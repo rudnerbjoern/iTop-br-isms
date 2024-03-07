@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.7">
+    <!--
+    * @copyright   Copyright (C) 2024 Björn Rudner
+    * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
+    -->
+    <classes>
+        <!-- maybe later
+        <class id="ISMSAssetType" _delta="define">
+            <parent>Typology</parent>
+            <properties>
+                <category>bizmodel,searchable,configmgmt</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>ismsassettype</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <display_template />
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="name">
+                        <attributes>
+                            <attribute id="name" />
+                        </attributes>
+                        <filter />
+                        <disabled>false</disabled>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="ismsassets_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>ISMSAsset</linked_class>
+                    <ext_key_to_me>assettype_id</ext_key_to_me>
+                    <edit_mode>add_only</edit_mode>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates />
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="description">
+                            <rank>20</rank>
+                        </item>
+                        <item id="ismsassets_list">
+                            <rank>100</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="description">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="description">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+    -->
+        <class id="ISMSAsset" _delta="define">
+            <parent>FunctionalCI</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <db_table>ismsasset</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <display_template />
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules />
+                <obsolescence>
+                    <condition><![CDATA[status='obsolete']]></condition>
+                </obsolescence>
+            </properties>
+            <fields>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="draft">draft</value>
+                        <value id="published">published</value>
+                        <value id="obsolete">obsolete</value>
+                    </values>
+                    <default_value>draft</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="category" xsi:type="AttributeEnum">
+                    <sql>category</sql>
+                    <values>
+                        <value id="primary">primary</value>
+                        <value id="secondary">secondary</value>
+                    </values>
+                    <default_value>primary</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+
+                <!-- maybe later
+                <field id="assettype_id" xsi:type="AttributeExternalKey">
+                    <sql>assettype_id</sql>
+                    <target_class>ISMSAssetType</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="assettype_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>assettype_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            -->
+                <field id="assettype" xsi:type="AttributeEnum">
+                    <sql>assettype</sql>
+                    <values>
+                        <value id="information">information</value>
+                        <value id="facility">facility</value>
+                        <value id="person">person</value>
+                        <value id="hardware">hardware</value>
+                        <value id="software">software</value>
+                        <value id="service">service</value>
+                        <value id="network">network</value>
+                        <value id="finance">finance</value>
+                        <value id="intangible">intangible</value>
+                    </values>
+                    <default_value>information</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="assetowner_id" xsi:type="AttributeExternalKey">
+                    <sql>assetowner_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="assetowner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>assetowner_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="assetguardian_id" xsi:type="AttributeExternalKey">
+                    <sql>assetguardian_id</sql>
+                    <target_class>Contact</target_class>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="assetguardian_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>assetguardian_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="assetusers" xsi:type="AttributeText">
+                    <sql>assetusers</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="creation_date" xsi:type="AttributeDate">
+                    <sql>creation_date</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDate">
+                    <sql>last_update</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="next_revision" xsi:type="AttributeDate">
+                    <sql>next_revision</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="supportingassets_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkSupportingAssetToAsset</linked_class>
+                    <ext_key_to_me>asset_id</ext_key_to_me>
+                    <ext_key_to_remote>supportingasset_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
+                <field id="supportedassets_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkSupportingAssetToAsset</linked_class>
+                    <ext_key_to_me>supportingasset_id</ext_key_to_me>
+                    <ext_key_to_remote>asset_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
+            </fields>
+            <relations>
+                <neighbours>
+                    <neighbour id="ismsasset">
+                        <query_down>SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS l1 ON l1.asset_id = down.id WHERE l1.supportingasset_id = :this-&gt;id</query_down>
+                        <query_up>SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS l1 ON l1.supportingasset_id = up.id WHERE l1.asset_id = :this-&gt;id</query_up>
+                    </neighbour>
+                </neighbours>
+            </relations>
+            <methods>
+                <method id="GetAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code>
+                        <![CDATA[public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
+                        {
+                            // Force the computed field to be read-only, preventing it to be written
+                            $aLimitedAttributes = array('creation_date','last_update');
+                            if (in_array($sAttCode, $aLimitedAttributes))
+                                return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
+                            return parent::GetAttributeFlags($sAttCode, $aReasons);
+                        }]]>
+                    </code>
+                </method>
+                <method id="PrefillCreationForm">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function PrefillCreationForm(&$aContextParam)
+                        {
+                            if (empty($this->Get('creation_date')))
+                            {
+                                $this->Set('creation_date', time());
+                            }
+                            if (empty($this->Get('last_update')))
+                            {
+                                $this->Set('last_update', time());
+                            }
+                            if (empty($this->Get('next_revision')))
+                            {
+                                $this->Set('next_revision', date('Y-m-d', strtotime('+1 year')));
+                            }
+                        }]]>
+                    </code>
+                    <arguments>
+                        <argument id="1">
+                            <mandatory>false</mandatory>
+                            <type>attcode</type>
+                        </argument>
+                    </arguments>
+                </method>
+                <method id="OnInsert">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function OnInsert()
+                        {
+                            parent::OnInsert();
+                            $this->Set('creation_date', time());
+                            $this->Set('last_update', time());
+                        }]]>
+                    </code>
+                </method>
+                <method id="OnUpdate">
+                    <static>false</static>
+                    <access>public</access>
+                    <code><![CDATA[
+                        public function OnUpdate()
+                        {
+                            parent::OnUpdate();
+                            $this->Set('last_update', time());
+                        }]]>
+                    </code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSAsset:GeneralInfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSAsset:Contacts">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="assetowner_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="assetguardian_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="assetusers">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSAsset:Details">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="category">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="assettype">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="description">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:riskmanagement" _delta="define">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="rm_confidentiality">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="rm_integrity">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="rm_availability">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="rm_authenticity">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="rm_nonrepudiation">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>30</rank>
+                            <items>
+                                <item id="fieldset:ISMSAsset:Dates">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="creation_date">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="last_update">
+                                            <rank>60</rank>
+                                        </item>
+                                        <item id="next_revision">
+                                            <rank>60</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="supportingassets_list">
+                            <rank>200</rank>
+                        </item>
+                        <item id="supportedassets_list">
+                            <rank>205</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>210</rank>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="friendlyname">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>30</rank>
+                        </item>
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="category">
+                            <rank>30</rank>
+                        </item>
+                        <item id="assettype">
+                            <rank>40</rank>
+                        </item>
+                        <item id="description">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="category">
+                            <rank>40</rank>
+                        </item>
+                        <item id="assettype">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+            <!--
+    Name
+    Description
+    Category
+    Type
+    BusinessUnit
+    AssetOwner
+    AssetGuardian
+    AssetUser
+
+    SupportingAssets
+
+
+
+-->
+        </class>
+
+
+        <class id="lnkSupportingAssetToAsset" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnksupportingassettoasset</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="supportingasset_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </naming>
+                <display_template />
+                <icon />
+                <reconciliation>
+                    <attributes>
+                        <attribute id="supportingasset_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <!-- Using "no_duplicate" for the "id" handle the message automatically -->
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="supportingasset_id" />
+                            <attribute id="asset_id" />
+                        </attributes>
+                        <filter />
+                        <disabled>false</disabled>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="supportingasset_id" xsi:type="AttributeExternalKey">
+                    <sql>supportingasset_id</sql>
+                    <target_class>ISMSAsset</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="supportingasset_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>supportingasset_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="asset_id" xsi:type="AttributeExternalKey">
+                    <sql>asset_id</sql>
+                    <target_class>ISMSAsset</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="asset_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>asset_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="supportingasset_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="supportingasset_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="supportingasset_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+
+    </classes>
+    <!-- ***************** Menus ***************** -->
+    <menus>
+        <menu id="ISMSManagement" xsi:type="MenuGroup" _delta="define">
+            <rank>29</rank>
+            <enable_class _delta="define">ISMSAsset</enable_class>
+            <enable_admin_only _delta="define">0</enable_admin_only>
+            <enable_action _delta="define">UR_ACTION_MODIFY</enable_action>
+            <style>
+                <decoration_classes>fas fa-sensor-cloud</decoration_classes>
+            </style>
+        </menu>
+        <menu id="ISMSSpace" xsi:type="DashboardMenuNode" _delta="define">
+            <rank>10</rank>
+            <parent>ISMSManagement</parent>
+            <definition>
+                <layout>DashboardLayoutOneCol</layout>
+                <title />
+                <cells>
+                    <cell id="isms-100">
+                        <rank>1</rank>
+                        <dashlets>
+                            <dashlet id="isms-101" xsi:type="DashletHeaderStatic">
+                                <rank>101</rank>
+                                <title>Menu:ISMSSpace:Assets</title>
+                            </dashlet>
+                            <dashlet id="isms-110" xsi:type="DashletBadge">
+                                <rank>110</rank>
+                                <class>ISMSAsset</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                    <cell id="isms-200">
+                        <rank>2</rank>
+                        <dashlets>
+                            <dashlet id="isms-201" xsi:type="DashletHeaderStatic">
+                                <rank>1</rank>
+                                <title>Menu:ISMSSpace:Options</title>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                </cells>
+            </definition>
+        </menu>
+    </menus>
+</itop_design>
