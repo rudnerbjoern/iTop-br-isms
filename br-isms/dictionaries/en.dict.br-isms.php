@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024 Björn Rudner
  * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
- * @version     2024-02-29
+ * @version     2024-10-30
  *
  * Localized data
  */
@@ -31,15 +31,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:category' => 'Category',
     'Class:ISMSAsset/Attribute:category/Value:primary' => 'Primary',
     'Class:ISMSAsset/Attribute:category/Value:secondary' => 'Secondary',
-    'Class:ISMSAsset/Attribute:assettype' => 'Type',
-    'Class:ISMSAsset/Attribute:assettype/Value:information' => 'Information/Data',
-    'Class:ISMSAsset/Attribute:assettype/Value:person' => 'Person/Knowledge',
-    'Class:ISMSAsset/Attribute:assettype/Value:facility' => 'Facility',
-    'Class:ISMSAsset/Attribute:assettype/Value:hardware' => 'Hardware',
-    'Class:ISMSAsset/Attribute:assettype/Value:software' => 'Software',
-    'Class:ISMSAsset/Attribute:assettype/Value:service' => 'Service',
-    'Class:ISMSAsset/Attribute:assettype/Value:network' => 'Network',
-    'Class:ISMSAsset/Attribute:assettype/Value:finance' => 'Finance',
-    'Class:ISMSAsset/Attribute:assettype/Value:intangible' => 'Intangible',
     'Class:ISMSAsset/Attribute:description' => 'Description',
+    'Class:ISMSAssetType' => 'Asset Type',
+    'Class:ISMSAssetType/Attribute:name' => 'Name',
+    'Class:ISMSAssetType/Attribute:description' => 'Description',
+    'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
 ));

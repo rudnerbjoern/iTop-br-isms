@@ -5,7 +5,6 @@
     * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
-        <!-- maybe later
         <class id="ISMSAssetType" _delta="define">
             <parent>Typology</parent>
             <properties>
@@ -86,7 +85,6 @@
                 </list>
             </presentation>
         </class>
-    -->
         <class id="ISMSAsset" _delta="define">
             <parent>FunctionalCI</parent>
             <properties>
@@ -136,8 +134,6 @@
                     <is_null_allowed>false</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
-                <!-- maybe later
                 <field id="assettype_id" xsi:type="AttributeExternalKey">
                     <sql>assettype_id</sql>
                     <target_class>ISMSAssetType</target_class>
@@ -147,24 +143,6 @@
                 <field id="assettype_name" xsi:type="AttributeExternalField">
                     <extkey_attcode>assettype_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
-                </field>
-            -->
-                <field id="assettype" xsi:type="AttributeEnum">
-                    <sql>assettype</sql>
-                    <values>
-                        <value id="information">information</value>
-                        <value id="facility">facility</value>
-                        <value id="person">person</value>
-                        <value id="hardware">hardware</value>
-                        <value id="software">software</value>
-                        <value id="service">service</value>
-                        <value id="network">network</value>
-                        <value id="finance">finance</value>
-                        <value id="intangible">intangible</value>
-                    </values>
-                    <default_value>information</default_value>
-                    <is_null_allowed>false</is_null_allowed>
-                    <display_style>list</display_style>
                 </field>
                 <field id="assetowner_id" xsi:type="AttributeExternalKey">
                     <sql>assetowner_id</sql>
@@ -350,7 +328,7 @@
                                         <item id="category">
                                             <rank>10</rank>
                                         </item>
-                                        <item id="assettype">
+                                        <item id="assettype_id">
                                             <rank>20</rank>
                                         </item>
                                         <item id="description">
@@ -431,7 +409,7 @@
                         <item id="category">
                             <rank>30</rank>
                         </item>
-                        <item id="assettype">
+                        <item id="assettype_id">
                             <rank>40</rank>
                         </item>
                         <item id="description">
@@ -450,7 +428,7 @@
                         <item id="category">
                             <rank>40</rank>
                         </item>
-                        <item id="assettype">
+                        <item id="assettype_id">
                             <rank>50</rank>
                         </item>
                     </items>
@@ -472,8 +450,6 @@
 
 -->
         </class>
-
-
         <class id="lnkSupportingAssetToAsset" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -567,7 +543,6 @@
                 </list>
             </presentation>
         </class>
-
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -606,6 +581,10 @@
                             <dashlet id="isms-201" xsi:type="DashletHeaderStatic">
                                 <rank>1</rank>
                                 <title>Menu:ISMSSpace:Options</title>
+                            </dashlet>
+                            <dashlet id="isms-210" xsi:type="DashletBadge">
+                                <rank>210</rank>
+                                <class>ISMSAssetType</class>
                             </dashlet>
                         </dashlets>
                     </cell>
