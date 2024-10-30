@@ -16,16 +16,16 @@
         <![CDATA[Information Secuirty Management System in iTop]]>
     </description>
     <version>
-        <![CDATA[0.0.1]]>
+        <![CDATA[3.1.2]]>
     </version>
     <release_date>
-        <![CDATA[2024-02-29]]>
+        <![CDATA[2024-10-20]]>
     </release_date>
     <version_description>
         <![CDATA[]]>
     </version_description>
     <itop_version_min>
-        <![CDATA[2.7.0]]>
+        <![CDATA[3.1.0]]>
     </itop_version_min>
     <status>stable</status>
     <mandatory>false</mandatory>
