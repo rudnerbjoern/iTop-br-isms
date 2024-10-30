@@ -85,10 +85,13 @@ if (!class_exists('ISMSInstaller')) {
                     'Intangible'
                 );
                 foreach ($aISMSAssetTypeNames as $sISMSAssetTypeName) {
-                    $oPM = MetaModel::NewObject('ISMSAssetType');
-                    $oPM->Set('name', $sISMSAssetTypeName);
-                    $oPM->DBWrite();
-                    SetupLog::Info("|  |- ISMSAssetType '$sISMSAssetTypeName' created.");
+                    $oSearch = DBSearch::FromOQL('SELECT ISMSAssetType WHERE name = :name');
+                    $oSet = new DBObjectSet($oSearch, array(), array('name' => $sISMSAssetTypeName));
+                    if ($oSet->Count() == 0) {
+                        $oPM = MetaModel::NewObject('ISMSAssetType', array('name' => $sISMSAssetTypeName));
+                        $oPM->DBInsert();
+                        SetupLog::Info("|  |- ISMSAssetType '$sISMSAssetTypeName' created.");
+                    }
                 }
             }
         }
