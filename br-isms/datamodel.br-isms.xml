@@ -115,24 +115,43 @@
             <fields>
                 <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
+                    <sort_type>rank</sort_type>
                     <values>
-                        <value id="draft">draft</value>
-                        <value id="published">published</value>
-                        <value id="obsolete">obsolete</value>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="published">
+                            <code>published</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>30</rank>
+                        </value>
                     </values>
                     <default_value>draft</default_value>
                     <is_null_allowed>false</is_null_allowed>
+                    <always_load_in_tables>true</always_load_in_tables>
                     <display_style>list</display_style>
                 </field>
                 <field id="category" xsi:type="AttributeEnum">
                     <sql>category</sql>
+                    <sort_type>rank</sort_type>
                     <values>
-                        <value id="primary">primary</value>
-                        <value id="secondary">secondary</value>
+                        <value id="primary">
+                            <code>primary</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="secondary">
+                            <code>secondary</code>
+                            <rank>20</rank>
+                        </value>
                     </values>
                     <default_value>primary</default_value>
                     <is_null_allowed>false</is_null_allowed>
-                    <display_style>list</display_style>
+                    <always_load_in_tables>true</always_load_in_tables>
+                    <display_style>radio_horizontal</display_style>
                 </field>
                 <field id="assettype_id" xsi:type="AttributeExternalKey">
                     <sql>assettype_id</sql>
