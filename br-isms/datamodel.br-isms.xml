@@ -30,8 +30,6 @@
                         <attributes>
                             <attribute id="name" />
                         </attributes>
-                        <filter />
-                        <disabled>false</disabled>
                         <is_blocking>true</is_blocking>
                     </rule>
                 </uniqueness_rules>
@@ -96,23 +94,47 @@
                 <db_final_class_field />
                 <naming>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                     </attributes>
                 </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
                 <display_template />
                 <reconciliation>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                         <attribute id="org_id" />
                         <attribute id="organization_name" />
                     </attributes>
                 </reconciliation>
-                <uniqueness_rules />
+                <indexes>
+                    <index id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                    </index>
+                </indexes>
+                <uniqueness_rules>
+                    <rule id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                        <is_blocking>false</is_blocking>
+                    </rule>
+                </uniqueness_rules>
                 <obsolescence>
                     <condition><![CDATA[status='obsolete']]></condition>
                 </obsolescence>
             </properties>
             <fields>
+                <field id="ref" xsi:type="AttributeString">
+                    <sql>ref</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
                 <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
                     <sort_type>rank</sort_type>
@@ -166,7 +188,7 @@
                 <field id="assetowner_id" xsi:type="AttributeExternalKey">
                     <sql>assetowner_id</sql>
                     <target_class>Person</target_class>
-                    <filter><![CDATA[SELECT Person]]></filter>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
                         <attribute id="org_id" />
                     </dependencies>
@@ -180,6 +202,7 @@
                 <field id="assetguardian_id" xsi:type="AttributeExternalKey">
                     <sql>assetguardian_id</sql>
                     <target_class>Contact</target_class>
+                    <filter><![CDATA[SELECT Contact WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
                         <attribute id="org_id" />
                     </dependencies>
@@ -200,7 +223,12 @@
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-                <field id="last_update" xsi:type="AttributeDate">
+                <field id="publish_date" xsi:type="AttributeDate">
+                    <sql>publish_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDateTime">
                     <sql>last_update</sql>
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
@@ -227,15 +255,245 @@
                     <duplicates>false</duplicates>
                 </field>
             </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_publish" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_draft" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_publish">
+                                <target>published</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <action id="2">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="published">
+                        <flags>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assettype_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_confidentiality">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_integrity">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_availability">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_authenticity">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_nonrepudiation">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="obsolete">
+                        <flags>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetguardian_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetusers">
+                                <read_only />
+                            </attribute>
+                            <attribute id="category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assettype_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_confidentiality">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_integrity">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_availability">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_authenticity">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_nonrepudiation">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_revision">
+                                <read_only />
+                            </attribute>
+                            <attribute id="supportingassets_list">
+                                <read_only />
+                            </attribute>
+                            <attribute id="supportedassets_list">
+                                <read_only />
+                            </attribute>
+                            <attribute id="documents_list">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_draft">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                    <action id="2">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                </states>
+            </lifecycle>
             <relations>
-                <neighbours>
-                    <neighbour id="ismsasset">
-                        <query_down>SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS l1 ON l1.asset_id = down.id WHERE l1.supportingasset_id = :this-&gt;id</query_down>
-                        <query_up>SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS l1 ON l1.supportingasset_id = up.id WHERE l1.asset_id = :this-&gt;id</query_up>
-                    </neighbour>
-                </neighbours>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismsasset">
+                            <query_down>SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.supportingasset_id = :this-&gt;id</query_down>
+                            <query_up>SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS lnk ON lnk.supportingasset_id = up.id WHERE lnk.asset_id = :this-&gt;id</query_up>
+                        </neighbour>
+                    </neighbours>
+                </relation>
             </relations>
             <methods>
+                <method id="DBInsertNoReload">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code>
+                        <![CDATA[public function DBInsertNoReload()
+                        {
+                            $iNextId = ItopCounter::IncClass(get_class($this));
+                            $sRef = $this->MakeAssetRef($iNextId);
+                            $this->SetIfNull('ref', $sRef);
+                            $iKey = parent::DBInsertNoReload();
+                            return $iKey;
+                        }
+                        ]]>
+                    </code>
+                </method>
+                <method id="MakeAssetRef">
+                    <static>false</static>
+                    <access>protected</access>
+                    <type>Overload-DBObject</type>
+                    <code>
+                        <![CDATA[protected function MakeAssetRef($iNextId)
+                        {
+                            return sprintf(static::GetAssetRefFormat(), $iNextId);
+                        }
+                        ]]>
+                    </code>
+                </method>
+                <method id="GetAssetRefFormat">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code>
+                        <![CDATA[public static function GetAssetRefFormat()
+                        {
+                            return 'A-%04d';
+                        }
+                        ]]>
+                    </code>
+                </method>
                 <method id="GetAttributeFlags" _delta="define">
                     <static>false</static>
                     <access>public</access>
@@ -258,17 +516,11 @@
                         public function PrefillCreationForm(&$aContextParam)
                         {
                             if (empty($this->Get('creation_date')))
-                            {
                                 $this->Set('creation_date', time());
-                            }
                             if (empty($this->Get('last_update')))
-                            {
                                 $this->Set('last_update', time());
-                            }
                             if (empty($this->Get('next_revision')))
-                            {
                                 $this->Set('next_revision', date('Y-m-d', strtotime('+1 year')));
-                            }
                         }]]>
                     </code>
                     <arguments>
@@ -386,11 +638,14 @@
                                         <item id="creation_date">
                                             <rank>10</rank>
                                         </item>
+                                        <item id="publish_date">
+                                            <rank>20</rank>
+                                        </item>
                                         <item id="last_update">
-                                            <rank>60</rank>
+                                            <rank>30</rank>
                                         </item>
                                         <item id="next_revision">
-                                            <rank>60</rank>
+                                            <rank>40</rank>
                                         </item>
                                     </items>
                                 </item>
@@ -409,65 +664,77 @@
                 </details>
                 <default_search>
                     <items>
-                        <item id="friendlyname">
+                        <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="friendlyname">
+                            <rank>20</rank>
+                        </item>
+                        <item id="assetowner_id">
                             <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>50</rank>
                         </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="name">
+                        <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="name">
                             <rank>20</rank>
                         </item>
-                        <item id="category">
+                        <item id="org_id">
                             <rank>30</rank>
                         </item>
-                        <item id="assettype_id">
+                        <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="description">
+                        <item id="category">
                             <rank>50</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="assetowner_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="description">
+                            <rank>80</rank>
                         </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="org_id">
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="name">
                             <rank>20</rank>
                         </item>
-                        <item id="status">
+                        <item id="org_id">
                             <rank>30</rank>
                         </item>
-                        <item id="category">
+                        <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="assettype_id">
+                        <item id="category">
                             <rank>50</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="assetowner_id">
+                            <rank>70</rank>
                         </item>
                     </items>
                 </list>
             </presentation>
-            <!--
-    Name
-    Description
-    Category
-    Type
-    BusinessUnit
-    AssetOwner
-    AssetGuardian
-    AssetUser
-
-    SupportingAssets
-
-
-
--->
         </class>
         <class id="lnkSupportingAssetToAsset" _delta="define">
             <parent>cmdbAbstractObject</parent>

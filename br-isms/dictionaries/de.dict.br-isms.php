@@ -23,6 +23,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'ISMSAsset:Contacts' => 'Kontakte',
     'Class:ISMSAsset' => 'Asset',
+    'Class:ISMSAsset/Name' => '%1$s %2$s',
     'Class:ISMSAsset/Attribute:name' => 'Name',
     'Class:ISMSAsset/Attribute:organization_name' => 'Organisation',
     'Class:ISMSAsset/Attribute:status' => 'Status',
@@ -44,10 +45,23 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:assetusers' => 'Anwender',
     'Class:ISMSAsset/Attribute:assetusers+' => 'Informationen über die Anwender dieses Assets.',
     'Class:ISMSAsset/Attribute:creation_date' => 'Erstelldatum',
+    'Class:ISMSAsset/Attribute:publish_date' => 'Veröffentlichungsdate',
     'Class:ISMSAsset/Attribute:last_update' => 'Letzte Änderung',
     'Class:ISMSAsset/Attribute:next_revision' => 'Nächste Revision',
     'Class:ISMSAsset/Attribute:supportingassets_list' => 'Unterstützende Assets',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Unterstützte Assets',
+    'Class:ISMSAsset/Stimulus:ev_publish' => 'Veröffentlichen',
+    'Class:ISMSAsset/Stimulus:ev_publish+' => '',
+    'Class:ISMSAsset/Stimulus:ev_obsolete' => 'Obsolet',
+    'Class:ISMSAsset/Stimulus:ev_obsolete+' => '',
+    'Class:ISMSAsset/Stimulus:ev_draft' => 'Entwurf',
+    'Class:ISMSAsset/Stimulus:ev_draft+' => '',
+));
+
+//
+// Class: ISMSAssetType
+//
+Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAssetType' => 'Asset Typ',
     'Class:ISMSAssetType/Attribute:name' => 'Name',
     'Class:ISMSAssetType/Attribute:description' => 'Beschreibung',
