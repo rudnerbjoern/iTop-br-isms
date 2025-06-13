@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.1">
+<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
     <!--
-    * @copyright   Copyright (C) 2024 Björn Rudner
+    * @copyright   Copyright (C) 2024-2025 Björn Rudner
     * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
@@ -19,7 +19,6 @@
                         <attribute id="name" />
                     </attributes>
                 </naming>
-                <display_template />
                 <reconciliation>
                     <attributes>
                         <attribute id="name" />
@@ -101,7 +100,6 @@
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
-                <display_template />
                 <reconciliation>
                     <attributes>
                         <attribute id="ref" />
@@ -752,8 +750,6 @@
                         <attribute id="asset_id" />
                     </attributes>
                 </naming>
-                <display_template />
-                <icon />
                 <reconciliation>
                     <attributes>
                         <attribute id="supportingasset_id" />
@@ -834,9 +830,9 @@
     <menus>
         <menu id="ISMSManagement" xsi:type="MenuGroup" _delta="define">
             <rank>29</rank>
-            <enable_class _delta="define">ISMSAsset</enable_class>
-            <enable_admin_only _delta="define">0</enable_admin_only>
-            <enable_action _delta="define">UR_ACTION_MODIFY</enable_action>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_admin_only>0</enable_admin_only>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
             <style>
                 <decoration_classes>fas fa-sensor-cloud</decoration_classes>
             </style>
