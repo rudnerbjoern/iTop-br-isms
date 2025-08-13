@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @copyright   Copyright (C) 2024 Björn Rudner
+ * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
- * @version     2024-10-30
+ * @version     2025-08-12
  *
  * Localized data
  */
@@ -11,15 +11,19 @@
 //
 // Application Menu
 //
+/** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Menu:ISMSManagement' => 'ISMS Management',
     'Menu:ISMSSpace' => 'ISMS Raum',
     'Menu:ISMSSpace:Assets' => 'Assets',
+    'Menu:ISMSSpace:Options' => 'Optionen',
+    'Menu:ISMSSpace:Risks' => 'Risiken',
 ));
 
 //
 // Class: ISMSAsset
 //
+/** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'ISMSAsset:Contacts' => 'Kontakte',
     'Class:ISMSAsset' => 'Asset',
@@ -45,7 +49,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:assetusers' => 'Anwender',
     'Class:ISMSAsset/Attribute:assetusers+' => 'Informationen über die Anwender dieses Assets.',
     'Class:ISMSAsset/Attribute:creation_date' => 'Erstelldatum',
-    'Class:ISMSAsset/Attribute:publish_date' => 'Veröffentlichungsdate',
+    'Class:ISMSAsset/Attribute:publish_date' => 'Veröffentlichungsdatum',
     'Class:ISMSAsset/Attribute:last_update' => 'Letzte Änderung',
     'Class:ISMSAsset/Attribute:next_revision' => 'Nächste Revision',
     'Class:ISMSAsset/Attribute:supportingassets_list' => 'Unterstützende Assets',
@@ -61,6 +65,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 // Class: ISMSAssetType
 //
+/** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAssetType' => 'Asset Typ',
     'Class:ISMSAssetType/Attribute:name' => 'Name',

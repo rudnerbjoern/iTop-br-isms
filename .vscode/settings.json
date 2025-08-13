@@ -10,6 +10,7 @@
         "Beschreibung",
         "bizmodel",
         "cmdb",
+        "Combodo",
         "configmgmt",
         "dashlet",
         "dashlets",
@@ -26,8 +27,12 @@
         "ismsasset",
         "ismsassets",
         "ismsassettype",
+        "ismscontrol",
+        "ismsrisk",
         "Kategorie",
+        "lnkismsrisktoismsasset",
         "lnksupportingassettoasset",
+        "mgmt",
         "moreinfo",
         "neighbour",
         "neighbours",
@@ -37,7 +42,9 @@
         "Organisation",
         "Primär",
         "Raum",
+        "riskassessment",
         "riskmanagement",
+        "riskowner",
         "Sekundär",
         "sprintf",
         "strtotime",
@@ -46,5 +53,8 @@
         "supportingassets",
         "Veröffentlicht",
         "Wissen"
-    ]
+    ],
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.formatOnPaste": true
 }
