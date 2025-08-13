@@ -470,6 +470,23 @@
                     </neighbours>
                 </relation>
             </relations>
+            <event_listeners>
+                <event_listener id="EvtSetInitialAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtBeforeWrite">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtBeforeWrite</callback>
+                </event_listener>
+            </event_listeners>
             <methods>
                 <method id="DBInsertNoReload">
                     <static>false</static>
@@ -511,24 +528,34 @@
                         ]]>
                     </code>
                 </method>
-                <method id="GetAttributeFlags" _delta="define">
+                <method id="EvtSetInitialAttributeFlags">
                     <static>false</static>
                     <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code>
-                        <![CDATA[public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
-                        {
-                            // Force the computed field to be read-only, preventing it to be written
-                            $aLimitedAttributes = array('creation_date','last_update');
-                            if (in_array($sAttCode, $aLimitedAttributes))
-                                return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
-                            return parent::GetAttributeFlags($sAttCode, $aReasons);
-                        }]]>
-                    </code>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
+    }
+    ]]></code>
+                </method>
+                <method id="EvtSetAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
+    }
+  ]]></code>
                 </method>
                 <method id="PrefillCreationForm">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
                     <code><![CDATA[
                         public function PrefillCreationForm(&$aContextParam)
                         {
@@ -547,28 +574,24 @@
                         </argument>
                     </arguments>
                 </method>
-                <method id="OnInsert">
+                <method id="EvtBeforeWrite">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
-                        public function OnInsert()
-                        {
-                            parent::OnInsert();
-                            $this->Set('creation_date', time());
-                            $this->Set('last_update', time());
-                        }]]>
-                    </code>
-                </method>
-                <method id="OnUpdate">
-                    <static>false</static>
-                    <access>public</access>
-                    <code><![CDATA[
-                        public function OnUpdate()
-                        {
-                            parent::OnUpdate();
-                            $this->Set('last_update', time());
-                        }]]>
-                    </code>
+    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+      $sToday = date(AttributeDate::GetInternalFormat());
+      $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+      if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
+        $this->Set('creation_date', $sToday);
+      }
+
+      // immer: last_update setzen
+      $this->Set('last_update', $sNow);
+    }
+  ]]></code>
                 </method>
             </methods>
             <presentation>
@@ -979,7 +1002,6 @@
                     <count_max>0</count_max>
                     <duplicates>false</duplicates>
                 </field>
-
                 <field id="risk_category" xsi:type="AttributeEnum">
                     <sql>risk_category</sql>
                     <values>
@@ -1190,7 +1212,6 @@
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
                 <field id="tgt_likelihood" xsi:type="AttributeEnum">
                     <sql>tgt_likelihood</sql>
                     <values>
@@ -1219,7 +1240,6 @@
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
                 <field id="tgt_impact" xsi:type="AttributeEnum">
                     <sql>tgt_impact</sql>
                     <values>
@@ -1248,12 +1268,10 @@
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
                 <field id="tgt_score" xsi:type="AttributeInteger">
                     <sql>tgt_score</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-
                 <field id="tgt_level" xsi:type="AttributeEnum">
                     <sql>tgt_level</sql>
                     <values>
@@ -1278,7 +1296,6 @@
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
                 <field id="aggregation_mode" xsi:type="AttributeEnum">
                     <sql>aggregation_mode</sql>
                     <values>
@@ -1299,8 +1316,6 @@
                     <is_null_allowed>false</is_null_allowed>
                     <display_style>list</display_style>
                 </field>
-
-
                 <field id="treatment_decision" xsi:type="AttributeEnum">
                     <sql>treatment_decision</sql>
                     <values>
@@ -1325,7 +1340,6 @@
                     <default_value>mitigate</default_value>
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-
                 <field id="treatment_owner_id" xsi:type="AttributeExternalKey">
                     <sql>treatment_owner_id</sql>
                     <target_class>Person</target_class>
@@ -1340,7 +1354,6 @@
                     <extkey_attcode>treatment_owner_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
                 </field>
-
                 <field id="treatment_due" xsi:type="AttributeDate">
                     <sql>treatment_due</sql>
                     <is_null_allowed>true</is_null_allowed>
@@ -1349,7 +1362,6 @@
                     <sql>treatment_plan</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-
                 <field id="acceptance_status" xsi:type="AttributeEnum">
                     <sql>acceptance_status</sql>
                     <values>
@@ -1389,7 +1401,6 @@
                     <sql>acceptance_rationale</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-
                 <field id="controls_list" xsi:type="AttributeLinkedSetIndirect">
                     <linked_class>lnkISMSRiskToISMSControl</linked_class>
                     <ext_key_to_me>risk_id</ext_key_to_me>
@@ -1550,6 +1561,16 @@
                 </relation>
             </relations>
             <event_listeners>
+                <event_listener id="EvtSetInitialAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetAttributeFlags</callback>
+                </event_listener>
                 <event_listener id="EvtCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
@@ -1565,10 +1586,10 @@
                     <rank>20</rank>
                     <callback>EvtComputeValues</callback>
                 </event_listener>
-                <event_listener id="OnLinksChanged" _delta="define">
+                <event_listener id="EvtLinksChanged" _delta="define">
                     <event>EVENT_DB_LINKS_CHANGED</event>
                     <rank>15</rank>
-                    <callback>OnLinksChanged</callback>
+                    <callback>EvtLinksChanged</callback>
                 </event_listener>
             </event_listeners>
             <methods>
@@ -1712,7 +1733,6 @@
     }
                     ]]></code>
                 </method>
-
                 <method id="DBInsertNoReload">
                     <static>false</static>
                     <access>public</access>
@@ -1750,51 +1770,51 @@
     }
                         ]]></code>
                 </method>
-                <method id="GetInitialStateAttributeFlags">
+                <method id="EvtSetInitialAttributeFlags">
                     <static>false</static>
                     <access>public</access>
-                    <type>Overload-DBObject</type>
+                    <type>EventListener</type>
                     <code><![CDATA[
-    public function GetInitialStateAttributeFlags($sAttCode, &$aReasons = array())
+    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-      $aLimitedAttributes = array(
-        'pre_score','pre_level',
-        'res_score','res_level',
-        'tgt_score','tgt_level',
-        'creation_date','last_update','publish_date'
-      );
-      if (in_array($sAttCode, $aLimitedAttributes)) {
-        return OPT_ATT_READONLY | parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
-      }
-      return parent::GetInitialStateAttributeFlags($sAttCode, $aReasons);
+        $this->ForceInitialAttributeFlags('pre_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('pre_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('res_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('res_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('tgt_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('tgt_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('publish_date', OPT_ATT_READONLY);
     }
-  ]]></code>
+    ]]></code>
                 </method>
-                <method id="GetAttributeFlags">
+                <method id="EvtSetAttributeFlags" _delta="define">
                     <static>false</static>
                     <access>public</access>
-                    <type>Overload-DBObject</type>
+                    <type>EventListener</type>
                     <code><![CDATA[
-    public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
+    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-        // Force the computed field to be read-only, preventing it to be written
-        $aLimitedAttributes = array('creation_date','last_update',
-            'pre_score','pre_level',
-            'res_score','res_level',
-            'tgt_score','tgt_level');
-        if (in_array($sAttCode, $aLimitedAttributes))
-            return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
+        $this->ForceAttributeFlags('pre_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('pre_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('res_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('res_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('tgt_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('tgt_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('publish_date', OPT_ATT_READONLY);
 
-        if (in_array($sAttCode, array('res_likelihood','res_impact'))) {
+        // Optional: res_likelihood/res_impact sperren, sobald Kontrollen wirken
         try {
-            $aAgg = $this->AggregateControlEffects(); // nutzt deine bestehende Methode
+            $aAgg = $this->AggregateControlEffects();
             $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
             if ($bHasAnyEffect) {
-            return OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState);
+                $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
+                $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
             }
-        } catch (Exception $e) {}
-        }
-        return parent::GetAttributeFlags($sAttCode, $aReasons);
+        } catch (\Exception $e) { /* ignore */ }
     }
   ]]></code>
                 </method>
@@ -1826,11 +1846,12 @@
                         </argument>
                     </arguments>
                 </method>
-                <method id="OnLinksChanged" _delta="define">
+                <method id="EvtLinksChanged" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
-    public function OnLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
     {
       $this->RecomputeRiskScores();
     }
@@ -1839,6 +1860,7 @@
                 <method id="EvtBeforeWrite" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
     public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
@@ -1855,6 +1877,7 @@
                 <method id="EvtComputeValues" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
     public function EvtComputeValues(Combodo\iTop\Service\Events\EventData $oEventData)
     {
@@ -1865,6 +1888,7 @@
                 <method id="EvtCheckToWrite">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
     public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
