@@ -464,8 +464,12 @@
                 <relation id="impacts">
                     <neighbours>
                         <neighbour id="ismsasset">
-                            <query_down>SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.supportingasset_id = :this-&gt;id</query_down>
-                            <query_up>SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS lnk ON lnk.supportingasset_id = up.id WHERE lnk.asset_id = :this-&gt;id</query_up>
+                            <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.supportingasset_id = :this->id]]></query_down>
+                            <query_up><![CDATA[SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS lnk ON lnk.supportingasset_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
+                        </neighbour>
+                        <neighbour id="ismsrisk">
+                            <query_up><![CDATA[SELECT ISMSRisk AS up JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.risk_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
+                            <query_down><![CDATA[SELECT ISMSRisk AS down WHERE 1 = 0]]></query_down>
                         </neighbour>
                     </neighbours>
                 </relation>
@@ -800,7 +804,6 @@
                     </attributes>
                 </reconciliation>
                 <uniqueness_rules>
-                    <!-- Using "no_duplicate" for the "id" handle the message automatically -->
                     <rule id="no_duplicate">
                         <attributes>
                             <attribute id="supportingasset_id" />
@@ -1554,9 +1557,13 @@
             <relations>
                 <relation id="impacts">
                     <neighbours>
+                        <neighbour id="ismscontrol">
+                            <query_up><![CDATA[ SELECT ISMSControl AS up JOIN lnkISMSRiskToISMSControl AS lnk ON lnk.control_id = up.id WHERE lnk.risk_id = :this->id]]></query_up>
+                            <query_down><![CDATA[SELECT ISMSControl AS down WHERE 1 = 0]]></query_down>
+                        </neighbour>
                         <neighbour id="ismsasset">
                             <direction>down</direction>
-                            <query_down>SELECT ISMSAsset AS down JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.risk_id = :this-&gt;id</query_down>
+                            <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.risk_id = :this->id]]></query_down>
                         </neighbour>
                     </neighbours>
                 </relation>
@@ -2379,6 +2386,9 @@
                         <attribute id="name" />
                     </attributes>
                 </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
                 <reconciliation>
                     <attributes>
                         <attribute id="name" />
@@ -2409,17 +2419,39 @@
                             <code>draft</code>
                             <rank>10</rank>
                         </value>
-                        <value id="active">
-                            <code>active</code>
+                        <value id="submitted">
+                            <code>submitted</code>
                             <rank>20</rank>
+                        </value>
+                        <value id="approved">
+                            <code>approved</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="implementing">
+                            <code>implementing</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="amending">
+                            <code>amending</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="effective">
+                            <code>effective</code>
+                            <rank>60</rank>
+                        </value>
+                        <value id="suspended">
+                            <code>suspended</code>
+                            <rank>70</rank>
                         </value>
                         <value id="retired">
                             <code>retired</code>
-                            <rank>30</rank>
+                            <rank>80</rank>
                         </value>
                     </values>
                     <default_value>draft</default_value>
                     <is_null_allowed>false</is_null_allowed>
+                    <sort_type>rank</sort_type>
+                    <display_style>list</display_style>
                 </field>
                 <field id="owner_id" xsi:type="AttributeExternalKey">
                     <sql>owner_id</sql>
@@ -2496,6 +2528,213 @@
                     <duplicates>false</duplicates>
                 </field>
             </fields>
+            <relations>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismsrisk">
+                            <direction>down</direction>
+                            <query_down><![CDATA[SELECT ISMSRisk AS down JOIN lnkISMSRiskToISMSControl AS lnk ON lnk.risk_id = down.id WHERE lnk.control_id = :this->id]]></query_down>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_submit" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_approve" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reject" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_start_impl" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_mark_effective" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_suspend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_resume" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_retire" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_start_amend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_submit_amend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_cancel_amend" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_submit">
+                                <target>submitted</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="submitted">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_approve">
+                                <target>approved</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_reject">
+                                <target>amending</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="approved">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_start_impl">
+                                <target>implementing</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_mark_effective">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="implementing">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_mark_effective">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+
+                    <state id="amending">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_submit_amend">
+                                <target>submitted</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_cancel_amend">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+
+
+                    <state id="effective">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_start_amend">
+                                <target>amending</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_suspend">
+                                <target>suspended</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="suspended">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_resume">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="retired">
+                        <flags>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="owner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+
+
             <methods />
             <presentation>
                 <details>
