@@ -492,41 +492,38 @@
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
-                    <code>
-                        <![CDATA[public function DBInsertNoReload()
-                        {
-                            $iNextId = ItopCounter::Inc('ISMSAsset');
-                            $sRef = $this->MakeAssetRef($iNextId);
-                            $this->SetIfNull('ref', $sRef);
-                            $iKey = parent::DBInsertNoReload();
-                            return $iKey;
-                        }
-                        ]]>
-                    </code>
+                    <code><![CDATA[
+    public function DBInsertNoReload()
+    {
+        $iNextId = ItopCounter::Inc('ISMSAsset');
+        $sRef = $this->MakeAssetRef($iNextId);
+        $this->SetIfNull('ref', $sRef);
+        $iKey = parent::DBInsertNoReload();
+        return $iKey;
+    }
+  ]]></code>
                 </method>
                 <method id="MakeAssetRef">
                     <static>false</static>
                     <access>protected</access>
                     <type>Overload-DBObject</type>
-                    <code>
-                        <![CDATA[protected function MakeAssetRef($iNextId)
-                        {
-                            return sprintf(static::GetAssetRefFormat(), $iNextId);
-                        }
-                        ]]>
-                    </code>
+                    <code><![CDATA[
+    protected function MakeAssetRef($iNextId)
+    {
+        return sprintf(static::GetAssetRefFormat(), $iNextId);
+    }
+  ]]></code>
                 </method>
                 <method id="GetAssetRefFormat">
                     <static>true</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
-                    <code>
-                        <![CDATA[public static function GetAssetRefFormat()
-                        {
-                            return 'A-%04d';
-                        }
-                        ]]>
-                    </code>
+                    <code><![CDATA[
+    public static function GetAssetRefFormat()
+    {
+        return 'A-%04d';
+    }
+  ]]></code>
                 </method>
                 <method id="EvtSetInitialAttributeFlags">
                     <static>false</static>
@@ -538,7 +535,7 @@
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
     }
-    ]]></code>
+  ]]></code>
                 </method>
                 <method id="EvtSetAttributeFlags" _delta="define">
                     <static>false</static>
@@ -555,18 +552,23 @@
                 <method id="PrefillCreationForm">
                     <static>false</static>
                     <access>public</access>
-                    <type>Overload-cmdbAbstractObject</type>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
-                        public function PrefillCreationForm(&$aContextParam)
-                        {
-                            if (empty($this->Get('creation_date')))
-                                $this->Set('creation_date', time());
-                            if (empty($this->Get('last_update')))
-                                $this->Set('last_update', time());
-                            if (empty($this->Get('next_revision')))
-                                $this->Set('next_revision', date('Y-m-d', strtotime('+1 year')));
-                        }]]>
-                    </code>
+    public function PrefillCreationForm(&$aContextParam)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        if (empty($this->Get('creation_date')))
+            $this->Set('creation_date', $sToday);
+        if (empty($this->Get('last_update')))
+            $this->Set('last_update', $sNow);
+        if (empty($this->Get('next_revision'))) {
+            $ts = strtotime('+1 year');
+            $this->Set('next_revision', date(AttributeDate::GetInternalFormat(), $ts));
+        }
+    }
+  ]]></code>
                     <arguments>
                         <argument id="1">
                             <mandatory>false</mandatory>
@@ -581,15 +583,14 @@
                     <code><![CDATA[
     public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-      $sToday = date(AttributeDate::GetInternalFormat());
-      $sNow   = date(AttributeDateTime::GetInternalFormat());
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
 
-      if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
-        $this->Set('creation_date', $sToday);
-      }
+        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
+            $this->Set('creation_date', $sToday);
+        }
 
-      // immer: last_update setzen
-      $this->Set('last_update', $sNow);
+        $this->Set('last_update', $sNow);
     }
   ]]></code>
                 </method>
@@ -1583,12 +1584,12 @@
                 </event_listener>
                 <event_listener id="EvtComputeValues" _delta="define">
                     <event>EVENT_DB_COMPUTE_VALUES</event>
-                    <rank>20</rank>
+                    <rank>10</rank>
                     <callback>EvtComputeValues</callback>
                 </event_listener>
                 <event_listener id="EvtLinksChanged" _delta="define">
                     <event>EVENT_DB_LINKS_CHANGED</event>
-                    <rank>15</rank>
+                    <rank>10</rank>
                     <callback>EvtLinksChanged</callback>
                 </event_listener>
             </event_listeners>
@@ -1596,10 +1597,11 @@
                 <method id="MapScoreToLevel" _delta="define">
                     <static>true</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
     public static function MapScoreToLevel($iScore)
     {
-        if (!is_int($iScore) || $iScore <= 0) { return null; }
+        if (!is_int($iScore) || $iScore <= 0) return null;
         if ($iScore >= 16) return 'extreme';
         if ($iScore >= 10) return 'high';
         if ($iScore >= 5)  return 'medium';
@@ -1610,74 +1612,152 @@
                 <method id="GetAggregationMode" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
     public function GetAggregationMode()
     {
-      $s = (string) $this->Get('aggregation_mode');
-      if ($s && $s !== 'inherit') { return $s; }
-      try {
-        $oCfg = MetaModel::GetConfig();
-        $def = $oCfg->Get('isms_risk_aggregation_mode'); // 'max' | 'sum_capped'
-        if ($def === 'sum_capped') return 'sum_capped';
-      } catch (Exception $e) {}
-      return 'max';
+        $s = (string) $this->Get('aggregation_mode');
+        if ($s && $s !== 'inherit') return $s;
+        try {
+            $oCfg = MetaModel::GetConfig();
+            $def = $oCfg->Get('isms_risk_aggregation_mode'); // 'max' | 'sum_capped'
+            if ($def === 'sum_capped') return 'sum_capped';
+        } catch (Exception $e) {
+        }
+        return 'max';
     }
   ]]></code>
                 </method>
                 <method id="AggregateControlEffects" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
+    /**
+     * Aggregate the risk-specific effectiveness of linked controls.
+     *
+     * Semantics:
+     * - We only consider links with link_status = 'effective'.
+     * - Each link contributes integer "steps" of reduction for likelihood/impact (0..N),
+     *   where 0 means "no effect". These are *relative* decrements, not absolute target values.
+     * - Aggregation mode:
+     *     - 'max'        : take the maximum effect across all links (per dimension)
+     *     - 'sum_capped' : sum effects and cap so that residual cannot go below 1 step
+     *                      (i.e., effect ≤ pre_value - 1)
+     *   Any other/unknown mode falls back to 'max'.
+     *
+     * Return:
+     *   array{like: ?int, impact: ?int}
+     *   null means "no computable effect" (e.g., no effective links *or* pre_* not set yet).
+     */
     public function AggregateControlEffects()
     {
-      $iRiskId = (int)$this->GetKey();
-      if ($iRiskId <= 0) return array('like'=>null,'impact'=>null);
-
-      $oSet = new DBObjectSet(
-        DBObjectSearch::FromOQL("SELECT lnkISMSRiskToISMSControl WHERE risk_id=:rid AND link_status='effective'"),
-        array(), array('rid'=>$iRiskId)
-      );
-
-      $sMode = $this->GetAggregationMode(); // 'max' | 'sum_capped'
-      $preL = (int)$this->Get('pre_likelihood'); // für Kappung nötig
-      $preI = (int)$this->Get('pre_impact');
-
-      $accL = null; $accI = null;
-
-      while ($oLink = $oSet->Fetch()) {
-        $vL = $oLink->Get('effect_on_likelihood'); // '0'..'3' oder NULL
-        $vI = $oLink->Get('effect_on_impact');
-        $nL = ($vL === '' || $vL === null) ? null : (int)$vL;
-        $nI = ($vI === '' || $vI === null) ? null : (int)$vI;
-
-        if ($sMode === 'sum_capped') {
-          if (!is_null($nL)) { $accL = is_null($accL) ? $nL : ($accL + $nL); }
-          if (!is_null($nI)) { $accI = is_null($accI) ? $nI : ($accI + $nI); }
-        } else { // max
-          if (!is_null($nL)) { $accL = is_null($accL) ? $nL : max($accL, $nL); }
-          if (!is_null($nI)) { $accI = is_null($accI) ? $nI : max($accI, $nI); }
+        $iRiskId = (int) $this->GetKey();
+        if ($iRiskId <= 0) {
+            return array('like' => null, 'impact' => null);
         }
-      }
 
-      if ($sMode === 'sum_capped') {
-        // Deckel: Maximal (pre-1) abziehen; negative Kappen vermeiden
-        if (!is_null($accL) && $preL > 0) { $accL = min($accL, max(0, $preL - 1)); }
-        if (!is_null($accI) && $preI > 0) { $accI = min($accI, max(0, $preI - 1)); }
-      }
+        // Resolve aggregation mode. Expected: 'max' | 'sum_capped' | 'inherit'(resolved upstream)
+        $sMode = (string) $this->GetAggregationMode();
 
-      return array('like'=>$accL, 'impact'=>$accI);
+        // Current inherent values (used for capping in 'sum_capped')
+        $preL = (int) $this->Get('pre_likelihood');
+        $preI = (int) $this->Get('pre_impact');
+
+        // Accumulators (null = no effect yet)
+        $accL = null;
+        $accI = null;
+
+        // Fetch effective links; robust against transient DB issues
+        try {
+            $oSearch = DBObjectSearch::FromOQL(
+                "SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid AND link_status = 'effective'"
+            );
+            $oSet = new DBObjectSet($oSearch, array(), array('rid' => $iRiskId));
+
+            while ($oLink = $oSet->Fetch()) {
+                // Raw values from link (can be '', null, or int-ish)
+                $vL = $oLink->Get('effect_on_likelihood');
+                $vI = $oLink->Get('effect_on_impact');
+                $nL = ($vL === '' || $vL === null) ? null : (int) $vL;
+                $nI = ($vI === '' || $vI === null) ? null : (int) $vI;
+
+                // Skip empty contributions
+                if ($nL !== null) {
+                    if ($sMode === 'sum_capped') {
+                        $accL = is_null($accL) ? $nL : ($accL + $nL);
+                    } else {
+                        // default/fallback = 'max'
+                        $accL = is_null($accL) ? $nL : max($accL, $nL);
+                    }
+                }
+                if ($nI !== null) {
+                    if ($sMode === 'sum_capped') {
+                        $accI = is_null($accI) ? $nI : ($accI + $nI);
+                    } else {
+                        $accI = is_null($accI) ? $nI : max($accI, $nI);
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            // On any DB error, behave as "no computed effect"
+            return array('like' => null, 'impact' => null);
+        }
+
+        // Apply capping for sum-mode so residual can't go below 1:
+        //   max effect = pre_value - 1  (because residual = max(1, pre - effect))
+        if ($sMode === 'sum_capped') {
+            if (!is_null($accL) && $preL > 0) {
+                $accL = min($accL, max(0, $preL - 1));
+            }
+            if (!is_null($accI) && $preI > 0) {
+                $accI = min($accI, max(0, $preI - 1));
+            }
+        }
+
+        // If inherent (pre_*) is not set yet (0), report no computed effect (null)
+        // so that UI rules (e.g., dynamic read-only on res_*) do not kick in prematurely.
+        if ($preL <= 0) {
+            $accL = null;
+        }
+        if ($preI <= 0) {
+            $accI = null;
+        }
+
+        return array('like' => $accL, 'impact' => $accI);
     }
   ]]></code>
                 </method>
                 <method id="RecomputeRiskScores" _delta="define">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
+    /**
+     * Recompute inherent (pre_*), residual (res_*), and target (tgt_*) risk scores & levels.
+     *
+     * Rules / semantics:
+     * - pre_* (inherent): computed iff both pre_likelihood and pre_impact > 0, else set to null.
+     * - res_* (residual):
+     *     * If AggregateControlEffects() returns any effect (like/impact not null), we compute
+     *       res_likelihood/res_impact as max(1, pre - effect) per dimension (only if pre_* > 0, else null).
+     *     * If there is NO computed effect (both null), we DO NOT touch res_likelihood/res_impact
+     *       so they can be maintained manually.
+     *     * res_score/level are always recomputed from the current res_* values (if both > 0), else null.
+     * - tgt_* (target): computed iff both tgt_likelihood and tgt_impact > 0, else set to null.
+     *
+     * Notes:
+     * - AggregateControlEffects() already applies the chosen aggregation mode (e.g. max / sum_capped)
+     *   and returns per-dimension integer step reductions or null (no computable effect).
+     * - static::MapScoreToLevel($score) must exist on this class and return an enum value (e.g. low/medium/high/extreme).
+     * - This method should be invoked from EVENT_DB_BEFORE_WRITE / EVENT_DB_COMPUTE_VALUES / EVENT_DB_LINKS_CHANGED.
+     */
     public function RecomputeRiskScores()
     {
-        // pre_*
+        // ---------- Inherent (pre_*) ----------
         $preL = (int) $this->Get('pre_likelihood');
         $preI = (int) $this->Get('pre_impact');
+
         if ($preL > 0 && $preI > 0) {
             $preScore = $preL * $preI;
             $this->Set('pre_score', $preScore);
@@ -1687,25 +1767,32 @@
             $this->Set('pre_level', null);
         }
 
-        // res_*
+        // ---------- Residual (res_*) ----------
+        // Aggregate effective control impacts (per-dimension step reductions or null)
         $aAgg = $this->AggregateControlEffects();
         $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
 
-
         if ($bHasAnyEffect) {
-            // NULL-Effekte als 0 behandeln
-            $effL = is_null($aAgg['like'])   ? 0 : (int) $aAgg['like'];   // 0..3
-            $effI = is_null($aAgg['impact']) ? 0 : (int) $aAgg['impact']; // 0..3
+            // Treat null effect as 0 in each dimension when computing (be explicit)
+            $effL = is_null($aAgg['like']) ? 0 : (int) $aAgg['like']; // 0..N
+            $effI = is_null($aAgg['impact']) ? 0 : (int) $aAgg['impact']; // 0..N
 
-            // Nur berechnen, wenn Brutto-Werte vorhanden sind
-            if ($preL > 0) { $this->Set('res_likelihood', max(1, $preL - $effL)); }
-            else           { $this->Set('res_likelihood', null); }
+            // Only compute if corresponding inherent dimension is present (>0)
+            if ($preL > 0) {
+                $this->Set('res_likelihood', max(1, $preL - $effL));
+            } else {
+                $this->Set('res_likelihood', null);
+            }
 
-            if ($preI > 0) { $this->Set('res_impact',     max(1, $preI - $effI)); }
-            else           { $this->Set('res_impact',     null); }
+            if ($preI > 0) {
+                $this->Set('res_impact', max(1, $preI - $effI));
+            } else {
+                $this->Set('res_impact', null);
+            }
         }
+        // If there is NO effect, we leave res_likelihood/res_impact untouched (manual values allowed)
 
-        // Falls KEINE Effekte vorhanden sind, bleiben res_* unverändert (manuell möglich)
+        // Compute residual score/level from current res_* (regardless of whether they were just changed)
         $resL = (int) $this->Get('res_likelihood');
         $resI = (int) $this->Get('res_impact');
         if ($resL > 0 && $resI > 0) {
@@ -1717,9 +1804,10 @@
             $this->Set('res_level', null);
         }
 
-        // tgt_*
+        // ---------- Target (tgt_*) ----------
         $tgtL = (int) $this->Get('tgt_likelihood');
         $tgtI = (int) $this->Get('tgt_impact');
+
         if ($tgtL > 0 && $tgtI > 0) {
             $tgtScore = $tgtL * $tgtI;
             $this->Set('tgt_score', $tgtScore);
@@ -1731,7 +1819,7 @@
 
         return true;
     }
-                    ]]></code>
+  ]]></code>
                 </method>
                 <method id="DBInsertNoReload">
                     <static>false</static>
@@ -1757,7 +1845,7 @@
     {
         return sprintf(static::GetRiskRefFormat(), $iNextId);
     }
-                        ]]></code>
+  ]]></code>
                 </method>
                 <method id="GetRiskRefFormat">
                     <static>true</static>
@@ -1768,7 +1856,7 @@
     {
         return 'R-%04d';
     }
-                        ]]></code>
+  ]]></code>
                 </method>
                 <method id="EvtSetInitialAttributeFlags">
                     <static>false</static>
@@ -1787,7 +1875,7 @@
         $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('publish_date', OPT_ATT_READONLY);
     }
-    ]]></code>
+  ]]></code>
                 </method>
                 <method id="EvtSetAttributeFlags" _delta="define">
                     <static>false</static>
@@ -1814,29 +1902,31 @@
                 $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
                 $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
             }
-        } catch (\Exception $e) { /* ignore */ }
+        } catch (\Exception $e) { /* ignore */
+        }
     }
   ]]></code>
                 </method>
                 <method id="PrefillCreationForm">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
     public function PrefillCreationForm(&$aContextParam)
     {
-      $sToday = date(AttributeDate::GetInternalFormat());
-      $sNow   = date(AttributeDateTime::GetInternalFormat());
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
 
-      if (empty($this->Get('creation_date')))
-        $this->Set('creation_date', $sToday);
+        if (empty($this->Get('creation_date')))
+            $this->Set('creation_date', $sToday);
 
-      if (empty($this->Get('last_update')))
-        $this->Set('last_update', $sNow);
+        if (empty($this->Get('last_update')))
+            $this->Set('last_update', $sNow);
 
-      if (empty($this->Get('next_revision'))) {
-        $ts = strtotime('+1 year');
-        $this->Set('next_revision', date(AttributeDate::GetInternalFormat(), $ts));
-      }
+        if (empty($this->Get('next_revision'))) {
+            $ts = strtotime('+1 year');
+            $this->Set('next_revision', date(AttributeDate::GetInternalFormat(), $ts));
+        }
     }
   ]]></code>
                     <arguments>
@@ -1853,7 +1943,7 @@
                     <code><![CDATA[
     public function EvtLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-      $this->RecomputeRiskScores();
+        $this->RecomputeRiskScores();
     }
   ]]></code>
                 </method>
@@ -1864,13 +1954,13 @@
                     <code><![CDATA[
     public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-      $sToday = date(AttributeDate::GetInternalFormat());
-      $sNow   = date(AttributeDateTime::GetInternalFormat());
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
 
-      if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
-        $this->Set('creation_date', $sToday);
-      $this->Set('last_update', $sNow);
-      $this->RecomputeRiskScores();
+        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
+            $this->Set('creation_date', $sToday);
+        $this->Set('last_update', $sNow);
+        $this->RecomputeRiskScores();
     }
   ]]></code>
                 </method>
@@ -1890,95 +1980,116 @@
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
+    /**
+     * EVENT_DB_CHECK_TO_WRITE
+     *
+     * Purpose:
+     *  - Add non-blocking warnings (via AddCheckWarning) before write, based on
+     *    treatment decision, dates, and consistency between inherent/residual/target.
+     *
+     * Notes:
+     *  - We do NOT modify attributes here (no side effects).
+     *  - For new objects (is_new), we skip link-based checks (no links exist yet).
+     *  - If you want to block saving instead of warning, use AddCheckError().
+     */
     public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
-      $bIsNew = (bool) $oEventData->Get('is_new');
-        // --- 1) Mitigate: entweder Controls ODER Zielwerte ---
+        $bIsNew = (bool) $oEventData->Get('is_new');
+
+        // --- (1) Mitigate: require either linked effective controls OR target values ---
         if ($this->Get('treatment_decision') === 'mitigate') {
             $bHasControls = false;
-            if (!$bIsNew) { // bei Neuanlage Links nicht prüfen
-            try {
-                $oSearch = DBObjectSearch::FromOQL("SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid");
-                $oSet = new DBObjectSet($oSearch, array(), array('rid' => (int) $this->GetKey()));
-                $bHasControls = ($oSet->Count() > 0);
-            } catch (\Exception $e) { /* ignore */ }
+
+            // For a brand new object, there cannot be links yet → skip link check
+            if (!$bIsNew) {
+                try {
+                    $oSearch = DBObjectSearch::FromOQL("SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid");
+                    $oSet    = new DBObjectSet($oSearch, array(), array('rid' => (int) $this->GetKey()));
+                    // COUNT(*) is efficient enough and supported in all iTop versions
+                    $bHasControls = ($oSet->Count() > 0);
+                } catch (\Exception $e) {
+                    // Fail silently: if link lookup fails, don't block the save here
+                }
             }
 
+            // Target residual present only if BOTH dimensions are filled
             $tgtL = $this->Get('tgt_likelihood');
             $tgtI = $this->Get('tgt_impact');
             $bHasTarget = ($tgtL !== '' && $tgtL !== null && $tgtI !== '' && $tgtI !== null);
 
             if (!$bHasControls && !$bHasTarget) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:MitigateNoPlanOrTarget'));
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:MitigateNoPlanOrTarget'));
             }
         }
 
-        // --- 2) Accept: formale Akzeptanz ---
+        // --- (2) Accept: require formal acceptance fields ---
         if ($this->Get('treatment_decision') === 'accept') {
             if ($this->Get('acceptance_status') !== 'accepted') {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptNotAccepted'));
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptNotAccepted'));
             }
-            $iAccBy  = (int) $this->Get('accepted_by_id');
+            $iAccBy   = (int) $this->Get('accepted_by_id');
             $sAccDate = $this->Get('acceptance_date');
             if ($iAccBy <= 0 || empty($sAccDate)) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptMissingWhoWhen'));
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptMissingWhoWhen'));
             }
         }
 
-        // --- 3) Termin in der Vergangenheit ---
+        // --- (3) Treatment due date in the past ---
         $sDue = $this->Get('treatment_due');
         if (!empty($sDue)) {
-            $ts = @strtotime($sDue);
+            $ts = @strtotime($sDue); // relies on server timezone
             if ($ts !== false && $ts < strtotime('today')) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:DueInPast'));
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:DueInPast'));
             }
         }
 
-        // --- 4) Plausibilität: Netto > Brutto? ---
+        // --- (4) Plausibility: residual score should not exceed inherent score ---
         $iPreScore = (int) $this->Get('pre_score');
         $iResScore = (int) $this->Get('res_score');
         if ($iResScore > 0 && $iPreScore > 0 && $iResScore > $iPreScore) {
             $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:ResidualGtInherent'));
         }
 
-        // --- 5) Plausibilität: Target (tgt_*) vs. Inherent/Residual ---
+        // --- (5) Plausibility: target vs. inherent/residual consistency ---
+        // Use current values; if score is missing, compute a local fallback from dimensions.
         $preL = (int) $this->Get('pre_likelihood');
         $preI = (int) $this->Get('pre_impact');
         $resL = (int) $this->Get('res_likelihood');
         $resI = (int) $this->Get('res_impact');
-        $tgtL = $this->Get('tgt_likelihood'); // kann ''/null sein
-        $tgtI = $this->Get('tgt_impact');     // kann ''/null sein
+        $tgtL = $this->Get('tgt_likelihood'); // may be ''/null
+        $tgtI = $this->Get('tgt_impact');     // may be ''/null
 
         $hasTgtL = ($tgtL !== '' && $tgtL !== null);
         $hasTgtI = ($tgtI !== '' && $tgtI !== null);
 
-        // Teilbefüllung (nur eine Dimension gesetzt)
+        // Partial target input (only one dimension) → ask for both
         if ($hasTgtL xor $hasTgtI) {
             $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetPartial'));
         }
 
-        // lokale Scores berechnen (ohne Attribute zu ändern)
+        // Compute local scores for comparisons, without touching attributes
         $preScoreLocal = ($iPreScore > 0) ? $iPreScore : (($preL > 0 && $preI > 0) ? $preL * $preI : null);
         $resScoreLocal = ($iResScore > 0) ? $iResScore : (($resL > 0 && $resI > 0) ? $resL * $resI : null);
         $tgtScoreLocal = ($hasTgtL && $hasTgtI) ? ((int) $tgtL * (int) $tgtI) : null;
 
-        // Ziel > Inherent?
+        // Target should not be worse than inherent
         if (!is_null($tgtScoreLocal) && !is_null($preScoreLocal) && $tgtScoreLocal > $preScoreLocal) {
             $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtInherent'));
         }
 
-        // Ziel > Residual (Ist)?
+        // Target should not be worse than current residual
         if (!is_null($tgtScoreLocal) && !is_null($resScoreLocal) && $tgtScoreLocal > $resScoreLocal) {
             $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtResidual'));
         }
 
-        // Accept widerspricht Ziel < Ist
-        if ($this->Get('treatment_decision') === 'accept'
+        // 'accept' normally implies keeping current residual; a lower target contradicts acceptance
+        if (
+            $this->Get('treatment_decision') === 'accept'
             && !is_null($tgtScoreLocal) && !is_null($resScoreLocal)
-            && $tgtScoreLocal < $resScoreLocal) {
+            && $tgtScoreLocal < $resScoreLocal
+        ) {
             $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptButTargetBelowResidual'));
         }
-
     }
   ]]></code>
                 </method>
@@ -2389,8 +2500,6 @@
             <presentation>
                 <details>
                     <items>
-
-                        <!-- LEFT COLUMN -->
                         <item id="col:col0">
                             <rank>10</rank>
                             <items>
@@ -2402,7 +2511,6 @@
                                         <item id="status" />
                                     </items>
                                 </item>
-
                                 <item id="fieldset:ISMSControl:Classification">
                                     <rank>20</rank>
                                     <items>
@@ -2412,8 +2520,6 @@
                                 </item>
                             </items>
                         </item>
-
-                        <!-- RIGHT COLUMN -->
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
