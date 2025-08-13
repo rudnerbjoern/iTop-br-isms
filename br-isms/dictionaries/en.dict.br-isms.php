@@ -74,6 +74,21 @@ Dict::Add('EN US', 'English', 'English', array(
 ));
 
 //
+// Class: lnkSupportingAssetToAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkSupportingAssetToAsset' => 'Link Supporting Asset / Asset',
+    'Class:lnkSupportingAssetToAsset+' => 'Association indicating that the first asset supports the second asset.',
+    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
+
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Supported asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
+));
+
+//
 // Class: ISMSRisk
 //
 /** @disregard P1009 Undefined type Dict */
@@ -223,7 +238,21 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Attribute:implemented_on' => 'Implemented on',
     'Class:ISMSControl/Attribute:next_review' => 'Next review',
     'Class:ISMSControl/Attribute:risks_list' => 'Risk(s)',
+));
 
+//
+// Class: lnkISMSRiskToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSRiskToISMSAsset' => 'Link Risk / Asset',
+    'Class:lnkISMSRiskToISMSAsset+' => 'Association between an ISMS risk and an ISMS asset.',
+    'Class:lnkISMSRiskToISMSAsset/Name' => '%1$s - %2$s',
+
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id'   => 'Risk',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_name' => 'Risk',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id'  => 'Asset',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
 //
@@ -231,6 +260,10 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSRiskToISMSControl' => 'Link Risk / Control',
+    'Class:lnkISMSRiskToISMSControl+' => 'Association between an ISMS risk and an ISMS control.',
+    'Class:lnkISMSRiskToISMSControl/Name' => '%1$s - %2$s',
+
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_id' => 'Risk',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_name' => 'Risk',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_id' => 'Control',
@@ -242,8 +275,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'lnkISMSRiskToISMSControl:Effect' => 'Effect',
     'lnkISMSRiskToISMSControl:Dates' => 'Dates',
     'lnkISMSRiskToISMSControl:Notes' => 'Notes',
-
-
 
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood' => 'Effect on likelihood',
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood/Value:0' => 'none',
@@ -266,16 +297,14 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSRiskToISMSControl/Attribute:due_date' => 'Due date',
     'Class:lnkISMSRiskToISMSControl/Attribute:comment' => 'Comment',
 
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_status'   => 'Control status',
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_org_ro'   => 'Control organization',
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_status' => 'Control status',
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_org_ro' => 'Control organization',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_owner_ro' => 'Control owner',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_domain_ro' => 'Control domain',
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_type_ro'  => 'Control type',
-
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref'           => 'Risk ref',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_level_ro'  => 'Inherent level',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_score_ro'  => 'Inherent score',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_level_ro'  => 'Residual level',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro'  => 'Residual score',
-
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_type_ro' => 'Control type',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref' => 'Risk ref',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_level_ro' => 'Inherent level',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_score_ro' => 'Inherent score',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_level_ro' => 'Residual level',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro' => 'Residual score',
 ));
