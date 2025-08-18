@@ -625,6 +625,7 @@
                     <code><![CDATA[
     public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
+        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
     }
@@ -637,6 +638,7 @@
                     <code><![CDATA[
     public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
+        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
     }
@@ -681,10 +683,12 @@
         $sToday = date(AttributeDate::GetInternalFormat());
         $sNow   = date(AttributeDateTime::GetInternalFormat());
 
+        // set creation date on initial write
         if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
             $this->Set('creation_date', $sToday);
         }
 
+        // set last update date on every write
         $this->Set('last_update', $sNow);
     }
   ]]></code>
@@ -1533,6 +1537,9 @@
                 <states>
                     <state id="draft">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="creation_date">
                                 <read_only />
                             </attribute>
@@ -1553,18 +1560,23 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <action id="2">
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
                                             <param xsi:type="attcode">last_update</param>
                                         </params>
                                     </action>
+                                -->
                                 </actions>
                             </transition>
                         </transitions>
                     </state>
                     <state id="published">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -1581,6 +1593,35 @@
                                 <read_only />
                             </attribute>
                             <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_cause">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_event">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_consequence">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_likelihood">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_impact">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_level">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -1589,41 +1630,48 @@
                                 <target>draft</target>
                                 <actions>
                                     <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
                                             <param xsi:type="attcode">last_update</param>
                                         </params>
                                     </action>
+                                -->
                                 </actions>
                             </transition>
                             <transition id="ev_obsolete">
                                 <target>obsolete</target>
                                 <actions>
-                                    <action id="1">
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
                                             <param xsi:type="attcode">last_update</param>
                                         </params>
                                     </action>
+                                -->
                                 </actions>
                             </transition>
                         </transitions>
                     </state>
                     <state id="obsolete">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
-                            <attribute id="status">
-                                <read_only />
-                            </attribute>
                             <attribute id="riskowner_id">
-                                <read_only />
-                            </attribute>
-                            <attribute id="description">
                                 <read_only />
                             </attribute>
                             <attribute id="creation_date">
@@ -1635,7 +1683,82 @@
                             <attribute id="last_update">
                                 <read_only />
                             </attribute>
-                            <attribute id="next_review">
+                            <attribute id="risk_category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_cause">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_event">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_consequence">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="aggregation_mode">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_decision">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_owner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_due">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_plan">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="accepted_by_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_rationale">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -1644,17 +1767,19 @@
                                 <target>draft</target>
                                 <actions>
                                     <action id="1">
-                                        <verb>SetCurrentDate</verb>
-                                        <params>
-                                            <param xsi:type="attcode">last_update</param>
-                                        </params>
-                                    </action>
-                                    <action id="2">
                                         <verb>Reset</verb>
                                         <params>
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
                                 </actions>
                             </transition>
                         </transitions>
@@ -1979,6 +2104,7 @@
                     <code><![CDATA[
     public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
+        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('pre_score', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('pre_level', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('res_score', OPT_ATT_READONLY);
@@ -1998,6 +2124,7 @@
                     <code><![CDATA[
     public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
+        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('pre_score', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('pre_level', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('res_score', OPT_ATT_READONLY);
@@ -2071,9 +2198,13 @@
         $sToday = date(AttributeDate::GetInternalFormat());
         $sNow   = date(AttributeDateTime::GetInternalFormat());
 
+        // set creation date on initial write
         if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
             $this->Set('creation_date', $sToday);
+
+        // set last update date on every write
         $this->Set('last_update', $sNow);
+
         $this->RecomputeRiskScores();
     }
   ]]></code>
@@ -2285,7 +2416,9 @@
                                     <items>
                                         <item id="creation_date" />
                                         <item id="last_update" />
+                                        <!-- this is for a later release
                                         <item id="next_review" />
+                                    -->
                                         <item id="publish_date" />
                                     </items>
                                 </item>
@@ -2876,7 +3009,9 @@
                                     <items>
                                         <item id="owner_id" />
                                         <item id="implemented_on" />
+                                        <!-- this is for a later release
                                         <item id="next_review" />
+                                    -->
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSControl:Description">
@@ -2901,7 +3036,9 @@
                         <item id="control_domain" />
                         <item id="control_type" />
                         <item id="implemented_on" />
+                        <!-- this is for a later release
                         <item id="next_review" />
+                    -->
                     </items>
                 </search>
                 <list>
@@ -2912,7 +3049,9 @@
                         <item id="owner_id" />
                         <item id="control_domain" />
                         <item id="control_type" />
+                        <!-- this is for a later release
                         <item id="next_review" />
+                    -->
                     </items>
                 </list>
             </presentation>
