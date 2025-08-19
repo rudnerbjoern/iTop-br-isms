@@ -3842,14 +3842,16 @@
             <rank>29</rank>
             <enable_class>ISMSAsset</enable_class>
             <enable_admin_only>0</enable_admin_only>
-            <enable_action>UR_ACTION_MODIFY</enable_action>
+            <enable_action>UR_ACTION_READ</enable_action>
             <style>
                 <decoration_classes>fas fa-table</decoration_classes>
             </style>
         </menu>
         <menu id="ISMSSpace" xsi:type="DashboardMenuNode" _delta="define">
-            <rank>10</rank>
+            <rank>0</rank>
             <parent>ISMSManagement</parent>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
             <definition>
                 <layout>DashboardLayoutOneCol</layout>
                 <title />
@@ -3909,6 +3911,82 @@
                     -->
                 </cells>
             </definition>
+        </menu>
+        <menu id="NewISMSAsset" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>10</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSAsset</class>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="NewISMSRisk" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>11</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSRisk</class>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="NewISMSControl" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>12</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSControl</class>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="SearchISMSAssets" xsi:type="SearchMenuNode" _delta="define">
+            <rank>20</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSAsset</class>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="SearchISMSRisks" xsi:type="SearchMenuNode" _delta="define">
+            <rank>21</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSRisk</class>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="SearchISMSControls" xsi:type="SearchMenuNode" _delta="define">
+            <rank>22</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSControl</class>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSManagement:Shortcuts" xsi:type="TemplateMenuNode" _delta="define">
+            <rank>30</rank>
+            <parent>ISMSManagement</parent>
+            <template_file />
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyAssets" xsi:type="OQLMenuNode" _delta="define">
+            <rank>31</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSAsset WHERE assetowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyRisks" xsi:type="OQLMenuNode" _delta="define">
+            <rank>32</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSRisk WHERE riskowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyControls" xsi:type="OQLMenuNode" _delta="define">
+            <rank>32</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSControl WHERE owner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
         </menu>
     </menus>
     <user_rights>
