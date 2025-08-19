@@ -3228,7 +3228,7 @@
                     <access>public</access>
                     <type>Overload-DBObject</type>
                     <code><![CDATA[
-    public static function GetRiskRefFormat()
+    public static function GetControlRefFormat()
     {
         return 'CTR-%04d';
     }
