@@ -2707,8 +2707,8 @@
                     <sort_type>rank</sort_type>
                     <display_style>list</display_style>
                 </field>
-                <field id="owner_id" xsi:type="AttributeExternalKey">
-                    <sql>owner_id</sql>
+                <field id="controlowner_id" xsi:type="AttributeExternalKey">
+                    <sql>controlowner_id</sql>
                     <target_class>Person</target_class>
                     <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
@@ -2717,8 +2717,8 @@
                     <is_null_allowed>true</is_null_allowed>
                     <on_target_delete>DEL_MANUAL</on_target_delete>
                 </field>
-                <field id="owner_name" xsi:type="AttributeExternalField">
-                    <extkey_attcode>owner_id</extkey_attcode>
+                <field id="controlowner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>controlowner_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
                 </field>
                 <field id="control_domain" xsi:type="AttributeEnum">
@@ -2964,7 +2964,7 @@
                             <attribute id="status">
                                 <read_only />
                             </attribute>
-                            <attribute id="owner_id">
+                            <attribute id="controlowner_id">
                                 <read_only />
                             </attribute>
                             <attribute id="control_domain">
@@ -3019,7 +3019,7 @@
                                 <item id="fieldset:ISMSControl:OwnershipSchedule">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="owner_id" />
+                                        <item id="controlowner_id" />
                                         <item id="implemented_on" />
                                         <!-- this is for a later release
                                         <item id="next_review" />
@@ -3044,7 +3044,7 @@
                         <item id="name" />
                         <item id="org_id" />
                         <item id="status" />
-                        <item id="owner_id" />
+                        <item id="controlowner_id" />
                         <item id="control_domain" />
                         <item id="control_type" />
                         <item id="implemented_on" />
@@ -3058,7 +3058,7 @@
                         <item id="name" />
                         <item id="org_id" />
                         <item id="status" />
-                        <item id="owner_id" />
+                        <item id="controlowner_id" />
                         <item id="control_domain" />
                         <item id="control_type" />
                         <!-- this is for a later release
@@ -3222,7 +3222,7 @@
                 </field>
                 <field id="control_owner_ro" xsi:type="AttributeExternalField">
                     <extkey_attcode>control_id</extkey_attcode>
-                    <target_attcode>owner_name</target_attcode>
+                    <target_attcode>controlowner_name</target_attcode>
                 </field>
                 <field id="risk_pre_level_ro" xsi:type="AttributeExternalField">
                     <extkey_attcode>risk_id</extkey_attcode>
@@ -3982,7 +3982,7 @@
         <menu id="ISMSMyControls" xsi:type="OQLMenuNode" _delta="define">
             <rank>32</rank>
             <parent>ISMSManagement:Shortcuts</parent>
-            <oql><![CDATA[SELECT ISMSControl WHERE owner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <oql><![CDATA[SELECT ISMSControl WHERE controlowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
             <do_search>1</do_search>
             <auto_reload>fast</auto_reload>
             <enable_class>ISMSControl</enable_class>
