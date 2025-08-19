@@ -1848,6 +1848,19 @@
     }
   ]]></code>
                 </method>
+
+                <method id="GetAggregationModeDefault" _delta="define">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
+                    <code><![CDATA[
+    public static function GetAggregationModeDefault()
+    {
+        // Can be 'max' or 'sum_capped'
+        return MetaModel::GetConfig()->GetModuleSetting('br-isms', 'risk_aggregation_mode', 'max');
+    }
+  ]]></code>
+                </method>
                 <method id="GetAggregationMode" _delta="define">
                     <static>false</static>
                     <access>public</access>
@@ -1858,8 +1871,7 @@
         $s = (string) $this->Get('aggregation_mode');
         if ($s && $s !== 'inherit') return $s;
         try {
-            $oCfg = MetaModel::GetConfig();
-            $def = $oCfg->Get('isms_risk_aggregation_mode'); // 'max' | 'sum_capped'
+            $def = self::GetAggregationModeDefault();
             if ($def === 'sum_capped') return 'sum_capped';
         } catch (Exception $e) {
         }
@@ -3899,4 +3911,9 @@
             </definition>
         </menu>
     </menus>
+    <module_parameters>
+        <parameters id="br-isms" _delta="define">
+            <risk_aggregation_mode type="string">max</risk_aggregation_mode>
+        </parameters>
+    </module_parameters>
 </itop_design>
