@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<itop_design xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.7">
+<itop_design version="3.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd">
     <!--
-    * @copyright   Copyright (C) 2024 Björn Rudner
+    * @copyright   Copyright (C) 2024-2025 Björn Rudner
     * @license     https://www.gnu.org/licenses/gpl-3.0.en.html
     -->
     <classes>
-        <!-- maybe later
         <class id="ISMSAssetType" _delta="define">
             <parent>Typology</parent>
             <properties>
@@ -20,7 +19,9 @@
                         <attribute id="name" />
                     </attributes>
                 </naming>
-                <display_template />
+                <style>
+                    <icon>images/isms-assettype.svg</icon>
+                </style>
                 <reconciliation>
                     <attributes>
                         <attribute id="name" />
@@ -31,8 +32,6 @@
                         <attributes>
                             <attribute id="name" />
                         </attributes>
-                        <filter />
-                        <disabled>false</disabled>
                         <is_blocking>true</is_blocking>
                     </rule>
                 </uniqueness_rules>
@@ -42,6 +41,7 @@
                     <sql>description</sql>
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
+                    <format>html</format>
                 </field>
                 <field id="ismsassets_list" xsi:type="AttributeLinkedSet">
                     <linked_class>ISMSAsset</linked_class>
@@ -86,7 +86,6 @@
                 </list>
             </presentation>
         </class>
-    -->
         <class id="ISMSAsset" _delta="define">
             <parent>FunctionalCI</parent>
             <properties>
@@ -98,46 +97,89 @@
                 <db_final_class_field />
                 <naming>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                     </attributes>
                 </naming>
-                <display_template />
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <style>
+                    <icon>images/isms-asset.svg</icon>
+                </style>
                 <reconciliation>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                         <attribute id="org_id" />
                         <attribute id="organization_name" />
                     </attributes>
                 </reconciliation>
-                <uniqueness_rules />
+                <indexes>
+                    <index id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                    </index>
+                </indexes>
+                <uniqueness_rules>
+                    <rule id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                        <is_blocking>false</is_blocking>
+                    </rule>
+                </uniqueness_rules>
                 <obsolescence>
                     <condition><![CDATA[status='obsolete']]></condition>
                 </obsolescence>
             </properties>
             <fields>
+                <field id="ref" xsi:type="AttributeString">
+                    <sql>ref</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
                 <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
+                    <sort_type>rank</sort_type>
                     <values>
-                        <value id="draft">draft</value>
-                        <value id="published">published</value>
-                        <value id="obsolete">obsolete</value>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="published">
+                            <code>published</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>30</rank>
+                        </value>
                     </values>
                     <default_value>draft</default_value>
                     <is_null_allowed>false</is_null_allowed>
+                    <always_load_in_tables>true</always_load_in_tables>
                     <display_style>list</display_style>
                 </field>
                 <field id="category" xsi:type="AttributeEnum">
                     <sql>category</sql>
+                    <sort_type>rank</sort_type>
                     <values>
-                        <value id="primary">primary</value>
-                        <value id="secondary">secondary</value>
+                        <value id="primary">
+                            <code>primary</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="secondary">
+                            <code>secondary</code>
+                            <rank>20</rank>
+                        </value>
                     </values>
                     <default_value>primary</default_value>
                     <is_null_allowed>false</is_null_allowed>
-                    <display_style>list</display_style>
+                    <always_load_in_tables>true</always_load_in_tables>
+                    <display_style>radio_horizontal</display_style>
                 </field>
-
-                <!-- maybe later
                 <field id="assettype_id" xsi:type="AttributeExternalKey">
                     <sql>assettype_id</sql>
                     <target_class>ISMSAssetType</target_class>
@@ -148,28 +190,10 @@
                     <extkey_attcode>assettype_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
                 </field>
-            -->
-                <field id="assettype" xsi:type="AttributeEnum">
-                    <sql>assettype</sql>
-                    <values>
-                        <value id="information">information</value>
-                        <value id="facility">facility</value>
-                        <value id="person">person</value>
-                        <value id="hardware">hardware</value>
-                        <value id="software">software</value>
-                        <value id="service">service</value>
-                        <value id="network">network</value>
-                        <value id="finance">finance</value>
-                        <value id="intangible">intangible</value>
-                    </values>
-                    <default_value>information</default_value>
-                    <is_null_allowed>false</is_null_allowed>
-                    <display_style>list</display_style>
-                </field>
                 <field id="assetowner_id" xsi:type="AttributeExternalKey">
                     <sql>assetowner_id</sql>
                     <target_class>Person</target_class>
-                    <filter><![CDATA[SELECT Person]]></filter>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
                         <attribute id="org_id" />
                     </dependencies>
@@ -183,6 +207,7 @@
                 <field id="assetguardian_id" xsi:type="AttributeExternalKey">
                     <sql>assetguardian_id</sql>
                     <target_class>Contact</target_class>
+                    <filter><![CDATA[SELECT Contact WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
                         <attribute id="org_id" />
                     </dependencies>
@@ -203,16 +228,57 @@
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-                <field id="last_update" xsi:type="AttributeDate">
+                <field id="publish_date" xsi:type="AttributeDate">
+                    <sql>publish_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDateTime">
                     <sql>last_update</sql>
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-                <field id="next_revision" xsi:type="AttributeDate">
-                    <sql>next_revision</sql>
+
+                <!-- this is for a later release
+                 Review-Intervall in Monaten (3/6/12/24), Default 12
+                <field id="review_interval_months" xsi:type="AttributeEnum" _delta="define">
+                    <sql>review_interval_months</sql>
+                    <values>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="6">
+                            <code>6</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="12">
+                            <code>12</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="24">
+                            <code>24</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <default_value>12</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>rank</sort_type>
+                </field>
+                -->
+
+                <field id="last_review" xsi:type="AttributeDate" _delta="define">
+                    <sql>last_review</sql>
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="next_review" xsi:type="AttributeDate" _delta="define">
+                    <sql>next_review</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+
                 <field id="supportingassets_list" xsi:type="AttributeLinkedSetIndirect">
                     <linked_class>lnkSupportingAssetToAsset</linked_class>
                     <ext_key_to_me>asset_id</ext_key_to_me>
@@ -229,51 +295,377 @@
                     <count_max>0</count_max>
                     <duplicates>false</duplicates>
                 </field>
+                <field id="risks_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSAsset</linked_class>
+                    <ext_key_to_me>asset_id</ext_key_to_me>
+                    <ext_key_to_remote>risk_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                    <display_style>tab</display_style>
+                </field>
+                <!-- this is for a later release
+                <field id="reviews_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>ISMSAssetReview</linked_class>
+                    <ext_key_to_me>asset_id</ext_key_to_me>
+                    <edit_mode>add_only</edit_mode>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                </field>
+                -->
             </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_publish" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_draft" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reopen" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_review">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_publish">
+                                <target>published</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                     -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="published">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assettype_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_review">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_confidentiality">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_integrity">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_availability">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_authenticity">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_nonrepudiation">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_draft">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="obsolete">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetguardian_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assetusers">
+                                <read_only />
+                            </attribute>
+                            <attribute id="category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="assettype_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_confidentiality">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_integrity">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_availability">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_authenticity">
+                                <read_only />
+                            </attribute>
+                            <attribute id="rm_nonrepudiation">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_review">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
+                                <read_only />
+                            </attribute>
+                            <attribute id="supportingassets_list">
+                                <read_only />
+                            </attribute>
+                            <attribute id="supportedassets_list">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_reopen">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                </states>
+            </lifecycle>
             <relations>
-                <neighbours>
-                    <neighbour id="ismsasset">
-                        <query_down>SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS l1 ON l1.asset_id = down.id WHERE l1.supportingasset_id = :this-&gt;id</query_down>
-                        <query_up>SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS l1 ON l1.supportingasset_id = up.id WHERE l1.asset_id = :this-&gt;id</query_up>
-                    </neighbour>
-                </neighbours>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismsasset">
+                            <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.supportingasset_id = :this->id]]></query_down>
+                            <query_up><![CDATA[SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS lnk ON lnk.supportingasset_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
+                        </neighbour>
+                        <neighbour id="ismsrisk">
+                            <query_up><![CDATA[SELECT ISMSRisk AS up JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.risk_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
+                            <query_down><![CDATA[SELECT ISMSRisk AS down WHERE 1 = 0]]></query_down>
+                        </neighbour>
+                    </neighbours>
+                </relation>
             </relations>
+            <event_listeners>
+                <event_listener id="EvtSetInitialAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtBeforeWrite">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtBeforeWrite</callback>
+                </event_listener>
+            </event_listeners>
             <methods>
-                <method id="GetAttributeFlags" _delta="define">
+                <method id="DBInsertNoReload">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
-                    <code>
-                        <![CDATA[public function GetAttributeFlags($sAttCode, &$aReasons = array(), $sTargetState = '')
-                        {
-                            // Force the computed field to be read-only, preventing it to be written
-                            $aLimitedAttributes = array('creation_date','last_update');
-                            if (in_array($sAttCode, $aLimitedAttributes))
-                                return(OPT_ATT_READONLY | parent::GetAttributeFlags($sAttCode, $aReasons, $sTargetState));
-                            return parent::GetAttributeFlags($sAttCode, $aReasons);
-                        }]]>
-                    </code>
+                    <code><![CDATA[
+    public function DBInsertNoReload()
+    {
+        $iNextId = ItopCounter::Inc('ISMSAsset');
+        $sRef = $this->MakeAssetRef($iNextId);
+        $this->SetIfNull('ref', $sRef);
+        $iKey = parent::DBInsertNoReload();
+        return $iKey;
+    }
+  ]]></code>
+                </method>
+                <method id="MakeAssetRef">
+                    <static>false</static>
+                    <access>protected</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    protected function MakeAssetRef($iNextId)
+    {
+        return sprintf(static::GetAssetRefFormat(), $iNextId);
+    }
+  ]]></code>
+                </method>
+                <method id="GetAssetRefFormat">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public static function GetAssetRefFormat()
+    {
+        return 'A-%04d';
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetInitialAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
+    }
+  ]]></code>
                 </method>
                 <method id="PrefillCreationForm">
                     <static>false</static>
                     <access>public</access>
+                    <type>Overload-DBObject</type>
                     <code><![CDATA[
-                        public function PrefillCreationForm(&$aContextParam)
-                        {
-                            if (empty($this->Get('creation_date')))
-                            {
-                                $this->Set('creation_date', time());
-                            }
-                            if (empty($this->Get('last_update')))
-                            {
-                                $this->Set('last_update', time());
-                            }
-                            if (empty($this->Get('next_revision')))
-                            {
-                                $this->Set('next_revision', date('Y-m-d', strtotime('+1 year')));
-                            }
-                        }]]>
-                    </code>
+    public function PrefillCreationForm(&$aContextParam)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        if (empty($this->Get('creation_date')))
+            $this->Set('creation_date', $sToday);
+        if (empty($this->Get('last_update')))
+            $this->Set('last_update', $sNow);
+        if (empty($this->Get('last_review')))
+            $this->Set('last_review', $sToday);
+        if (empty($this->Get('next_review'))) {
+            $ts = strtotime('+1 year');
+            $this->Set('next_review', date(AttributeDate::GetInternalFormat(), $ts));
+        }
+    }
+  ]]></code>
                     <arguments>
                         <argument id="1">
                             <mandatory>false</mandatory>
@@ -281,28 +673,25 @@
                         </argument>
                     </arguments>
                 </method>
-                <method id="OnInsert">
+                <method id="EvtBeforeWrite">
                     <static>false</static>
                     <access>public</access>
+                    <type>EventListener</type>
                     <code><![CDATA[
-                        public function OnInsert()
-                        {
-                            parent::OnInsert();
-                            $this->Set('creation_date', time());
-                            $this->Set('last_update', time());
-                        }]]>
-                    </code>
-                </method>
-                <method id="OnUpdate">
-                    <static>false</static>
-                    <access>public</access>
-                    <code><![CDATA[
-                        public function OnUpdate()
-                        {
-                            parent::OnUpdate();
-                            $this->Set('last_update', time());
-                        }]]>
-                    </code>
+    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        // set creation date on initial write
+        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
+            $this->Set('creation_date', $sToday);
+        }
+
+        // set last update date on every write
+        $this->Set('last_update', $sNow);
+    }
+  ]]></code>
                 </method>
             </methods>
             <presentation>
@@ -311,7 +700,7 @@
                         <item id="col:col0">
                             <rank>10</rank>
                             <items>
-                                <item id="fieldset:ISMSAsset:GeneralInfo">
+                                <item id="fieldset:Server:baseinfo">
                                     <rank>10</rank>
                                     <items>
                                         <item id="name">
@@ -344,13 +733,13 @@
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:ISMSAsset:Details">
+                                <item id="fieldset:Server:moreinfo">
                                     <rank>10</rank>
                                     <items>
                                         <item id="category">
                                             <rank>10</rank>
                                         </item>
-                                        <item id="assettype">
+                                        <item id="assettype_id">
                                             <rank>20</rank>
                                         </item>
                                         <item id="description">
@@ -383,97 +772,123 @@
                         <item id="col:col2">
                             <rank>30</rank>
                             <items>
-                                <item id="fieldset:ISMSAsset:Dates">
+                                <item id="fieldset:Server:Date">
                                     <rank>10</rank>
                                     <items>
                                         <item id="creation_date">
                                             <rank>10</rank>
                                         </item>
+                                        <item id="publish_date">
+                                            <rank>20</rank>
+                                        </item>
                                         <item id="last_update">
-                                            <rank>60</rank>
+                                            <rank>30</rank>
                                         </item>
-                                        <item id="next_revision">
-                                            <rank>60</rank>
-                                        </item>
+
                                     </items>
                                 </item>
                             </items>
                         </item>
+
+                        <!-- this is for a later release
+                        <item id="fieldset:ISMSAsset:Reviews" _delta="define">
+                            <rank>180</rank>
+                            <items>
+                                <item id="review_interval_months" />
+                                <item id="last_review" />
+                                <item id="next_review" />
+                            </items>
+                        </item>
+                        <item id="reviews_list" _delta="define">
+                            <rank>190</rank>
+                        </item>
+                    -->
+
                         <item id="supportingassets_list">
                             <rank>200</rank>
                         </item>
                         <item id="supportedassets_list">
                             <rank>205</rank>
                         </item>
-                        <item id="documents_list">
+                        <item id="risks_list">
                             <rank>210</rank>
                         </item>
                     </items>
                 </details>
                 <default_search>
                     <items>
-                        <item id="friendlyname">
+                        <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="friendlyname">
+                            <rank>20</rank>
+                        </item>
+                        <item id="assetowner_id">
                             <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>50</rank>
                         </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="name">
+                        <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="name">
                             <rank>20</rank>
                         </item>
-                        <item id="category">
+                        <item id="org_id">
                             <rank>30</rank>
                         </item>
-                        <item id="assettype">
+                        <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="description">
+                        <item id="category">
                             <rank>50</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="assetowner_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="description">
+                            <rank>80</rank>
                         </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="org_id">
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="name">
                             <rank>20</rank>
                         </item>
-                        <item id="status">
+                        <item id="org_id">
                             <rank>30</rank>
                         </item>
-                        <item id="category">
+                        <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="assettype">
+                        <item id="category">
                             <rank>50</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="assetowner_id">
+                            <rank>70</rank>
                         </item>
                     </items>
                 </list>
             </presentation>
-            <!--
-    Name
-    Description
-    Category
-    Type
-    BusinessUnit
-    AssetOwner
-    AssetGuardian
-    AssetUser
-
-    SupportingAssets
-
-
-
--->
         </class>
-
-
         <class id="lnkSupportingAssetToAsset" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -490,8 +905,6 @@
                         <attribute id="asset_id" />
                     </attributes>
                 </naming>
-                <display_template />
-                <icon />
                 <reconciliation>
                     <attributes>
                         <attribute id="supportingasset_id" />
@@ -499,7 +912,6 @@
                     </attributes>
                 </reconciliation>
                 <uniqueness_rules>
-                    <!-- Using "no_duplicate" for the "id" handle the message automatically -->
                     <rule id="no_duplicate">
                         <attributes>
                             <attribute id="supportingasset_id" />
@@ -567,15 +979,2870 @@
                 </list>
             </presentation>
         </class>
+        <class id="ISMSRisk" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <db_table>ismsrisk</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="ref" />
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <style>
+                    <icon>images/isms-risk.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="ref" />
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+                <indexes>
+                    <index id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                    </index>
+                </indexes>
+                <uniqueness_rules>
+                    <rule id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                        <is_blocking>false</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+                <obsolescence>
+                    <condition><![CDATA[status='obsolete']]></condition>
+                </obsolescence>
+            </properties>
+            <fields>
+                <field id="ref" xsi:type="AttributeString">
+                    <sql>ref</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="org_id" xsi:type="AttributeExternalKey">
+                    <sql>org_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="organization_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>org_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <sort_type>rank</sort_type>
+                    <values>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="published">
+                            <code>published</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <default_value>draft</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <always_load_in_tables>true</always_load_in_tables>
+                    <display_style>list</display_style>
+                </field>
+                <field id="riskowner_id" xsi:type="AttributeExternalKey">
+                    <sql>riskowner_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="riskowner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>riskowner_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="creation_date" xsi:type="AttributeDate">
+                    <sql>creation_date</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="publish_date" xsi:type="AttributeDate">
+                    <sql>publish_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDateTime">
+                    <sql>last_update</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="next_review" xsi:type="AttributeDate">
+                    <sql>next_review</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="assets_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSAsset</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>asset_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
+                <field id="risk_category" xsi:type="AttributeEnum">
+                    <sql>risk_category</sql>
+                    <values>
+                        <value id="security">
+                            <code>security</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="privacy">
+                            <code>privacy</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="compliance">
+                            <code>compliance</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="operational">
+                            <code>operational</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="strategic">
+                            <code>strategic</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>security</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="risk_cause" xsi:type="AttributeText">
+                    <sql>risk_cause</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="risk_event" xsi:type="AttributeText">
+                    <sql>risk_event</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="risk_consequence" xsi:type="AttributeText">
+                    <sql>risk_consequence</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="pre_likelihood" xsi:type="AttributeEnum">
+                    <sql>pre_likelihood</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>3</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="pre_impact" xsi:type="AttributeEnum">
+                    <sql>pre_impact</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>3</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="pre_score" xsi:type="AttributeInteger">
+                    <sql>pre_score</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="pre_level" xsi:type="AttributeEnum">
+                    <sql>pre_level</sql>
+                    <values>
+                        <value id="low">
+                            <code>low</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="medium">
+                            <code>medium</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="high">
+                            <code>high</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="extreme">
+                            <code>extreme</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="res_likelihood" xsi:type="AttributeEnum">
+                    <sql>res_likelihood</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="res_impact" xsi:type="AttributeEnum">
+                    <sql>res_impact</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="res_score" xsi:type="AttributeInteger">
+                    <sql>res_score</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="res_level" xsi:type="AttributeEnum">
+                    <sql>res_level</sql>
+                    <values>
+                        <value id="low">
+                            <code>low</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="medium">
+                            <code>medium</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="high">
+                            <code>high</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="extreme">
+                            <code>extreme</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="tgt_likelihood" xsi:type="AttributeEnum">
+                    <sql>tgt_likelihood</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="tgt_impact" xsi:type="AttributeEnum">
+                    <sql>tgt_impact</sql>
+                    <values>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="4">
+                            <code>4</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="5">
+                            <code>5</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="tgt_score" xsi:type="AttributeInteger">
+                    <sql>tgt_score</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="tgt_level" xsi:type="AttributeEnum">
+                    <sql>tgt_level</sql>
+                    <values>
+                        <value id="low">
+                            <code>low</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="medium">
+                            <code>medium</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="high">
+                            <code>high</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="extreme">
+                            <code>extreme</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="aggregation_mode" xsi:type="AttributeEnum">
+                    <sql>aggregation_mode</sql>
+                    <values>
+                        <value id="inherit">
+                            <code>inherit</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="max">
+                            <code>max</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="sum_capped">
+                            <code>sum_capped</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <default_value>inherit</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="treatment_decision" xsi:type="AttributeEnum">
+                    <sql>treatment_decision</sql>
+                    <values>
+                        <value id="mitigate">
+                            <code>mitigate</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="accept">
+                            <code>accept</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="avoid">
+                            <code>avoid</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="transfer">
+                            <code>transfer</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>mitigate</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="treatment_owner_id" xsi:type="AttributeExternalKey">
+                    <sql>treatment_owner_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="treatment_owner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>treatment_owner_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="treatment_due" xsi:type="AttributeDate">
+                    <sql>treatment_due</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="treatment_plan" xsi:type="AttributeText">
+                    <sql>treatment_plan</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="acceptance_status" xsi:type="AttributeEnum">
+                    <sql>acceptance_status</sql>
+                    <values>
+                        <value id="pending">
+                            <code>pending</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="accepted">
+                            <code>accepted</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="rejected">
+                            <code>rejected</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="accepted_by_id" xsi:type="AttributeExternalKey">
+                    <sql>accepted_by_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="accepted_by_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>accepted_by_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="acceptance_date" xsi:type="AttributeDate">
+                    <sql>acceptance_date</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="acceptance_rationale" xsi:type="AttributeText">
+                    <sql>acceptance_rationale</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="controls_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSControl</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>control_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                    <with_php_constraint>true</with_php_constraint>
+                    <with_php_computation>true</with_php_computation>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_publish" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_draft" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reopen" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_publish">
+                                <target>published</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="published">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="riskowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_cause">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_event">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_consequence">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_likelihood">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_impact">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_level">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_draft">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="obsolete">
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="riskowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_category">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_cause">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_event">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risk_consequence">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_likelihood">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_impact">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="aggregation_mode">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_decision">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_owner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_due">
+                                <read_only />
+                            </attribute>
+                            <attribute id="treatment_plan">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="accepted_by_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="acceptance_rationale">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_reopen">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <action id="9">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">last_update</param>
+                                        </params>
+                                    </action>
+                                -->
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                </states>
+            </lifecycle>
+            <relations>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismscontrol">
+                            <query_up><![CDATA[ SELECT ISMSControl AS up JOIN lnkISMSRiskToISMSControl AS lnk ON lnk.control_id = up.id WHERE lnk.risk_id = :this->id]]></query_up>
+                            <query_down><![CDATA[SELECT ISMSControl AS down WHERE 1 = 0]]></query_down>
+                        </neighbour>
+                        <neighbour id="ismsasset">
+                            <direction>down</direction>
+                            <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.risk_id = :this->id]]></query_down>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
+            <event_listeners>
+                <event_listener id="EvtSetInitialAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtCheckToWrite</callback>
+                </event_listener>
+                <event_listener id="EvtBeforeWrite" _delta="define">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtBeforeWrite</callback>
+                </event_listener>
+                <event_listener id="EvtComputeValues" _delta="define">
+                    <event>EVENT_DB_COMPUTE_VALUES</event>
+                    <rank>10</rank>
+                    <callback>EvtComputeValues</callback>
+                </event_listener>
+                <event_listener id="EvtLinksChanged" _delta="define">
+                    <event>EVENT_DB_LINKS_CHANGED</event>
+                    <rank>10</rank>
+                    <callback>EvtLinksChanged</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="MapScoreToLevel" _delta="define">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public static function MapScoreToLevel($iScore)
+    {
+        if (!is_int($iScore) || $iScore <= 0) return null;
+        if ($iScore >= 16) return 'extreme';
+        if ($iScore >= 10) return 'high';
+        if ($iScore >= 5)  return 'medium';
+        return 'low';
+    }
+  ]]></code>
+                </method>
 
+                <method id="GetAggregationModeDefault" _delta="define">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
+                    <code><![CDATA[
+    public static function GetAggregationModeDefault()
+    {
+        // Can be 'max' or 'sum_capped'
+        return MetaModel::GetConfig()->GetModuleSetting('br-isms', 'risk_aggregation_mode', 'max');
+    }
+  ]]></code>
+                </method>
+                <method id="GetAggregationMode" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function GetAggregationMode()
+    {
+        $s = (string) $this->Get('aggregation_mode');
+        if ($s && $s !== 'inherit') return $s;
+        try {
+            $def = self::GetAggregationModeDefault();
+            if ($def === 'sum_capped') return 'sum_capped';
+        } catch (Exception $e) {
+        }
+        return 'max';
+    }
+  ]]></code>
+                </method>
+                <method id="AggregateControlEffects" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    /**
+     * Aggregate the risk-specific effectiveness of linked controls.
+     *
+     * Semantics:
+     * - We only consider links with link_status = 'effective'.
+     * - Each link contributes integer "steps" of reduction for likelihood/impact (0..N),
+     *   where 0 means "no effect". These are *relative* decrements, not absolute target values.
+     * - Aggregation mode:
+     *     - 'max'        : take the maximum effect across all links (per dimension)
+     *     - 'sum_capped' : sum effects and cap so that residual cannot go below 1 step
+     *                      (i.e., effect ≤ pre_value - 1)
+     *   Any other/unknown mode falls back to 'max'.
+     *
+     * Return:
+     *   array{like: ?int, impact: ?int}
+     *   null means "no computable effect" (e.g., no effective links *or* pre_* not set yet).
+     */
+    public function AggregateControlEffects()
+    {
+        $iRiskId = (int) $this->GetKey();
+        if ($iRiskId <= 0) {
+            return array('like' => null, 'impact' => null);
+        }
+
+        // Resolve aggregation mode. Expected: 'max' | 'sum_capped' | 'inherit'(resolved upstream)
+        $sMode = (string) $this->GetAggregationMode();
+
+        // Current inherent values (used for capping in 'sum_capped')
+        $preL = (int) $this->Get('pre_likelihood');
+        $preI = (int) $this->Get('pre_impact');
+
+        // Accumulators (null = no effect yet)
+        $accL = null;
+        $accI = null;
+
+        // Fetch effective links; robust against transient DB issues
+        try {
+            $oSearch = DBObjectSearch::FromOQL(
+                "SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid AND link_status = 'effective'"
+            );
+            $oSet = new DBObjectSet($oSearch, array(), array('rid' => $iRiskId));
+
+            while ($oLink = $oSet->Fetch()) {
+                // Raw values from link (can be '', null, or int-ish)
+                $vL = $oLink->Get('effect_on_likelihood');
+                $vI = $oLink->Get('effect_on_impact');
+                $nL = ($vL === '' || $vL === null) ? null : (int) $vL;
+                $nI = ($vI === '' || $vI === null) ? null : (int) $vI;
+
+                // Skip empty contributions
+                if ($nL !== null) {
+                    if ($sMode === 'sum_capped') {
+                        $accL = is_null($accL) ? $nL : ($accL + $nL);
+                    } else {
+                        // default/fallback = 'max'
+                        $accL = is_null($accL) ? $nL : max($accL, $nL);
+                    }
+                }
+                if ($nI !== null) {
+                    if ($sMode === 'sum_capped') {
+                        $accI = is_null($accI) ? $nI : ($accI + $nI);
+                    } else {
+                        $accI = is_null($accI) ? $nI : max($accI, $nI);
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            // On any DB error, behave as "no computed effect"
+            return array('like' => null, 'impact' => null);
+        }
+
+        // Apply capping for sum-mode so residual can't go below 1:
+        //   max effect = pre_value - 1  (because residual = max(1, pre - effect))
+        if ($sMode === 'sum_capped') {
+            if (!is_null($accL) && $preL > 0) {
+                $accL = min($accL, max(0, $preL - 1));
+            }
+            if (!is_null($accI) && $preI > 0) {
+                $accI = min($accI, max(0, $preI - 1));
+            }
+        }
+
+        // If inherent (pre_*) is not set yet (0), report no computed effect (null)
+        // so that UI rules (e.g., dynamic read-only on res_*) do not kick in prematurely.
+        if ($preL <= 0) {
+            $accL = null;
+        }
+        if ($preI <= 0) {
+            $accI = null;
+        }
+
+        return array('like' => $accL, 'impact' => $accI);
+    }
+  ]]></code>
+                </method>
+                <method id="RecomputeRiskScores" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    /**
+     * Recompute inherent (pre_*), residual (res_*), and target (tgt_*) risk scores & levels.
+     *
+     * Rules / semantics:
+     * - pre_* (inherent): computed iff both pre_likelihood and pre_impact > 0, else set to null.
+     * - res_* (residual):
+     *     * If AggregateControlEffects() returns any effect (like/impact not null), we compute
+     *       res_likelihood/res_impact as max(1, pre - effect) per dimension (only if pre_* > 0, else null).
+     *     * If there is NO computed effect (both null), we DO NOT touch res_likelihood/res_impact
+     *       so they can be maintained manually.
+     *     * res_score/level are always recomputed from the current res_* values (if both > 0), else null.
+     * - tgt_* (target): computed iff both tgt_likelihood and tgt_impact > 0, else set to null.
+     *
+     * Notes:
+     * - AggregateControlEffects() already applies the chosen aggregation mode (e.g. max / sum_capped)
+     *   and returns per-dimension integer step reductions or null (no computable effect).
+     * - static::MapScoreToLevel($score) must exist on this class and return an enum value (e.g. low/medium/high/extreme).
+     * - This method should be invoked from EVENT_DB_BEFORE_WRITE / EVENT_DB_COMPUTE_VALUES / EVENT_DB_LINKS_CHANGED.
+     */
+    public function RecomputeRiskScores()
+    {
+        // ---------- Inherent (pre_*) ----------
+        $preL = (int) $this->Get('pre_likelihood');
+        $preI = (int) $this->Get('pre_impact');
+
+        if ($preL > 0 && $preI > 0) {
+            $preScore = $preL * $preI;
+            $this->Set('pre_score', $preScore);
+            $this->Set('pre_level', static::MapScoreToLevel($preScore));
+        } else {
+            $this->Set('pre_score', null);
+            $this->Set('pre_level', null);
+        }
+
+        // ---------- Residual (res_*) ----------
+        // Aggregate effective control impacts (per-dimension step reductions or null)
+        $aAgg = $this->AggregateControlEffects();
+        $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
+
+        if ($bHasAnyEffect) {
+            // Treat null effect as 0 in each dimension when computing (be explicit)
+            $effL = is_null($aAgg['like']) ? 0 : (int) $aAgg['like']; // 0..N
+            $effI = is_null($aAgg['impact']) ? 0 : (int) $aAgg['impact']; // 0..N
+
+            // Only compute if corresponding inherent dimension is present (>0)
+            if ($preL > 0) {
+                $this->Set('res_likelihood', max(1, $preL - $effL));
+            } else {
+                $this->Set('res_likelihood', null);
+            }
+
+            if ($preI > 0) {
+                $this->Set('res_impact', max(1, $preI - $effI));
+            } else {
+                $this->Set('res_impact', null);
+            }
+        }
+        // If there is NO effect, we leave res_likelihood/res_impact untouched (manual values allowed)
+
+        // Compute residual score/level from current res_* (regardless of whether they were just changed)
+        $resL = (int) $this->Get('res_likelihood');
+        $resI = (int) $this->Get('res_impact');
+        if ($resL > 0 && $resI > 0) {
+            $resScore = $resL * $resI;
+            $this->Set('res_score', $resScore);
+            $this->Set('res_level', static::MapScoreToLevel($resScore));
+        } else {
+            $this->Set('res_score', null);
+            $this->Set('res_level', null);
+        }
+
+        // ---------- Target (tgt_*) ----------
+        $tgtL = (int) $this->Get('tgt_likelihood');
+        $tgtI = (int) $this->Get('tgt_impact');
+
+        if ($tgtL > 0 && $tgtI > 0) {
+            $tgtScore = $tgtL * $tgtI;
+            $this->Set('tgt_score', $tgtScore);
+            $this->Set('tgt_level', static::MapScoreToLevel($tgtScore));
+        } else {
+            $this->Set('tgt_score', null);
+            $this->Set('tgt_level', null);
+        }
+
+        return true;
+    }
+  ]]></code>
+                </method>
+                <method id="DBInsertNoReload">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function DBInsertNoReload()
+    {
+        $iNextId = ItopCounter::Inc('ISMSRisk');
+        $sRef = $this->MakeRiskRef($iNextId);
+        $this->SetIfNull('ref', $sRef);
+        $iKey = parent::DBInsertNoReload();
+        return $iKey;
+    }
+  ]]></code>
+                </method>
+                <method id="MakeRiskRef">
+                    <static>false</static>
+                    <access>protected</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    protected function MakeRiskRef($iNextId)
+    {
+        return sprintf(static::GetRiskRefFormat(), $iNextId);
+    }
+  ]]></code>
+                </method>
+                <method id="GetRiskRefFormat">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public static function GetRiskRefFormat()
+    {
+        return 'R-%04d';
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetInitialAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('pre_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('pre_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('res_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('res_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('tgt_score', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('tgt_level', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('publish_date', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetAttributeFlags" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('pre_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('pre_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('res_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('res_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('tgt_score', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('tgt_level', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('publish_date', OPT_ATT_READONLY);
+
+        // Optional: res_likelihood/res_impact sperren, sobald Kontrollen wirken
+        try {
+            $aAgg = $this->AggregateControlEffects();
+            $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
+            if ($bHasAnyEffect) {
+                $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
+                $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
+            }
+        } catch (\Exception $e) { /* ignore */
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="PrefillCreationForm">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function PrefillCreationForm(&$aContextParam)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        if (empty($this->Get('creation_date')))
+            $this->Set('creation_date', $sToday);
+
+        if (empty($this->Get('last_update')))
+            $this->Set('last_update', $sNow);
+
+        if (empty($this->Get('next_review'))) {
+            $ts = strtotime('+1 year');
+            $this->Set('next_review', date(AttributeDate::GetInternalFormat(), $ts));
+        }
+    }
+  ]]></code>
+                    <arguments>
+                        <argument id="1">
+                            <mandatory>false</mandatory>
+                            <type>attcode</type>
+                        </argument>
+                    </arguments>
+                </method>
+                <method id="EvtLinksChanged" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->RecomputeRiskScores();
+    }
+  ]]></code>
+                </method>
+                <method id="EvtBeforeWrite" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        // set creation date on initial write
+        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
+            $this->Set('creation_date', $sToday);
+
+        // set last update date on every write
+        $this->Set('last_update', $sNow);
+
+        $this->RecomputeRiskScores();
+    }
+  ]]></code>
+                </method>
+                <method id="EvtComputeValues" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtComputeValues(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->RecomputeRiskScores();
+    }
+  ]]></code>
+                </method>
+                <method id="EvtCheckToWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    /**
+     * EVENT_DB_CHECK_TO_WRITE
+     *
+     * Purpose:
+     *  - Add non-blocking warnings (via AddCheckWarning) before write, based on
+     *    treatment decision, dates, and consistency between inherent/residual/target.
+     *
+     * Notes:
+     *  - We do NOT modify attributes here (no side effects).
+     *  - For new objects (is_new), we skip link-based checks (no links exist yet).
+     *  - If you want to block saving instead of warning, use AddCheckError().
+     */
+    public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $bIsNew = (bool) $oEventData->Get('is_new');
+
+        // --- (1) Mitigate: require either linked effective controls OR target values ---
+        if ($this->Get('treatment_decision') === 'mitigate') {
+            $bHasControls = false;
+
+            // For a brand new object, there cannot be links yet → skip link check
+            if (!$bIsNew) {
+                try {
+                    $oSearch = DBObjectSearch::FromOQL("SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid");
+                    $oSet    = new DBObjectSet($oSearch, array(), array('rid' => (int) $this->GetKey()));
+                    // COUNT(*) is efficient enough and supported in all iTop versions
+                    $bHasControls = ($oSet->Count() > 0);
+                } catch (\Exception $e) {
+                    // Fail silently: if link lookup fails, don't block the save here
+                }
+            }
+
+            // Target residual present only if BOTH dimensions are filled
+            $tgtL = $this->Get('tgt_likelihood');
+            $tgtI = $this->Get('tgt_impact');
+            $bHasTarget = ($tgtL !== '' && $tgtL !== null && $tgtI !== '' && $tgtI !== null);
+
+            if (!$bHasControls && !$bHasTarget) {
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:MitigateNoPlanOrTarget'));
+            }
+        }
+
+        // --- (2) Accept: require formal acceptance fields ---
+        if ($this->Get('treatment_decision') === 'accept') {
+            if ($this->Get('acceptance_status') !== 'accepted') {
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptNotAccepted'));
+            }
+            $iAccBy   = (int) $this->Get('accepted_by_id');
+            $sAccDate = $this->Get('acceptance_date');
+            if ($iAccBy <= 0 || empty($sAccDate)) {
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptMissingWhoWhen'));
+            }
+        }
+
+        // --- (3) Treatment due date in the past ---
+        $sDue = $this->Get('treatment_due');
+        if (!empty($sDue)) {
+            $ts = @strtotime($sDue); // relies on server timezone
+            if ($ts !== false && $ts < strtotime('today')) {
+                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:DueInPast'));
+            }
+        }
+
+        // --- (4) Plausibility: residual score should not exceed inherent score ---
+        $iPreScore = (int) $this->Get('pre_score');
+        $iResScore = (int) $this->Get('res_score');
+        if ($iResScore > 0 && $iPreScore > 0 && $iResScore > $iPreScore) {
+            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:ResidualGtInherent'));
+        }
+
+        // --- (5) Plausibility: target vs. inherent/residual consistency ---
+        // Use current values; if score is missing, compute a local fallback from dimensions.
+        $preL = (int) $this->Get('pre_likelihood');
+        $preI = (int) $this->Get('pre_impact');
+        $resL = (int) $this->Get('res_likelihood');
+        $resI = (int) $this->Get('res_impact');
+        $tgtL = $this->Get('tgt_likelihood'); // may be ''/null
+        $tgtI = $this->Get('tgt_impact');     // may be ''/null
+
+        $hasTgtL = ($tgtL !== '' && $tgtL !== null);
+        $hasTgtI = ($tgtI !== '' && $tgtI !== null);
+
+        // Partial target input (only one dimension) → ask for both
+        if ($hasTgtL xor $hasTgtI) {
+            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetPartial'));
+        }
+
+        // Compute local scores for comparisons, without touching attributes
+        $preScoreLocal = ($iPreScore > 0) ? $iPreScore : (($preL > 0 && $preI > 0) ? $preL * $preI : null);
+        $resScoreLocal = ($iResScore > 0) ? $iResScore : (($resL > 0 && $resI > 0) ? $resL * $resI : null);
+        $tgtScoreLocal = ($hasTgtL && $hasTgtI) ? ((int) $tgtL * (int) $tgtI) : null;
+
+        // Target should not be worse than inherent
+        if (!is_null($tgtScoreLocal) && !is_null($preScoreLocal) && $tgtScoreLocal > $preScoreLocal) {
+            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtInherent'));
+        }
+
+        // Target should not be worse than current residual
+        if (!is_null($tgtScoreLocal) && !is_null($resScoreLocal) && $tgtScoreLocal > $resScoreLocal) {
+            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtResidual'));
+        }
+
+        // 'accept' normally implies keeping current residual; a lower target contradicts acceptance
+        if (
+            $this->Get('treatment_decision') === 'accept'
+            && !is_null($tgtScoreLocal) && !is_null($resScoreLocal)
+            && $tgtScoreLocal < $resScoreLocal
+        ) {
+            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptButTargetBelowResidual'));
+        }
+    }
+  ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSRisk:Base">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name" />
+                                        <item id="org_id" />
+                                        <item id="status" />
+                                        <item id="riskowner_id" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:Context">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="risk_category" />
+                                        <item id="risk_cause" />
+                                        <item id="risk_event" />
+                                        <item id="risk_consequence" />
+                                        <item id="description" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSRisk:Summary">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="pre_level" />
+                                        <item id="pre_score" />
+                                        <item id="res_level" />
+                                        <item id="res_score" />
+                                        <item id="aggregation_mode" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:Preliminary">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="pre_likelihood" />
+                                        <item id="pre_impact" />
+                                        <item id="pre_score" />
+                                        <item id="pre_level" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:Residual">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="res_likelihood" />
+                                        <item id="res_impact" />
+                                        <item id="res_score" />
+                                        <item id="res_level" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:TargetResidual">
+                                    <rank>40</rank>
+                                    <items>
+                                        <item id="tgt_likelihood" />
+                                        <item id="tgt_impact" />
+                                        <item id="tgt_score" />
+                                        <item id="tgt_level" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>30</rank>
+                            <items>
+                                <item id="fieldset:ISMSRisk:Dates">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="creation_date" />
+                                        <item id="last_update" />
+                                        <!-- this is for a later release
+                                        <item id="next_review" />
+                                    -->
+                                        <item id="publish_date" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:Treatment">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="treatment_decision" />
+                                        <item id="treatment_owner_id" />
+                                        <item id="treatment_due" />
+                                        <item id="treatment_plan" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRisk:Acceptance">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="acceptance_status" />
+                                        <item id="accepted_by_id" />
+                                        <item id="acceptance_date" />
+                                        <item id="acceptance_rationale" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="assets_list">
+                            <rank>100</rank>
+                        </item>
+                        <item id="controls_list">
+                            <rank>110</rank>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="friendlyname">
+                            <rank>20</rank>
+                        </item>
+                        <item id="riskowner_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="name">
+                            <rank>20</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="risk_category">
+                            <rank>60</rank>
+                        </item>
+                        <item id="riskowner_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="pre_level">
+                            <rank>66</rank>
+                        </item>
+                        <item id="res_level">
+                            <rank>67</rank>
+                        </item>
+                        <item id="res_score">
+                            <rank>68</rank>
+                        </item>
+                        <item id="description">
+                            <rank>80</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="name">
+                            <rank>20</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="riskowner_id">
+                            <rank>70</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSRiskToISMSAsset" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkismsrisktoismsasset</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="asset_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="asset_id" xsi:type="AttributeExternalKey">
+                    <sql>asset_id</sql>
+                    <target_class>ISMSAsset</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="asset_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>asset_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="ISMSControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <db_table>ismscontrol</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <style>
+                    <icon>images/isms-control.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="org_id" />
+                        <attribute id="organization_name" />
+                    </attributes>
+                </reconciliation>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="org_id" xsi:type="AttributeExternalKey">
+                    <sql>org_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="organization_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>org_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="submitted">
+                            <code>submitted</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="approved">
+                            <code>approved</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="implementing">
+                            <code>implementing</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="amending">
+                            <code>amending</code>
+                            <rank>50</rank>
+                        </value>
+                        <value id="effective">
+                            <code>effective</code>
+                            <rank>60</rank>
+                        </value>
+                        <value id="suspended">
+                            <code>suspended</code>
+                            <rank>70</rank>
+                        </value>
+                        <value id="retired">
+                            <code>retired</code>
+                            <rank>80</rank>
+                        </value>
+                    </values>
+                    <default_value>draft</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <sort_type>rank</sort_type>
+                    <display_style>list</display_style>
+                </field>
+                <field id="owner_id" xsi:type="AttributeExternalKey">
+                    <sql>owner_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="owner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>owner_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="control_domain" xsi:type="AttributeEnum">
+                    <sql>control_domain</sql>
+                    <values>
+                        <value id="organizational">
+                            <code>organizational</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="people">
+                            <code>people</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="physical">
+                            <code>physical</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="technological">
+                            <code>technological</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="control_type" xsi:type="AttributeEnum">
+                    <sql>control_type</sql>
+                    <values>
+                        <value id="preventive">
+                            <code>preventive</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="detective">
+                            <code>detective</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="corrective">
+                            <code>corrective</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="implemented_on" xsi:type="AttributeDate">
+                    <sql>implemented_on</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="next_review" xsi:type="AttributeDate">
+                    <sql>next_review</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="risks_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSControl</linked_class>
+                    <ext_key_to_me>control_id</ext_key_to_me>
+                    <ext_key_to_remote>risk_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
+            </fields>
+            <relations>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismsrisk">
+                            <direction>down</direction>
+                            <query_down><![CDATA[SELECT ISMSRisk AS down JOIN lnkISMSRiskToISMSControl AS lnk ON lnk.risk_id = down.id WHERE lnk.control_id = :this->id]]></query_down>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_submit" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_approve" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reject" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_start_impl" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_mark_effective" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_suspend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_resume" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_retire" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_start_amend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_submit_amend" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_cancel_amend" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_submit">
+                                <target>submitted</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="submitted">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_approve">
+                                <target>approved</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_reject">
+                                <target>amending</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="approved">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_start_impl">
+                                <target>implementing</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_mark_effective">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="implementing">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_mark_effective">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+
+                    <state id="amending">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_submit_amend">
+                                <target>submitted</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_cancel_amend">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+
+
+                    <state id="effective">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_start_amend">
+                                <target>amending</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_suspend">
+                                <target>suspended</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="suspended">
+                        <flags>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_resume">
+                                <target>effective</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_retire">
+                                <target>retired</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="retired">
+                        <flags>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="status">
+                                <read_only />
+                            </attribute>
+                            <attribute id="owner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
+                            <attribute id="description">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implemented_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+
+
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSControl:Basics">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name" />
+                                        <item id="org_id" />
+                                        <item id="status" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSControl:Classification">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="control_domain" />
+                                        <item id="control_type" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSControl:OwnershipSchedule">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="owner_id" />
+                                        <item id="implemented_on" />
+                                        <!-- this is for a later release
+                                        <item id="next_review" />
+                                    -->
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSControl:Description">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="description" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="risks_list">
+                            <rank>100</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="name" />
+                        <item id="org_id" />
+                        <item id="status" />
+                        <item id="owner_id" />
+                        <item id="control_domain" />
+                        <item id="control_type" />
+                        <item id="implemented_on" />
+                        <!-- this is for a later release
+                        <item id="next_review" />
+                    -->
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="name" />
+                        <item id="org_id" />
+                        <item id="status" />
+                        <item id="owner_id" />
+                        <item id="control_domain" />
+                        <item id="control_type" />
+                        <!-- this is for a later release
+                        <item id="next_review" />
+                    -->
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSRiskToISMSControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkismsrisktoismscontrol</db_table>
+                <db_key_field>id</db_key_field>
+                <naming>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="control_id" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="control_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="control_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="risk_ref" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>ref</target_attcode>
+                </field>
+                <field id="control_id" xsi:type="AttributeExternalKey">
+                    <sql>control_id</sql>
+                    <target_class>ISMSControl</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="control_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="effect_on_likelihood" xsi:type="AttributeEnum">
+                    <sql>effect_on_likelihood</sql>
+                    <values>
+                        <value id="0">
+                            <code>0</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>radio_horizontal</display_style>
+                </field>
+                <field id="effect_on_impact" xsi:type="AttributeEnum">
+                    <sql>effect_on_impact</sql>
+                    <values>
+                        <value id="0">
+                            <code>0</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="1">
+                            <code>1</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="2">
+                            <code>2</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="3">
+                            <code>3</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>radio_horizontal</display_style>
+                </field>
+                <field id="link_status" xsi:type="AttributeEnum">
+                    <sql>link_status</sql>
+                    <values>
+                        <value id="planned">
+                            <code>planned</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="in_progress">
+                            <code>in_progress</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="effective">
+                            <code>effective</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="ineffective">
+                            <code>ineffective</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>planned</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="due_date" xsi:type="AttributeDate">
+                    <sql>due_date</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="comment" xsi:type="AttributeText">
+                    <sql>comment</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="control_status" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>status</target_attcode>
+                </field>
+                <field id="control_domain_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>control_domain</target_attcode>
+                </field>
+                <field id="control_type_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>control_type</target_attcode>
+                </field>
+                <field id="control_org_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>organization_name</target_attcode>
+                </field>
+                <field id="control_owner_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>owner_name</target_attcode>
+                </field>
+                <field id="risk_pre_level_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>pre_level</target_attcode>
+                </field>
+                <field id="risk_pre_score_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>pre_score</target_attcode>
+                </field>
+                <field id="risk_res_level_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>res_level</target_attcode>
+                </field>
+                <field id="risk_res_score_ro" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>res_score</target_attcode>
+                </field>
+            </fields>
+            <event_listeners />
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:lnkISMSRiskToISMSControl:Link">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="risk_id" />
+                                        <item id="control_id" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:lnkISMSRiskToISMSControl:ControlSnapshot">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="control_status" />
+                                        <item id="control_domain_ro" />
+                                        <item id="control_type_ro" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:lnkISMSRiskToISMSControl:RiskSnapshot">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="risk_pre_level_ro" />
+                                        <item id="risk_pre_score_ro" />
+                                        <item id="risk_res_level_ro" />
+                                        <item id="risk_res_score_ro" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:lnkISMSRiskToISMSControl:Effect">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="link_status" />
+                                        <item id="effect_on_likelihood" />
+                                        <item id="effect_on_impact" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:lnkISMSRiskToISMSControl:Dates">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="due_date" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="fieldset:lnkISMSRiskToISMSControl:Notes">
+                            <rank>30</rank>
+                            <items>
+                                <item id="comment" />
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="control_id" />
+                        <item id="link_status" />
+                        <item id="effect_on_likelihood" />
+                        <item id="effect_on_impact" />
+                        <item id="due_date" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="link_status">
+                            <rank>10</rank>
+                        </item>
+                        <item id="due_date">
+                            <rank>20</rank>
+                        </item>
+                        <item id="effect_on_likelihood">
+                            <rank>30</rank>
+                        </item>
+                        <item id="effect_on_impact">
+                            <rank>40</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+
+        <!-- this is for a later release
+
+        <class id="ISMSReview" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <abstract>true</abstract>
+                <category>bizmodel,searchable</category>
+                <db_table>ismsreview</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="status" />
+                        <attribute id="planned_on" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+            </properties>
+            <fields>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="planned">
+                            <code>planned</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="in_progress">
+                            <code>in_progress</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="completed">
+                            <code>completed</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="cancelled">
+                            <code>cancelled</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <default_value>planned</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="planned_on" xsi:type="AttributeDate">
+                    <sql>planned_on</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="started_on" xsi:type="AttributeDate">
+                    <sql>started_on</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="completed_on" xsi:type="AttributeDate">
+                    <sql>completed_on</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="reviewer_id" xsi:type="AttributeExternalKey">
+                    <sql>reviewer_id</sql>
+                    <target_class>Person</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="reviewer_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>reviewer_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="outcome" xsi:type="AttributeEnum">
+                    <sql>outcome</sql>
+                    <values>
+                        <value id="pass">
+                            <code>pass</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="minor_issues">
+                            <code>minor_issues</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="major_issues">
+                            <code>major_issues</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="fail">
+                            <code>fail</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <is_null_allowed>true</is_null_allowed>
+                    <sort_type>rank</sort_type>
+                    <display_style>list</display_style>
+                </field>
+                <field id="summary" xsi:type="AttributeString">
+                    <sql>summary</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="notes" xsi:type="AttributeText">
+                    <sql>notes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_start" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_complete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_cancel" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="planned">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_start">
+                                <target>in_progress</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="in_progress">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_complete">
+                                <target>completed</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="completed">
+                        <flags />
+                        <transitions />
+                    </state>
+                    <state id="cancelled">
+                        <flags />
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+            <methods>
+
+                <method id="GetTargetObject" _delta="define">
+            <static>false</static>
+            <access>public</access>
+            <type>Overload-DBObject</type>
+            <code><![CDATA[
+      public function GetTargetObject() { return null; }
+      ]]></code>
+        </method>
+
+                <method id="EvtOnStateTransition" _delta="define">
+            <static>false</static>
+            <access>public</access>
+            <type>EventListener</type>
+            <code><![CDATA[
+      public function EvtOnStateTransition(Combodo\iTop\Service\Events\EventData $oEventData)
+      {
+        $sTo = (string) $oEventData->Get('to_state');
+
+        if ($sTo === 'in_progress' && empty($this->Get('started_on'))) {
+          $this->Set('started_on', date('Y-m-d'));
+        }
+        if ($sTo === 'completed' && empty($this->Get('completed_on'))) {
+          $this->Set('completed_on', date('Y-m-d'));
+        }
+        if ($sTo === 'completed' && method_exists($this, 'OnReviewCompleted')) {
+          $this->OnReviewCompleted();
+        }
+      }
+      ]]></code>
+        </method>
+
+                <method id="EvtCheckToWrite" _delta="define">
+            <static>false</static>
+            <access>public</access>
+            <type>EventListener</type>
+            <code><![CDATA[
+      public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+      {
+        $sTarget = (string) $oEventData->Get('target_state');
+        if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
+          $this->AddCheckWarning('Outcome should be set before completion.');
+        }
+      }
+      ]]></code>
+        </method>
+            </methods>
+            <presentation>
+            <details>
+                <items>
+                    <item id="status" />
+                    <item id="planned_on" />
+                    <item id="started_on" />
+                    <item id="completed_on" />
+                    <item id="reviewer_id" />
+                    <item id="outcome" />
+                    <item id="summary" />
+                    <item id="notes" />
+                </items>
+            </details>
+        </presentation>
+        </class>
+
+        <class id="ISMSAssetReview" _delta="define">
+            <parent>ISMSReview</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismsassetreview</db_table>
+                <naming>
+                    <attributes>
+                        <attribute id="asset_name" />
+                        <attribute id="planned_on" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+            </properties>
+            <fields>
+                <field id="asset_id" xsi:type="AttributeExternalKey">
+                    <sql>asset_id</sql>
+                    <target_class>ISMSAsset</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="asset_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>asset_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_start" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_complete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_cancel" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="planned">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_start">
+                                <target>in_progress</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">started_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="in_progress">
+                        <flags>
+                            <attribute id="asset_id">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_complete">
+                                <target>completed</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">completed_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="completed">
+                        <flags>
+                            <attribute id="asset_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                    <state id="cancelled">
+                        <flags>
+                            <attribute id="asset_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+            <methods>
+                <method id="PrefillCreationForm" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+      /**
+       * PrefillCreationForm
+       * - Default planned_on = today
+       * - If empty, preset reviewer to the asset owner (if present)
+       */
+      public function PrefillCreationForm(&$aContextParam)
+      {
+        if (empty($this->Get('planned_on'))) {
+          $this->Set('planned_on', date('Y-m-d'));
+        }
+        // reviewer = Asset.owner (falls vorhanden)
+        try {
+          $iAssetId = (int)$this->Get('asset_id');
+          if ($iAssetId > 0 && empty($this->Get('reviewer_id'))) {
+            $oAsset = MetaModel::GetObject('ISMSAsset', $iAssetId, false);
+            if ($oAsset) {
+              $iOwner = (int)$oAsset->Get('assetowner_id');
+              if ($iOwner > 0) {
+                $this->Set('reviewer_id', $iOwner);
+              }
+            }
+          }
+        } catch (\Exception $e) { /* ignore */ }
+      }
+      ]]></code>
+                </method>
+                <method id="GetTargetObject" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+      public function GetTargetObject()
+      {
+        $iId = (int)$this->Get('asset_id');
+        return ($iId > 0) ? MetaModel::GetObject('ISMSAsset', $iId, false) : null;
+      }
+      ]]></code>
+                </method>
+                <method id="OnReviewCompleted" _delta="define">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+      public function OnReviewCompleted()
+      {
+        $oAsset = $this->GetTargetObject();
+        if ($oAsset) {
+          $sCompleted = $this->Get('completed_on');
+          if (empty($sCompleted)) { $sCompleted = date('Y-m-d'); }
+
+          // last_review aktualisieren
+          $oAsset->Set('last_review', $sCompleted);
+
+          // Intervall holen (Fallback 12), next_review berechnen
+          $iMonths = (int)$oAsset->Get('review_interval_months');
+          if ($iMonths <= 0) { $iMonths = 12; }
+
+          $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
+          $oAsset->Set('next_review', date('Y-m-d', $ts));
+
+          $oAsset->DBUpdate();
+        }
+      }
+      ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSAssetReview:Link">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="asset_id" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSAssetReview:Progress">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="status" />
+                                        <item id="planned_on" />
+                                        <item id="started_on" />
+                                        <item id="completed_on" />
+                                        <item id="reviewer_id" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSAssetReview:Outcome">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="outcome" />
+                                        <item id="summary" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>30</rank>
+                            <items>
+                                <item id="fieldset:ISMSAssetReview:Notes">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="notes" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="asset_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="asset_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="started_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                        <item id="summary" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="asset_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                    </items>
+                </list>
+            </presentation>
+        </class> -->
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
         <menu id="ISMSManagement" xsi:type="MenuGroup" _delta="define">
             <rank>29</rank>
-            <enable_class _delta="define">ISMSAsset</enable_class>
-            <enable_admin_only _delta="define">0</enable_admin_only>
-            <enable_action _delta="define">UR_ACTION_MODIFY</enable_action>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_admin_only>0</enable_admin_only>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
             <style>
                 <decoration_classes>fas fa-sensor-cloud</decoration_classes>
             </style>
@@ -598,6 +3865,10 @@
                                 <rank>110</rank>
                                 <class>ISMSAsset</class>
                             </dashlet>
+                            <dashlet id="isms-120" xsi:type="DashletBadge">
+                                <rank>120</rank>
+                                <class>ISMSAssetType</class>
+                            </dashlet>
                         </dashlets>
                     </cell>
                     <cell id="isms-200">
@@ -605,12 +3876,44 @@
                         <dashlets>
                             <dashlet id="isms-201" xsi:type="DashletHeaderStatic">
                                 <rank>1</rank>
-                                <title>Menu:ISMSSpace:Options</title>
+                                <title>Menu:ISMSSpace:Risks</title>
+                            </dashlet>
+                            <dashlet id="isms-210" xsi:type="DashletBadge">
+                                <rank>210</rank>
+                                <class>ISMSRisk</class>
+                            </dashlet>
+                            <dashlet id="isms-220" xsi:type="DashletBadge">
+                                <rank>210</rank>
+                                <class>ISMSControl</class>
                             </dashlet>
                         </dashlets>
                     </cell>
+                    <!-- this is for a later release
+                    <cell id="isms-300">
+                        <rank>3</rank>
+                        <dashlets>
+                            <dashlet id="isms-301" xsi:type="DashletHeaderStatic">
+                                <rank>301</rank>
+                                <title>Menu:ISMSSpace:Reviews</title>
+                            </dashlet>
+                            <dashlet id="isms-310" xsi:type="DashletBadge">
+                                <rank>310</rank>
+                                <class>ISMSReview</class>
+                            </dashlet>
+                            <dashlet id="isms-320" xsi:type="DashletBadge">
+                                <rank>320</rank>
+                                <class>ISMSAssetReview</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                    -->
                 </cells>
             </definition>
         </menu>
     </menus>
+    <module_parameters>
+        <parameters id="br-isms" _delta="define">
+            <risk_aggregation_mode type="string">max</risk_aggregation_mode>
+        </parameters>
+    </module_parameters>
 </itop_design>
