@@ -19,25 +19,25 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Menu:ISMSSpace:Options' => 'Optionen',
     'Menu:ISMSSpace:Risks' => 'Risiken & Kontrollen',
     'Menu:NewISMSAsset' => 'Neues Asset',
-    'Menu:NewISMSAsset+' => 'Neues ISMS-Asset anlegen.',
+    'Menu:NewISMSAsset+' => 'Neues ISMS-Asset anlegen',
     'Menu:NewISMSRisk' => 'Neues Risiko',
-    'Menu:NewISMSRisk+' => 'Neues ISMS-Risiko anlegen.',
+    'Menu:NewISMSRisk+' => 'Neues ISMS-Risiko anlegen',
     'Menu:NewISMSControl' => 'Neue Kontrolle',
-    'Menu:NewISMSControl+' => 'Neue ISMS-Kontrolle anlegen.',
+    'Menu:NewISMSControl+' => 'Neue ISMS-Kontrolle anlegen',
     'Menu:SearchISMSAssets' => 'Assets suchen',
-    'Menu:SearchISMSAssets+' => 'ISMS-Assets durchsuchen.',
+    'Menu:SearchISMSAssets+' => 'ISMS-Assets durchsuchen',
     'Menu:SearchISMSRisks' => 'Risiken suchen',
-    'Menu:SearchISMSRisks+' => 'ISMS-Risiken durchsuchen.',
+    'Menu:SearchISMSRisks+' => 'ISMS-Risiken durchsuchen',
     'Menu:SearchISMSControls' => 'Kontrollen suchen',
-    'Menu:SearchISMSControls+' => 'ISMS-Kontrollen durchsuchen.',
+    'Menu:SearchISMSControls+' => 'ISMS-Kontrollen durchsuchen',
     'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
-    'Menu:ISMSManagement:Shortcuts+' => 'Direkter Zugriff auf häufige ISMS-Ansichten.',
+    'Menu:ISMSManagement:Shortcuts+' => 'Direkter Zugriff auf häufige ISMS-Ansichten',
     'Menu:ISMSMyAssets' => 'Meine Assets',
-    'Menu:ISMSMyAssets+' => 'Assets, bei denen ich Besitzer bin.',
+    'Menu:ISMSMyAssets+' => 'Assets, bei denen ich Besitzer bin',
     'Menu:ISMSMyRisks' => 'Meine Risiken',
-    'Menu:ISMSMyRisks+' => 'Risiken, bei denen ich Risiko-Eigner bin.',
+    'Menu:ISMSMyRisks+' => 'Risiken, bei denen ich Risiko-Eigner bin',
     'Menu:ISMSMyControls' => 'Meine Kontrollen',
-    'Menu:ISMSMyControls+' => 'Kontrollen, bei denen ich Besitzer bin.',
+    'Menu:ISMSMyControls+' => 'Kontrollen, bei denen ich Besitzer bin',
 ));
 
 //
@@ -53,6 +53,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAssetType/Attribute:description+' => 'Optionale Details zu diesem Asset-Typ.',
     'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
     'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'Alle Assets, die diesem Typ zugeordnet sind.',
+    'Class:ISMSAssetType/UniquenessRule:name' => 'Ein Asset mit diesem Namen existiert bereits.',
+    'Class:ISMSAssetType/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
 ));
 
 //
@@ -89,10 +91,10 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:assettype_id+' => 'Asset-Typ / Klassifizierung.',
     'Class:ISMSAsset/Attribute:assettype_id_friendlyname' => 'Typ',
     'Class:ISMSAsset/Attribute:assettype_name' => 'Typ',
-    'Class:ISMSAsset/Attribute:assetowner_id' => 'Owner',
+    'Class:ISMSAsset/Attribute:assetowner_id' => 'Asset-Owner',
     'Class:ISMSAsset/Attribute:assetowner_id+' => 'Verantwortliche Person (Owner) für das Asset.',
-    'Class:ISMSAsset/Attribute:assetowner_id_friendlyname' => 'Owner',
-    'Class:ISMSAsset/Attribute:assetowner_name' => 'Owner',
+    'Class:ISMSAsset/Attribute:assetowner_id_friendlyname' => 'Asset-Owner',
+    'Class:ISMSAsset/Attribute:assetowner_name' => 'Asset-Owner',
     'Class:ISMSAsset/Attribute:assetguardian_id' => 'Verwalter',
     'Class:ISMSAsset/Attribute:assetguardian_id+' => 'Verwalter / Custodian des Assets.',
     'Class:ISMSAsset/Attribute:assetguardian_id_friendlyname' => 'Verwalter',
@@ -111,6 +113,12 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets, die dieses Asset unterstützen.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Unterstützte Assets',
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets, die von diesem Asset unterstützt werden.',
+    'Class:ISMSAsset/Attribute:risks_list' => 'Risiken',
+    'Class:ISMSAsset/Attribute:risks_list+' => 'Alle Risiken zu diesem Asset.',
+    'Class:ISMSAsset/UniquenessRule:ref' => 'Es existiert bereits ein Asset mit dieser Referenz',
+    'Class:ISMSAsset/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
+    'Class:ISMSAsset/UniquenessRule:name' => 'Es existiert bereits ein Asset mit diesem Namen',
+    'Class:ISMSAsset/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
     'Class:ISMSAsset/Stimulus:ev_publish' => 'Veröffentlichen',
     'Class:ISMSAsset/Stimulus:ev_publish+' => 'Asset freigeben/veröffentlichen.',
     'Class:ISMSAsset/Stimulus:ev_draft' => 'Entwurf',
@@ -119,42 +127,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Stimulus:ev_obsolete+' => 'Asset außer Betrieb nehmen.',
     'Class:ISMSAsset/Stimulus:ev_reopen' => 'Wieder öffnen',
     'Class:ISMSAsset/Stimulus:ev_reopen+' => 'Obsoletes Asset wieder öffnen (zurück zu Entwurf).',
-));
-
-//
-// Class: lnkSupportingAssetToAsset
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkSupportingAssetToAsset' => 'Link Unterstützendes Asset / Asset',
-    'Class:lnkSupportingAssetToAsset+' => 'Verknüpfung, die angibt, dass das erste Asset das zweite Asset unterstützt.',
-    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Wähle das Asset, das ein anderes Asset unterstützt.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Unterstütztes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Wähle das Asset, das unterstützt wird.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Unterstütztes Asset',
-));
-
-//
-// Class: lnkISMSRiskToISMSAsset
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSAsset' => 'Link Risiko / Asset',
-    'Class:lnkISMSRiskToISMSAsset+' => 'Verknüpfung zwischen einem ISMS-Risiko und einem ISMS-Asset.',
-    'Class:lnkISMSRiskToISMSAsset/Name' => '%1$s - %2$s',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id' => 'Risiko',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_name' => 'Risiko',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id' => 'Asset',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id+' => 'Verknüpftes Asset auswählen.',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id_friendlyname' => 'Asset',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
 //
@@ -372,6 +344,10 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Attribute:assets_list+' => 'Alle mit diesem Risiko verknüpften Assets.',
     'Class:ISMSRisk/Attribute:controls_list' => 'Kontrolle(n)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'Alle Kontrollen, die mit diesem Risiko verknüpft sind.',
+    'Class:ISMSRisk/UniquenessRule:ref' => 'Es existiert bereits ein Risiko mit dieser Referenz',
+    'Class:ISMSRisk/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
+    'Class:ISMSRisk/UniquenessRule:name' => 'Es existiert bereits ein Risiko mit diesem Namen',
+    'Class:ISMSRisk/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
     'Class:ISMSRisk/Stimulus:ev_publish' => 'Veröffentlichen',
     'Class:ISMSRisk/Stimulus:ev_publish+' => 'Risiko freigeben/veröffentlichen.',
     'Class:ISMSRisk/Stimulus:ev_draft' => 'Entwurf',
@@ -426,10 +402,10 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Vorübergehend außer Kraft',
     'Class:ISMSControl/Attribute:status/Value:retired' => 'Außer Betrieb',
     'Class:ISMSControl/Attribute:status/Value:retired+' => 'Endgültig außer Betrieb',
-    'Class:ISMSControl/Attribute:owner_id' => 'Verantwortlicher',
-    'Class:ISMSControl/Attribute:owner_id+' => 'Person, die für die Kontrolle verantwortlich ist.',
-    'Class:ISMSControl/Attribute:owner_id_friendlyname' => 'Verantwortlicher',
-    'Class:ISMSControl/Attribute:owner_name' => 'Verantwortlicher',
+    'Class:ISMSControl/Attribute:controlowner_id' => 'Kontroll-Owner',
+    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person, die für die Kontrolle verantwortlich ist.',
+    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Kontroll-Owner',
+    'Class:ISMSControl/Attribute:controlowner_name' => 'Kontroll-Owner',
     'Class:ISMSControl/Attribute:control_domain' => 'Kontroll-Domäne',
     'Class:ISMSControl/Attribute:control_domain+' => 'Primäre Domäne der Kontrolle.',
     'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organisatorisch',
@@ -450,12 +426,16 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Präventive Kontrolle.',
     'Class:ISMSControl/Attribute:description' => 'Beschreibung',
     'Class:ISMSControl/Attribute:description+' => 'Details zur Umsetzung und zum Geltungsbereich der Kontrolle.',
-    'Class:ISMSControl/Attribute:implemented_on' => 'Implementiert am',
-    'Class:ISMSControl/Attribute:implemented_on+' => 'Datum der Implementierung.',
+    'Class:ISMSControl/Attribute:implementation_date' => 'Implementiert am',
+    'Class:ISMSControl/Attribute:implementation_date+' => 'Datum der Implementierung.',
     'Class:ISMSControl/Attribute:next_review' => 'Nächste Überprüfung',
     'Class:ISMSControl/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
     'Class:ISMSControl/Attribute:risks_list' => 'Risiken',
     'Class:ISMSControl/Attribute:risks_list+' => 'Alle Risiken, die mit dieser Kontrolle verknüpft sind.',
+    'Class:ISMSControl/UniquenessRule:ref' => 'Es existiert bereits eine Kontrolle mit dieser Referenz',
+    'Class:ISMSControl/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
+    'Class:ISMSControl/UniquenessRule:name' => 'Es existiert bereits eine Kontrolle mit diesem Namen',
+    'Class:ISMSControl/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
     'Class:ISMSControl/Stimulus:ev_submit' => 'Zur Freigabe einreichen',
     'Class:ISMSControl/Stimulus:ev_submit+' => 'Von Entwurf zu Eingereicht',
     'Class:ISMSControl/Stimulus:ev_approve' => 'Freigeben',
@@ -478,6 +458,42 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Überarbeitung zur Freigabe einreichen',
     'Class:ISMSControl/Stimulus:ev_cancel_amend' => 'Überarbeitung abbrechen',
     'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Überarbeitung verwerfen und zu Wirksam zurückkehren',
+));
+
+//
+// Class: lnkSupportingAssetToAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkSupportingAssetToAsset' => 'Link Unterstützendes Asset / Asset',
+    'Class:lnkSupportingAssetToAsset+' => 'Verknüpfung, die angibt, dass das erste Asset das zweite Asset unterstützt.',
+    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Wähle das Asset, das ein anderes Asset unterstützt.',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Unterstütztes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Wähle das Asset, das unterstützt wird.',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Unterstütztes Asset',
+));
+
+//
+// Class: lnkISMSRiskToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkISMSRiskToISMSAsset' => 'Link Risiko / Asset',
+    'Class:lnkISMSRiskToISMSAsset+' => 'Verknüpfung zwischen einem ISMS-Risiko und einem ISMS-Asset.',
+    'Class:lnkISMSRiskToISMSAsset/Name' => '%1$s - %2$s',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id' => 'Risiko',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_name' => 'Risiko',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id+' => 'Verknüpftes Asset auswählen.',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id_friendlyname' => 'Asset',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
 //
@@ -546,7 +562,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSControl/Attribute:control_type_ro+' => 'Typ der verknüpften Kontrolle (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_org_ro' => 'Kontroll-Organisation',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_org_ro+' => 'Organisation der verknüpften Kontrolle (schreibgeschützt).',
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_owner_ro' => 'Kontrollverantwortlicher',
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_owner_ro' => 'Kontroll-Owner',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_owner_ro+' => 'Owner der verknüpften Kontrolle (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_level_ro' => 'Brutto-Level',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_pre_level_ro+' => 'Aktueller Brutto-Risikolevel (schreibgeschützt).',

@@ -67,6 +67,11 @@
                         </item>
                     </items>
                 </details>
+                <default_search>
+                    <items>
+                        <item id="name" />
+                    </items>
+                </default_search>
                 <search>
                     <items>
                         <item id="name">
@@ -128,6 +133,13 @@
                             <attribute id="ref" />
                         </attributes>
                         <is_blocking>false</is_blocking>
+                    </rule>
+                    <rule id="name">
+                        <attributes>
+                            <attribute id="org_id" />
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
                     </rule>
                 </uniqueness_rules>
                 <obsolescence>
@@ -278,7 +290,6 @@
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-
                 <field id="supportingassets_list" xsi:type="AttributeLinkedSetIndirect">
                     <linked_class>lnkSupportingAssetToAsset</linked_class>
                     <ext_key_to_me>asset_id</ext_key_to_me>
@@ -614,7 +625,7 @@
                     <code><![CDATA[
     public static function GetAssetRefFormat()
     {
-        return 'A-%04d';
+        return 'ASS-%04d';
     }
   ]]></code>
                 </method>
@@ -648,6 +659,12 @@
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
+                    <arguments>
+                        <argument id="1">
+                            <mandatory>false</mandatory>
+                            <type>attcode</type>
+                        </argument>
+                    </arguments>
                     <code><![CDATA[
     public function PrefillCreationForm(&$aContextParam)
     {
@@ -666,12 +683,6 @@
         }
     }
   ]]></code>
-                    <arguments>
-                        <argument id="1">
-                            <mandatory>false</mandatory>
-                            <type>attcode</type>
-                        </argument>
-                    </arguments>
                 </method>
                 <method id="EvtBeforeWrite">
                     <static>false</static>
@@ -820,7 +831,7 @@
                         <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="friendlyname">
+                        <item id="name">
                             <rank>20</rank>
                         </item>
                         <item id="assetowner_id">
@@ -829,19 +840,19 @@
                         <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="category">
                             <rank>50</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>70</rank>
                         </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="ref">
-                            <rank>10</rank>
-                        </item>
-                        <item id="name">
-                            <rank>20</rank>
-                        </item>
                         <item id="org_id">
                             <rank>30</rank>
                         </item>
@@ -864,12 +875,6 @@
                 </search>
                 <list>
                     <items>
-                        <item id="ref">
-                            <rank>10</rank>
-                        </item>
-                        <item id="name">
-                            <rank>20</rank>
-                        </item>
                         <item id="org_id">
                             <rank>30</rank>
                         </item>
@@ -887,6 +892,14 @@
                         </item>
                     </items>
                 </list>
+                <summary>
+                    <items>
+                        <item id="status" />
+                        <item id="category" />
+                        <item id="assettype_id" />
+                        <item id="assetowner_id" />
+                    </items>
+                </summary>
             </presentation>
         </class>
         <class id="lnkSupportingAssetToAsset" _delta="define">
@@ -917,8 +930,6 @@
                             <attribute id="supportingasset_id" />
                             <attribute id="asset_id" />
                         </attributes>
-                        <filter />
-                        <disabled>false</disabled>
                         <is_blocking>true</is_blocking>
                     </rule>
                 </uniqueness_rules>
@@ -1021,6 +1032,13 @@
                             <attribute id="ref" />
                         </attributes>
                         <is_blocking>false</is_blocking>
+                    </rule>
+                    <rule id="name">
+                        <attributes>
+                            <attribute id="org_id" />
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
                     </rule>
                 </uniqueness_rules>
                 <obsolescence>
@@ -1848,7 +1866,6 @@
     }
   ]]></code>
                 </method>
-
                 <method id="GetAggregationModeDefault">
                     <static>true</static>
                     <access>public</access>
@@ -2105,7 +2122,7 @@
                     <code><![CDATA[
     public static function GetRiskRefFormat()
     {
-        return 'R-%04d';
+        return 'RSK-%04d';
     }
   ]]></code>
                 </method>
@@ -2164,6 +2181,12 @@
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
+                    <arguments>
+                        <argument id="1">
+                            <mandatory>false</mandatory>
+                            <type>attcode</type>
+                        </argument>
+                    </arguments>
                     <code><![CDATA[
     public function PrefillCreationForm(&$aContextParam)
     {
@@ -2182,12 +2205,6 @@
         }
     }
   ]]></code>
-                    <arguments>
-                        <argument id="1">
-                            <mandatory>false</mandatory>
-                            <type>attcode</type>
-                        </argument>
-                    </arguments>
                 </method>
                 <method id="EvtLinksChanged">
                     <static>false</static>
@@ -2467,7 +2484,7 @@
                         <item id="ref">
                             <rank>10</rank>
                         </item>
-                        <item id="friendlyname">
+                        <item id="name">
                             <rank>20</rank>
                         </item>
                         <item id="riskowner_id">
@@ -2476,19 +2493,16 @@
                         <item id="status">
                             <rank>40</rank>
                         </item>
-                        <item id="org_id">
+                        <item id="risk_category">
                             <rank>50</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>60</rank>
                         </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="ref">
-                            <rank>10</rank>
-                        </item>
-                        <item id="name">
-                            <rank>20</rank>
-                        </item>
                         <item id="org_id">
                             <rank>30</rank>
                         </item>
@@ -2517,12 +2531,6 @@
                 </search>
                 <list>
                     <items>
-                        <item id="ref">
-                            <rank>10</rank>
-                        </item>
-                        <item id="name">
-                            <rank>20</rank>
-                        </item>
                         <item id="org_id">
                             <rank>30</rank>
                         </item>
@@ -2530,6 +2538,12 @@
                             <rank>40</rank>
                         </item>
                         <item id="riskowner_id">
+                            <rank>50</rank>
+                        </item>
+                        <item id="risk_category">
+                            <rank>60</rank>
+                        </item>
+                        <item id="treatment_decision">
                             <rank>70</rank>
                         </item>
                     </items>
@@ -2632,8 +2646,10 @@
                 <db_table>ismscontrol</db_table>
                 <db_key_field>id</db_key_field>
                 <key_type>autoincrement</key_type>
+                <db_final_class_field />
                 <naming>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                     </attributes>
                 </naming>
@@ -2645,13 +2661,44 @@
                 </style>
                 <reconciliation>
                     <attributes>
+                        <attribute id="ref" />
                         <attribute id="name" />
                         <attribute id="org_id" />
                         <attribute id="organization_name" />
                     </attributes>
                 </reconciliation>
+                <indexes>
+                    <index id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                    </index>
+                </indexes>
+                <uniqueness_rules>
+                    <rule id="ref">
+                        <attributes>
+                            <attribute id="ref" />
+                        </attributes>
+                        <is_blocking>false</is_blocking>
+                    </rule>
+                    <rule id="name">
+                        <attributes>
+                            <attribute id="org_id" />
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+                <obsolescence>
+                    <condition><![CDATA[status='retired']]></condition>
+                </obsolescence>
             </properties>
             <fields>
+                <field id="ref" xsi:type="AttributeString">
+                    <sql>ref</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
                 <field id="name" xsi:type="AttributeString">
                     <sql>name</sql>
                     <is_null_allowed>false</is_null_allowed>
@@ -2707,8 +2754,8 @@
                     <sort_type>rank</sort_type>
                     <display_style>list</display_style>
                 </field>
-                <field id="owner_id" xsi:type="AttributeExternalKey">
-                    <sql>owner_id</sql>
+                <field id="controlowner_id" xsi:type="AttributeExternalKey">
+                    <sql>controlowner_id</sql>
                     <target_class>Person</target_class>
                     <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
                     <dependencies>
@@ -2717,8 +2764,8 @@
                     <is_null_allowed>true</is_null_allowed>
                     <on_target_delete>DEL_MANUAL</on_target_delete>
                 </field>
-                <field id="owner_name" xsi:type="AttributeExternalField">
-                    <extkey_attcode>owner_id</extkey_attcode>
+                <field id="controlowner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>controlowner_id</extkey_attcode>
                     <target_attcode>name</target_attcode>
                 </field>
                 <field id="control_domain" xsi:type="AttributeEnum">
@@ -2765,12 +2812,29 @@
                     <sql>description</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-                <field id="implemented_on" xsi:type="AttributeDate">
-                    <sql>implemented_on</sql>
+                <field id="creation_date" xsi:type="AttributeDate">
+                    <sql>creation_date</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDateTime">
+                    <sql>last_update</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="approval_date" xsi:type="AttributeDate">
+                    <sql>approval_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="implementation_date" xsi:type="AttributeDate">
+                    <sql>implementation_date</sql>
+                    <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
                 <field id="next_review" xsi:type="AttributeDate">
                     <sql>next_review</sql>
+                    <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
                 <field id="risks_list" xsi:type="AttributeLinkedSetIndirect">
@@ -2808,7 +2872,23 @@
                 </stimuli>
                 <states>
                     <state id="draft">
-                        <flags />
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
+                                <read_only />
+                            </attribute>
+                        </flags>
                         <transitions>
                             <transition id="ev_submit">
                                 <target>submitted</target>
@@ -2817,11 +2897,34 @@
                         </transitions>
                     </state>
                     <state id="submitted">
-                        <flags />
+                        <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
+                                <read_only />
+                            </attribute>
+                        </flags>
                         <transitions>
                             <transition id="ev_approve">
                                 <target>approved</target>
-                                <actions />
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">approval_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
                             </transition>
                             <transition id="ev_reject">
                                 <target>amending</target>
@@ -2831,7 +2934,22 @@
                     </state>
                     <state id="approved">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2842,7 +2960,14 @@
                             </transition>
                             <transition id="ev_mark_effective">
                                 <target>effective</target>
-                                <actions />
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">implementation_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
                             </transition>
                             <transition id="ev_retire">
                                 <target>retired</target>
@@ -2852,6 +2977,9 @@
                     </state>
                     <state id="implementing">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
@@ -2861,11 +2989,30 @@
                             <attribute id="control_type">
                                 <read_only />
                             </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
+                                <read_only />
+                            </attribute>
                         </flags>
                         <transitions>
                             <transition id="ev_mark_effective">
                                 <target>effective</target>
-                                <actions />
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">implementation_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
                             </transition>
                             <transition id="ev_retire">
                                 <target>retired</target>
@@ -2873,10 +3020,24 @@
                             </transition>
                         </transitions>
                     </state>
-
                     <state id="amending">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2895,10 +3056,11 @@
                             </transition>
                         </transitions>
                     </state>
-
-
                     <state id="effective">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
@@ -2908,7 +3070,16 @@
                             <attribute id="control_type">
                                 <read_only />
                             </attribute>
-                            <attribute id="implemented_on">
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2929,6 +3100,9 @@
                     </state>
                     <state id="suspended">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
@@ -2938,7 +3112,16 @@
                             <attribute id="control_type">
                                 <read_only />
                             </attribute>
-                            <attribute id="implemented_on">
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2955,6 +3138,9 @@
                     </state>
                     <state id="retired">
                         <flags>
+                            <attribute id="ref">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -2964,7 +3150,7 @@
                             <attribute id="status">
                                 <read_only />
                             </attribute>
-                            <attribute id="owner_id">
+                            <attribute id="controlowner_id">
                                 <read_only />
                             </attribute>
                             <attribute id="control_domain">
@@ -2976,10 +3162,16 @@
                             <attribute id="description">
                                 <read_only />
                             </attribute>
-                            <attribute id="implemented_on">
+                            <attribute id="creation_date">
                                 <read_only />
                             </attribute>
-                            <attribute id="next_review">
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="implementation_date">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2987,9 +3179,136 @@
                     </state>
                 </states>
             </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtSetInitialAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtBeforeWrite">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtBeforeWrite</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="DBInsertNoReload">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function DBInsertNoReload()
+    {
+        $iNextId = ItopCounter::Inc('ISMSControl');
+        $sRef = $this->MakeControlRef($iNextId);
+        $this->SetIfNull('ref', $sRef);
+        $iKey = parent::DBInsertNoReload();
+        return $iKey;
+    }
+  ]]></code>
+                </method>
+                <method id="MakeControlRef">
+                    <static>false</static>
+                    <access>protected</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    protected function MakeControlRef($iNextId)
+    {
+        return sprintf(static::GetControlRefFormat(), $iNextId);
+    }
+  ]]></code>
+                </method>
+                <method id="GetControlRefFormat">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public static function GetControlRefFormat()
+    {
+        return 'CTR-%04d';
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetInitialAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('approval_date', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('implementation_date', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('approval_date', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('implementation_date', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="PrefillCreationForm">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <arguments>
+                        <argument id="1">
+                            <mandatory>false</mandatory>
+                            <type>attcode</type>
+                        </argument>
+                    </arguments>
+                    <code><![CDATA[
+    public function PrefillCreationForm(&$aContextParam)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
 
+        if (empty($this->Get('creation_date')))
+            $this->Set('creation_date', $sToday);
 
-            <methods />
+        if (empty($this->Get('last_update')))
+            $this->Set('last_update', $sNow);
+    }
+  ]]></code>
+                </method>
+                <method id="EvtBeforeWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $sToday = date(AttributeDate::GetInternalFormat());
+        $sNow   = date(AttributeDateTime::GetInternalFormat());
+
+        // set creation date on initial write
+        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
+            $this->Set('creation_date', $sToday);
+
+        // set last update date on every write
+        $this->Set('last_update', $sNow);
+
+    }
+  ]]></code>
+                </method>
+            </methods>
             <presentation>
                 <details>
                     <items>
@@ -3019,8 +3338,11 @@
                                 <item id="fieldset:ISMSControl:OwnershipSchedule">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="owner_id" />
-                                        <item id="implemented_on" />
+                                        <item id="controlowner_id" />
+                                        <item id="creation_date" />
+                                        <item id="last_update" />
+                                        <item id="approval_date" />
+                                        <item id="implementation_date" />
                                         <!-- this is for a later release
                                         <item id="next_review" />
                                     -->
@@ -3039,15 +3361,33 @@
                         </item>
                     </items>
                 </details>
+                <default_search>
+                    <items>
+                        <item id="ref">
+                            <rank>10</rank>
+                        </item>
+                        <item id="name">
+                            <rank>20</rank>
+                        </item>
+                        <item id="controlowner_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="status">
+                            <rank>40</rank>
+                        </item>
+                        <item id="org_id">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </default_search>
                 <search>
                     <items>
-                        <item id="name" />
                         <item id="org_id" />
                         <item id="status" />
-                        <item id="owner_id" />
+                        <item id="controlowner_id" />
                         <item id="control_domain" />
                         <item id="control_type" />
-                        <item id="implemented_on" />
+                        <item id="implementation_date" />
                         <!-- this is for a later release
                         <item id="next_review" />
                     -->
@@ -3055,10 +3395,9 @@
                 </search>
                 <list>
                     <items>
-                        <item id="name" />
                         <item id="org_id" />
                         <item id="status" />
-                        <item id="owner_id" />
+                        <item id="controlowner_id" />
                         <item id="control_domain" />
                         <item id="control_type" />
                         <!-- this is for a later release
@@ -3222,7 +3561,7 @@
                 </field>
                 <field id="control_owner_ro" xsi:type="AttributeExternalField">
                     <extkey_attcode>control_id</extkey_attcode>
-                    <target_attcode>owner_name</target_attcode>
+                    <target_attcode>controlowner_name</target_attcode>
                 </field>
                 <field id="risk_pre_level_ro" xsi:type="AttributeExternalField">
                     <extkey_attcode>risk_id</extkey_attcode>
@@ -3982,7 +4321,7 @@
         <menu id="ISMSMyControls" xsi:type="OQLMenuNode" _delta="define">
             <rank>32</rank>
             <parent>ISMSManagement:Shortcuts</parent>
-            <oql><![CDATA[SELECT ISMSControl WHERE owner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <oql><![CDATA[SELECT ISMSControl WHERE controlowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
             <do_search>1</do_search>
             <auto_reload>fast</auto_reload>
             <enable_class>ISMSControl</enable_class>

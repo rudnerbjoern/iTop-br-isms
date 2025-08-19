@@ -19,25 +19,25 @@ Dict::Add('EN US', 'English', 'English', array(
     'Menu:ISMSSpace:Options' => 'Options',
     'Menu:ISMSSpace:Risks' => 'Risks & Controls',
     'Menu:NewISMSAsset' => 'New Asset',
-    'Menu:NewISMSAsset+' => 'Create a new ISMS asset.',
+    'Menu:NewISMSAsset+' => 'Create a new ISMS asset',
     'Menu:NewISMSRisk' => 'New Risk',
-    'Menu:NewISMSRisk+' => 'Create a new ISMS risk.',
+    'Menu:NewISMSRisk+' => 'Create a new ISMS risk',
     'Menu:NewISMSControl' => 'New Control',
-    'Menu:NewISMSControl+' => 'Create a new ISMS control.',
+    'Menu:NewISMSControl+' => 'Create a new ISMS control',
     'Menu:SearchISMSAssets' => 'Search Assets',
-    'Menu:SearchISMSAssets+' => 'Search ISMS assets.',
+    'Menu:SearchISMSAssets+' => 'Search ISMS assets',
     'Menu:SearchISMSRisks' => 'Search Risks',
-    'Menu:SearchISMSRisks+' => 'Search ISMS risks.',
+    'Menu:SearchISMSRisks+' => 'Search ISMS risks',
     'Menu:SearchISMSControls' => 'Search Controls',
-    'Menu:SearchISMSControls+' => 'Search ISMS controls.',
+    'Menu:SearchISMSControls+' => 'Search ISMS controls',
     'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
-    'Menu:ISMSManagement:Shortcuts+' => 'Quick access to common ISMS views.',
+    'Menu:ISMSManagement:Shortcuts+' => 'Quick access to common ISMS views',
     'Menu:ISMSMyAssets' => 'My Assets',
-    'Menu:ISMSMyAssets+' => 'Assets where I am the owner.',
+    'Menu:ISMSMyAssets+' => 'Assets where I am the asset owner',
     'Menu:ISMSMyRisks' => 'My Risks',
-    'Menu:ISMSMyRisks+' => 'Risks where I am the risk owner.',
+    'Menu:ISMSMyRisks+' => 'Risks where I am the risk owner',
     'Menu:ISMSMyControls' => 'My Controls',
-    'Menu:ISMSMyControls+' => 'Controls where I am the owner.',
+    'Menu:ISMSMyControls+' => 'Controls where I am the control owner',
 ));
 
 //
@@ -53,6 +53,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAssetType/Attribute:description+' => 'Optional details about this asset type.',
     'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
     'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'All assets that are assigned to this type.',
+    'Class:ISMSAssetType/UniquenessRule:name' => 'This asset type already exists',
+    'Class:ISMSAssetType/UniquenessRule:name+' => 'The name must be unique',
 ));
 
 //
@@ -89,10 +91,10 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:assettype_id+' => 'Asset type / classification.',
     'Class:ISMSAsset/Attribute:assettype_id_friendlyname' => 'Type',
     'Class:ISMSAsset/Attribute:assettype_name' => 'Type',
-    'Class:ISMSAsset/Attribute:assetowner_id' => 'Owner',
+    'Class:ISMSAsset/Attribute:assetowner_id' => 'Asset owner',
     'Class:ISMSAsset/Attribute:assetowner_id+' => 'Person accountable for the asset.',
-    'Class:ISMSAsset/Attribute:assetowner_id_friendlyname' => 'Owner',
-    'Class:ISMSAsset/Attribute:assetowner_name' => 'Owner',
+    'Class:ISMSAsset/Attribute:assetowner_id_friendlyname' => 'Asset owner',
+    'Class:ISMSAsset/Attribute:assetowner_name' => 'Asset owner',
     'Class:ISMSAsset/Attribute:assetguardian_id' => 'Guardian',
     'Class:ISMSAsset/Attribute:assetguardian_id+' => 'Custodian responsible for day-to-day care of the asset.',
     'Class:ISMSAsset/Attribute:assetguardian_id_friendlyname' => 'Guardian',
@@ -113,6 +115,10 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets that are supported by this asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risk(s)',
     'Class:ISMSAsset/Attribute:risks_list+' => 'All risks linked to this asset.',
+    'Class:ISMSAsset/UniquenessRule:ref' => 'An asset with this reference already exists',
+    'Class:ISMSAsset/UniquenessRule:ref+' => 'The ref must be unique',
+    'Class:ISMSAsset/UniquenessRule:name' => 'An asset with this name already exists',
+    'Class:ISMSAsset/UniquenessRule:name+' => 'The name must be unique',
     'Class:ISMSAsset/Stimulus:ev_publish' => 'Publish',
     'Class:ISMSAsset/Stimulus:ev_publish+' => 'Publish/approve this asset.',
     'Class:ISMSAsset/Stimulus:ev_draft' => 'Draft',
@@ -121,24 +127,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Stimulus:ev_obsolete+' => 'Retire this asset.',
     'Class:ISMSAsset/Stimulus:ev_reopen' => 'Reopen',
     'Class:ISMSAsset/Stimulus:ev_reopen+' => 'Reopen an obsolete asset (back to draft).',
-));
-
-//
-// Class: lnkSupportingAssetToAsset
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkSupportingAssetToAsset' => 'Link Supporting Asset / Asset',
-    'Class:lnkSupportingAssetToAsset+' => 'Association indicating that the first asset supports the second asset.',
-    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Select the asset that provides support to another asset.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Supported asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Select the asset that is being supported.',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Supported asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
 ));
 
 //
@@ -356,6 +344,10 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Attribute:assets_list+' => 'All assets linked to this risk.',
     'Class:ISMSRisk/Attribute:controls_list' => 'Control(s)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'All controls linked to this risk.',
+    'Class:ISMSRisk/UniquenessRule:ref' => 'A risk with this reference already exists',
+    'Class:ISMSRisk/UniquenessRule:ref+' => 'The ref must be unique',
+    'Class:ISMSRisk/UniquenessRule:name' => 'A risk with this name already exists',
+    'Class:ISMSRisk/UniquenessRule:name+' => 'The name must be unique',
     'Class:ISMSRisk/Stimulus:ev_publish' => 'Publish',
     'Class:ISMSRisk/Stimulus:ev_publish+' => 'Publish/approve this risk.',
     'Class:ISMSRisk/Stimulus:ev_draft' => 'Draft',
@@ -410,10 +402,10 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Temporarily suspended',
     'Class:ISMSControl/Attribute:status/Value:retired' => 'Retired',
     'Class:ISMSControl/Attribute:status/Value:retired+' => 'Decommissioned / no longer in use',
-    'Class:ISMSControl/Attribute:owner_id' => 'Owner',
-    'Class:ISMSControl/Attribute:owner_id+' => 'Person responsible for maintaining the control.',
-    'Class:ISMSControl/Attribute:owner_id_friendlyname' => 'Owner',
-    'Class:ISMSControl/Attribute:owner_name' => 'Owner',
+    'Class:ISMSControl/Attribute:controlowner_id' => 'Control owner',
+    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person responsible for maintaining the control.',
+    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Control owner',
+    'Class:ISMSControl/Attribute:controlowner_name' => 'Control owner',
     'Class:ISMSControl/Attribute:control_domain' => 'Control domain',
     'Class:ISMSControl/Attribute:control_domain+' => 'Primary domain of the control.',
     'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organizational',
@@ -434,12 +426,16 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Preventive control.',
     'Class:ISMSControl/Attribute:description' => 'Description',
     'Class:ISMSControl/Attribute:description+' => 'Details about the control implementation and scope.',
-    'Class:ISMSControl/Attribute:implemented_on' => 'Implemented on',
-    'Class:ISMSControl/Attribute:implemented_on+' => 'Date when the control was implemented.',
+    'Class:ISMSControl/Attribute:implementation_date' => 'Implemented on',
+    'Class:ISMSControl/Attribute:implementation_date+' => 'Date when the control was implemented.',
     'Class:ISMSControl/Attribute:next_review' => 'Next review',
     'Class:ISMSControl/Attribute:next_review+' => 'Next scheduled review date.',
     'Class:ISMSControl/Attribute:risks_list' => 'Risk(s)',
     'Class:ISMSControl/Attribute:risks_list+' => 'All risks linked to this control.',
+    'Class:ISMSControl/UniquenessRule:ref' => 'A control with this reference already exists',
+    'Class:ISMSControl/UniquenessRule:ref+' => 'The ref must be unique',
+    'Class:ISMSControl/UniquenessRule:name' => 'A control with this name already exists',
+    'Class:ISMSControl/UniquenessRule:name+' => 'The name must be unique',
     'Class:ISMSControl/Stimulus:ev_submit' => 'Submit for approval',
     'Class:ISMSControl/Stimulus:ev_submit+' => 'Move from Draft to Submitted',
     'Class:ISMSControl/Stimulus:ev_approve' => 'Approve',
@@ -462,6 +458,24 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Submit the amendment for approval',
     'Class:ISMSControl/Stimulus:ev_cancel_amend'  => 'Cancel amendment',
     'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Discard the amendment and return to Effective',
+));
+
+//
+// Class: lnkSupportingAssetToAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkSupportingAssetToAsset' => 'Link Supporting Asset / Asset',
+    'Class:lnkSupportingAssetToAsset+' => 'Association indicating that the first asset supports the second asset.',
+    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Select the asset that provides support to another asset.',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Supported asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Select the asset that is being supported.',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Supported asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
 ));
 
 //

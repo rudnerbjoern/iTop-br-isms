@@ -113,7 +113,7 @@ stateDiagram-v2
 ### ISMSControl
 
 - Lifecycle (recommended): `draft → submitted → approved → implementing → effective → (suspended ↔ effective) → retired`
-- Fields: `name`, `org_id`, `owner_id`, `control_domain`, `control_type`, `implemented_on`, `next_review`
+- Fields: `name`, `org_id`, `controlowner_id`, `control_domain`, `control_type`, `implementation_date`, `next_review`
 - Linked risks via `lnkISMSRiskToISMSControl`
 - Can be revised (return to draft) if your policy allows it.
 
