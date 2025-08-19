@@ -268,12 +268,12 @@
                 </field>
                 -->
 
-                <field id="last_review" xsi:type="AttributeDate" _delta="define">
+                <field id="last_review" xsi:type="AttributeDate">
                     <sql>last_review</sql>
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-                <field id="next_review" xsi:type="AttributeDate" _delta="define">
+                <field id="next_review" xsi:type="AttributeDate">
                     <sql>next_review</sql>
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
@@ -631,7 +631,7 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetAttributeFlags" _delta="define">
+                <method id="EvtSetAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -747,7 +747,7 @@
                                         </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:Server:riskmanagement" _delta="define">
+                                <item id="fieldset:Server:riskmanagement">
                                     <rank>20</rank>
                                     <items>
                                         <item id="rm_confidentiality">
@@ -791,7 +791,7 @@
                         </item>
 
                         <!-- this is for a later release
-                        <item id="fieldset:ISMSAsset:Reviews" _delta="define">
+                        <item id="fieldset:ISMSAsset:Reviews" >
                             <rank>180</rank>
                             <items>
                                 <item id="review_interval_months" />
@@ -799,7 +799,7 @@
                                 <item id="next_review" />
                             </items>
                         </item>
-                        <item id="reviews_list" _delta="define">
+                        <item id="reviews_list" >
                             <rank>190</rank>
                         </item>
                     -->
@@ -1816,24 +1816,24 @@
                     <rank>10</rank>
                     <callback>EvtCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeWrite" _delta="define">
+                <event_listener id="EvtBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
                     <callback>EvtBeforeWrite</callback>
                 </event_listener>
-                <event_listener id="EvtComputeValues" _delta="define">
+                <event_listener id="EvtComputeValues">
                     <event>EVENT_DB_COMPUTE_VALUES</event>
                     <rank>10</rank>
                     <callback>EvtComputeValues</callback>
                 </event_listener>
-                <event_listener id="EvtLinksChanged" _delta="define">
+                <event_listener id="EvtLinksChanged">
                     <event>EVENT_DB_LINKS_CHANGED</event>
                     <rank>10</rank>
                     <callback>EvtLinksChanged</callback>
                 </event_listener>
             </event_listeners>
             <methods>
-                <method id="MapScoreToLevel" _delta="define">
+                <method id="MapScoreToLevel">
                     <static>true</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -1849,7 +1849,7 @@
   ]]></code>
                 </method>
 
-                <method id="GetAggregationModeDefault" _delta="define">
+                <method id="GetAggregationModeDefault">
                     <static>true</static>
                     <access>public</access>
                     <type>Overload-cmdbAbstractObject</type>
@@ -1861,7 +1861,7 @@
     }
   ]]></code>
                 </method>
-                <method id="GetAggregationMode" _delta="define">
+                <method id="GetAggregationMode">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -1879,7 +1879,7 @@
     }
   ]]></code>
                 </method>
-                <method id="AggregateControlEffects" _delta="define">
+                <method id="AggregateControlEffects">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -1979,7 +1979,7 @@
     }
   ]]></code>
                 </method>
-                <method id="RecomputeRiskScores" _delta="define">
+                <method id="RecomputeRiskScores">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -2129,7 +2129,7 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetAttributeFlags" _delta="define">
+                <method id="EvtSetAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -2189,7 +2189,7 @@
                         </argument>
                     </arguments>
                 </method>
-                <method id="EvtLinksChanged" _delta="define">
+                <method id="EvtLinksChanged">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -2200,7 +2200,7 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtBeforeWrite" _delta="define">
+                <method id="EvtBeforeWrite">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -2221,7 +2221,7 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtComputeValues" _delta="define">
+                <method id="EvtComputeValues">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -3479,7 +3479,7 @@
             </lifecycle>
             <methods>
 
-                <method id="GetTargetObject" _delta="define">
+                <method id="GetTargetObject" >
             <static>false</static>
             <access>public</access>
             <type>Overload-DBObject</type>
@@ -3488,7 +3488,7 @@
       ]]></code>
         </method>
 
-                <method id="EvtOnStateTransition" _delta="define">
+                <method id="EvtOnStateTransition" >
             <static>false</static>
             <access>public</access>
             <type>EventListener</type>
@@ -3510,7 +3510,7 @@
       ]]></code>
         </method>
 
-                <method id="EvtCheckToWrite" _delta="define">
+                <method id="EvtCheckToWrite" >
             <static>false</static>
             <access>public</access>
             <type>EventListener</type>
@@ -3681,7 +3681,7 @@
                 </states>
             </lifecycle>
             <methods>
-                <method id="PrefillCreationForm" _delta="define">
+                <method id="PrefillCreationForm" >
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -3712,7 +3712,7 @@
       }
       ]]></code>
                 </method>
-                <method id="GetTargetObject" _delta="define">
+                <method id="GetTargetObject" >
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -3724,7 +3724,7 @@
       }
       ]]></code>
                 </method>
-                <method id="OnReviewCompleted" _delta="define">
+                <method id="OnReviewCompleted" >
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -3842,14 +3842,16 @@
             <rank>29</rank>
             <enable_class>ISMSAsset</enable_class>
             <enable_admin_only>0</enable_admin_only>
-            <enable_action>UR_ACTION_MODIFY</enable_action>
+            <enable_action>UR_ACTION_READ</enable_action>
             <style>
-                <decoration_classes>fas fa-sensor-cloud</decoration_classes>
+                <decoration_classes>fas fa-table</decoration_classes>
             </style>
         </menu>
         <menu id="ISMSSpace" xsi:type="DashboardMenuNode" _delta="define">
-            <rank>10</rank>
+            <rank>0</rank>
             <parent>ISMSManagement</parent>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
             <definition>
                 <layout>DashboardLayoutOneCol</layout>
                 <title />
@@ -3910,7 +3912,579 @@
                 </cells>
             </definition>
         </menu>
+        <menu id="NewISMSAsset" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>10</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSAsset</class>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="NewISMSRisk" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>11</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSRisk</class>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="NewISMSControl" xsi:type="NewObjectMenuNode" _delta="define">
+            <rank>12</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSControl</class>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_MODIFY</enable_action>
+        </menu>
+        <menu id="SearchISMSAssets" xsi:type="SearchMenuNode" _delta="define">
+            <rank>20</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSAsset</class>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="SearchISMSRisks" xsi:type="SearchMenuNode" _delta="define">
+            <rank>21</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSRisk</class>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="SearchISMSControls" xsi:type="SearchMenuNode" _delta="define">
+            <rank>22</rank>
+            <parent>ISMSManagement</parent>
+            <class>ISMSControl</class>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSManagement:Shortcuts" xsi:type="TemplateMenuNode" _delta="define">
+            <rank>30</rank>
+            <parent>ISMSManagement</parent>
+            <template_file />
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyAssets" xsi:type="OQLMenuNode" _delta="define">
+            <rank>31</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSAsset WHERE assetowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSAsset</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyRisks" xsi:type="OQLMenuNode" _delta="define">
+            <rank>32</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSRisk WHERE riskowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSMyControls" xsi:type="OQLMenuNode" _delta="define">
+            <rank>32</rank>
+            <parent>ISMSManagement:Shortcuts</parent>
+            <oql><![CDATA[SELECT ISMSControl WHERE owner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
     </menus>
+    <user_rights>
+        <groups>
+            <group id="ISMSTypology" _delta="define">
+                <classes>
+                    <class id="ISMSAssetType" />
+                </classes>
+            </group>
+            <group id="ISMSAssetMgmt" _delta="define">
+                <classes>
+                    <class id="ISMSAsset" />
+                </classes>
+            </group>
+            <group id="ISMSRiskMgmt" _delta="define">
+                <classes>
+                    <class id="ISMSRisk" />
+                </classes>
+            </group>
+            <group id="ISMSControlMgmt" _delta="define">
+                <classes>
+                    <class id="ISMSControl" />
+                </classes>
+            </group>
+            <group id="ISMSLinkAssetAsset" _delta="define">
+                <classes>
+                    <class id="lnkSupportingAssetToAsset" />
+                </classes>
+            </group>
+            <group id="ISMSLinkRiskAsset" _delta="define">
+                <classes>
+                    <class id="lnkISMSRiskToISMSAsset" />
+                </classes>
+            </group>
+            <group id="ISMSLinkRiskControl" _delta="define">
+                <classes>
+                    <class id="lnkISMSRiskToISMSControl" />
+                </classes>
+            </group>
+        </groups>
+        <profiles>
+            <profile id="73001" _delta="define">
+                <name>ISMS Manager</name>
+                <description>Full access to ISMS Assets, Risks, Controls, links and lifecycle actions across all organizations.</description>
+                <groups>
+                    <group id="ISMSTypology">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_publish">allow</action>
+                            <action id="stimulus:ev_draft">allow</action>
+                            <action id="stimulus:ev_obsolete">allow</action>
+                            <action id="stimulus:ev_reopen">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_publish">allow</action>
+                            <action id="stimulus:ev_draft">allow</action>
+                            <action id="stimulus:ev_obsolete">allow</action>
+                            <action id="stimulus:ev_reopen">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_submit">allow</action>
+                            <action id="stimulus:ev_approve">allow</action>
+                            <action id="stimulus:ev_start_impl">allow</action>
+                            <action id="stimulus:ev_mark_effective">allow</action>
+                            <action id="stimulus:ev_suspend">allow</action>
+                            <action id="stimulus:ev_resume">allow</action>
+                            <action id="stimulus:ev_retire">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkAssetAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskControl">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+            <profile id="73002" _delta="define">
+                <name>ISMS Asset Maintainer</name>
+                <description>Create and maintain ISMS Assets (typically within own organization). No publish or obsolete transitions.</description>
+                <groups>
+                    <group id="ISMSTypology">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_start_impl">deny</action>
+                            <action id="stimulus:ev_mark_effective">deny</action>
+                            <action id="stimulus:ev_suspend">deny</action>
+                            <action id="stimulus:ev_resume">deny</action>
+                            <action id="stimulus:ev_retire">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkAssetAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskControl">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+            <profile id="73003" _delta="define">
+                <name>ISMS Risk Analyst</name>
+                <description>Create and assess ISMS Risks, manage links to Assets/Controls and treatment data. No publish or obsolete transitions.</description>
+                <groups>
+                    <group id="ISMSTypology">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_start_impl">deny</action>
+                            <action id="stimulus:ev_mark_effective">deny</action>
+                            <action id="stimulus:ev_suspend">deny</action>
+                            <action id="stimulus:ev_resume">deny</action>
+                            <action id="stimulus:ev_retire">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkAssetAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskControl">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+            <profile id="73004" _delta="define">
+                <name>ISMS Control Maintainer</name>
+                <description>Create and maintain ISMS Controls and implementation details. Governance actions (approve/effective/retire) by Manager.</description>
+                <groups>
+                    <group id="ISMSTypology">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">allow</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_start_impl">allow</action>
+                            <action id="stimulus:ev_mark_effective">deny</action>
+                            <action id="stimulus:ev_suspend">allow</action>
+                            <action id="stimulus:ev_resume">allow</action>
+                            <action id="stimulus:ev_retire">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkAssetAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskControl">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+            <profile id="73005" _delta="define">
+                <name>ISMS Viewer</name>
+                <description>Read-only access to ISMS Assets, Risks and Controls.</description>
+                <groups>
+                    <group id="ISMSTypology">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_publish">deny</action>
+                            <action id="stimulus:ev_draft">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlMgmt">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_start_impl">deny</action>
+                            <action id="stimulus:ev_mark_effective">deny</action>
+                            <action id="stimulus:ev_suspend">deny</action>
+                            <action id="stimulus:ev_resume">deny</action>
+                            <action id="stimulus:ev_retire">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkAssetAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskAsset">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkRiskControl">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                </groups>
+            </profile>
+        </profiles>
+    </user_rights>
     <module_parameters>
         <parameters id="br-isms" _delta="define">
             <risk_aggregation_mode type="string">max</risk_aggregation_mode>

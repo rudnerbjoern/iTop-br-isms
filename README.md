@@ -79,12 +79,15 @@ Global default for risk control aggregation (per-risk can override):
 - Flags:
   - In `published`: identity/context read-only; review dates editable
 
-### ISMSControl
+```mermaid
+stateDiagram-v2
+  [*] --> draft
 
-- Lifecycle (recommended): `draft → submitted → approved → implementing → effective → (suspended ↔ effective) → retired`
-- Fields: `name`, `org_id`, `owner_id`, `control_domain`, `control_type`, `implemented_on`, `next_review`
-- Linked risks via `lnkISMSRiskToISMSControl`
-- Can be revised (return to draft) if your policy allows it.
+  draft --> published: ev_publish
+  published --> draft: ev_draft
+  published --> obsolete: ev_obsolete
+  obsolete --> draft: ev_reopen
+```
 
 ### ISMSRisk
 
@@ -96,6 +99,41 @@ Global default for risk control aggregation (per-risk can override):
 - Relations:
   - Controls via `lnkISMSRiskToISMSControl` (only *effective* links contribute to computations)
   - Assets via `lnkISMSRiskToISMSAsset`
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+
+  draft --> published: ev_publish
+  published --> draft: ev_draft
+  published --> obsolete: ev_obsolete
+  obsolete --> draft: ev_reopen
+```
+
+### ISMSControl
+
+- Lifecycle (recommended): `draft → submitted → approved → implementing → effective → (suspended ↔ effective) → retired`
+- Fields: `name`, `org_id`, `owner_id`, `control_domain`, `control_type`, `implemented_on`, `next_review`
+- Linked risks via `lnkISMSRiskToISMSControl`
+- Can be revised (return to draft) if your policy allows it.
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+
+  draft --> submitted: ev_submit
+  submitted --> approved: ev_approve
+  approved --> implementing: ev_start_impl
+  implementing --> effective: ev_mark_effective
+
+  effective --> suspended: ev_suspend
+  suspended --> effective: ev_resume
+
+  approved --> retired: ev_retire
+  implementing --> retired: ev_retire
+  effective --> retired: ev_retire
+  suspended --> retired: ev_retire
+```
 
 ---
 
@@ -164,6 +202,73 @@ Global default for risk control aggregation (per-risk can override):
   Generate human-friendly references:
   - Assets: `A-%04d`
   - Risks:  `R-%04d`
+
+---
+
+## User Rights
+
+This chapter defines who is **Responsible (R)**, **Accountable (A)**, **Consulted (C)**, and **Informed (I)** for key activities within the ISMS extension.
+
+> **Legend:**
+> **R** = Responsible (does the work) • **A** = Accountable (final decision/ownership) • **C** = Consulted (two-way) • **I** = Informed (one-way)
+
+### Roles
+
+- **ISMS Manager** – governance & lifecycle authority, full access
+- **ISMS Asset Maintainer** – creates/maintains assets
+- **ISMS Risk Analyst** – creates/assesses risks, manages risk links & treatment data
+- **ISMS Control Maintainer** – creates/maintains controls, implements them (approval/go-live by Manager)
+- **ISMS Viewer** – read-only
+
+> Organization scope/visibility is governed separately from these role profiles.
+
+### Typology
+
+| Activity                                   | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
+| ------------------------------------------ | -----------: | ---------------: | -----------: | -----------------: | -----: |
+| Maintain **Asset Types** (`ISMSAssetType`) |      **A/R** |                I |            I |                  I |      I |
+
+### Assets
+
+| Activity                                                              | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
+| --------------------------------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
+| Create / update **Asset** (`ISMSAsset`)                               |            A |            **R** |            I |                  I |      I |
+| Publish asset (→ `published`)                                         |      **A/R** |                I |            I |                  I |      I |
+| Obsolete asset (→ `obsolete`)                                         |      **A/R** |                I |            I |                  I |      I |
+| Reopen asset (→ `draft`)                                              |      **A/R** |                I |            I |                  I |      I |
+| Maintain **supporting/supported** links (`lnkSupportingAssetToAsset`) |            A |            **R** |            C |                  I |      I |
+
+### Risks
+
+| Activity                                                       | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
+| -------------------------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
+| Create / update **Risk** (`ISMSRisk`)                          |            A |                I |        **R** |                  I |      I |
+| Publish risk (→ `published`)                                   |      **A/R** |                I |            I |                  I |      I |
+| Obsolete / reopen risk                                         |      **A/R** |                I |            I |                  I |      I |
+| Maintain **Risk ↔ Asset** links (`lnkISMSRiskToISMSAsset`)     |            A |                I |        **R** |                  I |      I |
+| Maintain **Risk ↔ Control** links (`lnkISMSRiskToISMSControl`) |            A |                I |        **R** |                  C |      I |
+| Define treatment (decision/owner/due/plan, target residual)    |        **A** |                C |        **R** |                  C |      I |
+| Record risk **acceptance** (status/by/date/rationale)          |      **A/R** |                I |            C |                  I |      I |
+
+### Controls
+
+| Activity                                    | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
+| ------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
+| Create / update **Control** (`ISMSControl`) |            A |                I |            I |              **R** |      I |
+| Submit control (→ internal review)          |            A |                I |            I |              **R** |      I |
+| Approve control                             |      **A/R** |                I |            I |                  C |      I |
+| Start implementation                        |            A |                I |            I |              **R** |      I |
+| Mark **effective**                          |      **A/R** |                I |            I |                  C |      I |
+| Suspend / resume                            |            A |                I |            I |              **R** |      I |
+| Retire                                      |      **A/R** |                I |            I |                  C |      I |
+
+### Notes
+
+- Tables reflect shipped profile permissions: **Manager** can execute all lifecycle stimuli; **Maintainers/Analysts** have day-to-day write access in their domain but not publish/obsolete/approve/effective actions.
+- Link maintenance is segregated:
+  - Asset topology (`lnkSupportingAssetToAsset`) by **Asset Maintainer**.
+  - Risk linkage (`lnkISMSRiskToISMSAsset`, `lnkISMSRiskToISMSControl`) by **Risk Analyst**.
+- Organization boundaries (who may touch which org’s data) are enforced via user/org visibility, not via these RACI assignments.
 
 ---
 
