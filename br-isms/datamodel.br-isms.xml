@@ -364,7 +364,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -442,7 +442,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -455,7 +455,7 @@
                             <transition id="ev_obsolete">
                                 <target>obsolete</target>
                                 <actions>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -546,7 +546,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -575,20 +575,20 @@
                 </relation>
             </relations>
             <event_listeners>
-                <event_listener id="EvtSetInitialAttributeFlags">
+                <event_listener id="EvtSetInitialISMSAssetAttributeFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialAttributeFlags</callback>
+                    <callback>EvtSetInitialISMSAssetAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetAttributeFlags">
+                <event_listener id="EvtSetISMSAssetAttributeFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetAttributeFlags</callback>
+                    <callback>EvtSetISMSAssetAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeWrite">
+                <event_listener id="EvtBeforeISMSAssetWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeWrite</callback>
+                    <callback>EvtBeforeISMSAssetWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods>
@@ -629,12 +629,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetInitialAttributeFlags">
+                <method id="EvtSetInitialISMSAssetAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetInitialISMSAssetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -642,12 +642,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetAttributeFlags">
+                <method id="EvtSetISMSAssetAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetISMSAssetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -684,12 +684,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtBeforeWrite">
+                <method id="EvtBeforeISMSAssetWrite">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtBeforeISMSAssetWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $sToday = date(AttributeDate::GetInternalFormat());
         $sNow   = date(AttributeDateTime::GetInternalFormat());
@@ -1578,7 +1578,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1653,7 +1653,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1666,7 +1666,7 @@
                             <transition id="ev_obsolete">
                                 <target>obsolete</target>
                                 <actions>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1790,7 +1790,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1819,35 +1819,35 @@
                 </relation>
             </relations>
             <event_listeners>
-                <event_listener id="EvtSetInitialAttributeFlags">
+                <event_listener id="EvtSetInitialISMSRiskAttributeFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialAttributeFlags</callback>
+                    <callback>EvtSetInitialISMSRiskAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetAttributeFlags">
+                <event_listener id="EvtSetISMSRiskAttributeFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetAttributeFlags</callback>
+                    <callback>EvtSetISMSRiskAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtCheckToWrite">
+                <event_listener id="EvtCheckISMSRiskToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtCheckToWrite</callback>
+                    <callback>EvtCheckISMSRiskToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeWrite">
+                <event_listener id="EvtBeforeISMSRiskWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeWrite</callback>
+                    <callback>EvtBeforeISMSRiskWrite</callback>
                 </event_listener>
-                <event_listener id="EvtComputeValues">
+                <event_listener id="EvtComputeISMSRiskValues">
                     <event>EVENT_DB_COMPUTE_VALUES</event>
                     <rank>10</rank>
-                    <callback>EvtComputeValues</callback>
+                    <callback>EvtComputeISMSRiskValues</callback>
                 </event_listener>
-                <event_listener id="EvtLinksChanged">
+                <event_listener id="EvtISMSRiskLinksChanged">
                     <event>EVENT_DB_LINKS_CHANGED</event>
                     <rank>10</rank>
-                    <callback>EvtLinksChanged</callback>
+                    <callback>EvtISMSRiskLinksChanged</callback>
                 </event_listener>
             </event_listeners>
             <methods>
@@ -2126,12 +2126,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetInitialAttributeFlags">
+                <method id="EvtSetInitialISMSRiskAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetInitialISMSRiskAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('pre_score', OPT_ATT_READONLY);
@@ -2146,12 +2146,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetAttributeFlags">
+                <method id="EvtSetISMSRiskAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetISMSRiskAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('pre_score', OPT_ATT_READONLY);
@@ -2206,23 +2206,23 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtLinksChanged">
+                <method id="EvtISMSRiskLinksChanged">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtISMSRiskLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->RecomputeRiskScores();
     }
   ]]></code>
                 </method>
-                <method id="EvtBeforeWrite">
+                <method id="EvtBeforeISMSRiskWrite">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtBeforeISMSRiskWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $sToday = date(AttributeDate::GetInternalFormat());
         $sNow   = date(AttributeDateTime::GetInternalFormat());
@@ -2238,18 +2238,18 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtComputeValues">
+                <method id="EvtComputeISMSRiskValues">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtComputeValues(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtComputeISMSRiskValues(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->RecomputeRiskScores();
     }
   ]]></code>
                 </method>
-                <method id="EvtCheckToWrite">
+                <method id="EvtCheckISMSRiskToWrite">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
@@ -2266,7 +2266,7 @@
      *  - For new objects (is_new), we skip link-based checks (no links exist yet).
      *  - If you want to block saving instead of warning, use AddCheckError().
      */
-    public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtCheckISMSRiskToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $bIsNew = (bool) $oEventData->Get('is_new');
 
@@ -3180,20 +3180,20 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtSetInitialAttributeFlags">
+                <event_listener id="EvtSetInitialISMSControlAttributeFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialAttributeFlags</callback>
+                    <callback>EvtSetInitialISMSControlAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetAttributeFlags">
+                <event_listener id="EvtSetISMSControlAttributeFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetAttributeFlags</callback>
+                    <callback>EvtSetISMSControlAttributeFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeWrite">
+                <event_listener id="EvtBeforeISMSControlWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeWrite</callback>
+                    <callback>EvtBeforeISMSControlWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods>
@@ -3234,12 +3234,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetInitialAttributeFlags">
+                <method id="EvtSetInitialISMSControlAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetInitialAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetInitialISMSControlAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -3249,12 +3249,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtSetAttributeFlags">
+                <method id="EvtSetISMSControlAttributeFlags">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtSetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtSetISMSControlAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -3288,12 +3288,12 @@
     }
   ]]></code>
                 </method>
-                <method id="EvtBeforeWrite">
+                <method id="EvtBeforeISMSControlWrite">
                     <static>false</static>
                     <access>public</access>
                     <type>EventListener</type>
                     <code><![CDATA[
-    public function EvtBeforeWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    public function EvtBeforeISMSControlWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
         $sToday = date(AttributeDate::GetInternalFormat());
         $sNow   = date(AttributeDateTime::GetInternalFormat());
