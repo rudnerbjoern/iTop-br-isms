@@ -290,6 +290,14 @@
                     <default_value />
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="functionalcis_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkFunctionalCiToAsset</linked_class>
+                    <ext_key_to_me>asset_id</ext_key_to_me>
+                    <ext_key_to_remote>functionalci_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
                 <field id="supportingassets_list" xsi:type="AttributeLinkedSetIndirect">
                     <linked_class>lnkSupportingAssetToAsset</linked_class>
                     <ext_key_to_me>asset_id</ext_key_to_me>
@@ -529,6 +537,9 @@
                             <attribute id="next_review">
                                 <read_only />
                             </attribute>
+                            <attribute id="functionalcis_list">
+                                <read_only />
+                            </attribute>
                             <attribute id="supportingassets_list">
                                 <read_only />
                             </attribute>
@@ -570,6 +581,10 @@
                         <neighbour id="ismsrisk">
                             <query_up><![CDATA[SELECT ISMSRisk AS up JOIN lnkISMSRiskToISMSAsset AS lnk ON lnk.risk_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
                             <query_down><![CDATA[SELECT ISMSRisk AS down WHERE 1 = 0]]></query_down>
+                        </neighbour>
+                        <neighbour id="functionalci">
+                            <query_up><![CDATA[SELECT FunctionalCI AS up JOIN lnkFunctionalCiToAsset AS lnk ON lnk.functionalci_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
+                            <query_down><![CDATA[SELECT FunctionalCI AS down WHERE 1 = 0]]></query_down>
                         </neighbour>
                     </neighbours>
                 </relation>
@@ -819,10 +834,13 @@
                             <rank>200</rank>
                         </item>
                         <item id="supportedassets_list">
-                            <rank>205</rank>
+                            <rank>210</rank>
+                        </item>
+                        <item id="functionalcis_list">
+                            <rank>220</rank>
                         </item>
                         <item id="risks_list">
-                            <rank>210</rank>
+                            <rank>230</rank>
                         </item>
                     </items>
                 </details>
@@ -989,6 +1007,106 @@
                     </items>
                 </list>
             </presentation>
+        </class>
+        <class id="lnkFunctionalCiToAsset" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkfunctionalcitoasset</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="functionalci_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="functionalci_id" />
+                        <attribute id="asset_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="functionalci_id" />
+                            <attribute id="asset_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="functionalci_id" xsi:type="AttributeExternalKey">
+                    <sql>functionalci_id</sql>
+                    <target_class>FunctionalCI</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="functionalci_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>functionalci_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="asset_id" xsi:type="AttributeExternalKey">
+                    <sql>asset_id</sql>
+                    <target_class>ISMSAsset</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="asset_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>asset_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="functionalci_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="functionalci_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="functionalci_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="FunctionalCI" _delta="must_exist">
+            <relations>
+                <relation id="impacts">
+                    <neighbours>
+                        <neighbour id="ismsasset">
+                            <direction>down</direction>
+                            <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkFunctionalCiToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.functionalci_id = :this->id]]></query_down>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
         </class>
         <class id="ISMSRisk" _delta="define">
             <parent>cmdbAbstractObject</parent>

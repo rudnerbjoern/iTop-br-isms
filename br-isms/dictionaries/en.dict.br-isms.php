@@ -109,6 +109,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:last_update+' => 'Last modification timestamp.',
     'Class:ISMSAsset/Attribute:next_revision' => 'Next revision',
     'Class:ISMSAsset/Attribute:next_revision+' => 'Planned date for the next review/revision.',
+    'Class:ISMSAsset/Attribute:functionalcis_list' => 'Related CI(s)',
+    'Class:ISMSAsset/Attribute:functionalcis_list+' => 'Functional CIs related to this asset.',
     'Class:ISMSAsset/Attribute:supportingassets_list' => 'Supporting asset(s)',
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets that support this asset.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Supported asset(s)',
@@ -476,6 +478,21 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Select the asset that is being supported.',
     'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Supported asset',
     'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
+));
+
+//
+// Class: lnkFunctionalCiToAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkFunctionalCiToAsset' => 'Link FunctionalCI / Asset',
+    'Class:lnkFunctionalCiToAsset/Name' => '%1$s - %2$s',
+    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id' => 'FunctionalCI',
+    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id_friendlyname' => 'FunctionalCI',
+    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_name' => 'FunctionalCI',
+    'Class:lnkFunctionalCiToAsset/Attribute:asset_id' => 'Related asset',
+    'Class:lnkFunctionalCiToAsset/Attribute:asset_id_friendlyname' => 'Related asset',
+    'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Related asset',
 ));
 
 //
