@@ -1685,6 +1685,24 @@
                             <attribute id="last_update">
                                 <read_only />
                             </attribute>
+                            <attribute id="pre_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="pre_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_level">
+                                <read_only />
+                            </attribute>
                         </flags>
                         <transitions>
                             <transition id="ev_publish">
@@ -1713,6 +1731,7 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <!-- Core identity & dates locked -->
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -1722,15 +1741,7 @@
                             <attribute id="riskowner_id">
                                 <read_only />
                             </attribute>
-                            <attribute id="creation_date">
-                                <read_only />
-                            </attribute>
-                            <attribute id="publish_date">
-                                <read_only />
-                            </attribute>
-                            <attribute id="last_update">
-                                <read_only />
-                            </attribute>
+                            <!-- Risk context locked once published -->
                             <attribute id="risk_category">
                                 <read_only />
                             </attribute>
@@ -1746,6 +1757,16 @@
                             <attribute id="description">
                                 <read_only />
                             </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <!-- Inherent input fixed (baseline) -->
                             <attribute id="pre_likelihood">
                                 <mandatory />
                                 <read_only />
@@ -1754,12 +1775,27 @@
                                 <mandatory />
                                 <read_only />
                             </attribute>
+                            <!-- Computed fields are already forced read-only by events -->
                             <attribute id="pre_score">
                                 <read_only />
                             </attribute>
                             <attribute id="pre_level">
                                 <read_only />
                             </attribute>
+                            <attribute id="res_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="res_level">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_score">
+                                <read_only />
+                            </attribute>
+                            <attribute id="tgt_level">
+                                <read_only />
+                            </attribute>
+                            <!-- Unlock aggregation mode -->
+                            <attribute id="aggregation_mode" />
                         </flags>
                         <transitions>
                             <transition id="ev_draft">
@@ -1807,16 +1843,10 @@
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
+                            <attribute id="status">
+                                <read_only />
+                            </attribute>
                             <attribute id="riskowner_id">
-                                <read_only />
-                            </attribute>
-                            <attribute id="creation_date">
-                                <read_only />
-                            </attribute>
-                            <attribute id="publish_date">
-                                <read_only />
-                            </attribute>
-                            <attribute id="last_update">
                                 <read_only />
                             </attribute>
                             <attribute id="risk_category">
@@ -1895,6 +1925,18 @@
                                 <read_only />
                             </attribute>
                             <attribute id="acceptance_rationale">
+                                <read_only />
+                            </attribute>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                            <attribute id="next_review">
                                 <read_only />
                             </attribute>
                         </flags>
@@ -2684,6 +2726,24 @@
                         <attribute id="asset_id" />
                     </attributes>
                 </naming>
+                <indexes>
+                    <index id="risk_id">
+                        <attributes>
+                            <attribute id="risk_id" />
+                        </attributes>
+                    </index>
+                    <index id="asset_id">
+                        <attributes>
+                            <attribute id="asset_id" />
+                        </attributes>
+                    </index>
+                    <index id="risk_asset">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="asset_id" />
+                        </attributes>
+                    </index>
+                </indexes>
                 <reconciliation>
                     <attributes>
                         <attribute id="risk_id" />
@@ -3019,6 +3079,21 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
+                            <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="controlowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
+                                <read_only />
+                            </attribute>
                             <attribute id="creation_date">
                                 <read_only />
                             </attribute>
@@ -3055,7 +3130,19 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="controlowner_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_domain">
+                                <read_only />
+                            </attribute>
+                            <attribute id="control_type">
                                 <read_only />
                             </attribute>
                             <attribute id="creation_date">
@@ -3098,7 +3185,13 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="controlowner_id">
                                 <read_only />
                             </attribute>
                             <attribute id="control_domain">
@@ -3179,6 +3272,9 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
                                 <read_only />
                             </attribute>
@@ -3221,7 +3317,13 @@
                             <attribute id="ref">
                                 <read_only />
                             </attribute>
+                            <attribute id="name">
+                                <read_only />
+                            </attribute>
                             <attribute id="org_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="controlowner_id">
                                 <read_only />
                             </attribute>
                             <attribute id="control_domain">
@@ -3540,6 +3642,24 @@
                         <attribute id="control_id" />
                     </attributes>
                 </naming>
+                <indexes>
+                    <index id="risk_id">
+                        <attributes>
+                            <attribute id="risk_id" />
+                        </attributes>
+                    </index>
+                    <index id="control_id">
+                        <attributes>
+                            <attribute id="control_id" />
+                        </attributes>
+                    </index>
+                    <index id="risk_control">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="control_id" />
+                        </attributes>
+                    </index>
+                </indexes>
                 <reconciliation>
                     <attributes>
                         <attribute id="risk_id" />
@@ -4342,7 +4462,7 @@
                                 <class>ISMSRisk</class>
                             </dashlet>
                             <dashlet id="isms-220" xsi:type="DashletBadge">
-                                <rank>210</rank>
+                                <rank>220</rank>
                                 <class>ISMSControl</class>
                             </dashlet>
                         </dashlets>
@@ -4421,7 +4541,11 @@
         <menu id="ISMSMyAssets" xsi:type="OQLMenuNode" _delta="define">
             <rank>31</rank>
             <parent>ISMSManagement:Shortcuts</parent>
-            <oql><![CDATA[SELECT ISMSAsset WHERE assetowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <oql><![CDATA[
+SELECT ISMSAsset
+WHERE assetowner_id = :current_contact_id
+    AND status NOT IN ("obsolete")
+  ]]></oql>
             <do_search>1</do_search>
             <auto_reload>fast</auto_reload>
             <enable_class>ISMSAsset</enable_class>
@@ -4430,7 +4554,11 @@
         <menu id="ISMSMyRisks" xsi:type="OQLMenuNode" _delta="define">
             <rank>32</rank>
             <parent>ISMSManagement:Shortcuts</parent>
-            <oql><![CDATA[SELECT ISMSRisk WHERE riskowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <oql><![CDATA[
+SELECT ISMSRisk
+WHERE riskowner_id = :current_contact_id
+    AND status NOT IN ("obsolete")
+  ]]></oql>
             <do_search>1</do_search>
             <auto_reload>fast</auto_reload>
             <enable_class>ISMSRisk</enable_class>
@@ -4439,12 +4567,81 @@
         <menu id="ISMSMyControls" xsi:type="OQLMenuNode" _delta="define">
             <rank>32</rank>
             <parent>ISMSManagement:Shortcuts</parent>
-            <oql><![CDATA[SELECT ISMSControl WHERE controlowner_id = :current_contact_id AND status NOT IN ("obsolete")]]></oql>
+            <oql><![CDATA[
+SELECT ISMSControl
+WHERE controlowner_id = :current_contact_id
+    AND status NOT IN ("retired")
+  ]]></oql>
             <do_search>1</do_search>
             <auto_reload>fast</auto_reload>
             <enable_class>ISMSControl</enable_class>
             <enable_action>UR_ACTION_READ</enable_action>
         </menu>
+        <!-- === ISMS Dashboards & OQL-Shortcuts ===
+        <menu id="ISMSManagement:Dashboards" xsi:type="TemplateMenuNode" _delta="define">
+            <rank>40</rank>
+            <parent>ISMSManagement</parent>
+            <template_file />
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSDash:RisksWithoutControls" xsi:type="OQLMenuNode" _delta="define">
+            <rank>41</rank>
+            <parent>ISMSManagement:Dashboards</parent>
+            <oql><![CDATA[
+SELECT ISMSRisk
+WHERE status NOT IN ("obsolete")
+    AND treatment_decision NOT IN ("accept")
+    AND acceptance_status NOT IN ("accepted")
+    AND id NOT IN (SELECT ISMSRisk AS r JOIN lnkISMSRiskToISMSControl AS l ON l.risk_id = r.id)
+  ]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSRisk</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSDash:OverdueMitigations" xsi:type="OQLMenuNode" _delta="define">
+            <rank>42</rank>
+            <parent>ISMSManagement:Dashboards</parent>
+            <oql><![CDATA[
+SELECT lnkISMSRiskToISMSControl
+WHERE due_date != NULL
+    AND due_date < DATE(NOW())
+    AND link_status IN ("planned","in_progress","ineffective")
+  ]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>lnkISMSRiskToISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSDash:ControlsReviewDue" xsi:type="OQLMenuNode" _delta="define">
+            <rank>43</rank>
+            <parent>ISMSManagement:Dashboards</parent>
+            <oql><![CDATA[
+SELECT ISMSControl
+WHERE status NOT IN ("retired")
+    AND next_review != NULL
+    AND next_review < DATE(NOW())
+  ]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        <menu id="ISMSDash:ControlsNoNextReview" xsi:type="OQLMenuNode" _delta="define">
+            <rank>44</rank>
+            <parent>ISMSManagement:Dashboards</parent>
+            <oql><![CDATA[
+SELECT ISMSControl
+WHERE status NOT IN ('retired')
+    AND next_review = NULL
+  ]]></oql>
+            <do_search>1</do_search>
+            <auto_reload>fast</auto_reload>
+            <enable_class>ISMSControl</enable_class>
+            <enable_action>UR_ACTION_READ</enable_action>
+        </menu>
+        -->
     </menus>
     <user_rights>
         <groups>
@@ -4541,6 +4738,9 @@
                             <action id="stimulus:ev_suspend">allow</action>
                             <action id="stimulus:ev_resume">allow</action>
                             <action id="stimulus:ev_retire">allow</action>
+                            <action id="stimulus:ev_start_amend">allow</action>
+                            <action id="stimulus:ev_submit_amend">allow</action>
+                            <action id="stimulus:ev_cancel_amend">allow</action>
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset" _delta="define">
@@ -4632,6 +4832,10 @@
                             <action id="stimulus:ev_suspend">allow</action>
                             <action id="stimulus:ev_resume">allow</action>
                             <action id="stimulus:ev_retire">allow</action>
+                            <action id="stimulus:ev_start_amend">allow</action>
+                            <action id="stimulus:ev_submit_amend">allow</action>
+                            <action id="stimulus:ev_cancel_amend">allow</action>
+
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
@@ -4723,6 +4927,9 @@
                             <action id="stimulus:ev_suspend">deny</action>
                             <action id="stimulus:ev_resume">deny</action>
                             <action id="stimulus:ev_retire">deny</action>
+                            <action id="stimulus:ev_start_amend">deny</action>
+                            <action id="stimulus:ev_submit_amend">deny</action>
+                            <action id="stimulus:ev_cancel_amend">deny</action>
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
@@ -4814,6 +5021,9 @@
                             <action id="stimulus:ev_suspend">deny</action>
                             <action id="stimulus:ev_resume">deny</action>
                             <action id="stimulus:ev_retire">deny</action>
+                            <action id="stimulus:ev_start_amend">deny</action>
+                            <action id="stimulus:ev_submit_amend">deny</action>
+                            <action id="stimulus:ev_cancel_amend">deny</action>
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
@@ -4905,6 +5115,9 @@
                             <action id="stimulus:ev_suspend">allow</action>
                             <action id="stimulus:ev_resume">allow</action>
                             <action id="stimulus:ev_retire">deny</action>
+                            <action id="stimulus:ev_start_amend">allow</action>
+                            <action id="stimulus:ev_submit_amend">allow</action>
+                            <action id="stimulus:ev_cancel_amend">allow</action>
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
@@ -4996,6 +5209,9 @@
                             <action id="stimulus:ev_suspend">deny</action>
                             <action id="stimulus:ev_resume">deny</action>
                             <action id="stimulus:ev_retire">deny</action>
+                            <action id="stimulus:ev_start_amend">deny</action>
+                            <action id="stimulus:ev_submit_amend">deny</action>
+                            <action id="stimulus:ev_cancel_amend">deny</action>
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
