@@ -484,7 +484,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 // Class: lnkFunctionalCiToAsset
 //
 /** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
+Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkFunctionalCiToAsset' => 'Link FunctionalCI / Asset',
     'Class:lnkFunctionalCiToAsset/Name' => '%1$s - %2$s',
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id' => 'FunctionalCI',
