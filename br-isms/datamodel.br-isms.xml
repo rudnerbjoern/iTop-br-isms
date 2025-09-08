@@ -5007,7 +5007,7 @@
                 $oRisk->Set('last_review', $sCompleted);
 
                 // Intervall holen (Fallback 12), next_review berechnen
-                $iMonths = (int)$oAsset->Get('review_interval_months');
+                $iMonths = (int)$oRisk->Get('review_interval_months');
                 if ($iMonths <= 0) {
                     $iMonths = 12;
                 }
