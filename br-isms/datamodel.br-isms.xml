@@ -251,35 +251,27 @@
                     <is_null_allowed>false</is_null_allowed>
                 </field>
 
-                <!-- this is for a later release
-                 Review-Intervall in Monaten (3/6/12/24), Default 12
+                <!-- Review interval in months (3/6/12/24), Default 12 -->
                 <field id="review_interval_months" xsi:type="AttributeEnum" _delta="define">
                     <sql>review_interval_months</sql>
                     <values>
                         <value id="3">
                             <code>3</code>
-                            <rank>10</rank>
                         </value>
                         <value id="6">
                             <code>6</code>
-                            <rank>20</rank>
                         </value>
                         <value id="12">
                             <code>12</code>
-                            <rank>30</rank>
                         </value>
                         <value id="24">
                             <code>24</code>
-                            <rank>40</rank>
                         </value>
                     </values>
-                    <default_value>12</default_value>
                     <is_null_allowed>false</is_null_allowed>
                     <display_style>list</display_style>
-                    <sort_type>rank</sort_type>
+                    <sort_type>code</sort_type>
                 </field>
-                -->
-
                 <field id="last_review" xsi:type="AttributeDate">
                     <sql>last_review</sql>
                     <default_value />
@@ -323,7 +315,6 @@
                     <duplicates>false</duplicates>
                     <display_style>tab</display_style>
                 </field>
-                <!-- this is for a later release
                 <field id="reviews_list" xsi:type="AttributeLinkedSet">
                     <linked_class>ISMSAssetReview</linked_class>
                     <ext_key_to_me>asset_id</ext_key_to_me>
@@ -331,7 +322,6 @@
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                 </field>
-                -->
             </fields>
             <lifecycle>
                 <stimuli>
@@ -644,6 +634,23 @@
     }
   ]]></code>
                 </method>
+                <method id="GetConfiguredReviewIntervalMonths">
+                    <static>true</static>
+                    <access>public</access>
+                    <type>Overload-cmdbAbstractObject</type>
+                    <code><![CDATA[
+    public static function GetConfiguredReviewIntervalMonths()
+    {
+        try {
+            $i = (int) MetaModel::GetModuleSetting('br-isms', 'review_interval_months', 12);
+            if ($i <= 0) { $i = 12; }
+                return $i;
+        } catch (\Exception $e) {
+            return 12;
+        }
+    }
+  ]]></code>
+                </method>
                 <method id="EvtSetInitialISMSAssetAttributeFlags">
                     <static>false</static>
                     <access>public</access>
@@ -688,13 +695,20 @@
 
         if (empty($this->Get('creation_date')))
             $this->Set('creation_date', $sToday);
+
         if (empty($this->Get('last_update')))
             $this->Set('last_update', $sNow);
+
         if (empty($this->Get('last_review')))
             $this->Set('last_review', $sToday);
+
+        if (empty($this->Get('review_interval_months')))
+            $this->Set('review_interval_months', self::GetConfiguredReviewIntervalMonths());
+
         if (empty($this->Get('next_review'))) {
-            $ts = strtotime('+1 year');
-            $this->Set('next_review', date(AttributeDate::GetInternalFormat(), $ts));
+            $iMonths = (int) $this->Get('review_interval_months');
+            $ts = strtotime('+'.$iMonths.' months', strtotime($sToday));
+            $this->Set('next_review', date('Y-m-d', $ts));
         }
     }
   ]]></code>
@@ -810,26 +824,27 @@
                                         <item id="last_update">
                                             <rank>30</rank>
                                         </item>
-
                                     </items>
                                 </item>
                             </items>
                         </item>
-
-                        <!-- this is for a later release
-                        <item id="fieldset:ISMSAsset:Reviews" >
+                        <item id="fieldset:ISMSAsset:Reviews">
                             <rank>180</rank>
                             <items>
-                                <item id="review_interval_months" />
-                                <item id="last_review" />
-                                <item id="next_review" />
+                                <item id="review_interval_months">
+                                    <rank>10</rank>
+                                </item>
+                                <item id="last_review">
+                                    <rank>20</rank>
+                                </item>
+                                <item id="next_review">
+                                    <rank>30</rank>
+                                </item>
                             </items>
                         </item>
-                        <item id="reviews_list" >
+                        <item id="reviews_list">
                             <rank>190</rank>
                         </item>
-                    -->
-
                         <item id="supportingassets_list">
                             <rank>200</rank>
                         </item>
@@ -1234,6 +1249,32 @@
                     <sql>last_update</sql>
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
+                </field>
+                <!-- Review interval in months (3/6/12/24), Default 12 -->
+                <field id="review_interval_months" xsi:type="AttributeEnum" _delta="define">
+                    <sql>review_interval_months</sql>
+                    <values>
+                        <value id="3">
+                            <code>3</code>
+                        </value>
+                        <value id="6">
+                            <code>6</code>
+                        </value>
+                        <value id="12">
+                            <code>12</code>
+                        </value>
+                        <value id="24">
+                            <code>24</code>
+                        </value>
+                    </values>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                    <sort_type>code</sort_type>
+                </field>
+                <field id="last_review" xsi:type="AttributeDate">
+                    <sql>last_review</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
                 </field>
                 <field id="next_review" xsi:type="AttributeDate">
                     <sql>next_review</sql>
@@ -1661,6 +1702,13 @@
                     <duplicates>false</duplicates>
                     <with_php_constraint>true</with_php_constraint>
                     <with_php_computation>true</with_php_computation>
+                </field>
+                <field id="reviews_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>ISMSRiskReview</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <edit_mode>add_only</edit_mode>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
                 </field>
             </fields>
             <lifecycle>
@@ -2359,9 +2407,16 @@
         if (empty($this->Get('last_update')))
             $this->Set('last_update', $sNow);
 
+        if (empty($this->Get('last_review')))
+            $this->Set('last_review', $sToday);
+
+        if (empty($this->Get('review_interval_months')))
+            $this->Set('review_interval_months', ISMSAsset::GetConfiguredReviewIntervalMonths());
+
         if (empty($this->Get('next_review'))) {
-            $ts = strtotime('+1 year');
-            $this->Set('next_review', date(AttributeDate::GetInternalFormat(), $ts));
+            $iMonths = (int) $this->Get('review_interval_months');
+            $ts = strtotime('+'.$iMonths.' months', strtotime($sToday));
+            $this->Set('next_review', date('Y-m-d', $ts));
         }
     }
   ]]></code>
@@ -2605,9 +2660,6 @@
                                     <items>
                                         <item id="creation_date" />
                                         <item id="last_update" />
-                                        <!-- this is for a later release
-                                        <item id="next_review" />
-                                    -->
                                         <item id="publish_date" />
                                     </items>
                                 </item>
@@ -2631,11 +2683,28 @@
                                 </item>
                             </items>
                         </item>
+                        <item id="fieldset:ISMSAsset:Reviews">
+                            <rank>40</rank>
+                            <items>
+                                <item id="review_interval_months">
+                                    <rank>10</rank>
+                                </item>
+                                <item id="last_review">
+                                    <rank>20</rank>
+                                </item>
+                                <item id="next_review">
+                                    <rank>30</rank>
+                                </item>
+                            </items>
+                        </item>
                         <item id="assets_list">
                             <rank>100</rank>
                         </item>
                         <item id="controls_list">
                             <rank>110</rank>
+                        </item>
+                        <item id="reviews_list">
+                            <rank>190</rank>
                         </item>
                     </items>
                 </details>
@@ -3908,8 +3977,6 @@
             </presentation>
         </class>
 
-        <!-- this is for a later release
-
         <class id="ISMSReview" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -3924,6 +3991,23 @@
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <indexes>
+                    <index id="status">
+                        <attributes>
+                            <attribute id="status" />
+                        </attributes>
+                    </index>
+                    <index id="planned_on">
+                        <attributes>
+                            <attribute id="planned_on" />
+                        </attributes>
+                    </index>
+                    <index id="reviewer_id">
+                        <attributes>
+                            <attribute id="reviewer_id" />
+                        </attributes>
+                    </index>
+                </indexes>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
@@ -4010,6 +4094,18 @@
                     <sql>notes</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
+                <field id="scope" xsi:type="AttributeString">
+                    <sql>scope</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="checklist" xsi:type="AttributeText">
+                    <sql>checklist</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="evidence" xsi:type="AttributeText">
+                    <sql>evidence</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
             </fields>
             <lifecycle>
                 <stimuli>
@@ -4019,7 +4115,14 @@
                 </stimuli>
                 <states>
                     <state id="planned">
-                        <flags />
+                        <flags>
+                            <attribute id="started_on">
+                                <hidden />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <hidden />
+                            </attribute>
+                        </flags>
                         <transitions>
                             <transition id="ev_start">
                                 <target>in_progress</target>
@@ -4045,79 +4148,150 @@
                         </transitions>
                     </state>
                     <state id="completed">
-                        <flags />
+                        <flags>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
+                        </flags>
                         <transitions />
                     </state>
                     <state id="cancelled">
-                        <flags />
+                        <flags>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
+                        </flags>
                         <transitions />
                     </state>
                 </states>
             </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtReviewCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtReviewCheckToWrite</callback>
+                </event_listener>
+            </event_listeners>
             <methods>
-
                 <method id="GetTargetObject" >
-            <static>false</static>
-            <access>public</access>
-            <type>Overload-DBObject</type>
-            <code><![CDATA[
-      public function GetTargetObject() { return null; }
-      ]]></code>
-        </method>
-
-                <method id="EvtOnStateTransition" >
-            <static>false</static>
-            <access>public</access>
-            <type>EventListener</type>
-            <code><![CDATA[
-      public function EvtOnStateTransition(Combodo\iTop\Service\Events\EventData $oEventData)
-      {
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function GetTargetObject()
+    {
+        return null;
+    }
+  ]]></code>
+                </method>
+                <method id="EvtOnStateTransition">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtOnStateTransition(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
         $sTo = (string) $oEventData->Get('to_state');
 
         if ($sTo === 'in_progress' && empty($this->Get('started_on'))) {
-          $this->Set('started_on', date('Y-m-d'));
+            $this->Set('started_on', date('Y-m-d'));
         }
         if ($sTo === 'completed' && empty($this->Get('completed_on'))) {
-          $this->Set('completed_on', date('Y-m-d'));
+            $this->Set('completed_on', date('Y-m-d'));
         }
         if ($sTo === 'completed' && method_exists($this, 'OnReviewCompleted')) {
-          $this->OnReviewCompleted();
+            $this->OnReviewCompleted();
         }
-      }
-      ]]></code>
-        </method>
-
-                <method id="EvtCheckToWrite" >
-            <static>false</static>
-            <access>public</access>
-            <type>EventListener</type>
-            <code><![CDATA[
-      public function EvtCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    }
+  ]]></code>
+                </method>
+                <method id="EvtReviewCheckToWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+      public function EvtReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
       {
         $sTarget = (string) $oEventData->Get('target_state');
         if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
-          $this->AddCheckWarning('Outcome should be set before completion.');
+          $this->AddCheckIssue('Outcome should be set before completion.');
         }
       }
-      ]]></code>
-        </method>
+  ]]></code>
+                </method>
             </methods>
             <presentation>
-            <details>
-                <items>
-                    <item id="status" />
-                    <item id="planned_on" />
-                    <item id="started_on" />
-                    <item id="completed_on" />
-                    <item id="reviewer_id" />
-                    <item id="outcome" />
-                    <item id="summary" />
-                    <item id="notes" />
-                </items>
-            </details>
-        </presentation>
+                <details>
+                    <items>
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="started_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                        <item id="summary" />
+                        <item id="notes" />
+                        <item id="scope" />
+                        <item id="checklist" />
+                        <item id="evidence" />
+                    </items>
+                </details>
+            </presentation>
         </class>
-
         <class id="ISMSAssetReview" _delta="define">
             <parent>ISMSReview</parent>
             <properties>
@@ -4125,10 +4299,18 @@
                 <db_table>ismsassetreview</db_table>
                 <naming>
                     <attributes>
+                        <attribute id="asset_ref" />
                         <attribute id="asset_name" />
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <indexes>
+                    <index id="asset_id">
+                        <attributes>
+                            <attribute id="asset_id" />
+                        </attributes>
+                    </index>
+                </indexes>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
@@ -4139,6 +4321,10 @@
                     <target_class>ISMSAsset</target_class>
                     <is_null_allowed>false</is_null_allowed>
                     <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="asset_ref" xsi:type="AttributeExternalField">
+                    <extkey_attcode>asset_id</extkey_attcode>
+                    <target_attcode>ref</target_attcode>
                 </field>
                 <field id="asset_name" xsi:type="AttributeExternalField">
                     <extkey_attcode>asset_id</extkey_attcode>
@@ -4153,7 +4339,26 @@
                 </stimuli>
                 <states>
                     <state id="planned">
-                        <flags />
+                        <flags>
+                            <attribute id="asset_id">
+                                <mandatory />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <mandatory />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                        </flags>
                         <transitions>
                             <transition id="ev_start">
                                 <target>in_progress</target>
@@ -4175,13 +4380,33 @@
                     <state id="in_progress">
                         <flags>
                             <attribute id="asset_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
                                 <mandatory />
                                 <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <must_prompt />
+                                <mandatory />
                             </attribute>
                         </flags>
                         <transitions>
                             <transition id="ev_complete">
                                 <target>completed</target>
+                                <flags>
+                                    <attribute id="outcome">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                    <attribute id="summary">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                </flags>
                                 <actions>
                                     <action id="1">
                                         <verb>SetCurrentDate</verb>
@@ -4223,6 +4448,15 @@
                             <attribute id="notes">
                                 <read_only />
                             </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
                         </flags>
                         <transitions />
                     </state>
@@ -4252,81 +4486,132 @@
                             <attribute id="notes">
                                 <read_only />
                             </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
                         </flags>
                         <transitions />
                     </state>
                 </states>
             </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtAssetReviewCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>20</rank>
+                    <callback>EvtAssetReviewCheckToWrite</callback>
+                </event_listener>
+                <event_listener id="EvtAssetReviewAfterWrite">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>20</rank>
+                    <callback>EvtAssetReviewAfterWrite</callback>
+                </event_listener>
+            </event_listeners>
             <methods>
                 <method id="PrefillCreationForm" >
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
                     <code><![CDATA[
-      /**
-       * PrefillCreationForm
-       * - Default planned_on = today
-       * - If empty, preset reviewer to the asset owner (if present)
-       */
-      public function PrefillCreationForm(&$aContextParam)
-      {
+    /**
+    * PrefillCreationForm
+    * - Default planned_on = today
+    * - If empty, preset reviewer to the asset owner (if present)
+    */
+    public function PrefillCreationForm(&$aContextParam)
+    {
         if (empty($this->Get('planned_on'))) {
-          $this->Set('planned_on', date('Y-m-d'));
+            $this->Set('planned_on', date('Y-m-d'));
         }
         // reviewer = Asset.owner (falls vorhanden)
         try {
-          $iAssetId = (int)$this->Get('asset_id');
-          if ($iAssetId > 0 && empty($this->Get('reviewer_id'))) {
-            $oAsset = MetaModel::GetObject('ISMSAsset', $iAssetId, false);
-            if ($oAsset) {
-              $iOwner = (int)$oAsset->Get('assetowner_id');
-              if ($iOwner > 0) {
-                $this->Set('reviewer_id', $iOwner);
-              }
+            $iAssetId = (int)$this->Get('asset_id');
+            if ($iAssetId > 0 && empty($this->Get('reviewer_id'))) {
+                $oAsset = MetaModel::GetObject('ISMSAsset', $iAssetId, false);
+                if ($oAsset) {
+                    $iOwner = (int)$oAsset->Get('assetowner_id');
+                    if ($iOwner > 0) {
+                       $this->Set('reviewer_id', $iOwner);
+                    }
+                }
             }
-          }
         } catch (\Exception $e) { /* ignore */ }
-      }
-      ]]></code>
+    }
+  ]]></code>
                 </method>
                 <method id="GetTargetObject" >
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
                     <code><![CDATA[
-      public function GetTargetObject()
-      {
+    public function GetTargetObject()
+    {
         $iId = (int)$this->Get('asset_id');
         return ($iId > 0) ? MetaModel::GetObject('ISMSAsset', $iId, false) : null;
-      }
-      ]]></code>
+    }
+  ]]></code>
                 </method>
-                <method id="OnReviewCompleted" >
+                <method id="EvtAssetReviewCheckToWrite">
                     <static>false</static>
                     <access>public</access>
-                    <type>Overload-DBObject</type>
+                    <type>EventListener</type>
                     <code><![CDATA[
-      public function OnReviewCompleted()
-      {
-        $oAsset = $this->GetTargetObject();
-        if ($oAsset) {
-          $sCompleted = $this->Get('completed_on');
-          if (empty($sCompleted)) { $sCompleted = date('Y-m-d'); }
-
-          // last_review aktualisieren
-          $oAsset->Set('last_review', $sCompleted);
-
-          // Intervall holen (Fallback 12), next_review berechnen
-          $iMonths = (int)$oAsset->Get('review_interval_months');
-          if ($iMonths <= 0) { $iMonths = 12; }
-
-          $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
-          $oAsset->Set('next_review', date('Y-m-d', $ts));
-
-          $oAsset->DBUpdate();
+    public function EvtAssetReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        // Zeitliche Konsistenz
+        $sPlanned = (string) $this->Get('planned_on');
+        $sStarted = (string) $this->Get('started_on');
+        $sCompleted = (string) $this->Get('completed_on');
+        if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
+            $this->AddCheckIssue('started_on is before planned_on.');
         }
-      }
-      ]]></code>
+        if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
+            $this->AddCheckIssue('completed_on is before started_on.');
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="EvtAssetReviewAfterWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtAssetReviewAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $sStimulus = (string) $oEventData->Get('stimulus_applied'); // z. B. 'ev_complete'
+        $sTarget   = (string) $oEventData->Get('target_state');     // z. B. 'completed'
+
+        if ($sStimulus === 'ev_complete') {
+
+            $oAsset = $this->GetTargetObject();
+            if ($oAsset) {
+                $sCompleted = $this->Get('completed_on');
+                if (empty($sCompleted)) {
+                    $sCompleted = date('Y-m-d');
+                }
+
+                // last_review aktualisieren
+                $oAsset->Set('last_review', $sCompleted);
+
+                // Intervall holen (Fallback 12), next_review berechnen
+                $iMonths = (int)$oAsset->Get('review_interval_months');
+                if ($iMonths <= 0) {
+                    $iMonths = 12;
+                }
+
+                $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
+                $oAsset->Set('next_review', date('Y-m-d', $ts));
+
+                $oAsset->DBUpdate();
+            }
+        }
+    }
+  ]]></code>
                 </method>
             </methods>
             <presentation>
@@ -4371,6 +4656,9 @@
                                 <item id="fieldset:ISMSAssetReview:Notes">
                                     <rank>10</rank>
                                     <items>
+                                        <item id="scope" />
+                                        <item id="checklist" />
+                                        <item id="evidence" />
                                         <item id="notes" />
                                     </items>
                                 </item>
@@ -4411,7 +4699,416 @@
                     </items>
                 </list>
             </presentation>
-        </class> -->
+        </class>
+        <class id="ISMSRiskReview" _delta="define">
+            <parent>ISMSReview</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismsriskreview</db_table>
+                <naming>
+                    <attributes>
+                        <attribute id="risk_ref" />
+                        <attribute id="risk_name" />
+                        <attribute id="planned_on" />
+                    </attributes>
+                </naming>
+                <indexes>
+                    <index id="risk_id">
+                        <attributes>
+                            <attribute id="risk_id" />
+                        </attributes>
+                    </index>
+                </indexes>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="risk_ref" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>ref</target_attcode>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_start" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_complete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_cancel" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="planned">
+                        <flags>
+                            <attribute id="risk_id">
+                                <mandatory />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <mandatory />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_start">
+                                <target>in_progress</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">started_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="in_progress">
+                        <flags>
+                            <attribute id="risk_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <must_prompt />
+                                <mandatory />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_complete">
+                                <target>completed</target>
+                                <flags>
+                                    <attribute id="outcome">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                    <attribute id="summary">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                </flags>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">completed_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                            <transition id="ev_cancel">
+                                <target>cancelled</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="completed">
+                        <flags>
+                            <attribute id="risk_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                    <state id="cancelled">
+                        <flags>
+                            <attribute id="risk_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <read_only />
+                            </attribute>
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
+                            </attribute>
+                            <attribute id="notes">
+                                <read_only />
+                            </attribute>
+                            <attribute id="scope">
+                                <read_only />
+                            </attribute>
+                            <attribute id="checklist">
+                                <read_only />
+                            </attribute>
+                            <attribute id="evidence">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtRiskReviewCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>20</rank>
+                    <callback>EvtRiskReviewCheckToWrite</callback>
+                </event_listener>
+                <event_listener id="EvtRiskReviewAfterWrite">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>20</rank>
+                    <callback>EvtRiskReviewAfterWrite</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="PrefillCreationForm">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    /**
+    * PrefillCreationForm
+    * - Default planned_on = today
+    * - If empty, preset reviewer to the asset owner (if present)
+    */
+    public function PrefillCreationForm(&$aContextParam)
+    {
+        if (empty($this->Get('planned_on'))) {
+            $this->Set('planned_on', date('Y-m-d'));
+        }
+        // reviewer = Risk.owner (falls vorhanden)
+        try {
+            $iRiskId = (int)$this->Get('risk_id');
+            if ($iRiskId > 0 && empty($this->Get('reviewer_id'))) {
+                $oRisk = MetaModel::GetObject('ISMSRisk', $iRiskId, false);
+                if ($oRisk) {
+                    $iOwner = (int)$oRisk->Get('riskowner_id');
+                    if ($iOwner > 0) {
+                       $this->Set('reviewer_id', $iOwner);
+                    }
+                }
+            }
+        } catch (\Exception $e) { /* ignore */ }
+    }
+  ]]></code>
+                </method>
+                <method id="GetTargetObject">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function GetTargetObject()
+    {
+        $iId = (int)$this->Get('risk_id');
+        return ($iId > 0) ? MetaModel::GetObject('ISMSRisk', $iId, false) : null;
+    }
+  ]]></code>
+                </method>
+                <method id="EvtRiskReviewCheckToWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtRiskReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        // Zeitliche Konsistenz
+        $sPlanned = (string) $this->Get('planned_on');
+        $sStarted = (string) $this->Get('started_on');
+        $sCompleted = (string) $this->Get('completed_on');
+        if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
+            $this->AddCheckIssue('started_on is before planned_on.');
+        }
+        if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
+            $this->AddCheckIssue('completed_on is before started_on.');
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="EvtRiskReviewAfterWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtRiskReviewAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $sStimulus = (string) $oEventData->Get('stimulus_applied'); // z. B. 'ev_complete'
+        $sTarget   = (string) $oEventData->Get('target_state');     // z. B. 'completed'
+
+        if ($sStimulus === 'ev_complete') {
+
+            $oRisk = $this->GetTargetObject();
+            if ($oRisk) {
+                $sCompleted = $this->Get('completed_on');
+                if (empty($sCompleted)) {
+                    $sCompleted = date('Y-m-d');
+                }
+
+                // last_review aktualisieren
+                $oRisk->Set('last_review', $sCompleted);
+
+                // Intervall holen (Fallback 12), next_review berechnen
+                $iMonths = (int)$oAsset->Get('review_interval_months');
+                if ($iMonths <= 0) {
+                    $iMonths = 12;
+                }
+
+                $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
+                $oRisk->Set('next_review', date('Y-m-d', $ts));
+
+                $oRisk->DBUpdate();
+            }
+
+        }
+    }
+  ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSRiskReview:Link">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="risk_id" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSRiskReview:Progress">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="status" />
+                                        <item id="planned_on" />
+                                        <item id="started_on" />
+                                        <item id="completed_on" />
+                                        <item id="reviewer_id" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSRiskReview:Outcome">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="outcome" />
+                                        <item id="summary" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col2">
+                            <rank>30</rank>
+                            <items>
+                                <item id="fieldset:ISMSRiskReview:Notes">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="scope" />
+                                        <item id="checklist" />
+                                        <item id="evidence" />
+                                        <item id="notes" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="started_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                        <item id="summary" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="status" />
+                        <item id="planned_on" />
+                        <item id="completed_on" />
+                        <item id="reviewer_id" />
+                        <item id="outcome" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -4467,7 +5164,6 @@
                             </dashlet>
                         </dashlets>
                     </cell>
-                    <!-- this is for a later release
                     <cell id="isms-300">
                         <rank>3</rank>
                         <dashlets>
@@ -4483,9 +5179,12 @@
                                 <rank>320</rank>
                                 <class>ISMSAssetReview</class>
                             </dashlet>
+                            <dashlet id="isms-330" xsi:type="DashletBadge">
+                                <rank>330</rank>
+                                <class>ISMSRiskReview</class>
+                            </dashlet>
                         </dashlets>
                     </cell>
-                    -->
                 </cells>
             </definition>
         </menu>
@@ -5251,6 +5950,7 @@ WHERE status NOT IN ('retired')
     <module_parameters>
         <parameters id="br-isms" _delta="define">
             <risk_aggregation_mode type="string">max</risk_aggregation_mode>
+            <review_interval_months type="integer">12</review_interval_months>
         </parameters>
     </module_parameters>
 </itop_design>
