@@ -673,6 +673,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSReview/Stimulus:ev_complete' => 'Review abschließen',
     'Class:ISMSReview/Stimulus:ev_cancel' => 'Review abbrechen',
 
+    'Class:ISMSReview/Check:PlannedInPast' => 'Planungsdatum darf nicht in der Vergangenheit liegen.',
     'Class:ISMSReview/Check:NoOutcome' => 'Ergebnis sollte vor dem Abschluss gesetzt werden.',
     'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Begonnen am" liegt vor "Geplant am".',
     'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Abgeschlossen am" liegt vor "Begonnen am".',

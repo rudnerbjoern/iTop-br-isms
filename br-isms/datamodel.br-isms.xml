@@ -4401,7 +4401,7 @@
                 <field id="planned_on" xsi:type="AttributeDate">
                     <sql>planned_on</sql>
                     <default_value />
-                    <is_null_allowed>true</is_null_allowed>
+                    <is_null_allowed>false</is_null_allowed>
                 </field>
                 <field id="started_on" xsi:type="AttributeDate">
                     <sql>started_on</sql>
@@ -4471,10 +4471,6 @@
                     <sql>summary</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
-                <field id="notes" xsi:type="AttributeText">
-                    <sql>notes</sql>
-                    <is_null_allowed>true</is_null_allowed>
-                </field>
                 <field id="scope" xsi:type="AttributeString">
                     <sql>scope</sql>
                     <is_null_allowed>true</is_null_allowed>
@@ -4485,6 +4481,10 @@
                 </field>
                 <field id="evidence" xsi:type="AttributeText">
                     <sql>evidence</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="notes" xsi:type="AttributeCaseLog">
+                    <sql>notes</sql>
                     <is_null_allowed>true</is_null_allowed>
                 </field>
             </fields>
@@ -4502,6 +4502,9 @@
                             </attribute>
                             <attribute id="completed_on">
                                 <hidden />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
                             </attribute>
                         </flags>
                         <transitions>
@@ -4608,7 +4611,7 @@
                 </event_listener>
             </event_listeners>
             <methods>
-                <method id="GetTargetObject" >
+                <method id="GetTargetObject">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -4647,6 +4650,25 @@
                     <code><![CDATA[
       public function EvtReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
       {
+
+        $sCurrentStatus = (string) $this->Get('status');
+        $sTargetState   = (string) $oEventData->Get('target_state'); // '' or 'planned'|'in_progress'|'completed'|'cancelled'
+        $sStatusAfter   = $sTargetState !== '' ? $sTargetState : $sCurrentStatus;
+
+        if (($oEventData->Get('is_new') === true) || ($sStatusAfter === 'planned'))
+        {
+            $sPlanned = (string) $this->Get('planned_on'); // 'Y-m-d'
+            if ($sPlanned !== '')
+            {
+                $tsPlanned = @strtotime($sPlanned);
+                $tsToday   = @strtotime(date(AttributeDate::GetInternalFormat())); // 'Y-m-d' today
+                if ($tsPlanned !== false && $tsPlanned < $tsToday)
+                {
+                  $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:PlannedInPast'));
+                }
+            }
+        }
+
         $sTarget = (string) $oEventData->Get('target_state');
         if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
           $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:NoOutcome'));
@@ -4679,17 +4701,14 @@
                         <item id="summary">
                             <rank>80</rank>
                         </item>
-                        <item id="notes">
+                        <item id="scope">
                             <rank>90</rank>
                         </item>
-                        <item id="scope">
+                        <item id="checklist">
                             <rank>100</rank>
                         </item>
-                        <item id="checklist">
-                            <rank>110</rank>
-                        </item>
                         <item id="evidence">
-                            <rank>120</rank>
+                            <rank>110</rank>
                         </item>
                     </items>
                 </details>
@@ -5084,9 +5103,6 @@
                                         </item>
                                         <item id="evidence">
                                             <rank>30</rank>
-                                        </item>
-                                        <item id="notes">
-                                            <rank>40</rank>
                                         </item>
                                     </items>
                                 </item>
@@ -5565,9 +5581,6 @@
                                         <item id="evidence">
                                             <rank>30</rank>
                                         </item>
-                                        <item id="notes">
-                                            <rank>40</rank>
-                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -6043,9 +6056,6 @@
                                         </item>
                                         <item id="evidence">
                                             <rank>30</rank>
-                                        </item>
-                                        <item id="notes">
-                                            <rank>40</rank>
                                         </item>
                                     </items>
                                 </item>

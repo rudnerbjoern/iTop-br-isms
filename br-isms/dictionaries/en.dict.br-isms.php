@@ -690,6 +690,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSReview/Stimulus:ev_complete' => 'Complete Review',
     'Class:ISMSReview/Stimulus:ev_cancel' => 'Cancel Review',
 
+    'Class:ISMSReview/Check:PlannedInPast' => 'Planned date cannot be in the past.',
     'Class:ISMSReview/Check:NoOutcome' => 'Outcome should be set before completion.',
     'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Started on" is before "Planned on".',
     'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Completed on" is before "Started on".',
