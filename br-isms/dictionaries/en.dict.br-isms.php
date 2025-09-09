@@ -631,6 +631,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset name',
     'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'This asset review already exists',
     'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Cancel Review',
 
     'Class:ISMSRiskReview' => 'ISMS Risk Review',
     'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
@@ -640,6 +643,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRiskReview/Attribute:risk_name' => 'Risk name',
     'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'This risk review already exists',
     'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Cancel Review',
 
     'Class:ISMSControlReview' => 'ISMS Control Review',
     'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
@@ -649,6 +655,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControlReview/Attribute:control_name' => 'Control name',
     'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'This control review already exists',
     'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSControlReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Cancel Review',
 
     'Class:ISMSReview/Attribute:status' => 'Status',
     'Class:ISMSReview/Attribute:status+' => 'Lifecycle status of the review.',

@@ -614,6 +614,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset-Name',
     'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'Dieses Asset-Review existiert bereits',
     'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Review abbrechen',
 
     'Class:ISMSRiskReview' => 'ISMS-Risiko-Review',
     'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
@@ -623,6 +626,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRiskReview/Attribute:risk_name' => 'Risiko-Name',
     'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'Dieses Risiko-Review existiert bereits',
     'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Review abbrechen',
 
     'Class:ISMSControlReview' => 'ISMS-Kontroll-Review',
     'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
@@ -632,6 +638,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControlReview/Attribute:control_name' => 'Kontroll-Name',
     'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'Dieses Kontroll-Review existiert bereits',
     'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSControlReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Review abbrechen',
 
     'Class:ISMSReview/Attribute:status' => 'Status',
     'Class:ISMSReview/Attribute:status+' => 'Lebenszyklusstatus des Reviews.',
