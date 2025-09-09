@@ -1,6 +1,10 @@
 # iTop ISMS Extension
 
-A lightweight Information Security Management (ISMS) extension for **iTop** that adds Assets, Risks, Controls and their relations - including inherent/residual/target risk evaluation, aggregation of control effects, validations, and tidy UI presentations.
+Copyright (c) 2024-2025 Björn Rudner
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?logo=git&style=flat)](https://github.com/rudnerbjoern/iTop-isms/issues)
+[![License](https://img.shields.io/github/license/rudnerbjoern/iTop-br-isms)](https://github.com/rudnerbjoern/iTop-br-isms/blob/main/LICENSE)
+
+A lightweight Information Security Management (ISMS) extension for **iTop** that adds Assets, Risks, Controls and their relations — including inherent/residual/target risk evaluation, aggregation of control effects, **review workflows**, validations, and tidy UI presentations.
 
 > Tested with recent iTop 3.2 lines.
 
@@ -14,6 +18,12 @@ A lightweight Information Security Management (ISMS) extension for **iTop** that
   - `ISMSRisk` (inherent / residual / target, treatment & acceptance)
   - `ISMSControl` (reusable controls with their own lifecycle)
   - Links: `lnkSupportingAssetToAsset`, `lnkISMSRiskToISMSAsset`, `lnkISMSRiskToISMSControl`
+- **Reviews**
+  - Base class `ISMSReview` with lifecycle: `planned → in_progress → (completed | cancelled)`
+  - Common fields: `planned_on`, `started_on`, `completed_on`, `reviewer_id`, `outcome`, `summary`, `scope`, `checklist`, `evidence`, `notes`
+  - Validation: while status is **Planned**, `planned_on` **is required** and **must not be in the past** (server-side)
+    – and on completion an **Outcome** is required.
+  - `ISMSAssetReview`: upon completion sets asset `last_review` and computes `next_review` using `review_interval_months`.
 - **Risk math**
   - Inherent score = `pre_likelihood × pre_impact`
   - Residual computed from *effective* controls (see aggregation)
@@ -52,12 +62,21 @@ A lightweight Information Security Management (ISMS) extension for **iTop** that
 
 ## Configuration
 
-Global default for risk control aggregation (per-risk can override):
+Override module settings in **config-itop.php**:
 
 ```php
-// in config-itop.php
-'isms_risk_aggregation_mode' => 'max', // 'max' or 'sum_capped'
+// config-itop.php
+'module_settings' => array(
+  'br-isms' => array(
+    // Risk: how to aggregate control effects (per-risk can still override)
+    'risk_aggregation_mode' => 'max',      // 'max' or 'sum_capped'
+    // Reviews: default interval (months) used by Asset/Risk/Control reviews
+    'review_interval_months' => 12,        // fallback if not set on the object
+  ),
+),
 ```
+
+The extension reads these values via `MetaModel::GetModuleSetting('br-isms', ...)`.
 
 ---
 
@@ -72,7 +91,7 @@ Global default for risk control aggregation (per-risk can override):
 
 - Lifecycle: `draft → published → obsolete` (reopen to draft if allowed)
 - Key fields: `ref`, `name`, `org_id`, `assetowner_id`, `assetguardian_id`, `category`, `assettype_id`
-- Dates: `creation_date` (auto), `publish_date` (on publish), `last_update` (auto), `next_review` (default +1y)
+- Dates: `creation_date` (auto), `publish_date` (on publish), `last_update` (auto), `last_review`, `next_review` (computed from `review_interval_months`)
 - Relations:
   - `supportingassets_list` / `supportedassets_list` via `lnkSupportingAssetToAsset`
   - `risks_list` via `lnkISMSRiskToISMSAsset`
@@ -175,14 +194,20 @@ stateDiagram-v2
 - Target: partial input (only one dimension): warn
 - Target worse than Inherent or Residual: warn
 - Accept + Target below current Residual: warn
+- Reviews:
+  - Planned: `planned_on` is required and cannot be in the past
+  - Complete: `outcome` must be set
 
 (See `EvtCheckToWrite` for the exact messages)
 
 ---
 
-## UI/Presentation
+## UI / Presentation
 
-- Three columns with clear fieldsets: **Base**, **Context**, **Summary**, **Preliminary**, **Residual**, **Target**, **Treatment**, **Acceptance**, **Dates**.
+- Three-column details:
+  - **Asset**: General & Contacts (left), More info + Risk management + Reviews (center), Dates (right)
+  - **Risk**: Base & Context (left), Summary + Inherent/Residual/Target (center), Dates + Treatment + Acceptance + Reviews (right)
+  - Clear fieldsets: **Base**, **Context**, **Summary**, **Preliminary**, **Residual**, **Target**, **Treatment**, **Acceptance**, **Dates**, **Reviews**.
 - Relations:
   - Asset "impacts" shows **supporting/supported** assets and **risks**.
   - Risk "impacts" shows **controls** (up) and **assets** (down).
@@ -198,10 +223,15 @@ stateDiagram-v2
   Recompute scores and touch `last_update`.
 - `EvtCheckToWrite`
   Add user warnings for the validations above.
+- **Reviews**:
+  - `EvtReviewCheckToWrite` validates `planned_on` (create & update while status=planned) and `outcome` on completion.
+  - `EvtOnStateTransition` timestamps `started_on` / `completed_on` and triggers post-completion hook.
+  - `ISMSAssetReview::OnReviewCompleted()` updates `last_review` and computes `next_review`.
 - `DBInsertNoReload` + counters
   Generate human-friendly references:
-  - Assets: `A-%04d`
-  - Risks:  `R-%04d`
+  - Assets:   `ASS-%04d`
+  - Risks:    `RSK-%04d`
+  - Controls: `CST-%04d`
 
 ---
 
@@ -283,12 +313,14 @@ This chapter defines who is **Responsible (R)**, **Accountable (A)**, **Consulte
 5. Observe **Residual** values recompute automatically.
 6. Set a **Target**; review warnings if inconsistencies exist.
 7. Link the **Risk** to relevant **Assets**.
+8. Create an **Asset Review** from the Asset; complete it → `last_review`/`next_review` auto-updated using the configured interval.
 
 ---
 
 ## Roadmap / Next steps
 
 - Generalized **Review** objects for Assets, Controls, Risks (with lifecycle and reminders)
+- **Risk & Control Reviews** (same framework as Asset Reviews)
 - Organization-wide thresholds (e.g., appetite) and dashboards
 - Reporting & matrix widgets (risk heatmap)
 - Additional control assurance fields
@@ -305,7 +337,7 @@ This chapter defines who is **Responsible (R)**, **Accountable (A)**, **Consulte
 
 ## Localization
 
-- English and German dictionaries included.
+- English and German dictionaries included. Review strings & name patterns (EN/DE) are shipped.
   Add new locales by duplicating the dict files under `dictionaries/`.
 
 ---
@@ -322,9 +354,20 @@ PRs and issues welcome. Please:
 
 ## License
 
-TBD
+This project is licensed under the **GNU Affero General Public License v3.0**
+(**AGPL-3.0-only**).
 
----
+You may use, modify, and redistribute this software under the terms of the AGPL.
+If you run a modified version over a network (e.g., as a web application), you must
+offer the complete corresponding source code to the users interacting with it.
+
+- [Full text](LICENSE)
+
+## How to help
+
+**Contributions are very welcome!**
+
+If you would like to contribute, please check the [issues](https://github.com/rudnerbjoern/iTop-isms/issues) or open a pull request.
 
 ## Credits
 
