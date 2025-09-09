@@ -18,6 +18,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Menu:ISMSSpace:Assets' => 'Assets',
     'Menu:ISMSSpace:Options' => 'Optionen',
     'Menu:ISMSSpace:Risks' => 'Risiken & Kontrollen',
+    'Menu:ISMSSpace:Reviews' => 'Reviews',
     'Menu:NewISMSAsset' => 'Neues Asset',
     'Menu:NewISMSAsset+' => 'Neues ISMS-Asset anlegen',
     'Menu:NewISMSRisk' => 'Neues Risiko',
