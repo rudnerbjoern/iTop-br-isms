@@ -4537,9 +4537,6 @@
                 </details>
                 <list>
                     <items>
-                        <item id="control_id">
-                            <rank>20</rank>
-                        </item>
                         <item id="status">
                             <rank>30</rank>
                         </item>
@@ -4581,6 +4578,15 @@
                         </attributes>
                     </index>
                 </indexes>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="asset_id" />
+                            <attribute id="planned_on" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
@@ -5051,6 +5057,15 @@
                         </attributes>
                     </index>
                 </indexes>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="planned_on" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
@@ -5522,6 +5537,15 @@
                         </attributes>
                     </index>
                 </indexes>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="control_id" />
+                            <attribute id="planned_on" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>

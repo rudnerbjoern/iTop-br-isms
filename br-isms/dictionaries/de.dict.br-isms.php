@@ -612,6 +612,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAssetReview/Attribute:asset_id+' => 'Verknüpftes Asset, das geprüft wird.',
     'Class:ISMSAssetReview/Attribute:asset_ref' => 'Asset-Referenz',
     'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset-Name',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'Dieses Asset-Review existiert bereits',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
 
     'Class:ISMSRiskReview' => 'ISMS-Risiko-Review',
     'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
@@ -619,6 +621,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRiskReview/Attribute:risk_id+' => 'Verknüpftes Risiko, das geprüft wird.',
     'Class:ISMSRiskReview/Attribute:risk_ref' => 'Risiko-Referenz',
     'Class:ISMSRiskReview/Attribute:risk_name' => 'Risiko-Name',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'Dieses Risiko-Review existiert bereits',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
 
     'Class:ISMSControlReview' => 'ISMS-Kontroll-Review',
     'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
@@ -626,6 +630,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControlReview/Attribute:control_id+' => 'Verknüpfte Kontrolle, die geprüft wird.',
     'Class:ISMSControlReview/Attribute:control_ref' => 'Kontroll-Referenz',
     'Class:ISMSControlReview/Attribute:control_name' => 'Kontroll-Name',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'Dieses Kontroll-Review existiert bereits',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
 
     'Class:ISMSReview/Attribute:status' => 'Status',
     'Class:ISMSReview/Attribute:status+' => 'Lebenszyklusstatus des Reviews.',
