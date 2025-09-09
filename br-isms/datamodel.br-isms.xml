@@ -4497,20 +4497,36 @@
                 <states>
                     <state id="planned">
                         <flags>
+                            <attribute id="reviewer_id">
+                                <mandatory />
+                            </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
+                            </attribute>
                             <attribute id="started_on">
                                 <hidden />
                             </attribute>
                             <attribute id="completed_on">
                                 <hidden />
                             </attribute>
-                            <attribute id="planned_on">
-                                <mandatory />
+                            <attribute id="outcome">
+                                <read_only />
+                            </attribute>
+                            <attribute id="summary">
+                                <read_only />
                             </attribute>
                         </flags>
                         <transitions>
                             <transition id="ev_start">
                                 <target>in_progress</target>
-                                <actions />
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">started_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
                             </transition>
                             <transition id="ev_cancel">
                                 <target>cancelled</target>
@@ -4519,11 +4535,42 @@
                         </transitions>
                     </state>
                     <state id="in_progress">
-                        <flags />
+                        <flags>
+                            <attribute id="planned_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="started_on">
+                                <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <hidden />
+                            </attribute>
+                            <attribute id="reviewer_id">
+                                <must_prompt />
+                                <mandatory />
+                            </attribute>
+                        </flags>
                         <transitions>
                             <transition id="ev_complete">
                                 <target>completed</target>
-                                <actions />
+                                <flags>
+                                    <attribute id="outcome">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                    <attribute id="summary">
+                                        <must_prompt />
+                                        <mandatory />
+                                    </attribute>
+                                </flags>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">completed_on</param>
+                                        </params>
+                                    </action>
+                                </actions>
                             </transition>
                             <transition id="ev_cancel">
                                 <target>cancelled</target>
@@ -4799,11 +4846,14 @@
                             <attribute id="reviewer_id">
                                 <mandatory />
                             </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
+                            </attribute>
                             <attribute id="started_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="completed_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="outcome">
                                 <read_only />
@@ -4836,11 +4886,13 @@
                                 <read_only />
                             </attribute>
                             <attribute id="planned_on">
-                                <mandatory />
                                 <read_only />
                             </attribute>
                             <attribute id="started_on">
                                 <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <hidden />
                             </attribute>
                             <attribute id="reviewer_id">
                                 <must_prompt />
@@ -5275,11 +5327,14 @@
                             <attribute id="reviewer_id">
                                 <mandatory />
                             </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
+                            </attribute>
                             <attribute id="started_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="completed_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="outcome">
                                 <read_only />
@@ -5312,11 +5367,13 @@
                                 <read_only />
                             </attribute>
                             <attribute id="planned_on">
-                                <mandatory />
                                 <read_only />
                             </attribute>
                             <attribute id="started_on">
                                 <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <hidden />
                             </attribute>
                             <attribute id="reviewer_id">
                                 <must_prompt />
@@ -5752,11 +5809,14 @@
                             <attribute id="reviewer_id">
                                 <mandatory />
                             </attribute>
+                            <attribute id="planned_on">
+                                <mandatory />
+                            </attribute>
                             <attribute id="started_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="completed_on">
-                                <read_only />
+                                <hidden />
                             </attribute>
                             <attribute id="outcome">
                                 <read_only />
@@ -5789,11 +5849,13 @@
                                 <read_only />
                             </attribute>
                             <attribute id="planned_on">
-                                <mandatory />
                                 <read_only />
                             </attribute>
                             <attribute id="started_on">
                                 <read_only />
+                            </attribute>
+                            <attribute id="completed_on">
+                                <hidden />
                             </attribute>
                             <attribute id="reviewer_id">
                                 <must_prompt />
