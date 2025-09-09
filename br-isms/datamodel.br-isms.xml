@@ -69,7 +69,9 @@
                 </details>
                 <default_search>
                     <items>
-                        <item id="name" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
@@ -787,7 +789,7 @@
                                         </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:Server:riskmanagement">
+                                <item id="fieldset:FunctionalCI:RiskManagement">
                                     <rank>20</rank>
                                     <items>
                                         <item id="rm_confidentiality">
@@ -804,6 +806,20 @@
                                         </item>
                                         <item id="rm_nonrepudiation">
                                             <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSReview:Reviews">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="review_interval_months">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="last_review">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="next_review">
+                                            <rank>30</rank>
                                         </item>
                                     </items>
                                 </item>
@@ -828,34 +844,20 @@
                                 </item>
                             </items>
                         </item>
-                        <item id="fieldset:ISMSAsset:Reviews">
-                            <rank>180</rank>
-                            <items>
-                                <item id="review_interval_months">
-                                    <rank>10</rank>
-                                </item>
-                                <item id="last_review">
-                                    <rank>20</rank>
-                                </item>
-                                <item id="next_review">
-                                    <rank>30</rank>
-                                </item>
-                            </items>
-                        </item>
-                        <item id="reviews_list">
-                            <rank>190</rank>
-                        </item>
                         <item id="supportingassets_list">
-                            <rank>200</rank>
+                            <rank>100</rank>
                         </item>
                         <item id="supportedassets_list">
-                            <rank>210</rank>
+                            <rank>110</rank>
                         </item>
                         <item id="functionalcis_list">
-                            <rank>220</rank>
+                            <rank>120</rank>
                         </item>
                         <item id="risks_list">
-                            <rank>230</rank>
+                            <rank>130</rank>
+                        </item>
+                        <item id="reviews_list">
+                            <rank>140</rank>
                         </item>
                     </items>
                 </details>
@@ -887,50 +889,58 @@
                 <search>
                     <items>
                         <item id="org_id">
-                            <rank>30</rank>
+                            <rank>10</rank>
                         </item>
                         <item id="status">
-                            <rank>40</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="category">
-                            <rank>50</rank>
+                            <rank>30</rank>
                         </item>
                         <item id="assettype_id">
-                            <rank>60</rank>
+                            <rank>40</rank>
                         </item>
                         <item id="assetowner_id">
-                            <rank>70</rank>
+                            <rank>50</rank>
                         </item>
                         <item id="description">
-                            <rank>80</rank>
+                            <rank>60</rank>
                         </item>
                     </items>
                 </search>
                 <list>
                     <items>
                         <item id="org_id">
-                            <rank>30</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="status">
-                            <rank>40</rank>
+                            <rank>30</rank>
                         </item>
                         <item id="category">
-                            <rank>50</rank>
+                            <rank>40</rank>
                         </item>
                         <item id="assettype_id">
-                            <rank>60</rank>
+                            <rank>50</rank>
                         </item>
                         <item id="assetowner_id">
-                            <rank>70</rank>
+                            <rank>60</rank>
                         </item>
                     </items>
                 </list>
                 <summary>
                     <items>
-                        <item id="status" />
-                        <item id="category" />
-                        <item id="assettype_id" />
-                        <item id="assetowner_id" />
+                        <item id="status">
+                            <rank>10</rank>
+                        </item>
+                        <item id="category">
+                            <rank>20</rank>
+                        </item>
+                        <item id="assettype_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="assetowner_id">
+                            <rank>40</rank>
+                        </item>
                     </items>
                 </summary>
             </presentation>
@@ -1014,10 +1024,10 @@
                 <list>
                     <items>
                         <item id="supportingasset_id">
-                            <rank>10</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="asset_id">
-                            <rank>20</rank>
+                            <rank>30</rank>
                         </item>
                     </items>
                 </list>
@@ -1102,10 +1112,10 @@
                 <list>
                     <items>
                         <item id="functionalci_id">
-                            <rank>10</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="asset_id">
-                            <rank>20</rank>
+                            <rank>30</rank>
                         </item>
                     </items>
                 </list>
@@ -2479,7 +2489,7 @@
      * Notes:
      *  - We do NOT modify attributes here (no side effects).
      *  - For new objects (is_new), we skip link-based checks (no links exist yet).
-     *  - If you want to block saving instead of warning, use AddCheckError().
+     *  - If you want to block saving instead of warning, use AddCheckIssue().
      */
     public function EvtCheckISMSRiskToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
     {
@@ -2592,20 +2602,38 @@
                                 <item id="fieldset:ISMSRisk:Base">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="name" />
-                                        <item id="org_id" />
-                                        <item id="status" />
-                                        <item id="riskowner_id" />
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="riskowner_id">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:Context">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="risk_category" />
-                                        <item id="risk_cause" />
-                                        <item id="risk_event" />
-                                        <item id="risk_consequence" />
-                                        <item id="description" />
+                                        <item id="risk_category">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="risk_cause">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="risk_event">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="risk_consequence">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="description">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -2616,38 +2644,72 @@
                                 <item id="fieldset:ISMSRisk:Summary">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="pre_level" />
-                                        <item id="pre_score" />
-                                        <item id="res_level" />
-                                        <item id="res_score" />
-                                        <item id="aggregation_mode" />
+                                        <item id="pre_level">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="pre_score">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="res_level">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="res_score">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="aggregation_mode">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:Preliminary">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="pre_likelihood" />
-                                        <item id="pre_impact" />
-                                        <item id="pre_score" />
-                                        <item id="pre_level" />
+                                        <item id="pre_likelihood">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="pre_impact">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="pre_score">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="pre_level">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:Residual">
                                     <rank>30</rank>
                                     <items>
-                                        <item id="res_likelihood" />
-                                        <item id="res_impact" />
-                                        <item id="res_score" />
-                                        <item id="res_level" />
+                                        <item id="res_likelihood">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="res_impact">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="res_score">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="res_level">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:TargetResidual">
                                     <rank>40</rank>
                                     <items>
-                                        <item id="tgt_likelihood" />
-                                        <item id="tgt_impact" />
-                                        <item id="tgt_score" />
-                                        <item id="tgt_level" />
+                                        <item id="tgt_likelihood">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="tgt_impact">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="tgt_score">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="tgt_level">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -2658,42 +2720,64 @@
                                 <item id="fieldset:ISMSRisk:Dates">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="creation_date" />
-                                        <item id="last_update" />
-                                        <item id="publish_date" />
+                                        <item id="creation_date">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="last_update">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="publish_date">
+                                            <rank>30</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:Treatment">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="treatment_decision" />
-                                        <item id="treatment_owner_id" />
-                                        <item id="treatment_due" />
-                                        <item id="treatment_plan" />
+                                        <item id="treatment_decision">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="treatment_owner_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="treatment_due">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="treatment_plan">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSRisk:Acceptance">
                                     <rank>30</rank>
                                     <items>
-                                        <item id="acceptance_status" />
-                                        <item id="accepted_by_id" />
-                                        <item id="acceptance_date" />
-                                        <item id="acceptance_rationale" />
+                                        <item id="acceptance_status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="accepted_by_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="acceptance_date">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="acceptance_rationale">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
-                            </items>
-                        </item>
-                        <item id="fieldset:ISMSRisk:Reviews">
-                            <rank>40</rank>
-                            <items>
-                                <item id="review_interval_months">
-                                    <rank>10</rank>
-                                </item>
-                                <item id="last_review">
-                                    <rank>20</rank>
-                                </item>
-                                <item id="next_review">
-                                    <rank>30</rank>
+                                <item id="fieldset:ISMSReview:Reviews">
+                                    <rank>40</rank>
+                                    <items>
+                                        <item id="review_interval_months">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="last_review">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="next_review">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
                                 </item>
                             </items>
                         </item>
@@ -2704,7 +2788,7 @@
                             <rank>110</rank>
                         </item>
                         <item id="reviews_list">
-                            <rank>190</rank>
+                            <rank>120</rank>
                         </item>
                     </items>
                 </details>
@@ -2733,25 +2817,25 @@
                 <search>
                     <items>
                         <item id="org_id">
-                            <rank>30</rank>
+                            <rank>10</rank>
                         </item>
                         <item id="status">
-                            <rank>40</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="risk_category">
-                            <rank>60</rank>
+                            <rank>30</rank>
                         </item>
                         <item id="riskowner_id">
-                            <rank>70</rank>
+                            <rank>40</rank>
                         </item>
                         <item id="pre_level">
-                            <rank>66</rank>
+                            <rank>50</rank>
                         </item>
                         <item id="res_level">
-                            <rank>67</rank>
+                            <rank>60</rank>
                         </item>
                         <item id="res_score">
-                            <rank>68</rank>
+                            <rank>70</rank>
                         </item>
                         <item id="description">
                             <rank>80</rank>
@@ -2761,18 +2845,21 @@
                 <list>
                     <items>
                         <item id="org_id">
-                            <rank>30</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="status">
-                            <rank>40</rank>
+                            <rank>30</rank>
                         </item>
                         <item id="riskowner_id">
-                            <rank>50</rank>
+                            <rank>40</rank>
                         </item>
                         <item id="risk_category">
-                            <rank>60</rank>
+                            <rank>50</rank>
                         </item>
                         <item id="treatment_decision">
+                            <rank>60</rank>
+                        </item>
+                        <item id="res_score">
                             <rank>70</rank>
                         </item>
                     </items>
@@ -2876,10 +2963,10 @@
                 <list>
                     <items>
                         <item id="risk_id">
-                            <rank>10</rank>
+                            <rank>20</rank>
                         </item>
                         <item id="asset_id">
-                            <rank>20</rank>
+                            <rank>30</rank>
                         </item>
                     </items>
                 </list>
@@ -3652,16 +3739,26 @@
                                 <item id="fieldset:ISMSControl:Basics">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="name" />
-                                        <item id="org_id" />
-                                        <item id="status" />
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSControl:Classification">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="control_domain" />
-                                        <item id="control_type" />
+                                        <item id="control_domain">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="control_type">
+                                            <rank>20</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -3672,26 +3769,35 @@
                                 <item id="fieldset:ISMSControl:OwnershipSchedule">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="controlowner_id" />
-                                        <item id="creation_date" />
-                                        <item id="last_update" />
-                                        <item id="approval_date" />
-                                        <item id="implementation_date" />
-                                        <!-- this is for a later release
-                                        <item id="next_review" />
-                                    -->
+                                        <item id="controlowner_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="creation_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="last_update">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="approval_date">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="implementation_date">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:ISMSControl:Description">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="description" />
+                                        <item id="description">
+                                            <rank>10</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
                         </item>
-                        <item id="fieldset:ISMSControl:Reviews">
-                            <rank>40</rank>
+                        <item id="fieldset:ISMSReview:Reviews">
+                            <rank>30</rank>
                             <items>
                                 <item id="review_interval_months">
                                     <rank>10</rank>
@@ -3733,21 +3839,43 @@
                 </default_search>
                 <search>
                     <items>
-                        <item id="org_id" />
-                        <item id="status" />
-                        <item id="controlowner_id" />
-                        <item id="control_domain" />
-                        <item id="control_type" />
-                        <item id="implementation_date" />
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="controlowner_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="control_domain">
+                            <rank>40</rank>
+                        </item>
+                        <item id="control_type">
+                            <rank>50</rank>
+                        </item>
+                        <item id="implementation_date">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="org_id" />
-                        <item id="status" />
-                        <item id="controlowner_id" />
-                        <item id="control_domain" />
-                        <item id="control_type" />
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="controlowner_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="control_domain">
+                            <rank>50</rank>
+                        </item>
+                        <item id="control_type">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </list>
             </presentation>
@@ -3954,25 +4082,43 @@
                                 <item id="fieldset:lnkISMSRiskToISMSControl:Link">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="risk_id" />
-                                        <item id="control_id" />
+                                        <item id="risk_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="control_id">
+                                            <rank>20</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:lnkISMSRiskToISMSControl:ControlSnapshot">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="control_status" />
-                                        <item id="control_domain_ro" />
-                                        <item id="control_type_ro" />
+                                        <item id="control_status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="control_domain_ro">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="control_type_ro">
+                                            <rank>30</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:lnkISMSRiskToISMSControl:RiskSnapshot">
-                                    <rank>20</rank>
+                                    <rank>30</rank>
                                     <items>
-                                        <item id="risk_pre_level_ro" />
-                                        <item id="risk_pre_score_ro" />
-                                        <item id="risk_res_level_ro" />
-                                        <item id="risk_res_score_ro" />
+                                        <item id="risk_pre_level_ro">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="risk_pre_score_ro">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="risk_res_level_ro">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="risk_res_score_ro">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -3983,15 +4129,23 @@
                                 <item id="fieldset:lnkISMSRiskToISMSControl:Effect">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="link_status" />
-                                        <item id="effect_on_likelihood" />
-                                        <item id="effect_on_impact" />
+                                        <item id="link_status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="effect_on_likelihood">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="effect_on_impact">
+                                            <rank>30</rank>
+                                        </item>
                                     </items>
                                 </item>
                                 <item id="fieldset:lnkISMSRiskToISMSControl:Dates">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="due_date" />
+                                        <item id="due_date">
+                                            <rank>10</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -3999,40 +4153,53 @@
                         <item id="fieldset:lnkISMSRiskToISMSControl:Notes">
                             <rank>30</rank>
                             <items>
-                                <item id="comment" />
+                                <item id="comment">
+                                    <rank>10</rank>
+                                </item>
                             </items>
                         </item>
                     </items>
                 </details>
                 <search>
                     <items>
-                        <item id="risk_id" />
-                        <item id="control_id" />
-                        <item id="link_status" />
-                        <item id="effect_on_likelihood" />
-                        <item id="effect_on_impact" />
-                        <item id="due_date" />
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="control_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="link_status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="effect_on_likelihood">
+                            <rank>40</rank>
+                        </item>
+                        <item id="effect_on_impact">
+                            <rank>50</rank>
+                        </item>
+                        <item id="due_date">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
                         <item id="link_status">
-                            <rank>10</rank>
-                        </item>
-                        <item id="due_date">
                             <rank>20</rank>
                         </item>
-                        <item id="effect_on_likelihood">
+                        <item id="due_date">
                             <rank>30</rank>
                         </item>
-                        <item id="effect_on_impact">
+                        <item id="effect_on_likelihood">
                             <rank>40</rank>
+                        </item>
+                        <item id="effect_on_impact">
+                            <rank>50</rank>
                         </item>
                     </items>
                 </list>
             </presentation>
         </class>
-
         <class id="ISMSReview" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -4324,7 +4491,7 @@
       {
         $sTarget = (string) $oEventData->Get('target_state');
         if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
-          $this->AddCheckIssue('Outcome should be set before completion.');
+          $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:NoOutcome'));
         }
       }
   ]]></code>
@@ -4333,19 +4500,66 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="started_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
-                        <item id="summary" />
-                        <item id="notes" />
-                        <item id="scope" />
-                        <item id="checklist" />
-                        <item id="evidence" />
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>60</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>70</rank>
+                        </item>
+                        <item id="summary">
+                            <rank>80</rank>
+                        </item>
+                        <item id="notes">
+                            <rank>90</rank>
+                        </item>
+                        <item id="scope">
+                            <rank>100</rank>
+                        </item>
+                        <item id="checklist">
+                            <rank>110</rank>
+                        </item>
+                        <item id="evidence">
+                            <rank>120</rank>
+                        </item>
                     </items>
                 </details>
+                <list>
+                    <items>
+                        <item id="control_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>60</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>70</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>80</rank>
+                        </item>
+                    </items>
+                </list>
             </presentation>
         </class>
         <class id="ISMSAssetReview" _delta="define">
@@ -4624,10 +4838,10 @@
         $sStarted = (string) $this->Get('started_on');
         $sCompleted = (string) $this->Get('completed_on');
         if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue('started_on is before planned_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
         }
         if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue('completed_on is before started_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
         }
     }
   ]]></code>
@@ -4676,20 +4890,40 @@
                         <item id="col:col0">
                             <rank>10</rank>
                             <items>
-                                <item id="fieldset:ISMSAssetReview:Link">
+                                <item id="fieldset:ISMSReview:Link">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="asset_id" />
+                                        <item id="asset_id">
+                                            <rank>10</rank>
+                                        </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:ISMSAssetReview:Progress">
+                                <item id="fieldset:ISMSReview:Outcome">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="status" />
-                                        <item id="planned_on" />
-                                        <item id="started_on" />
-                                        <item id="completed_on" />
-                                        <item id="reviewer_id" />
+                                        <item id="outcome">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="summary">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSReview:Notes">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="scope">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="checklist">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="evidence">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="notes">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -4697,25 +4931,24 @@
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:ISMSAssetReview:Outcome">
+                                <item id="fieldset:ISMSReview:Progress">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="outcome" />
-                                        <item id="summary" />
-                                    </items>
-                                </item>
-                            </items>
-                        </item>
-                        <item id="col:col2">
-                            <rank>30</rank>
-                            <items>
-                                <item id="fieldset:ISMSAssetReview:Notes">
-                                    <rank>10</rank>
-                                    <items>
-                                        <item id="scope" />
-                                        <item id="checklist" />
-                                        <item id="evidence" />
-                                        <item id="notes" />
+                                        <item id="status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="reviewer_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="planned_on">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="started_on">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="completed_on">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -4724,34 +4957,77 @@
                 </details>
                 <default_search>
                     <items>
-                        <item id="asset_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="asset_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>50</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="asset_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="started_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
-                        <item id="summary" />
+                        <item id="asset_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>60</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="summary">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="asset_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="asset_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>60</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>70</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </list>
             </presentation>
@@ -5032,10 +5308,10 @@
         $sStarted = (string) $this->Get('started_on');
         $sCompleted = (string) $this->Get('completed_on');
         if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue('started_on is before planned_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
         }
         if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue('completed_on is before started_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn'));
         }
     }
   ]]></code>
@@ -5085,20 +5361,40 @@
                         <item id="col:col0">
                             <rank>10</rank>
                             <items>
-                                <item id="fieldset:ISMSRiskReview:Link">
+                                <item id="fieldset:ISMSReview:Link">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="risk_id" />
+                                        <item id="risk_id">
+                                            <rank>10</rank>
+                                        </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:ISMSRiskReview:Progress">
+                                <item id="fieldset:ISMSReview:Outcome">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="status" />
-                                        <item id="planned_on" />
-                                        <item id="started_on" />
-                                        <item id="completed_on" />
-                                        <item id="reviewer_id" />
+                                        <item id="outcome">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="summary">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSReview:Notes">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="scope">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="checklist">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="evidence">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="notes">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -5106,25 +5402,24 @@
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:ISMSRiskReview:Outcome">
+                                <item id="fieldset:ISMSReview:Progress">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="outcome" />
-                                        <item id="summary" />
-                                    </items>
-                                </item>
-                            </items>
-                        </item>
-                        <item id="col:col2">
-                            <rank>30</rank>
-                            <items>
-                                <item id="fieldset:ISMSRiskReview:Notes">
-                                    <rank>10</rank>
-                                    <items>
-                                        <item id="scope" />
-                                        <item id="checklist" />
-                                        <item id="evidence" />
-                                        <item id="notes" />
+                                        <item id="status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="reviewer_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="planned_on">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="started_on">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="completed_on">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -5133,34 +5428,77 @@
                 </details>
                 <default_search>
                     <items>
-                        <item id="risk_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>50</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="risk_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="started_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
-                        <item id="summary" />
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>60</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="summary">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="risk_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="risk_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>60</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>70</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </list>
             </presentation>
@@ -5441,10 +5779,10 @@
         $sStarted = (string) $this->Get('started_on');
         $sCompleted = (string) $this->Get('completed_on');
         if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue('started_on is before planned_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
         }
         if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue('completed_on is before started_on.');
+            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn'));
         }
     }
   ]]></code>
@@ -5493,20 +5831,40 @@
                         <item id="col:col0">
                             <rank>10</rank>
                             <items>
-                                <item id="fieldset:ISMSControlReview:Link">
+                                <item id="fieldset:ISMSReview:Link">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="control_id" />
+                                        <item id="control_id">
+                                            <rank>10</rank>
+                                        </item>
                                     </items>
                                 </item>
-                                <item id="fieldset:ISMSControlReview:Progress">
+                                <item id="fieldset:ISMSReview:Outcome">
                                     <rank>20</rank>
                                     <items>
-                                        <item id="status" />
-                                        <item id="planned_on" />
-                                        <item id="started_on" />
-                                        <item id="completed_on" />
-                                        <item id="reviewer_id" />
+                                        <item id="outcome">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="summary">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSReview:Notes">
+                                    <rank>30</rank>
+                                    <items>
+                                        <item id="scope">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="checklist">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="evidence">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="notes">
+                                            <rank>40</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -5514,25 +5872,24 @@
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
-                                <item id="fieldset:ISMSControlReview:Outcome">
+                                <item id="fieldset:ISMSReview:Progress">
                                     <rank>10</rank>
                                     <items>
-                                        <item id="outcome" />
-                                        <item id="summary" />
-                                    </items>
-                                </item>
-                            </items>
-                        </item>
-                        <item id="col:col2">
-                            <rank>30</rank>
-                            <items>
-                                <item id="fieldset:ISMSControlReview:Notes">
-                                    <rank>10</rank>
-                                    <items>
-                                        <item id="scope" />
-                                        <item id="checklist" />
-                                        <item id="evidence" />
-                                        <item id="notes" />
+                                        <item id="status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="reviewer_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="planned_on">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="started_on">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="completed_on">
+                                            <rank>50</rank>
+                                        </item>
                                     </items>
                                 </item>
                             </items>
@@ -5541,34 +5898,77 @@
                 </details>
                 <default_search>
                     <items>
-                        <item id="control_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>50</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="control_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="started_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
-                        <item id="summary" />
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="status">
+                            <rank>20</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>30</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>60</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>70</rank>
+                        </item>
+                        <item id="summary">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="control_id" />
-                        <item id="status" />
-                        <item id="planned_on" />
-                        <item id="completed_on" />
-                        <item id="reviewer_id" />
-                        <item id="outcome" />
+                        <item id="control_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="planned_on">
+                            <rank>40</rank>
+                        </item>
+                        <item id="started_on">
+                            <rank>50</rank>
+                        </item>
+                        <item id="completed_on">
+                            <rank>60</rank>
+                        </item>
+                        <item id="outcome">
+                            <rank>70</rank>
+                        </item>
+                        <item id="reviewer_id">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </list>
             </presentation>
@@ -5847,6 +6247,24 @@ WHERE status NOT IN ('retired')
                     <class id="lnkISMSRiskToISMSControl" />
                 </classes>
             </group>
+            <group id="ISMSAssetReview" _delta="define">
+                <classes>
+                    <class id="ISMSReview" />
+                    <class id="ISMSAssetReview" />
+                </classes>
+            </group>
+            <group id="ISMSRiskReview" _delta="define">
+                <classes>
+                    <class id="ISMSReview" />
+                    <class id="ISMSRiskReview" />
+                </classes>
+            </group>
+            <group id="ISMSControlReview" _delta="define">
+                <classes>
+                    <class id="ISMSReview" />
+                    <class id="ISMSControlReview" />
+                </classes>
+            </group>
         </groups>
         <profiles>
             <profile id="117" _delta="if_exists">
@@ -5940,6 +6358,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk delete">allow</action>
                         </actions>
                     </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73001" _delta="define">
@@ -6002,7 +6459,6 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_start_amend">allow</action>
                             <action id="stimulus:ev_submit_amend">allow</action>
                             <action id="stimulus:ev_cancel_amend">allow</action>
-
                         </actions>
                     </group>
                     <group id="ISMSLinkAssetAsset">
@@ -6033,6 +6489,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk write">allow</action>
                             <action id="action:delete">allow</action>
                             <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
                         </actions>
                     </group>
                 </groups>
@@ -6129,6 +6624,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk delete">deny</action>
                         </actions>
                     </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73003" _delta="define">
@@ -6221,6 +6755,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk write">allow</action>
                             <action id="action:delete">allow</action>
                             <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
                         </actions>
                     </group>
                 </groups>
@@ -6317,6 +6890,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk delete">deny</action>
                         </actions>
                     </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">allow</action>
+                            <action id="stimulus:ev_complete">allow</action>
+                            <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73005" _delta="define">
@@ -6409,6 +7021,45 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk write">deny</action>
                             <action id="action:delete">deny</action>
                             <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSAssetReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSRiskReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSControlReview" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_start">deny</action>
+                            <action id="stimulus:ev_complete">deny</action>
+                            <action id="stimulus:ev_cancel">deny</action>
                         </actions>
                     </group>
                 </groups>
