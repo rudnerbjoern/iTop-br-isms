@@ -1,5 +1,9 @@
 # iTop ISMS Extension
 
+Copyright (c) 2024-2025 Björn Rudner
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?logo=git&style=flat)](https://github.com/rudnerbjoern/iTop-isms/issues)
+[![License](https://img.shields.io/github/license/rudnerbjoern/iTop-br-isms)](https://github.com/rudnerbjoern/iTop-br-isms/blob/main/LICENSE)
+
 A lightweight Information Security Management (ISMS) extension for **iTop** that adds Assets, Risks, Controls and their relations — including inherent/residual/target risk evaluation, aggregation of control effects, **review workflows**, validations, and tidy UI presentations.
 
 > Tested with recent iTop 3.2 lines.
@@ -350,9 +354,20 @@ PRs and issues welcome. Please:
 
 ## License
 
-TBD
+This project is licensed under the **GNU Affero General Public License v3.0**
+(**AGPL-3.0-only**).
 
----
+You may use, modify, and redistribute this software under the terms of the AGPL.
+If you run a modified version over a network (e.g., as a web application), you must
+offer the complete corresponding source code to the users interacting with it.
+
+- [Full text](LICENSE)
+
+## How to help
+
+**Contributions are very welcome!**
+
+If you would like to contribute, please check the [issues](https://github.com/rudnerbjoern/iTop-isms/issues) or open a pull request.
 
 ## Credits
 
