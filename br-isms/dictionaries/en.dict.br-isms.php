@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-08-19
+ * @version     2025-09-09
  *
  * Localized data
  */
@@ -46,7 +46,7 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSAssetType' => 'Asset Type',
+    'Class:ISMSAssetType' => 'ISMS Asset Type',
     'Class:ISMSAssetType+' => 'Typology used to classify ISMS assets.',
     'Class:ISMSAssetType/Attribute:name' => 'Name',
     'Class:ISMSAssetType/Attribute:name+' => 'Unique label of the asset type.',
@@ -64,7 +64,7 @@ Dict::Add('EN US', 'English', 'English', array(
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'ISMSAsset:Contacts' => 'Contacts',
-    'Class:ISMSAsset' => 'Asset',
+    'Class:ISMSAsset' => 'ISMS Asset',
     'Class:ISMSAsset+' => 'Information security management system (ISMS) asset.',
     'Class:ISMSAsset/Name' => '%1$s %2$s',
     'Class:ISMSAsset/Attribute:ref' => 'Reference',
