@@ -1380,22 +1380,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1409,22 +1431,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1442,18 +1486,38 @@
                         <value id="low">
                             <code>low</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                                <decoration_classes>fas fa-check-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="medium">
                             <code>medium</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                                <decoration_classes>fas fa-minus-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="high">
                             <code>high</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="extreme">
                             <code>extreme</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1466,22 +1530,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1494,22 +1580,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1526,18 +1634,38 @@
                         <value id="low">
                             <code>low</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                                <decoration_classes>fas fa-check-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="medium">
                             <code>medium</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                                <decoration_classes>fas fa-minus-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="high">
                             <code>high</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="extreme">
                             <code>extreme</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1550,22 +1678,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1578,22 +1728,44 @@
                         <value id="1">
                             <code>1</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                            </style>
                         </value>
                         <value id="2">
                             <code>2</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                            </style>
                         </value>
                         <value id="3">
                             <code>3</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,213,79)</main_color>
+                                <complementary_color>rgb(78,53,16)</complementary_color>
+                            </style>
                         </value>
                         <value id="4">
                             <code>4</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                         <value id="5">
                             <code>5</code>
                             <rank>50</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>fas fa-exclamation-triangle</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -1610,18 +1782,38 @@
                         <value id="low">
                             <code>low</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                                <decoration_classes>far fa-flag</decoration_classes>
+                            </style>
                         </value>
                         <value id="medium">
                             <code>medium</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(240,244,195)</main_color>
+                                <complementary_color>rgb(62,74,0)</complementary_color>
+                                <decoration_classes>far fa-flag</decoration_classes>
+                            </style>
                         </value>
                         <value id="high">
                             <code>high</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(251,140,0)</main_color>
+                                <complementary_color>rgb(0,0,0)</complementary_color>
+                                <decoration_classes>far fa-flag</decoration_classes>
+                            </style>
                         </value>
                         <value id="extreme">
                             <code>extreme</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(198,40,40)</main_color>
+                                <complementary_color>rgb(255,255,255)</complementary_color>
+                                <decoration_classes>far fa-flag</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
