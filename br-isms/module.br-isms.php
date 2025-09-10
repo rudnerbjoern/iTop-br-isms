@@ -30,7 +30,9 @@ SetupWebPage::AddModule(
 
         // Components
         //
-        'datamodel' => array(),
+        'datamodel' => array(
+            'src/dashletriskmatrix.class.inc.php',
+        ),
         'webservice' => array(),
         'data.struct' => array(
             // add your 'structure' definition XML files here,

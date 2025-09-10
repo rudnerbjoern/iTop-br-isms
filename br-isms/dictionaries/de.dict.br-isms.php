@@ -679,3 +679,40 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Begonnen am" liegt vor "Geplant am".',
     'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Abgeschlossen am" liegt vor "Begonnen am".',
 ));
+
+//
+// Class: DashletRiskMatrix
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'UI:DashletRiskMatrix:Label' => 'Risiko-Matrix',
+    'UI:DashletRiskMatrix:Description' => '5×5 Likelihood × Impact Matrix für veröffentlichte Risiken',
+    'UI:DashletRiskMatrix:Title' => 'Veröffentlichte Risiken — Risiko-Matrix',
+
+    'UI:DashletRiskMatrix:Impact' => 'Auswirkung',
+    'UI:DashletRiskMatrix:Likelihood' => 'Eintrittswahrscheinlichkeit',
+    'UI:DashletRiskMatrix:Total' => 'Summe',
+
+    'UI:DashletRiskMatrix:Legend:Low' => 'Niedrig',
+    'UI:DashletRiskMatrix:Legend:Medium' => 'Mittel',
+    'UI:DashletRiskMatrix:Legend:High' => 'Hoch',
+    'UI:DashletRiskMatrix:Legend:Extreme' => 'Extrem',
+
+    'UI:DashletRiskMatrix:NoData' => 'Keine Daten im aktuellen Umfang',
+
+    'UI:DashletRiskMatrix:Prop-Title' => 'Titel',
+    'UI:DashletRiskMatrix:Prop-Query' => 'OQL-Scope',
+    'UI:DashletRiskMatrix:Prop-X' => 'X-Achse (Auswirkung) - Attribut',
+    'UI:DashletRiskMatrix:Prop-Y' => 'Y-Achse (Eintrittswahrscheinlichkeit) - Attribut',
+    'UI:DashletRiskMatrix:Prop-Link' => 'Drilldown-Links aktivieren',
+    'UI:DashletRiskMatrix:Prop-Totals' => 'Summen anzeigen',
+    'UI:DashletRiskMatrix:Prop-ColorMode' => 'Farbmodus',
+    'UI:DashletRiskMatrix:Prop-ShowPercent' => 'Prozente pro Zelle anzeigen',
+    'UI:DashletRiskMatrix:Prop-IncludeNA'   => '(n/a)-Bucket einschließen',
+
+    'UI:DashletRiskMatrix:ColorMode:Count' => 'Heatmap nach Anzahl',
+    'UI:DashletRiskMatrix:ColorMode:Severity' => 'Schweregrad (fixe Stufen)',
+    'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (aus Zellen-Daten)',
+
+    'UI:DashletRiskMatrix:NA' => 'N/V',
+));
