@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-09-09
+ * @version     2025-09-10
  *
  * Localized data
  */
@@ -695,4 +695,41 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSReview/Check:NoOutcome' => 'Outcome should be set before completion.',
     'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Started on" is before "Planned on".',
     'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Completed on" is before "Started on".',
+));
+
+//
+// Class: DashletRiskMatrix
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'UI:DashletRiskMatrix:Label' => 'Risk Matrix',
+    'UI:DashletRiskMatrix:Description' => '5x5 likelihood × impact matrix for published risks',
+    'UI:DashletRiskMatrix:Title' => 'Published Risks — Risk Matrix',
+
+    'UI:DashletRiskMatrix:Impact' => 'Impact',
+    'UI:DashletRiskMatrix:Likelihood' => 'Likelihood',
+    'UI:DashletRiskMatrix:Total' => 'Total',
+
+    'UI:DashletRiskMatrix:Legend:Low' => 'Low',
+    'UI:DashletRiskMatrix:Legend:Medium' => 'Medium',
+    'UI:DashletRiskMatrix:Legend:High' => 'High',
+    'UI:DashletRiskMatrix:Legend:Extreme' => 'Extreme',
+
+    'UI:DashletRiskMatrix:NoData' => 'No data for current scope',
+
+    'UI:DashletRiskMatrix:Prop-Title' => 'Title',
+    'UI:DashletRiskMatrix:Prop-Query' => 'OQL scope',
+    'UI:DashletRiskMatrix:Prop-X' => 'X axis attribute (impact)',
+    'UI:DashletRiskMatrix:Prop-Y' => 'Y axis attribute (likelihood)',
+    'UI:DashletRiskMatrix:Prop-Link' => 'Enable drilldown links',
+    'UI:DashletRiskMatrix:Prop-Totals' => 'Show totals',
+    'UI:DashletRiskMatrix:Prop-ColorMode' => 'Color mode',
+    'UI:DashletRiskMatrix:Prop-ShowPercent' => 'Show % per cell',
+    'UI:DashletRiskMatrix:Prop-IncludeNA'   => 'Include (n/a) bucket',
+
+    'UI:DashletRiskMatrix:ColorMode:Count' => 'Heat by count',
+    'UI:DashletRiskMatrix:ColorMode:Severity' => 'Severity (fixed levels)',
+    'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (from cell data)',
+
+    'UI:DashletRiskMatrix:NA' => 'N/A',
 ));

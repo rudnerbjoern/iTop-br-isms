@@ -7518,4 +7518,24 @@ WHERE status NOT IN ('retired')
             <review_interval_months type="integer">12</review_interval_months>
         </parameters>
     </module_parameters>
+    <meta>
+        <dashlets>
+            <dashlet id="DashletRiskMatrix" _delta="define">
+                <label>UI:DashletRiskMatrix:Label</label>
+                <icon>br-isms/images/isms-risk.svg</icon>
+                <description>UI:DashletRiskMatrix:Description</description>
+                <configuration>
+                    <title>Published Risks — Residual Matrix</title>
+                    <query>SELECT ISMSRisk WHERE status = "published"</query>
+                    <x_axis>res_impact</x_axis>
+                    <y_axis>res_likelihood</y_axis>
+                    <link>true</link>
+                    <totals>true</totals>
+                    <color_mode>severity</color_mode>
+                    <show_percent>true</show_percent>
+                    <include_na>false</include_na>
+                </configuration>
+            </dashlet>
+        </dashlets>
+    </meta>
 </itop_design>
