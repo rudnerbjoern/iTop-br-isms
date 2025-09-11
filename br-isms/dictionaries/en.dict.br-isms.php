@@ -771,6 +771,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
     'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
     'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard control',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Control code',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Control title',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Control domain',
     'Class:ISMSSoAEntry/Attribute:applicability' => 'Applicability',
     'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Applicable',
     'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Not applicable',
@@ -810,11 +813,16 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
     'ISMSSoA:KPIs' => 'KPIs',
     'ISMSSoA:Entries' => 'Statement of Applicability',
     'ISMSSoA:Populate:Confirm' => 'Create missing SoA entries from the selected standard?',
     'ISMSSoA:Populate:Done' => 'Created %1$d SoA entries.',
     'ISMSSoA:Coverage' => 'Coverage',
+    'ISMSSoA:StdControls:Total' => 'Standard controls: %1$d',
+    'ISMSSoA:EntriesCount' => 'Entries',
+    'ISMSSoA:Drill:Applicable'  => 'Applicable entries in this domain',
+    'ISMSSoA:Drill:Implemented' => 'Implemented entries in this domain',
 ));
 
 //

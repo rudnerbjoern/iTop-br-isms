@@ -794,11 +794,16 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
     'ISMSSoA:KPIs' => 'KPIs',
     'ISMSSoA:Entries' => 'Erklärung zur Anwendbarkeit (SoA)',
     'ISMSSoA:Populate:Confirm' => 'Fehlende SoA-Einträge aus dem gewählten Standard erzeugen?',
     'ISMSSoA:Populate:Done' => '%1$d SoA-Einträge erstellt.',
     'ISMSSoA:Coverage' => 'Abdeckung',
+    'ISMSSoA:StdControls:Total' => 'Standard-Kontrollen: %1$d',
+    'ISMSSoA:EntriesCount' => 'Einträge',
+    'ISMSSoA:Drill:Applicable'  => 'Anwendbare Einträge in dieser Domäne',
+    'ISMSSoA:Drill:Implemented' => 'Implementierte Einträge in dieser Domäne',
 ));
 
 //
