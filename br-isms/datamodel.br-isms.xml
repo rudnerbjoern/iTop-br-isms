@@ -1479,6 +1479,10 @@
                 <field id="pre_score" xsi:type="AttributeInteger">
                     <sql>pre_score</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <dependencies>
+                        <attribute id="pre_likelihood" />
+                        <attribute id="pre_impact" />
+                    </dependencies>
                 </field>
                 <field id="pre_level" xsi:type="AttributeEnum">
                     <sql>pre_level</sql>
@@ -1523,6 +1527,10 @@
                     <sort_type>rank</sort_type>
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
+                    <dependencies>
+                        <attribute id="pre_likelihood" />
+                        <attribute id="pre_impact" />
+                    </dependencies>
                 </field>
                 <field id="res_likelihood" xsi:type="AttributeEnum">
                     <sql>res_likelihood</sql>
@@ -1627,6 +1635,10 @@
                 <field id="res_score" xsi:type="AttributeInteger">
                     <sql>res_score</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <dependencies>
+                        <attribute id="res_likelihood" />
+                        <attribute id="res_impact" />
+                    </dependencies>
                 </field>
                 <field id="res_level" xsi:type="AttributeEnum">
                     <sql>res_level</sql>
@@ -1671,6 +1683,10 @@
                     <sort_type>rank</sort_type>
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
+                    <dependencies>
+                        <attribute id="res_likelihood" />
+                        <attribute id="res_impact" />
+                    </dependencies>
                 </field>
                 <field id="tgt_likelihood" xsi:type="AttributeEnum">
                     <sql>tgt_likelihood</sql>
@@ -1775,6 +1791,10 @@
                 <field id="tgt_score" xsi:type="AttributeInteger">
                     <sql>tgt_score</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <dependencies>
+                        <attribute id="tgt_likelihood" />
+                        <attribute id="tgt_impact" />
+                    </dependencies>
                 </field>
                 <field id="tgt_level" xsi:type="AttributeEnum">
                     <sql>tgt_level</sql>
@@ -1819,6 +1839,10 @@
                     <sort_type>rank</sort_type>
                     <is_null_allowed>true</is_null_allowed>
                     <display_style>list</display_style>
+                    <dependencies>
+                        <attribute id="tgt_likelihood" />
+                        <attribute id="tgt_impact" />
+                    </dependencies>
                 </field>
                 <field id="aggregation_mode" xsi:type="AttributeEnum">
                     <sql>aggregation_mode</sql>
@@ -2866,6 +2890,7 @@
                                 <item id="fieldset:ISMSRisk:Summary">
                                     <rank>10</rank>
                                     <items>
+                                        <!--
                                         <item id="pre_level">
                                             <rank>10</rank>
                                         </item>
@@ -2878,6 +2903,7 @@
                                         <item id="res_score">
                                             <rank>40</rank>
                                         </item>
+                                        -->
                                         <item id="aggregation_mode">
                                             <rank>50</rank>
                                         </item>
@@ -3473,6 +3499,11 @@
                     <edit_mode>add_only</edit_mode>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
+                </field>
+                <field id="soaentries_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSSoAEntryToISMSControl</linked_class>
+                    <ext_key_to_me>control_id</ext_key_to_me>
+                    <ext_key_to_remote>soaentry_id</ext_key_to_remote>
                 </field>
             </fields>
             <relations>
@@ -4125,6 +4156,9 @@
                         </item>
                         <item id="reviews_list">
                             <rank>110</rank>
+                        </item>
+                        <item id="soaentries_list">
+                            <rank>120</rank>
                         </item>
                     </items>
                 </details>
@@ -6419,6 +6453,872 @@
                 </list>
             </presentation>
         </class>
+        <!-- Standards and SoA -->
+        <class id="ISMSStandard" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismsstandard</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="version" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                        <attribute id="version" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="name" />
+                            <attribute id="version" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="version" xsi:type="AttributeString">
+                    <sql>version</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="publisher" xsi:type="AttributeString">
+                    <sql>publisher</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="url" xsi:type="AttributeURL">
+                    <sql>url</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="controls_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>ISMSStandardControl</linked_class>
+                    <ext_key_to_me>standard_id</ext_key_to_me>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="name" />
+                        <item id="version" />
+                        <item id="publisher" />
+                        <item id="url" />
+                        <item id="controls_list" />
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="name" />
+                        <item id="version" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="name" />
+                        <item id="version" />
+                        <item id="publisher" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="name" />
+                        <item id="version" />
+                        <item id="publisher" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+
+        <class id="ISMSStandardControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismsstandardcontrol</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="standard_name" />
+                        <attribute id="standard_version" />
+                        <attribute id="code" />
+                        <attribute id="title" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="code" />
+                        <attribute id="title" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="standard_id" />
+                            <attribute id="code" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="standard_id" xsi:type="AttributeExternalKey">
+                    <sql>standard_id</sql>
+                    <target_class>ISMSStandard</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="standard_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="standard_version" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>version</target_attcode>
+                </field>
+                <field id="code" xsi:type="AttributeString">
+                    <sql>code</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="title" xsi:type="AttributeString">
+                    <sql>title</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="domain" xsi:type="AttributeString">
+                    <sql>domain</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="standard_id" />
+                        <item id="code" />
+                        <item id="title" />
+                        <item id="domain" />
+                        <item id="description" />
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="standard_id" />
+                        <item id="code" />
+                        <item id="title" />
+                        <item id="domain" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="standard_id" />
+                        <item id="code" />
+                        <item id="title" />
+                        <item id="domain" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="standard_id" />
+                        <item id="code" />
+                        <item id="title" />
+                        <item id="domain" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+
+        <class id="ISMSSoA" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismssao</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="org_name" />
+                        <attribute id="standard_name" />
+                        <attribute id="standard_version" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="org_id" />
+                        <attribute id="org_name" />
+                        <attribute id="standard_id" />
+                        <attribute id="standard_name" />
+                        <attribute id="standard_version" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="org_id" />
+                            <attribute id="standard_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+                <obsolescence>
+                    <condition><![CDATA[status='obsolete']]></condition>
+                </obsolescence>
+            </properties>
+            <fields>
+                <field id="org_id" xsi:type="AttributeExternalKey">
+                    <sql>org_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="org_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>org_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="standard_id" xsi:type="AttributeExternalKey">
+                    <sql>standard_id</sql>
+                    <target_class>ISMSStandard</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="standard_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="standard_version" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>version</target_attcode>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="in_review">
+                            <code>in_review</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="approved">
+                            <code>approved</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>draft</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <always_load_in_tables>true</always_load_in_tables>
+                    <display_style>list</display_style>
+                </field>
+                <field id="owner_id" xsi:type="AttributeExternalKey">
+                    <sql>owner_id</sql>
+                    <target_class>Person</target_class>
+                    <filter><![CDATA[SELECT Person WHERE org_id = :this->org_id]]></filter>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                </field>
+                <field id="owner_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>owner_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="effective_from" xsi:type="AttributeDate">
+                    <sql>effective_from</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="notes" xsi:type="AttributeCaseLog">
+                    <sql>notes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="kpi_total" xsi:type="AttributeInteger">
+                    <sql>kpi_total</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="kpi_applicable" xsi:type="AttributeInteger">
+                    <sql>kpi_applicable</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="kpi_implemented" xsi:type="AttributeInteger">
+                    <sql>kpi_implemented</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="kpi_gaps" xsi:type="AttributeInteger">
+                    <sql>kpi_gaps</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="soaentries_list" xsi:type="AttributeLinkedSet">
+                    <linked_class>ISMSSoAEntry</linked_class>
+                    <ext_key_to_me>soa_id</ext_key_to_me>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_submit" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_approve" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_submit">
+                                <target>in_review</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="in_review">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_approve">
+                                <target>approved</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">effective_from</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="approved">
+                        <flags />
+                        <transitions>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <flags />
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="obsolete">
+                        <flags />
+                        <transitions />
+                    </state>
+                </states>
+            </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtSetInitialISMSoAAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialISMSoAAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetISMSSoaAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetISMSSoaAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtISMSSoAComputeValues">
+                    <event>EVENT_DB_COMPUTE_VALUES</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAComputeValues</callback>
+                </event_listener>
+                <event_listener id="EvtISMSSoACheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoACheckToWrite</callback>
+                </event_listener>
+                <event_listener id="EvtISMSSoAAfterWrite">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAAfterWrite</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="EvtSetInitialISMSoAAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetInitialISMSoAAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceInitialAttributeFlags('effective_from', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('kpi_total', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('kpi_applicable', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('kpi_implemented', OPT_ATT_READONLY);
+        $this->ForceInitialAttributeFlags('kpi_gaps', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="EvtSetISMSSoaAttributeFlags">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtSetISMSSoaAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $this->ForceAttributeFlags('effective_from', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('kpi_total', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('kpi_applicable', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('kpi_implemented', OPT_ATT_READONLY);
+        $this->ForceAttributeFlags('kpi_gaps', OPT_ATT_READONLY);
+    }
+  ]]></code>
+                </method>
+                <method id="RecomputeKPIs">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function RecomputeKPIs()
+    {
+        $iTotal = 0;
+        $iApplicable = 0;
+        $iImpl = 0;
+        $iGaps = 0;
+        $oSearch = DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa');
+        $oSet = new DBObjectSet( $oSearch , array(), array('soa' => $this->GetKey()) );
+        while ($o = $oSet->Fetch()) {
+            $iTotal++;
+            $app = (string)$o->Get('applicability');
+            $impl = (string)$o->Get('implementation_status');
+            if ($app === 'applicable' || $app === 'partial') {
+                $iApplicable++;
+                if ($impl === 'implemented')
+                    $iImpl++;
+                if ($impl === '' || $impl === 'planned' || $impl === 'in_progress')
+                    $iGaps++;
+            }
+        }
+        $this->Set('kpi_total', $iTotal);
+        $this->Set('kpi_applicable', $iApplicable);
+        $this->Set('kpi_implemented', $iImpl);
+        $this->Set('kpi_gaps', $iGaps);
+    }
+  ]]></code>
+                </method>
+                <method id="PopulateEntriesFromStandard">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>Overload-DBObject</type>
+                    <code><![CDATA[
+    public function PopulateEntriesFromStandard($bOnlyMissing = true)
+    {
+        $iCreated = 0;
+        $iSoaId = (int) $this->GetKey();
+        $iStdId = (int) $this->Get('standard_id');
+        if ($iStdId <= 0) return 0;
+
+        $oCtrlSet = new DBObjectSet(
+            DBObjectSearch::FromOQL('SELECT ISMSStandardControl WHERE standard_id = :std'),
+            array(),
+            array('std' => $iStdId)
+        );
+
+        while ($oCtrl = $oCtrlSet->Fetch()) {
+            $iCtrlId = (int) $oCtrl->GetKey();
+
+            if ($bOnlyMissing) {
+                $oExists = new DBObjectSet(
+                    DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa AND standardcontrol_id = :ctrl'),
+                    array(),
+                    array('soa' => $iSoaId, 'ctrl' => $iCtrlId)
+                );
+                if ($oExists->CountExceeds(0)) {
+                    continue;
+                }
+            }
+
+            $oEntry = new ISMSSoAEntry();
+            $oEntry->Set('soa_id', $iSoaId);
+            $oEntry->Set('standardcontrol_id', $iCtrlId);
+            // Optional defaults:
+            // $oEntry->Set('applicability', 'applicable');
+            // $oEntry->Set('implementation_status', 'planned');
+            $oEntry->DBInsert();
+            $iCreated++;
+        }
+
+        // KPIs neu berechnen
+        $this->RecomputeKPIs();
+        $this->DBUpdate();
+
+        return $iCreated;
+    }
+  ]]></code>
+                </method>
+                <method id="EvtISMSSoAComputeValues">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtISMSSoAComputeValues(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+       $this->RecomputeKPIs();
+    }
+  ]]></code>
+                </method>
+                <method id="EvtISMSSoACheckToWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtISMSSoACheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $target = (string)$oEventData->Get('target_state');
+        if ($target === 'approved') {
+            // Alle Einträge müssen entschieden sein
+            $oSet = new DBObjectSet(DBObjectSearch::FromOQL(
+                'SELECT ISMSSoAEntry WHERE soa_id = :soa AND applicability IS NULL'), array(), array('soa'=>$this->GetKey()));
+            if ($oSet->CountExceeds(0)) {
+                $this->AddCheckIssue(Dict::S('Class:ISMSSoA/Check:AllEntriesDecided'));
+            }
+        }
+    }
+  ]]></code>
+                </method>
+                <method id="EvtISMSSoAAfterWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtISMSSoAAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        if ($oEventData->Get('is_new') === true)
+        {
+            try {
+                $created = $this->PopulateEntriesFromStandard(true);
+                // Optional: Log/Note
+                if ($created > 0) {
+                    $this->AddToNotes('Auto-populated '.$created.' SoA entries from standard.');
+                    $this->DBUpdate();
+                }
+            } catch (\Exception $e) {
+                // swallow to avoid breaking object creation; admin can check logs
+            }
+        }
+    }
+  ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="org_id" />
+                        <item id="standard_id" />
+                        <item id="status" />
+                        <item id="owner_id" />
+                        <item id="effective_from" />
+                        <item id="kpi_total" />
+                        <item id="kpi_applicable" />
+                        <item id="kpi_implemented" />
+                        <item id="kpi_gaps" />
+                        <item id="soaentries_list" />
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="org_id" />
+                        <item id="standard_id" />
+                        <item id="status" />
+                        <item id="owner_id" />
+                        <item id="effective_from" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="ISMSSoAEntry" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <db_table>ismssaoentry</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <naming>
+                    <attributes>
+                        <attribute id="soa_org_name" />
+                        <attribute id="soa_standard_name" />
+                        <attribute id="standardcontrol_code" />
+                    </attributes>
+                </naming>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="soa_id" />
+                            <attribute id="standardcontrol_code" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="soa_id" xsi:type="AttributeExternalKey">
+                    <sql>soa_id</sql>
+                    <target_class>ISMSSoA</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="soa_org_id" xsi:type="AttributeExternalField">
+                    <extkey_attcode>soa_id</extkey_attcode>
+                    <target_attcode>org_id</target_attcode>
+                </field>
+                <field id="soa_org_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>soa_id</extkey_attcode>
+                    <target_attcode>org_name</target_attcode>
+                </field>
+                <field id="soa_standard_id" xsi:type="AttributeExternalField">
+                    <extkey_attcode>soa_id</extkey_attcode>
+                    <target_attcode>standard_id</target_attcode>
+                </field>
+                <field id="soa_standard_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>soa_id</extkey_attcode>
+                    <target_attcode>standard_name</target_attcode>
+                </field>
+                <field id="standardcontrol_id" xsi:type="AttributeExternalKey">
+                    <sql>standardcontrol_id</sql>
+                    <target_class>ISMSStandardControl</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="standardcontrol_code" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standardcontrol_id</extkey_attcode>
+                    <target_attcode>code</target_attcode>
+                </field>
+                <field id="applicability" xsi:type="AttributeEnum">
+                    <sql>applicability</sql>
+                    <values>
+                        <value id="applicable">
+                            <code>applicable</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="not_applicable">
+                            <code>not_applicable</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="partial">
+                            <code>partial</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>not_applicable</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <always_load_in_tables>true</always_load_in_tables>
+                    <display_style>radio_horizontal</display_style>
+                </field>
+                <field id="justification" xsi:type="AttributeText">
+                    <sql>justification</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="implementation_status" xsi:type="AttributeEnum">
+                    <sql>impl_status</sql>
+                    <values>
+                        <value id="planned">
+                            <code>planned</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="in_progress">
+                            <code>in_progress</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="implemented">
+                            <code>implemented</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="not_implemented">
+                            <code>not_implemented</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>not_implemented</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="evidence" xsi:type="AttributeText">
+                    <sql>evidence</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="notes" xsi:type="AttributeCaseLog">
+                    <sql>notes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="controls_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSSoAEntryToISMSControl</linked_class>
+                    <ext_key_to_me>soaentry_id</ext_key_to_me>
+                    <ext_key_to_remote>control_id</ext_key_to_remote>
+                </field>
+            </fields>
+            <event_listeners>
+                <event_listener id="EvtISMSSoAEntryCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAEntryCheckToWrite</callback>
+                </event_listener>
+            </event_listeners>
+            <methods>
+                <method id="EvtISMSSoAEntryCheckToWrite">
+                    <static>false</static>
+                    <access>public</access>
+                    <type>EventListener</type>
+                    <code><![CDATA[
+    public function EvtISMSSoAEntryCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
+    {
+        $app = (string)$this->Get('applicability');
+        if ($app === 'not_applicable' && trim((string)$this->Get('justification')) === '') {
+            $this->AddCheckIssue(Dict::S('Class:ISMSSoAEntry/Check:NoJustificationForNA'));
+        }
+        if (($app === 'applicable' || $app === 'partial')
+            && (string)$this->Get('implementation_status') === 'implemented'
+            && trim((string)$this->Get('evidence')) === '') {
+            $this->AddCheckIssue(Dict::S('Class:ISMSSoAEntry/Check:NoEvidence'));
+        }
+    }
+  ]]></code>
+                </method>
+            </methods>
+            <presentation>
+                <details>
+                    <items>
+                        <item id="soa_id" />
+                        <item id="standardcontrol_id" />
+                        <item id="applicability" />
+                        <item id="justification" />
+                        <item id="implementation_status" />
+                        <item id="evidence" />
+                        <item id="controls_list" />
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="soa_org_id" />
+                        <item id="soa_id" />
+                        <item id="standardcontrol_id" />
+                        <item id="applicability" />
+                        <item id="implementation_status" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="soa_org_id" />
+                        <item id="soa_standard_id" />
+                        <item id="soa_id" />
+                        <item id="standardcontrol_id" />
+                        <item id="applicability" />
+                        <item id="implementation_status" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="soa_id" />
+                        <item id="standardcontrol_id" />
+                        <item id="applicability" />
+                        <item id="implementation_status" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSSoAEntryToISMSControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <db_table>lnksoaentrytocontrol</db_table>
+                <key_type>autoincrement</key_type>
+                <db_key_field>id</db_key_field>
+                <naming>
+                    <attributes>
+                        <attribute id="soaentry_id" />
+                        <attribute id="control_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="soaentry_id" />
+                        <attribute id="control_id" />
+                        <attribute id="control_name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="soaentry_id" />
+                            <attribute id="control_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="soaentry_id" xsi:type="AttributeExternalKey">
+                    <sql>soaentry_id</sql>
+                    <target_class>ISMSSoAEntry</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="control_id" xsi:type="AttributeExternalKey">
+                    <sql>control_id</sql>
+                    <target_class>ISMSControl</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="control_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="role" xsi:type="AttributeString">
+                    <sql>role</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="contribution" xsi:type="AttributeEnum">
+                    <sql>contrib</sql>
+                    <values>
+                        <value id="primary">
+                            <code>primary</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="supporting">
+                            <code>supporting</code>
+                            <rank>20</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>radio_horizontal</display_style>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="soaentry_id" />
+                        <item id="control_id" />
+                        <item id="role" />
+                        <item id="contribution" />
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="soaentry_id" />
+                        <item id="control_id" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -6496,6 +7396,31 @@
                             <dashlet id="isms-340" xsi:type="DashletBadge">
                                 <rank>340</rank>
                                 <class>ISMSControlReview</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                    <cell id="isms-400">
+                        <rank>4</rank>
+                        <dashlets>
+                            <dashlet id="isms-401" xsi:type="DashletHeaderStatic">
+                                <rank>401</rank>
+                                <title>Menu:ISMSSpace:Standards</title>
+                            </dashlet>
+                            <dashlet id="isms-410" xsi:type="DashletBadge">
+                                <rank>410</rank>
+                                <class>ISMSStandard</class>
+                            </dashlet>
+                            <dashlet id="isms-420" xsi:type="DashletBadge">
+                                <rank>420</rank>
+                                <class>ISMSStandardControl</class>
+                            </dashlet>
+                            <dashlet id="isms-430" xsi:type="DashletBadge">
+                                <rank>430</rank>
+                                <class>ISMSSoA</class>
+                            </dashlet>
+                            <dashlet id="isms-440" xsi:type="DashletBadge">
+                                <rank>440</rank>
+                                <class>ISMSSoAEntry</class>
                             </dashlet>
                         </dashlets>
                     </cell>
@@ -6711,6 +7636,23 @@ WHERE status NOT IN ('retired')
                     <class id="ISMSControlReview" />
                 </classes>
             </group>
+            <group id="ISMSStandardAndControl" _delta="define">
+                <classes>
+                    <class id="ISMSStandard" />
+                    <class id="ISMSStandardControl" />
+                </classes>
+            </group>
+            <group id="ISMSSoAAndEntry" _delta="define">
+                <classes>
+                    <class id="ISMSSoA" />
+                    <class id="ISMSSoAEntry" />
+                </classes>
+            </group>
+            <group id="ISMSLinkSoAEntryControl" _delta="define">
+                <classes>
+                    <class id="lnkISMSSoAEntryToISMSControl" />
+                </classes>
+            </group>
         </groups>
         <profiles>
             <profile id="117" _delta="if_exists">
@@ -6841,6 +7783,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_start">allow</action>
                             <action id="stimulus:ev_complete">allow</action>
                             <action id="stimulus:ev_cancel">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
                         </actions>
                     </group>
                 </groups>
@@ -6976,6 +7948,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_cancel">allow</action>
                         </actions>
                     </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73002" _delta="define">
@@ -7107,6 +8109,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_start">deny</action>
                             <action id="stimulus:ev_complete">deny</action>
                             <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
                         </actions>
                     </group>
                 </groups>
@@ -7242,6 +8274,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_cancel">deny</action>
                         </actions>
                     </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73004" _delta="define">
@@ -7375,6 +8437,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_cancel">allow</action>
                         </actions>
                     </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
                 </groups>
             </profile>
             <profile id="73005" _delta="define">
@@ -7506,6 +8598,36 @@ WHERE status NOT IN ('retired')
                             <action id="stimulus:ev_start">deny</action>
                             <action id="stimulus:ev_complete">deny</action>
                             <action id="stimulus:ev_cancel">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSStandardAndControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSSoAAndEntry" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                        </actions>
+                    </group>
+                    <group id="ISMSLinkSoAEntryControl" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">deny</action>
                         </actions>
                     </group>
                 </groups>

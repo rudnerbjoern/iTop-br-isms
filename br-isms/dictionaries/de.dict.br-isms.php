@@ -681,6 +681,127 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 ));
 
 //
+// Class: ISMSStandard
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSStandard' => 'ISMS-Standard',
+    'Class:ISMSStandard+' => 'Sicherheits-/Compliance-Standard, z. B. ISO/IEC 27001.',
+    'Class:ISMSStandard/Name' => '%1$s:%2$s',
+    'Class:ISMSStandard/Attribute:name' => 'Name',
+    'Class:ISMSStandard/Attribute:version' => 'Version',
+    'Class:ISMSStandard/Attribute:publisher' => 'Herausgeber',
+    'Class:ISMSStandard/Attribute:url' => 'Referenz (URL)',
+    'Class:ISMSStandard/Attribute:controls_list' => 'Kontrollen',
+    'Class:ISMSStandard/Attribute:controls_list+' => 'Standard-Kontrollen (z. B. Anhang A).',
+    'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'Dieser Standard/Version existiert bereits.',
+));
+
+//
+// Class: ISMSStandardControl
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSStandardControl' => 'Standard-Kontrolle',
+    'Class:ISMSStandardControl+' => 'Kontrolle gemäß gewähltem Standard.',
+    'Class:ISMSStandardControl/Name' => '%1$s:%2$s / %3$s - %4$s',
+    'Class:ISMSStandardControl/Attribute:standard_id' => 'Standard',
+    'Class:ISMSStandardControl/Attribute:code' => 'Code',
+    'Class:ISMSStandardControl/Attribute:title' => 'Titel',
+    'Class:ISMSStandardControl/Attribute:domain' => 'Domäne',
+    'Class:ISMSStandardControl/Attribute:description' => 'Beschreibung',
+    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA-Einträge',
+    'Class:ISMSStandardControl/UniquenessRule:no_duplicate' => 'Diese Kontrolle existiert bereits für den Standard "$this->standard_id_friendlyname$".',
+));
+
+//
+// Class: ISMSSoA
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSSoA' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'Class:ISMSSoA+' => 'SoA pro Organisation und Standard.',
+    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
+    'Class:ISMSSoA/Attribute:org_id' => 'Organisation',
+    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
+    'Class:ISMSSoA/Attribute:status' => 'Status',
+    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Entwurf',
+    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In Prüfung',
+    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Freigegeben',
+    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolet',
+    'Class:ISMSSoA/Attribute:owner_id' => 'Verantwortlich',
+    'Class:ISMSSoA/Attribute:effective_from' => 'Gültig ab',
+    'Class:ISMSSoA/Attribute:notes' => 'Notizen',
+    'Class:ISMSSoA/Attribute:kpi_total' => 'Kontrollen (gesamt)',
+    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Anwendbar',
+    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implementiert',
+    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Lücken',
+    'Class:ISMSSoA/Attribute:entries_list' => 'SoA-Einträge',
+    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'Für die Organisation "$this->org_id_friendlyname$" und den Standard "$this->standard_id_friendlyname$" existiert bereits eine SoA.',
+    'Class:ISMSSoA/Stimulus:ev_submit' => 'Einreichen',
+    'Class:ISMSSoA/Stimulus:ev_approve' => 'Freigeben',
+    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Außer Betrieb',
+    'Class:ISMSSoA/Check:AllEntriesDecided' => 'Vor der Freigabe müssen alle Einträge eine Entscheidung zur Anwendbarkeit besitzen.',
+));
+
+
+//
+// Class: ISMSSoAEntry
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSSoAEntry' => 'SoA-Eintrag',
+    'Class:ISMSSoAEntry+' => 'Entscheidung zur Anwendbarkeit von eine Standard-Kontrolle.',
+    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
+    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard-Kontrolle',
+    'Class:ISMSSoAEntry/Attribute:applicability' => 'Anwendbarkeit',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Anwendbar',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Nicht anwendbar',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Teilweise anwendbar',
+    'Class:ISMSSoAEntry/Attribute:justification' => 'Begründung',
+    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Umsetzungsstatus',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Geplant',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In Umsetzung',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implementiert',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Nicht implementiert',
+    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidenz',
+    'Class:ISMSSoAEntry/Attribute:notes' => 'Notizen',
+    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Interne Kontrollen',
+    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'Es existiert bereits ein Eintrag zu "$this->standardcontrol_code$" in der SoA "$this->soa_id_friendlyname$".',
+    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Bitte gib eine Begründung an, wenn eine Kontrolle als nicht anwendbar markiert wird.',
+    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Füge nach Möglichkeit Evidenz für implementierte Kontrollen hinzu.',
+));
+
+//
+// Class: lnkISMSSoAEntryToISMSControl
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkISMSSoAEntryToISMSControl' => 'Verknüpfung SoA-Eintrag / interne Kontrolle',
+    'Class:lnkISMSSoAEntryToISMSControl/Name' => '%1$s - %2$s',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:soaentry_id' => 'SoA-Eintrag',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:control_id' => 'Kontrolle',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:role' => 'Rolle',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution' => 'Beitrag',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:primary' => 'Primär',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:supporting' => 'Unterstützend',
+    'Class:lnkISMSSoAEntryToISMSControl/UniquenessRule:no_duplicate' => 'Der SoA-Eintrag "$this->soaentry_id_friendlyname$" ist bereits mit der Kontrolle "$this->control_id_friendlyname$" verknüpft.',
+));
+
+//
+// Class: ISMSSoA
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSSoA:KPIs' => 'KPIs',
+    'ISMSSoA:Entries' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'ISMSSoA:Populate:Confirm' => 'Fehlende SoA-Einträge aus dem gewählten Standard erzeugen?',
+    'ISMSSoA:Populate:Done' => '%1$d SoA-Einträge erstellt.',
+    'ISMSSoA:Coverage' => 'Abdeckung',
+));
+
+//
 // Class: DashletRiskMatrix
 //
 /** @disregard P1009 Undefined type Dict */
