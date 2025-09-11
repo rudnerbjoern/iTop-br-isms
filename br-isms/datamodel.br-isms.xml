@@ -267,7 +267,6 @@
                     <default_value />
                     <is_null_allowed>false</is_null_allowed>
                 </field>
-
                 <!-- Review interval in months (3/6/12/24), Default 12 -->
                 <field id="review_interval_months" xsi:type="AttributeEnum" _delta="define">
                     <sql>review_interval_months</sql>
@@ -5244,7 +5243,7 @@
                 </event_listener>
             </event_listeners>
             <methods>
-                <method id="PrefillCreationForm" >
+                <method id="PrefillCreationForm">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -5275,7 +5274,7 @@
     }
   ]]></code>
                 </method>
-                <method id="GetTargetObject" >
+                <method id="GetTargetObject">
                     <static>false</static>
                     <access>public</access>
                     <type>Overload-DBObject</type>
@@ -6639,7 +6638,6 @@
                 </list>
             </presentation>
         </class>
-
         <class id="ISMSSoA" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -7018,27 +7016,129 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="org_id" />
-                        <item id="standard_id" />
-                        <item id="status" />
-                        <item id="owner_id" />
-                        <item id="effective_from" />
-                        <item id="kpi_total" />
-                        <item id="kpi_applicable" />
-                        <item id="kpi_implemented" />
-                        <item id="kpi_gaps" />
-                        <item id="soaentries_list" />
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <!-- Header / Basics -->
+                                <item id="fieldset:ISMSSoA:Header">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="org_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="standard_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="owner_id">
+                                            <rank>40</rank>
+                                        </item>
+                                        <item id="effective_from">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <!-- KPIs -->
+                                <item id="fieldset:ISMSSoA:KPIs">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="kpi_total">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="kpi_applicable">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="kpi_implemented">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="kpi_gaps">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="soaentries_list">
+                            <rank>100</rank>
+                        </item>
                     </items>
                 </details>
+                <default_search>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standard_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="owner_id">
+                            <rank>40</rank>
+                        </item>
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standard_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="owner_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="effective_from">
+                            <rank>50</rank>
+                        </item>
+                    </items>
+                </search>
                 <list>
                     <items>
-                        <item id="org_id" />
-                        <item id="standard_id" />
-                        <item id="status" />
-                        <item id="owner_id" />
-                        <item id="effective_from" />
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standard_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="kpi_total">
+                            <rank>40</rank>
+                        </item>
+                        <item id="kpi_applicable">
+                            <rank>50</rank>
+                        </item>
+                        <item id="kpi_implemented">
+                            <rank>60</rank>
+                        </item>
+                        <item id="kpi_gaps">
+                            <rank>70</rank>
+                        </item>
                     </items>
                 </list>
+                <summary>
+                    <items>
+                        <item id="status" />
+                        <item id="org_id" />
+                        <item id="standard_id" />
+                        <item id="owner_id" />
+                    </items>
+                </summary>
             </presentation>
         </class>
         <class id="ISMSSoAEntry" _delta="define">
@@ -7098,20 +7198,43 @@
                     <extkey_attcode>standardcontrol_id</extkey_attcode>
                     <target_attcode>code</target_attcode>
                 </field>
+                <field id="standardcontrol_title" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standardcontrol_id</extkey_attcode>
+                    <target_attcode>title</target_attcode>
+                </field>
+                <field id="standardcontrol_domain" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standardcontrol_id</extkey_attcode>
+                    <target_attcode>domain</target_attcode>
+                </field>
                 <field id="applicability" xsi:type="AttributeEnum">
                     <sql>applicability</sql>
                     <values>
                         <value id="applicable">
                             <code>applicable</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                                <decoration_classes>fas fa-check-circle</decoration_classes>
+                            </style>
                         </value>
                         <value id="not_applicable">
                             <code>not_applicable</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(238,238,238)</main_color>
+                                <complementary_color>rgb(85,85,85)</complementary_color>
+                                <decoration_classes>fas fa-ban</decoration_classes>
+                            </style>
                         </value>
                         <value id="partial">
                             <code>partial</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(255,243,205)</main_color>
+                                <complementary_color>rgb(102,60,0)</complementary_color>
+                                <decoration_classes>fas fa-adjust</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -7130,18 +7253,38 @@
                         <value id="planned">
                             <code>planned</code>
                             <rank>10</rank>
+                            <style>
+                                <main_color>rgb(227,242,253)</main_color>
+                                <complementary_color>rgb(13,71,161)</complementary_color>
+                                <decoration_classes>fas fa-calendar-plus</decoration_classes>
+                            </style>
                         </value>
                         <value id="in_progress">
                             <code>in_progress</code>
                             <rank>20</rank>
+                            <style>
+                                <main_color>rgb(187,222,251)</main_color>
+                                <complementary_color>rgb(21,101,192)</complementary_color>
+                                <decoration_classes>fas fa-spinner</decoration_classes>
+                            </style>
                         </value>
                         <value id="implemented">
                             <code>implemented</code>
                             <rank>30</rank>
+                            <style>
+                                <main_color>rgb(232,245,233)</main_color>
+                                <complementary_color>rgb(27,94,32)</complementary_color>
+                                <decoration_classes>fas fa-check</decoration_classes>
+                            </style>
                         </value>
                         <value id="not_implemented">
                             <code>not_implemented</code>
                             <rank>40</rank>
+                            <style>
+                                <main_color>rgb(255,235,238)</main_color>
+                                <complementary_color>rgb(183,28,28)</complementary_color>
+                                <decoration_classes>fas fa-triangle-exclamation</decoration_classes>
+                            </style>
                         </value>
                     </values>
                     <sort_type>rank</sort_type>
@@ -7194,42 +7337,143 @@
             <presentation>
                 <details>
                     <items>
-                        <item id="soa_id" />
-                        <item id="standardcontrol_id" />
-                        <item id="applicability" />
-                        <item id="justification" />
-                        <item id="implementation_status" />
-                        <item id="evidence" />
-                        <item id="controls_list" />
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSSoAEntry:Link">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="soa_id">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="standardcontrol_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="standardcontrol_domain">
+                                            <rank>50</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSSoAEntry:Decision">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="applicability">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="justification">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:ISMSSoAEntry:Implementation">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="implementation_status">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="evidence">
+                                            <rank>20</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="controls_list">
+                            <rank>100</rank>
+                        </item>
                     </items>
                 </details>
                 <default_search>
                     <items>
-                        <item id="soa_org_id" />
-                        <item id="soa_id" />
-                        <item id="standardcontrol_id" />
-                        <item id="applicability" />
-                        <item id="implementation_status" />
+                        <item id="soa_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standardcontrol_code">
+                            <rank>20</rank>
+                        </item>
+                        <item id="standardcontrol_title">
+                            <rank>30</rank>
+                        </item>
+                        <item id="applicability">
+                            <rank>40</rank>
+                        </item>
+                        <item id="implementation_status">
+                            <rank>50</rank>
+                        </item>
+                        <item id="standardcontrol_domain">
+                            <rank>60</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="soa_org_id" />
-                        <item id="soa_standard_id" />
-                        <item id="soa_id" />
-                        <item id="standardcontrol_id" />
-                        <item id="applicability" />
-                        <item id="implementation_status" />
+                        <item id="soa_org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="soa_standard_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="soa_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="standardcontrol_id">
+                            <rank>40</rank>
+                        </item>
+                        <item id="standardcontrol_code">
+                            <rank>50</rank>
+                        </item>
+                        <item id="standardcontrol_title">
+                            <rank>60</rank>
+                        </item>
+                        <item id="standardcontrol_domain">
+                            <rank>70</rank>
+                        </item>
+                        <item id="applicability">
+                            <rank>80</rank>
+                        </item>
+                        <item id="implementation_status">
+                            <rank>90</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="soa_id" />
-                        <item id="standardcontrol_id" />
-                        <item id="applicability" />
-                        <item id="implementation_status" />
+                        <item id="soa_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="standardcontrol_id">
+                            <rank>30</rank>
+                        </item>
+                        <item id="standardcontrol_code">
+                            <rank>40</rank>
+                        </item>
+                        <item id="standardcontrol_title">
+                            <rank>50</rank>
+                        </item>
+                        <item id="standardcontrol_domain">
+                            <rank>60</rank>
+                        </item>
+                        <item id="applicability">
+                            <rank>70</rank>
+                        </item>
+                        <item id="implementation_status">
+                            <rank>80</rank>
+                        </item>
                     </items>
                 </list>
+                <summary>
+                    <items>
+                        <item id="applicability" />
+                        <item id="implementation_status" />
+                        <item id="standardcontrol_code" />
+                        <item id="standardcontrol_domain" />
+                    </items>
+                </summary>
             </presentation>
         </class>
         <class id="lnkISMSSoAEntryToISMSControl" _delta="define">
