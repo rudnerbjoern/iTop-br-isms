@@ -95,6 +95,10 @@
         </class>
         <class id="ISMSAsset" _delta="define">
             <parent>FunctionalCI</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSAsset</name>
+                <file>src/_ISMSAsset.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <abstract>false</abstract>
@@ -612,144 +616,7 @@
                     <callback>EvtBeforeISMSAssetWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="DBInsertNoReload">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function DBInsertNoReload()
-    {
-        $iNextId = ItopCounter::Inc('ISMSAsset');
-        $sRef = $this->MakeAssetRef($iNextId);
-        $this->SetIfNull('ref', $sRef);
-        $iKey = parent::DBInsertNoReload();
-        return $iKey;
-    }
-  ]]></code>
-                </method>
-                <method id="MakeAssetRef">
-                    <static>false</static>
-                    <access>protected</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    protected function MakeAssetRef($iNextId)
-    {
-        return sprintf(static::GetAssetRefFormat(), $iNextId);
-    }
-  ]]></code>
-                </method>
-                <method id="GetAssetRefFormat">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public static function GetAssetRefFormat()
-    {
-        return 'ASS-%04d';
-    }
-  ]]></code>
-                </method>
-                <method id="GetConfiguredReviewIntervalMonths">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-cmdbAbstractObject</type>
-                    <code><![CDATA[
-    public static function GetConfiguredReviewIntervalMonths()
-    {
-        try {
-            $i = (int) MetaModel::GetModuleSetting('br-isms', 'review_interval_months', 12);
-            if ($i <= 0) { $i = 12; }
-                return $i;
-        } catch (\Exception $e) {
-            return 12;
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetInitialISMSAssetAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetInitialISMSAssetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetISMSAssetAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetISMSAssetAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <arguments>
-                        <argument id="1">
-                            <mandatory>false</mandatory>
-                            <type>attcode</type>
-                        </argument>
-                    </arguments>
-                    <code><![CDATA[
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        if (empty($this->Get('creation_date')))
-            $this->Set('creation_date', $sToday);
-
-        if (empty($this->Get('last_update')))
-            $this->Set('last_update', $sNow);
-
-        if (empty($this->Get('last_review')))
-            $this->Set('last_review', $sToday);
-
-        if (empty($this->Get('review_interval_months')))
-            $this->Set('review_interval_months', self::GetConfiguredReviewIntervalMonths());
-
-        if (empty($this->Get('next_review'))) {
-            $iMonths = (int) $this->Get('review_interval_months');
-            $ts = strtotime('+'.$iMonths.' months', strtotime($sToday));
-            $this->Set('next_review', date('Y-m-d', $ts));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtBeforeISMSAssetWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtBeforeISMSAssetWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        // set creation date on initial write
-        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date')) {
-            $this->Set('creation_date', $sToday);
-        }
-
-        // set last update date on every write
-        $this->Set('last_update', $sNow);
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -1149,6 +1016,10 @@
         </class>
         <class id="ISMSRisk" _delta="define">
             <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSRisk</name>
+                <file>src/_ISMSRisk.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <abstract>false</abstract>
@@ -2313,531 +2184,7 @@
                     <callback>EvtISMSRiskLinksChanged</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="MapScoreToLevel">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public static function MapScoreToLevel($iScore)
-    {
-        if (!is_int($iScore) || $iScore <= 0) return null;
-        if ($iScore >= 16) return 'extreme';
-        if ($iScore >= 10) return 'high';
-        if ($iScore >= 5)  return 'medium';
-        return 'low';
-    }
-  ]]></code>
-                </method>
-                <method id="GetAggregationModeDefault">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-cmdbAbstractObject</type>
-                    <code><![CDATA[
-    public static function GetAggregationModeDefault()
-    {
-        // Can be 'max' or 'sum_capped'
-        return MetaModel::GetConfig()->GetModuleSetting('br-isms', 'risk_aggregation_mode', 'max');
-    }
-  ]]></code>
-                </method>
-                <method id="GetAggregationMode">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function GetAggregationMode()
-    {
-        $s = (string) $this->Get('aggregation_mode');
-        if ($s && $s !== 'inherit') return $s;
-        try {
-            $def = self::GetAggregationModeDefault();
-            if ($def === 'sum_capped') return 'sum_capped';
-        } catch (Exception $e) {
-        }
-        return 'max';
-    }
-  ]]></code>
-                </method>
-                <method id="AggregateControlEffects">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    /**
-     * Aggregate the risk-specific effectiveness of linked controls.
-     *
-     * Semantics:
-     * - We only consider links with link_status = 'effective'.
-     * - Each link contributes integer "steps" of reduction for likelihood/impact (0..N),
-     *   where 0 means "no effect". These are *relative* decrements, not absolute target values.
-     * - Aggregation mode:
-     *     - 'max'        : take the maximum effect across all links (per dimension)
-     *     - 'sum_capped' : sum effects and cap so that residual cannot go below 1 step
-     *                      (i.e., effect ≤ pre_value - 1)
-     *   Any other/unknown mode falls back to 'max'.
-     *
-     * Return:
-     *   array{like: ?int, impact: ?int}
-     *   null means "no computable effect" (e.g., no effective links *or* pre_* not set yet).
-     */
-    public function AggregateControlEffects()
-    {
-        $iRiskId = (int) $this->GetKey();
-        if ($iRiskId <= 0) {
-            return array('like' => null, 'impact' => null);
-        }
-
-        // Resolve aggregation mode. Expected: 'max' | 'sum_capped' | 'inherit'(resolved upstream)
-        $sMode = (string) $this->GetAggregationMode();
-
-        // Current inherent values (used for capping in 'sum_capped')
-        $preL = (int) $this->Get('pre_likelihood');
-        $preI = (int) $this->Get('pre_impact');
-
-        // Accumulators (null = no effect yet)
-        $accL = null;
-        $accI = null;
-
-        // Fetch effective links; robust against transient DB issues
-        try {
-            $oSearch = DBObjectSearch::FromOQL(
-                "SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid AND link_status = 'effective'"
-            );
-            $oSet = new DBObjectSet($oSearch, array(), array('rid' => $iRiskId));
-
-            while ($oLink = $oSet->Fetch()) {
-                // Raw values from link (can be '', null, or int-ish)
-                $vL = $oLink->Get('effect_on_likelihood');
-                $vI = $oLink->Get('effect_on_impact');
-                $nL = ($vL === '' || $vL === null) ? null : (int) $vL;
-                $nI = ($vI === '' || $vI === null) ? null : (int) $vI;
-
-                // Skip empty contributions
-                if ($nL !== null) {
-                    if ($sMode === 'sum_capped') {
-                        $accL = is_null($accL) ? $nL : ($accL + $nL);
-                    } else {
-                        // default/fallback = 'max'
-                        $accL = is_null($accL) ? $nL : max($accL, $nL);
-                    }
-                }
-                if ($nI !== null) {
-                    if ($sMode === 'sum_capped') {
-                        $accI = is_null($accI) ? $nI : ($accI + $nI);
-                    } else {
-                        $accI = is_null($accI) ? $nI : max($accI, $nI);
-                    }
-                }
-            }
-        } catch (\Exception $e) {
-            // On any DB error, behave as "no computed effect"
-            return array('like' => null, 'impact' => null);
-        }
-
-        // Apply capping for sum-mode so residual can't go below 1:
-        //   max effect = pre_value - 1  (because residual = max(1, pre - effect))
-        if ($sMode === 'sum_capped') {
-            if (!is_null($accL) && $preL > 0) {
-                $accL = min($accL, max(0, $preL - 1));
-            }
-            if (!is_null($accI) && $preI > 0) {
-                $accI = min($accI, max(0, $preI - 1));
-            }
-        }
-
-        // If inherent (pre_*) is not set yet (0), report no computed effect (null)
-        // so that UI rules (e.g., dynamic read-only on res_*) do not kick in prematurely.
-        if ($preL <= 0) {
-            $accL = null;
-        }
-        if ($preI <= 0) {
-            $accI = null;
-        }
-
-        return array('like' => $accL, 'impact' => $accI);
-    }
-  ]]></code>
-                </method>
-                <method id="RecomputeRiskScores">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    /**
-     * Recompute inherent (pre_*), residual (res_*), and target (tgt_*) risk scores & levels.
-     *
-     * Rules / semantics:
-     * - pre_* (inherent): computed iff both pre_likelihood and pre_impact > 0, else set to null.
-     * - res_* (residual):
-     *     * If AggregateControlEffects() returns any effect (like/impact not null), we compute
-     *       res_likelihood/res_impact as max(1, pre - effect) per dimension (only if pre_* > 0, else null).
-     *     * If there is NO computed effect (both null), we DO NOT touch res_likelihood/res_impact
-     *       so they can be maintained manually.
-     *     * res_score/level are always recomputed from the current res_* values (if both > 0), else null.
-     * - tgt_* (target): computed iff both tgt_likelihood and tgt_impact > 0, else set to null.
-     *
-     * Notes:
-     * - AggregateControlEffects() already applies the chosen aggregation mode (e.g. max / sum_capped)
-     *   and returns per-dimension integer step reductions or null (no computable effect).
-     * - static::MapScoreToLevel($score) must exist on this class and return an enum value (e.g. low/medium/high/extreme).
-     * - This method should be invoked from EVENT_DB_BEFORE_WRITE / EVENT_DB_COMPUTE_VALUES / EVENT_DB_LINKS_CHANGED.
-     */
-    public function RecomputeRiskScores()
-    {
-        // ---------- Inherent (pre_*) ----------
-        $preL = (int) $this->Get('pre_likelihood');
-        $preI = (int) $this->Get('pre_impact');
-
-        if ($preL > 0 && $preI > 0) {
-            $preScore = $preL * $preI;
-            $this->Set('pre_score', $preScore);
-            $this->Set('pre_level', static::MapScoreToLevel($preScore));
-        } else {
-            $this->Set('pre_score', null);
-            $this->Set('pre_level', null);
-        }
-
-        // ---------- Residual (res_*) ----------
-        // Aggregate effective control impacts (per-dimension step reductions or null)
-        $aAgg = $this->AggregateControlEffects();
-        $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
-
-        if ($bHasAnyEffect) {
-            // Treat null effect as 0 in each dimension when computing (be explicit)
-            $effL = is_null($aAgg['like']) ? 0 : (int) $aAgg['like']; // 0..N
-            $effI = is_null($aAgg['impact']) ? 0 : (int) $aAgg['impact']; // 0..N
-
-            // Only compute if corresponding inherent dimension is present (>0)
-            if ($preL > 0) {
-                $this->Set('res_likelihood', max(1, $preL - $effL));
-            } else {
-                $this->Set('res_likelihood', null);
-            }
-
-            if ($preI > 0) {
-                $this->Set('res_impact', max(1, $preI - $effI));
-            } else {
-                $this->Set('res_impact', null);
-            }
-        }
-        // If there is NO effect, we leave res_likelihood/res_impact untouched (manual values allowed)
-
-        // Compute residual score/level from current res_* (regardless of whether they were just changed)
-        $resL = (int) $this->Get('res_likelihood');
-        $resI = (int) $this->Get('res_impact');
-        if ($resL > 0 && $resI > 0) {
-            $resScore = $resL * $resI;
-            $this->Set('res_score', $resScore);
-            $this->Set('res_level', static::MapScoreToLevel($resScore));
-        } else {
-            $this->Set('res_score', null);
-            $this->Set('res_level', null);
-        }
-
-        // ---------- Target (tgt_*) ----------
-        $tgtL = (int) $this->Get('tgt_likelihood');
-        $tgtI = (int) $this->Get('tgt_impact');
-
-        if ($tgtL > 0 && $tgtI > 0) {
-            $tgtScore = $tgtL * $tgtI;
-            $this->Set('tgt_score', $tgtScore);
-            $this->Set('tgt_level', static::MapScoreToLevel($tgtScore));
-        } else {
-            $this->Set('tgt_score', null);
-            $this->Set('tgt_level', null);
-        }
-
-        return true;
-    }
-  ]]></code>
-                </method>
-                <method id="DBInsertNoReload">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function DBInsertNoReload()
-    {
-        $iNextId = ItopCounter::Inc('ISMSRisk');
-        $sRef = $this->MakeRiskRef($iNextId);
-        $this->SetIfNull('ref', $sRef);
-        $iKey = parent::DBInsertNoReload();
-        return $iKey;
-    }
-  ]]></code>
-                </method>
-                <method id="MakeRiskRef">
-                    <static>false</static>
-                    <access>protected</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    protected function MakeRiskRef($iNextId)
-    {
-        return sprintf(static::GetRiskRefFormat(), $iNextId);
-    }
-  ]]></code>
-                </method>
-                <method id="GetRiskRefFormat">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public static function GetRiskRefFormat()
-    {
-        return 'RSK-%04d';
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetInitialISMSRiskAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetInitialISMSRiskAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('pre_score', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('pre_level', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('res_score', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('res_level', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('tgt_score', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('tgt_level', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('publish_date', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetISMSRiskAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetISMSRiskAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_score', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_level', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_score', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_level', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_score', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_level', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date', OPT_ATT_READONLY);
-
-        // Optional: res_likelihood/res_impact sperren, sobald Kontrollen wirken
-        try {
-            $aAgg = $this->AggregateControlEffects();
-            $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
-            if ($bHasAnyEffect) {
-                $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
-                $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
-            }
-        } catch (\Exception $e) { /* ignore */
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <arguments>
-                        <argument id="1">
-                            <mandatory>false</mandatory>
-                            <type>attcode</type>
-                        </argument>
-                    </arguments>
-                    <code><![CDATA[
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        if (empty($this->Get('creation_date')))
-            $this->Set('creation_date', $sToday);
-
-        if (empty($this->Get('last_update')))
-            $this->Set('last_update', $sNow);
-
-        if (empty($this->Get('last_review')))
-            $this->Set('last_review', $sToday);
-
-        if (empty($this->Get('review_interval_months')))
-            $this->Set('review_interval_months', ISMSAsset::GetConfiguredReviewIntervalMonths());
-
-        if (empty($this->Get('next_review'))) {
-            $iMonths = (int) $this->Get('review_interval_months');
-            $ts = strtotime('+'.$iMonths.' months', strtotime($sToday));
-            $this->Set('next_review', date('Y-m-d', $ts));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtISMSRiskLinksChanged">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtISMSRiskLinksChanged(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->RecomputeRiskScores();
-    }
-  ]]></code>
-                </method>
-                <method id="EvtBeforeISMSRiskWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtBeforeISMSRiskWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        // set creation date on initial write
-        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
-            $this->Set('creation_date', $sToday);
-
-        // set last update date on every write
-        $this->Set('last_update', $sNow);
-
-        $this->RecomputeRiskScores();
-    }
-  ]]></code>
-                </method>
-                <method id="EvtComputeISMSRiskValues">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtComputeISMSRiskValues(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->RecomputeRiskScores();
-    }
-  ]]></code>
-                </method>
-                <method id="EvtCheckISMSRiskToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    /**
-     * EVENT_DB_CHECK_TO_WRITE
-     *
-     * Purpose:
-     *  - Add non-blocking warnings (via AddCheckWarning) before write, based on
-     *    treatment decision, dates, and consistency between inherent/residual/target.
-     *
-     * Notes:
-     *  - We do NOT modify attributes here (no side effects).
-     *  - For new objects (is_new), we skip link-based checks (no links exist yet).
-     *  - If you want to block saving instead of warning, use AddCheckIssue().
-     */
-    public function EvtCheckISMSRiskToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $bIsNew = (bool) $oEventData->Get('is_new');
-
-        // --- (1) Mitigate: require either linked effective controls OR target values ---
-        if ($this->Get('treatment_decision') === 'mitigate') {
-            $bHasControls = false;
-
-            // For a brand new object, there cannot be links yet → skip link check
-            if (!$bIsNew) {
-                try {
-                    $oSearch = DBObjectSearch::FromOQL("SELECT lnkISMSRiskToISMSControl WHERE risk_id = :rid");
-                    $oSet    = new DBObjectSet($oSearch, array(), array('rid' => (int) $this->GetKey()));
-                    // COUNT(*) is efficient enough and supported in all iTop versions
-                    $bHasControls = ($oSet->Count() > 0);
-                } catch (\Exception $e) {
-                    // Fail silently: if link lookup fails, don't block the save here
-                }
-            }
-
-            // Target residual present only if BOTH dimensions are filled
-            $tgtL = $this->Get('tgt_likelihood');
-            $tgtI = $this->Get('tgt_impact');
-            $bHasTarget = ($tgtL !== '' && $tgtL !== null && $tgtI !== '' && $tgtI !== null);
-
-            if (!$bHasControls && !$bHasTarget) {
-                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:MitigateNoPlanOrTarget'));
-            }
-        }
-
-        // --- (2) Accept: require formal acceptance fields ---
-        if ($this->Get('treatment_decision') === 'accept') {
-            if ($this->Get('acceptance_status') !== 'accepted') {
-                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptNotAccepted'));
-            }
-            $iAccBy   = (int) $this->Get('accepted_by_id');
-            $sAccDate = $this->Get('acceptance_date');
-            if ($iAccBy <= 0 || empty($sAccDate)) {
-                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptMissingWhoWhen'));
-            }
-        }
-
-        // --- (3) Treatment due date in the past ---
-        $sDue = $this->Get('treatment_due');
-        if (!empty($sDue)) {
-            $ts = @strtotime($sDue); // relies on server timezone
-            if ($ts !== false && $ts < strtotime('today')) {
-                $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:DueInPast'));
-            }
-        }
-
-        // --- (4) Plausibility: residual score should not exceed inherent score ---
-        $iPreScore = (int) $this->Get('pre_score');
-        $iResScore = (int) $this->Get('res_score');
-        if ($iResScore > 0 && $iPreScore > 0 && $iResScore > $iPreScore) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:ResidualGtInherent'));
-        }
-
-        // --- (5) Plausibility: target vs. inherent/residual consistency ---
-        // Use current values; if score is missing, compute a local fallback from dimensions.
-        $preL = (int) $this->Get('pre_likelihood');
-        $preI = (int) $this->Get('pre_impact');
-        $resL = (int) $this->Get('res_likelihood');
-        $resI = (int) $this->Get('res_impact');
-        $tgtL = $this->Get('tgt_likelihood'); // may be ''/null
-        $tgtI = $this->Get('tgt_impact');     // may be ''/null
-
-        $hasTgtL = ($tgtL !== '' && $tgtL !== null);
-        $hasTgtI = ($tgtI !== '' && $tgtI !== null);
-
-        // Partial target input (only one dimension) → ask for both
-        if ($hasTgtL xor $hasTgtI) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetPartial'));
-        }
-
-        // Compute local scores for comparisons, without touching attributes
-        $preScoreLocal = ($iPreScore > 0) ? $iPreScore : (($preL > 0 && $preI > 0) ? $preL * $preI : null);
-        $resScoreLocal = ($iResScore > 0) ? $iResScore : (($resL > 0 && $resI > 0) ? $resL * $resI : null);
-        $tgtScoreLocal = ($hasTgtL && $hasTgtI) ? ((int) $tgtL * (int) $tgtI) : null;
-
-        // Target should not be worse than inherent
-        if (!is_null($tgtScoreLocal) && !is_null($preScoreLocal) && $tgtScoreLocal > $preScoreLocal) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtInherent'));
-        }
-
-        // Target should not be worse than current residual
-        if (!is_null($tgtScoreLocal) && !is_null($resScoreLocal) && $tgtScoreLocal > $resScoreLocal) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:TargetGtResidual'));
-        }
-
-        // 'accept' normally implies keeping current residual; a lower target contradicts acceptance
-        if (
-            $this->Get('treatment_decision') === 'accept'
-            && !is_null($tgtScoreLocal) && !is_null($resScoreLocal)
-            && $tgtScoreLocal < $resScoreLocal
-        ) {
-            $this->AddCheckWarning(Dict::S('Class:ISMSRisk/Check:AcceptButTargetBelowResidual'));
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -3221,6 +2568,10 @@
         </class>
         <class id="ISMSControl" _delta="define">
             <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSControl</name>
+                <file>src/_ISMSControl.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <abstract>false</abstract>
@@ -3945,131 +3296,7 @@
                     <callback>EvtBeforeISMSControlWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="DBInsertNoReload">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function DBInsertNoReload()
-    {
-        $iNextId = ItopCounter::Inc('ISMSControl');
-        $sRef = $this->MakeControlRef($iNextId);
-        $this->SetIfNull('ref', $sRef);
-        $iKey = parent::DBInsertNoReload();
-        return $iKey;
-    }
-  ]]></code>
-                </method>
-                <method id="MakeControlRef">
-                    <static>false</static>
-                    <access>protected</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    protected function MakeControlRef($iNextId)
-    {
-        return sprintf(static::GetControlRefFormat(), $iNextId);
-    }
-  ]]></code>
-                </method>
-                <method id="GetControlRefFormat">
-                    <static>true</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public static function GetControlRefFormat()
-    {
-        return 'CTR-%04d';
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetInitialISMSControlAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetInitialISMSControlAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceInitialAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('approval_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('implementation_date', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetISMSControlAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetISMSControlAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceAttributeFlags('ref', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('approval_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('implementation_date', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <arguments>
-                        <argument id="1">
-                            <mandatory>false</mandatory>
-                            <type>attcode</type>
-                        </argument>
-                    </arguments>
-                    <code><![CDATA[
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        if (empty($this->Get('creation_date')))
-            $this->Set('creation_date', $sToday);
-
-        if (empty($this->Get('last_update')))
-            $this->Set('last_update', $sNow);
-
-        if (empty($this->Get('last_review')))
-            $this->Set('last_review', $sToday);
-
-        if (empty($this->Get('review_interval_months')))
-            $this->Set('review_interval_months', ISMSAsset::GetConfiguredReviewIntervalMonths());
-
-        if (empty($this->Get('next_review'))) {
-            $iMonths = (int) $this->Get('review_interval_months');
-            $ts = strtotime('+'.$iMonths.' months', strtotime($sToday));
-            $this->Set('next_review', date('Y-m-d', $ts));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtBeforeISMSControlWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtBeforeISMSControlWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sToday = date(AttributeDate::GetInternalFormat());
-        $sNow   = date(AttributeDateTime::GetInternalFormat());
-
-        // set creation date on initial write
-        if ($oEventData->Get('is_new') === true && !$this->Get('creation_date'))
-            $this->Set('creation_date', $sToday);
-
-        // set last update date on every write
-        $this->Set('last_update', $sNow);
-
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -4545,6 +3772,10 @@
         </class>
         <class id="ISMSReview" _delta="define">
             <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSReview</name>
+                <file>src/_ISMSReview.php</file>
+            </php_parent>
             <properties>
                 <abstract>true</abstract>
                 <category>bizmodel,searchable</category>
@@ -4882,73 +4113,7 @@
                     <callback>EvtReviewCheckToWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="GetTargetObject">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function GetTargetObject()
-    {
-        return null;
-    }
-  ]]></code>
-                </method>
-                <method id="EvtOnStateTransition">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtOnStateTransition(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sTo = (string) $oEventData->Get('to_state');
-
-        if ($sTo === 'in_progress' && empty($this->Get('started_on'))) {
-            $this->Set('started_on', date('Y-m-d'));
-        }
-        if ($sTo === 'completed' && empty($this->Get('completed_on'))) {
-            $this->Set('completed_on', date('Y-m-d'));
-        }
-        if ($sTo === 'completed' && method_exists($this, 'OnReviewCompleted')) {
-            $this->OnReviewCompleted();
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtReviewCheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-      public function EvtReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-      {
-
-        $sCurrentStatus = (string) $this->Get('status');
-        $sTargetState   = (string) $oEventData->Get('target_state'); // '' or 'planned'|'in_progress'|'completed'|'cancelled'
-        $sStatusAfter   = $sTargetState !== '' ? $sTargetState : $sCurrentStatus;
-
-        if (($oEventData->Get('is_new') === true) || ($sStatusAfter === 'planned'))
-        {
-            $sPlanned = (string) $this->Get('planned_on'); // 'Y-m-d'
-            if ($sPlanned !== '')
-            {
-                $tsPlanned = @strtotime($sPlanned);
-                $tsToday   = @strtotime(date(AttributeDate::GetInternalFormat())); // 'Y-m-d' today
-                if ($tsPlanned !== false && $tsPlanned < $tsToday)
-                {
-                  $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:PlannedInPast'));
-                }
-            }
-        }
-
-        $sTarget = (string) $oEventData->Get('target_state');
-        if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
-          $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:NoOutcome'));
-        }
-      }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -5010,6 +4175,10 @@
         </class>
         <class id="ISMSAssetReview" _delta="define">
             <parent>ISMSReview</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSAssetReview</name>
+                <file>src/_ISMSAssetReview.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <db_table>ismsassetreview</db_table>
@@ -5242,108 +4411,7 @@
                     <callback>EvtAssetReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    /**
-    * PrefillCreationForm
-    * - Default planned_on = today
-    * - If empty, preset reviewer to the asset owner (if present)
-    */
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        if (empty($this->Get('planned_on'))) {
-            $this->Set('planned_on', date('Y-m-d'));
-        }
-        // reviewer = Asset.owner (falls vorhanden)
-        try {
-            $iAssetId = (int)$this->Get('asset_id');
-            if ($iAssetId > 0 && empty($this->Get('reviewer_id'))) {
-                $oAsset = MetaModel::GetObject('ISMSAsset', $iAssetId, false);
-                if ($oAsset) {
-                    $iOwner = (int)$oAsset->Get('assetowner_id');
-                    if ($iOwner > 0) {
-                       $this->Set('reviewer_id', $iOwner);
-                    }
-                }
-            }
-        } catch (\Exception $e) { /* ignore */ }
-    }
-  ]]></code>
-                </method>
-                <method id="GetTargetObject">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function GetTargetObject()
-    {
-        $iId = (int)$this->Get('asset_id');
-        return ($iId > 0) ? MetaModel::GetObject('ISMSAsset', $iId, false) : null;
-    }
-  ]]></code>
-                </method>
-                <method id="EvtAssetReviewCheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtAssetReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        // Zeitliche Konsistenz
-        $sPlanned = (string) $this->Get('planned_on');
-        $sStarted = (string) $this->Get('started_on');
-        $sCompleted = (string) $this->Get('completed_on');
-        if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
-        }
-        if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtAssetReviewAfterWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtAssetReviewAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sStimulus = (string) $oEventData->Get('stimulus_applied'); // z. B. 'ev_complete'
-        $sTarget   = (string) $oEventData->Get('target_state');     // z. B. 'completed'
-
-        if ($sStimulus === 'ev_complete') {
-
-            $oAsset = $this->GetTargetObject();
-            if ($oAsset) {
-                $sCompleted = $this->Get('completed_on');
-                if (empty($sCompleted)) {
-                    $sCompleted = date('Y-m-d');
-                }
-
-                // last_review aktualisieren
-                $oAsset->Set('last_review', $sCompleted);
-
-                // Intervall holen (Fallback 12), next_review berechnen
-                $iMonths = (int)$oAsset->Get('review_interval_months');
-                if ($iMonths <= 0) {
-                    $iMonths = 12;
-                }
-
-                $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
-                $oAsset->Set('next_review', date('Y-m-d', $ts));
-
-                $oAsset->DBUpdate();
-            }
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -5491,6 +4559,10 @@
         </class>
         <class id="ISMSRiskReview" _delta="define">
             <parent>ISMSReview</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSRiskReview</name>
+                <file>src/_ISMSRiskReview.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <db_table>ismsriskreview</db_table>
@@ -5723,109 +4795,7 @@
                     <callback>EvtRiskReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    /**
-    * PrefillCreationForm
-    * - Default planned_on = today
-    * - If empty, preset reviewer to the asset owner (if present)
-    */
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        if (empty($this->Get('planned_on'))) {
-            $this->Set('planned_on', date('Y-m-d'));
-        }
-        // reviewer = Risk.owner (falls vorhanden)
-        try {
-            $iRiskId = (int)$this->Get('risk_id');
-            if ($iRiskId > 0 && empty($this->Get('reviewer_id'))) {
-                $oRisk = MetaModel::GetObject('ISMSRisk', $iRiskId, false);
-                if ($oRisk) {
-                    $iOwner = (int)$oRisk->Get('riskowner_id');
-                    if ($iOwner > 0) {
-                       $this->Set('reviewer_id', $iOwner);
-                    }
-                }
-            }
-        } catch (\Exception $e) { /* ignore */ }
-    }
-  ]]></code>
-                </method>
-                <method id="GetTargetObject">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function GetTargetObject()
-    {
-        $iId = (int)$this->Get('risk_id');
-        return ($iId > 0) ? MetaModel::GetObject('ISMSRisk', $iId, false) : null;
-    }
-  ]]></code>
-                </method>
-                <method id="EvtRiskReviewCheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtRiskReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        // Zeitliche Konsistenz
-        $sPlanned = (string) $this->Get('planned_on');
-        $sStarted = (string) $this->Get('started_on');
-        $sCompleted = (string) $this->Get('completed_on');
-        if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
-        }
-        if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn'));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtRiskReviewAfterWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtRiskReviewAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sStimulus = (string) $oEventData->Get('stimulus_applied'); // z. B. 'ev_complete'
-        $sTarget   = (string) $oEventData->Get('target_state');     // z. B. 'completed'
-
-        if ($sStimulus === 'ev_complete') {
-
-            $oRisk = $this->GetTargetObject();
-            if ($oRisk) {
-                $sCompleted = $this->Get('completed_on');
-                if (empty($sCompleted)) {
-                    $sCompleted = date('Y-m-d');
-                }
-
-                // last_review aktualisieren
-                $oRisk->Set('last_review', $sCompleted);
-
-                // Intervall holen (Fallback 12), next_review berechnen
-                $iMonths = (int)$oRisk->Get('review_interval_months');
-                if ($iMonths <= 0) {
-                    $iMonths = 12;
-                }
-
-                $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
-                $oRisk->Set('next_review', date('Y-m-d', $ts));
-
-                $oRisk->DBUpdate();
-            }
-
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -5973,6 +4943,10 @@
         </class>
         <class id="ISMSControlReview" _delta="define">
             <parent>ISMSReview</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSControlReview</name>
+                <file>src/_ISMSControlReview.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <db_table>ismscontrolreview</db_table>
@@ -6205,108 +5179,7 @@
                     <callback>EvtControlReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="PrefillCreationForm">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    /**
-    * PrefillCreationForm
-    * - Default planned_on = today
-    * - If empty, preset reviewer to the control owner (if present)
-    */
-    public function PrefillCreationForm(&$aContextParam)
-    {
-        if (empty($this->Get('planned_on'))) {
-            $this->Set('planned_on', date('Y-m-d'));
-        }
-        // reviewer = Control.owner (falls vorhanden)
-        try {
-            $iControlId = (int)$this->Get('control_id');
-            if ($iControlId > 0 && empty($this->Get('reviewer_id'))) {
-                $oControl = MetaModel::GetObject('ISMSControl', $iControlId, false);
-                if ($oControl) {
-                    $iOwner = (int)$oControl->Get('controlowner_id');
-                    if ($iOwner > 0) {
-                       $this->Set('reviewer_id', $iOwner);
-                    }
-                }
-            }
-        } catch (\Exception $e) { /* ignore */ }
-    }
-  ]]></code>
-                </method>
-                <method id="GetTargetObject">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function GetTargetObject()
-    {
-        $iId = (int)$this->Get('control_id');
-        return ($iId > 0) ? MetaModel::GetObject('ISMSControl', $iId, false) : null;
-    }
-  ]]></code>
-                </method>
-                <method id="EvtControlReviewCheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtControlReviewCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        // Zeitliche Konsistenz
-        $sPlanned = (string) $this->Get('planned_on');
-        $sStarted = (string) $this->Get('started_on');
-        $sCompleted = (string) $this->Get('completed_on');
-        if (!empty($sStarted) && !empty($sPlanned) && $sStarted < $sPlanned) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:StartedOnIsBeforePlannedOn'));
-        }
-        if (!empty($sCompleted) && (!empty($sStarted) && $sCompleted < $sStarted)) {
-            $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn'));
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtControlReviewAfterWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtControlReviewAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $sStimulus = (string) $oEventData->Get('stimulus_applied'); // z. B. 'ev_complete'
-        $sTarget   = (string) $oEventData->Get('target_state');     // z. B. 'completed'
-
-        if ($sStimulus === 'ev_complete') {
-
-            $oControl = $this->GetTargetObject();
-            if ($oControl) {
-                $sCompleted = $this->Get('completed_on');
-                if (empty($sCompleted)) {
-                    $sCompleted = date('Y-m-d');
-                }
-
-                // last_review aktualisieren
-                $oControl->Set('last_review', $sCompleted);
-
-                // Intervall holen (Fallback 12), next_review berechnen
-                $iMonths = (int)$oControl->Get('review_interval_months');
-                if ($iMonths <= 0) {
-                    $iMonths = 12;
-                }
-
-                $ts = strtotime('+'.$iMonths.' months', strtotime($sCompleted));
-                $oControl->Set('next_review', date('Y-m-d', $ts));
-
-                $oControl->DBUpdate();
-            }
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -6640,6 +5513,10 @@
         </class>
         <class id="ISMSSoA" _delta="define">
             <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSSoA</name>
+                <file>src/_ISMSSoA.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <db_table>ismssao</db_table>
@@ -6846,173 +5723,7 @@
                     <callback>EvtISMSSoAAfterWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="EvtSetInitialISMSoAAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetInitialISMSoAAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceInitialAttributeFlags('effective_from', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_total', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_applicable', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_implemented', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_gaps', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="EvtSetISMSSoaAttributeFlags">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtSetISMSSoaAttributeFlags(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $this->ForceAttributeFlags('effective_from', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_total', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_applicable', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_implemented', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_gaps', OPT_ATT_READONLY);
-    }
-  ]]></code>
-                </method>
-                <method id="RecomputeKPIs">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function RecomputeKPIs()
-    {
-        $iTotal = 0;
-        $iApplicable = 0;
-        $iImpl = 0;
-        $iGaps = 0;
-        $oSearch = DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa');
-        $oSet = new DBObjectSet( $oSearch , array(), array('soa' => $this->GetKey()) );
-        while ($o = $oSet->Fetch()) {
-            $iTotal++;
-            $app = (string)$o->Get('applicability');
-            $impl = (string)$o->Get('implementation_status');
-            if ($app === 'applicable' || $app === 'partial') {
-                $iApplicable++;
-                if ($impl === 'implemented')
-                    $iImpl++;
-                if ($impl === '' || $impl === 'planned' || $impl === 'in_progress')
-                    $iGaps++;
-            }
-        }
-        $this->Set('kpi_total', $iTotal);
-        $this->Set('kpi_applicable', $iApplicable);
-        $this->Set('kpi_implemented', $iImpl);
-        $this->Set('kpi_gaps', $iGaps);
-    }
-  ]]></code>
-                </method>
-                <method id="PopulateEntriesFromStandard">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>Overload-DBObject</type>
-                    <code><![CDATA[
-    public function PopulateEntriesFromStandard($bOnlyMissing = true)
-    {
-        $iCreated = 0;
-        $iSoaId = (int) $this->GetKey();
-        $iStdId = (int) $this->Get('standard_id');
-        if ($iStdId <= 0) return 0;
-
-        $oCtrlSet = new DBObjectSet(
-            DBObjectSearch::FromOQL('SELECT ISMSStandardControl WHERE standard_id = :std'),
-            array(),
-            array('std' => $iStdId)
-        );
-
-        while ($oCtrl = $oCtrlSet->Fetch()) {
-            $iCtrlId = (int) $oCtrl->GetKey();
-
-            if ($bOnlyMissing) {
-                $oExists = new DBObjectSet(
-                    DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa AND standardcontrol_id = :ctrl'),
-                    array(),
-                    array('soa' => $iSoaId, 'ctrl' => $iCtrlId)
-                );
-                if ($oExists->CountExceeds(0)) {
-                    continue;
-                }
-            }
-
-            $oEntry = new ISMSSoAEntry();
-            $oEntry->Set('soa_id', $iSoaId);
-            $oEntry->Set('standardcontrol_id', $iCtrlId);
-            // Optional defaults:
-            // $oEntry->Set('applicability', 'applicable');
-            // $oEntry->Set('implementation_status', 'planned');
-            $oEntry->DBInsert();
-            $iCreated++;
-        }
-
-        // KPIs neu berechnen
-        $this->RecomputeKPIs();
-        $this->DBUpdate();
-
-        return $iCreated;
-    }
-  ]]></code>
-                </method>
-                <method id="EvtISMSSoAComputeValues">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtISMSSoAComputeValues(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-       $this->RecomputeKPIs();
-    }
-  ]]></code>
-                </method>
-                <method id="EvtISMSSoACheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtISMSSoACheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $target = (string)$oEventData->Get('target_state');
-        if ($target === 'approved') {
-            // Alle Einträge müssen entschieden sein
-            $oSet = new DBObjectSet(DBObjectSearch::FromOQL(
-                'SELECT ISMSSoAEntry WHERE soa_id = :soa AND applicability IS NULL'), array(), array('soa'=>$this->GetKey()));
-            if ($oSet->CountExceeds(0)) {
-                $this->AddCheckIssue(Dict::S('Class:ISMSSoA/Check:AllEntriesDecided'));
-            }
-        }
-    }
-  ]]></code>
-                </method>
-                <method id="EvtISMSSoAAfterWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtISMSSoAAfterWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        if ($oEventData->Get('is_new') === true)
-        {
-            try {
-                $created = $this->PopulateEntriesFromStandard(true);
-                // Optional: Log/Note
-                if ($created > 0) {
-                    $this->AddToNotes('Auto-populated '.$created.' SoA entries from standard.');
-                    $this->DBUpdate();
-                }
-            } catch (\Exception $e) {
-                // swallow to avoid breaking object creation; admin can check logs
-            }
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
@@ -7042,11 +5753,9 @@
                                 </item>
                             </items>
                         </item>
-
                         <item id="col:col1">
                             <rank>20</rank>
                             <items>
-                                <!-- KPIs -->
                                 <item id="fieldset:ISMSSoA:KPIs">
                                     <rank>10</rank>
                                     <items>
@@ -7143,6 +5852,10 @@
         </class>
         <class id="ISMSSoAEntry" _delta="define">
             <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR_isms\Extension\Framework\Model\_ISMSSoAEntry</name>
+                <file>src/_ISMSSoAEntry.php</file>
+            </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
                 <db_table>ismssaoentry</db_table>
@@ -7313,27 +6026,7 @@
                     <callback>EvtISMSSoAEntryCheckToWrite</callback>
                 </event_listener>
             </event_listeners>
-            <methods>
-                <method id="EvtISMSSoAEntryCheckToWrite">
-                    <static>false</static>
-                    <access>public</access>
-                    <type>EventListener</type>
-                    <code><![CDATA[
-    public function EvtISMSSoAEntryCheckToWrite(Combodo\iTop\Service\Events\EventData $oEventData)
-    {
-        $app = (string)$this->Get('applicability');
-        if ($app === 'not_applicable' && trim((string)$this->Get('justification')) === '') {
-            $this->AddCheckIssue(Dict::S('Class:ISMSSoAEntry/Check:NoJustificationForNA'));
-        }
-        if (($app === 'applicable' || $app === 'partial')
-            && (string)$this->Get('implementation_status') === 'implemented'
-            && trim((string)$this->Get('evidence')) === '') {
-            $this->AddCheckIssue(Dict::S('Class:ISMSSoAEntry/Check:NoEvidence'));
-        }
-    }
-  ]]></code>
-                </method>
-            </methods>
+            <methods />
             <presentation>
                 <details>
                     <items>
