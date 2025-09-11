@@ -105,7 +105,7 @@ CSS);
         // Render
         $oBlock = UIContentBlockUIBlockFactory::MakeStandard(null, ['soa-dash']);
         $oBlock->AddHtml('<div class="soa-dash">');
-        $oBlock->AddHtml('<h3>' . Dict::S('ISMSSoA:Coverage') . '</h3>');
+        $oBlock->AddHtml('<div class="ibo-panel--title">' . Dict::S('ISMSSoA:Coverage') . '</div>');
 
         // KPI-Chips
         $oBlock->AddHtml('<div class="soa-kpis">');

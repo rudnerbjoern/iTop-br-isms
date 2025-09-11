@@ -736,7 +736,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSSoA/Attribute:kpi_applicable' => 'Anwendbar',
     'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implementiert',
     'Class:ISMSSoA/Attribute:kpi_gaps' => 'Lücken',
-    'Class:ISMSSoA/Attribute:entries_list' => 'SoA-Einträge',
+    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA-Einträge',
     'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'Für die Organisation "$this->org_id_friendlyname$" und den Standard "$this->standard_id_friendlyname$" existiert bereits eine SoA.',
     'Class:ISMSSoA/Stimulus:ev_submit' => 'Einreichen',
     'Class:ISMSSoA/Stimulus:ev_approve' => 'Freigeben',

@@ -5646,18 +5646,22 @@
                 <field id="kpi_total" xsi:type="AttributeInteger">
                     <sql>kpi_total</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <tracking_level>none</tracking_level>
                 </field>
                 <field id="kpi_applicable" xsi:type="AttributeInteger">
                     <sql>kpi_applicable</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <tracking_level>none</tracking_level>
                 </field>
                 <field id="kpi_implemented" xsi:type="AttributeInteger">
                     <sql>kpi_implemented</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <tracking_level>none</tracking_level>
                 </field>
                 <field id="kpi_gaps" xsi:type="AttributeInteger">
                     <sql>kpi_gaps</sql>
                     <is_null_allowed>true</is_null_allowed>
+                    <tracking_level>none</tracking_level>
                 </field>
                 <field id="soaentries_list" xsi:type="AttributeLinkedSet">
                     <linked_class>ISMSSoAEntry</linked_class>

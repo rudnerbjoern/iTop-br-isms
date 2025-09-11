@@ -753,7 +753,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSSoA/Attribute:kpi_applicable' => 'Applicable',
     'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implemented',
     'Class:ISMSSoA/Attribute:kpi_gaps' => 'Gaps',
-    'Class:ISMSSoA/Attribute:entries_list' => 'SoA entries',
+    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA entries',
     'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'There is already a SoA for organization "$this->org_id_friendlyname$" and standard "$this->standard_id_friendlyname$".',
     'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
     'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
