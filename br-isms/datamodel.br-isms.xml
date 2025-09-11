@@ -5408,9 +5408,18 @@
                         <item id="publisher" />
                     </items>
                 </list>
+                <summary>
+                    <items>
+                        <item id="publisher">
+                            <rank>10</rank>
+                        </item>
+                        <item id="url">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </summary>
             </presentation>
         </class>
-
         <class id="ISMSStandardControl" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <properties>
@@ -5509,6 +5518,13 @@
                         <item id="domain" />
                     </items>
                 </list>
+                <summary>
+                    <items>
+                        <item id="domain">
+                            <rank>10</rank>
+                        </item>
+                    </items>
+                </summary>
             </presentation>
         </class>
         <class id="ISMSSoA" _delta="define">
@@ -5842,10 +5858,15 @@
                 </list>
                 <summary>
                     <items>
-                        <item id="status" />
-                        <item id="org_id" />
-                        <item id="standard_id" />
-                        <item id="owner_id" />
+                        <item id="org_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standard_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="owner_id">
+                            <rank>30</rank>
+                        </item>
                     </items>
                 </summary>
             </presentation>
