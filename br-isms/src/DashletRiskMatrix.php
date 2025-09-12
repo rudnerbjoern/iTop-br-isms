@@ -1,5 +1,6 @@
 <?php
 
+use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlock;
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlockUIBlockFactory;
 

@@ -2,21 +2,16 @@
 
 namespace BR_isms\Extension\Framework\Model;
 
+use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
 use Combodo\iTop\Service\Events\EventData;
-use DBObjectSearch;
-use DBObjectSet;
 use Dict;
 use cmdbAbstractObject;
-use WebPage;
-use ItopCounter;
 use MetaModel;
-use AttributeDate;
-use AttributeDateTime;
 
 class _ISMSSoAEntry extends cmdbAbstractObject
 {
 
-    /** @var array<int,bool> SoA-IDs, die nach Löschung recomputed werden sollen (pro Request) */
+    /** @var array<int,bool> SoA IDs to recompute after deletions (deduplicated per request). */
     protected static array $aSoaToRecompute = [];
 
     public function EvtISMSSoAEntryCheckToWrite(EventData $oEventData): void
@@ -33,9 +28,12 @@ class _ISMSSoAEntry extends cmdbAbstractObject
         }
     }
 
+    /**
+     * After write (insert or update): recompute current SoA KPIs.
+     * If the entry was moved to a different SoA, recompute the previous one as well.
+     */
     public function EvtISMSSoAEntryAfterWrite(EventData $oEventData): void
     {
-        // aktuelle SoA neu berechnen
         $iSoaId = (int) $this->Get('soa_id');
         if ($iSoaId > 0) {
             $oSoa = MetaModel::GetObject('ISMSSoA', $iSoaId, false);
@@ -44,7 +42,7 @@ class _ISMSSoAEntry extends cmdbAbstractObject
             }
         }
 
-        // falls der Eintrag die SoA gewechselt hat: alte SoA ebenfalls neu berechnen
+        // Also recompute old SoA if the link has changed
         $aPrev = (array) $oEventData->Get('previous_values');
         $iPrevSoaId = (int) ($aPrev['soa_id'] ?? 0);
         if ($iPrevSoaId > 0 && $iPrevSoaId !== $iSoaId) {
@@ -55,6 +53,10 @@ class _ISMSSoAEntry extends cmdbAbstractObject
         }
     }
 
+    /**
+     * About to delete: remember the owning SoA ID.
+     * After deletion we can no longer read the row; we recompute in EvtAfterDelete().
+     */
     public function EvtISMSSoAEntryAboutToDelete(EventData $oEventData): void
     {
         $iSoaId = (int) $this->Get('soa_id');
@@ -62,13 +64,18 @@ class _ISMSSoAEntry extends cmdbAbstractObject
             self::$aSoaToRecompute[$iSoaId] = true;
         }
     }
+
+    /**
+     * After delete: recompute KPIs for all SoAs that had entries removed in this request.
+     * We deduplicate via a static array to be efficient during mass deletes.
+     */
     public function EvtISMSSoAEntryAfterDelete(EventData $oEventData): void
     {
         if (empty(self::$aSoaToRecompute)) {
             return;
         }
         foreach (array_keys(self::$aSoaToRecompute) as $iSoaId) {
-            $oSoa = MetaModel::GetObject('ISMSSoA', (int)$iSoaId, false);
+            $oSoa = MetaModel::GetObject('ISMSSoA', $iSoaId, false);
             if ($oSoa && $oSoa->RecomputeKpis()) {
                 $oSoa->DBUpdate();
             }

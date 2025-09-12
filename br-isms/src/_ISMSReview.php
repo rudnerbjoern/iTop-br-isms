@@ -2,58 +2,68 @@
 
 namespace BR_isms\Extension\Framework\Model;
 
+use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
 use Combodo\iTop\Service\Events\EventData;
-use DBObjectSearch;
-use DBObjectSet;
 use Dict;
 use cmdbAbstractObject;
-use WebPage;
-use ItopCounter;
-use MetaModel;
 use AttributeDate;
-use AttributeDateTime;
 
+/**
+ * Base class for all ISMS*Review objects.
+ *
+ * Responsibilities (generic, cross-type):
+ *  - Lifecycle date stamping on state transitions:
+ *      - when entering in_progress → set started_on (if empty)
+ *      - when entering completed  → set completed_on (if empty)
+ *  - Generic write checks:
+ *      - planned_on cannot be in the past on creation / when in 'planned'
+ *      - outcome must be set when completing
+ *
+ * Notes:
+ *  - Child classes (Asset/Risk/Control reviews) may add extra checks.
+ *  - Keep this class side-effect free except for setting own attributes.
+ *  - Do NOT DBUpdate() here; the platform persists after checks pass.
+ */
 class _ISMSReview extends cmdbAbstractObject
 {
 
-    public function EvtOnStateTransition(EventData $oEventData): void
-    {
-        $sTo = (string) $oEventData->Get('to_state');
 
-        if ($sTo === 'in_progress' && empty($this->Get('started_on'))) {
-            $this->Set('started_on', date('Y-m-d'));
-        }
-        if ($sTo === 'completed' && empty($this->Get('completed_on'))) {
-            $this->Set('completed_on', date('Y-m-d'));
-        }
-        if ($sTo === 'completed' && method_exists($this, 'OnReviewCompleted')) {
-            $this->OnReviewCompleted();
-        }
-    }
-
+    /**
+     * Generic validations before writing:
+     * - planned_on must not be in the past when the record is new OR when target state is 'planned'
+     * - outcome must be set when completing
+     *
+     * Emits CheckIssues to block the write if invalid.
+     */
     public function EvtReviewCheckToWrite(EventData $oEventData): void
     {
         $sCurrentStatus = (string) $this->Get('status');
-        $sTargetState   = (string) $oEventData->Get('target_state'); // '' or 'planned'|'in_progress'|'completed'|'cancelled'
-        $sStatusAfter   = $sTargetState !== '' ? $sTargetState : $sCurrentStatus;
+        $sTargetState   = (string) $oEventData->Get('target_state'); // may be ''
+        $sStatusAfter   = ($sTargetState !== '') ? $sTargetState : $sCurrentStatus;
 
-        if (($oEventData->Get('is_new') === true) || ($sStatusAfter === 'planned')) {
-            $sPlanned = (string) $this->Get('planned_on'); // 'Y-m-d'
+        // 1) planned_on must not be in the past at creation or when (remaining/going) planned
+        if ($oEventData->Get('is_new') === true || $sStatusAfter === 'planned') {
+            $sPlanned = (string) $this->Get('planned_on'); // internal 'Y-m-d'
             if ($sPlanned !== '') {
                 $tsPlanned = @strtotime($sPlanned);
-                $tsToday   = @strtotime(date(AttributeDate::GetInternalFormat())); // 'Y-m-d' today
+                $tsToday   = @strtotime(IsmsReviewUtils::Today());
                 if ($tsPlanned !== false && $tsPlanned < $tsToday) {
                     $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:PlannedInPast'));
                 }
             }
         }
 
-        $sTarget = (string) $oEventData->Get('target_state');
-        if ($sTarget === 'completed' && empty($this->Get('outcome'))) {
+        // 2) outcome required when completing
+        if ($sTargetState === 'completed' && $this->Get('outcome') === '') {
             $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:NoOutcome'));
         }
     }
 
+    /**
+     * Children override to return the reviewed target object (Asset/Risk/Control).
+     *
+     * @return mixed|null A DBObject instance or null if not applicable.
+     */
     public function GetTargetObject()
     {
         return null;
