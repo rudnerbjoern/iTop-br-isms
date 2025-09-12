@@ -62,7 +62,7 @@ class _ISMSSoA extends cmdbAbstractObject
             // Optional: Log/Note
             if ($iCreated > 0) {
 
-                $this->Set('notes', Dict::Format('ISMSSoA:Populate:Done', $iCreated));
+                $this->Set('notes', Dict::Format('ISMSSoA:PopulatedEntries', $iCreated));
                 $this->DBUpdate();
             }
             //} catch (\Exception $e) {
