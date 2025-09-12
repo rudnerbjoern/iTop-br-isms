@@ -48,7 +48,7 @@ CSS);
 .risk-kpis { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
 .risk-chip { border-radius:8px; padding:6px 10px; background:#f6f7f8; font-weight:600 }
 .risk-legend { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px }
-.risk-dot { display:inline-block; min-width:1.8em; text-align:center; font-weight:700; border-radius:6px; padding:2px 6px }
+.risk-dot { display:inline-block; min-width:1.8em; text-align:center; font-weight:700; border-radius:6px; padding:2px 6px; box-shadow:0 0 0 1px rgba(0,0,0,.08) inset; }
 .risk-dot.pre { background:rgb(227,242,253); color:rgb(13,71,161) }        /* P (pre)  */
 .risk-dot.res { background:rgb(255,243,205); color:rgb(102,60,0) }         /* R (res)  */
 .risk-dot.tgt { background:rgb(232,245,233); color:rgb(27,94,32) }         /* T (tgt)  */
