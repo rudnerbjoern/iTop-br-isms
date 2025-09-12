@@ -101,12 +101,12 @@ class _ISMSSoA extends cmdbAbstractObject
 
         try {
             $iCreated = 0;
-            try {
-                // Create only missing entries; harmless if already populated
-                $iCreated = (int) $this->PopulateEntriesFromStandard(true);
-            } catch (\Exception $e) {
-                // swallow to avoid breaking object creation; error is visible in logs
-            }
+            //try {
+            // Create only missing entries; harmless if already populated
+            $iCreated = (int) $this->PopulateEntriesFromStandard(true);
+            //} catch (\Exception $e) {
+            // swallow to avoid breaking object creation; error is visible in logs
+            //}
 
             // Append a short note (if 'notes' is a CaseLog)
             if (
@@ -243,7 +243,7 @@ class _ISMSSoA extends cmdbAbstractObject
 
             // Optional defaults (adapt to your process):
             $oEntry->Set('applicability', 'applicable');
-            $oEntry->Set('implementation_status', '');
+            $oEntry->Set('implementation_status', 'not_implemented');
 
             // Insert without reloading the whole object graph
             $oEntry->DBInsertNoReload();
