@@ -152,6 +152,16 @@ Dict::Add('EN US', 'English', 'English', array(
     'ISMSRisk:Dates' => 'Dates',
     'ISMSRisk:Treatment' => 'Treatment',
     'ISMSRisk:Acceptance' => 'Acceptance',
+    'ISMSRisk:Tab:Dashboard' => 'Dashboard',
+    'ISMSRisk:Matrix'        => 'Risk evaluation matrix',
+    'ISMSRisk:Axis:Likelihood' => 'Likelihood',
+    'ISMSRisk:Axis:Impact'     => 'Impact',
+    'ISMSRisk:Score'           => 'score',
+    'ISMSRisk:Legend:Pre'      => 'Pre (inherent)',
+    'ISMSRisk:Legend:Residual' => 'Residual',
+    'ISMSRisk:Legend:Target'   => 'Target',
+    'ISMSRisk:Legend:Note'     => 'Cell background shows severity by L×I',
+    'ISMSRisk:Tooltip:Point'   => '%1$s — L=%2$s, I=%3$s, score=%4$s',
     'Class:ISMSRisk' => 'ISMS Risk',
     'Class:ISMSRisk+' => 'Information security risk with inherent/residual/target evaluation and treatment data.',
     'Class:ISMSRisk/Name' => '%1$s %2$s',
@@ -736,6 +746,17 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
+    'ISMSSoA:Header'  => 'General information',
+    'ISMSSoA:KPIs' => 'KPIs',
+    'ISMSSoA:Entries' => 'Statement of Applicability',
+    'ISMSSoA:Populate:Confirm' => 'Create missing SoA entries from the selected standard?',
+    'ISMSSoA:Populate:Done' => 'Created %1$d SoA entries.',
+    'ISMSSoA:Coverage' => 'Coverage',
+    'ISMSSoA:StdControls:Total' => 'Standard controls: %1$d',
+    'ISMSSoA:EntriesCount' => 'Entries',
+    'ISMSSoA:Drill:Applicable'  => 'Applicable entries in this domain',
+    'ISMSSoA:Drill:Implemented' => 'Implemented entries in this domain',
     'Class:ISMSSoA' => 'Statement of Applicability',
     'Class:ISMSSoA+' => 'SoA per Organization and Standard.',
     'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
@@ -806,23 +827,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:primary' => 'Primary',
     'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:supporting' => 'Supporting',
     'Class:lnkISMSSoAEntryToISMSControl/UniquenessRule:no_duplicate' => 'The SoA entry "$this->soaentry_id_friendlyname$" is already linked to control "$this->control_id_friendlyname$".',
-));
-
-//
-// Class: ISMSSoA
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
-    'ISMSSoA:KPIs' => 'KPIs',
-    'ISMSSoA:Entries' => 'Statement of Applicability',
-    'ISMSSoA:Populate:Confirm' => 'Create missing SoA entries from the selected standard?',
-    'ISMSSoA:Populate:Done' => 'Created %1$d SoA entries.',
-    'ISMSSoA:Coverage' => 'Coverage',
-    'ISMSSoA:StdControls:Total' => 'Standard controls: %1$d',
-    'ISMSSoA:EntriesCount' => 'Entries',
-    'ISMSSoA:Drill:Applicable'  => 'Applicable entries in this domain',
-    'ISMSSoA:Drill:Implemented' => 'Implemented entries in this domain',
 ));
 
 //

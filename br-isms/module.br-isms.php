@@ -32,15 +32,14 @@ SetupWebPage::AddModule(
         //
         'datamodel' => array(
             'src/DashletRiskMatrix.php',
-            'src/SoACoverage.php',
-            'src/SoAPopulateMenu.php',
+            'src/IsmsUIExtension.php',
         ),
         'webservice' => array(),
         'data.struct' => array(
             // add your 'structure' definition XML files here,
         ),
         'data.sample' => array(
-            // add your sample data XML files here,
+            'data/data.sample.standard.xml'
         ),
 
         // Documentation

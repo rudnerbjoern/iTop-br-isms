@@ -2,7 +2,7 @@
 
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlockUIBlockFactory;
 
-class SoACoverageUIExtension implements iApplicationUIExtension
+class IsmsUIExtension implements iApplicationUIExtension
 {
 
     public function OnDisplayProperties($oObject, WebPage $oPage, $bEditMode = false)
@@ -17,13 +17,13 @@ class SoACoverageUIExtension implements iApplicationUIExtension
     public function OnDisplayRelations($oObject, WebPage $oPage, $bEditMode = false)
     {
         if ($bEditMode) return;
-        if (!($oObject instanceof ISMSSoA)) return;
+        if ($oObject instanceof ISMSSoA) {
 
-        // Minimaler Tab-Titel (sprachabhängig)
-        $oPage->SetCurrentTab(Dict::S('ISMSSoA:Tab:Dashboard', 'Dashboard'));
+            // Minimaler Tab-Titel (sprachabhängig)
+            $oPage->SetCurrentTab(Dict::S('ISMSSoA:Tab:Dashboard', 'Dashboard'));
 
-        // Kleines CSS (inline)
-        $oPage->add_style(<<<CSS
+            // Kleines CSS (inline)
+            $oPage->add_style(<<<CSS
 .soa-dash {margin-top:12px}
 .soa-kpis {display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
 .soa-chip {border-radius:8px; padding:6px 10px; background:#f6f7f8; font-weight:600}
@@ -34,12 +34,41 @@ class SoACoverageUIExtension implements iApplicationUIExtension
 .soa-subtle {color:#666; font-size:12px}
 CSS);
 
-        // Block bauen und einhängen
-        $oBlock = $this->BuildDashboardBlock($oObject);
-        $oPage->AddUiBlock($oBlock);
+            // Block bauen und einhängen
+            $oBlock = $this->BuildSoaDashboardBlock($oObject);
+            $oPage->AddUiBlock($oBlock);
+        } elseif ($oObject instanceof ISMSRisk) {
+            //Is Risk
+            // Minimaler Tab-Titel (sprachabhängig)
+            $oPage->SetCurrentTab(Dict::S('ISMSSoA:Tab:Dashboard', 'Dashboard'));
+
+            // Kleines CSS (inline)
+            $oPage->add_style(<<<CSS
+.risk-dash { margin-top:12px }
+.risk-kpis { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+.risk-chip { border-radius:8px; padding:6px 10px; background:#f6f7f8; font-weight:600 }
+.risk-legend { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px }
+.risk-dot { display:inline-block; min-width:1.8em; text-align:center; font-weight:700; border-radius:6px; padding:2px 6px }
+.risk-dot.pre { background:rgb(227,242,253); color:rgb(13,71,161) }        /* P (pre)  */
+.risk-dot.res { background:rgb(255,243,205); color:rgb(102,60,0) }         /* R (res)  */
+.risk-dot.tgt { background:rgb(232,245,233); color:rgb(27,94,32) }         /* T (tgt)  */
+
+.risk-matrix { border-collapse:collapse; width:100%; table-layout:fixed; margin-top:6px }
+.risk-matrix th, .risk-matrix td { border:1px solid #ddd; padding:6px; text-align:center; vertical-align:middle }
+.risk-matrix thead th { background:#f6f7f8; font-weight:600 }
+.risk-matrix .axis-title { background:#eef1f4; font-weight:600 }
+.risk-cell { height:42px; position:relative }
+.risk-badges { display:flex; gap:4px; justify-content:center; align-items:center; flex-wrap:wrap }
+.risk-note { color:#666; font-size:12px; margin-top:6px }
+CSS);
+
+            // Block bauen und einhängen
+            $oBlock = $this->BuildRiskDashboardBlock($oObject);
+            $oPage->AddUiBlock($oBlock);
+        }
     }
 
-    private function BuildDashboardBlock(ISMSSoA $oSoa)
+    private function BuildSoaDashboardBlock(ISMSSoA $oSoa)
     {
         $iSoaId = (int)$oSoa->GetKey();
         $iStdId = (int)$oSoa->Get('standard_id');
@@ -187,6 +216,148 @@ CSS);
         $oBlock->AddHtml('</div>');
         return $oBlock;
     }
+
+
+    private function BuildRiskDashboardBlock(ISMSRisk $oRisk)
+    {
+
+        // Werte holen
+        $vals = function (string $l, string $i, string $s, string $lvl) use ($oRisk) {
+            return array(
+                'L' => (string)$oRisk->Get($l),
+                'I' => (string)$oRisk->Get($i),
+                'S' => (string)$oRisk->Get($s),
+                'LVL' => (string)$oRisk->Get($lvl),
+            );
+        };
+        $pre = $vals('pre_likelihood', 'pre_impact', 'pre_score', 'pre_level');
+        $res = $vals('res_likelihood', 'res_impact', 'res_score', 'res_level');
+        $tgt = $vals('tgt_likelihood', 'tgt_impact', 'tgt_score', 'tgt_level');
+
+        // Hilfen
+        $axisL = Dict::S('ISMSRisk:Axis:Likelihood', 'Likelihood');
+        $axisI = Dict::S('ISMSRisk:Axis:Impact', 'Impact');
+
+        $fmtLvl = function (string $att, string $code): string {
+            if ($code === '') return '';
+            // Versuch: Enum-Label aus Attributedefinition holen
+            try {
+                $oDef = MetaModel::GetAttributeDef('ISMSRisk', $att);
+                if ($oDef instanceof AttributeEnum && method_exists($oDef, 'GetLabelForValue')) {
+                    $s = $oDef->GetLabelForValue($code);
+                    if ($s !== '') return $s;
+                }
+            } catch (\Exception $e) { /* ignore */
+            }
+            $k = sprintf('Class:%s/Attribute:%s/Value:%s', 'ISMSRisk', $att, $code);
+            $s = Dict::S($k, '');
+            return ($s !== '') ? $s : $code;
+        };
+
+        // Zell-Hintergrund (Schweregrad) nach Produkt L*I
+        $cellStyle = function (int $L, int $I): string {
+            $p = $L * $I;
+            if ($p >= 17) return 'background:rgb(198,40,40); color:#fff;';      // extreme
+            if ($p >= 10) return 'background:rgb(251,140,0); color:#000;';      // high
+            if ($p >= 6)  return 'background:rgb(240,244,195); color:#3E4A00;'; // medium
+            return 'background:rgb(232,245,233); color:#1B5E20;';               // low
+        };
+
+        // Table bauen
+        $oBlock = UIContentBlockUIBlockFactory::MakeStandard(null, ['risk-dash']);
+        $oBlock->AddHtml('<div class="risk-dash">');
+        $oBlock->AddHtml('<h3>' . Dict::S('ISMSRisk:Matrix', 'Risk evaluation matrix') . '</h3>');
+
+        // Score-KPIs
+        $oBlock->AddHtml('<div class="risk-kpis">');
+        $oBlock->AddHtml('<span class="risk-chip"><span class="risk-dot pre">P</span> '
+            . sprintf(
+                'L=%s, I=%s, %s=%s (%s)',
+                utils::HtmlEntities($pre['L'] ?: '-'),
+                utils::HtmlEntities($pre['I'] ?: '-'),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Score', 'score')),
+                utils::HtmlEntities($pre['S'] ?: '-'),
+                utils::HtmlEntities($fmtLvl('pre_level', $pre['LVL']) ?: '-')
+            ) . '</span>');
+        $oBlock->AddHtml('<span class="risk-chip"><span class="risk-dot res">R</span> '
+            . sprintf(
+                'L=%s, I=%s, %s=%s (%s)',
+                utils::HtmlEntities($res['L'] ?: '-'),
+                utils::HtmlEntities($res['I'] ?: '-'),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Score', 'score')),
+                utils::HtmlEntities($res['S'] ?: '-'),
+                utils::HtmlEntities($fmtLvl('res_level', $res['LVL']) ?: '-')
+            ) . '</span>');
+        $oBlock->AddHtml('<span class="risk-chip"><span class="risk-dot tgt">T</span> '
+            . sprintf(
+                'L=%s, I=%s, %s=%s (%s)',
+                utils::HtmlEntities($tgt['L'] ?: '-'),
+                utils::HtmlEntities($tgt['I'] ?: '-'),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Score', 'score')),
+                utils::HtmlEntities($tgt['S'] ?: '-'),
+                utils::HtmlEntities($fmtLvl('tgt_level', $tgt['LVL']) ?: '-')
+            ) . '</span>');
+        $oBlock->AddHtml('</div>');
+
+        // Matrix
+        $oBlock->AddHtml('<table class="risk-matrix">');
+
+        // Erste Kopfzeile mit Achsentiteln
+        $oBlock->AddHtml('<thead><tr>'
+            . '<th class="axis-title">' . utils::HtmlEntities($axisL) . '</th>'
+            . '<th class="axis-title" colspan="5">' . utils::HtmlEntities($axisI) . '</th>'
+            . '</tr>');
+
+        // Spaltenkopf Impact 1..5
+        $oBlock->AddHtml('<tr><th></th>');
+        for ($i = 1; $i <= 5; $i++) {
+            $oBlock->AddHtml('<th>' . (string)$i . '</th>');
+        }
+        $oBlock->AddHtml('</tr></thead><tbody>');
+
+        // Zellen 5..1 (Likelihood als Zeilen, invertiert: 5 → 1)
+        for ($L = 5; $L >= 1; $L--) {
+            $oBlock->AddHtml('<tr>');
+            $oBlock->AddHtml('<th>' . $L . '</th>');
+            for ($I = 1; $I <= 5; $I++) {
+                $style = $cellStyle($L, $I);
+                // Marker sammeln
+                $badges = '';
+                $mk = function ($tag, $cls, $valL, $valI, $score, $label) {
+                    if ($valL === (string)$GLOBALS['L'] && $valI === (string)$GLOBALS['I']) {
+                        $t = Dict::Format('ISMSRisk:Tooltip:Point', $label, $valL, $valI, ($score !== '' ? $score : '-'));
+                        return '<span class="risk-dot ' . $cls . '" title="' . utils::HtmlEntities($t) . '">' . $tag . '</span>';
+                    }
+                    return '';
+                };
+                // Kleiner Trick: aktuelle Zellkoordinaten global bereitstellen für den Closure-Vergleich
+                $GLOBALS['L'] = (string)$L;
+                $GLOBALS['I'] = (string)$I;
+
+                $badges .= $mk('P', 'pre', $pre['L'], $pre['I'], $pre['S'], Dict::S('ISMSRisk:Legend:Pre', 'Pre'));
+                $badges .= $mk('R', 'res', $res['L'], $res['I'], $res['S'], Dict::S('ISMSRisk:Legend:Residual', 'Residual'));
+                $badges .= $mk('T', 'tgt', $tgt['L'], $tgt['I'], $tgt['S'], Dict::S('ISMSRisk:Legend:Target', 'Target'));
+
+                $oBlock->AddHtml('<td class="risk-cell" style="' . $style . '"><div class="risk-badges">' . $badges . '</div></td>');
+            }
+            $oBlock->AddHtml('</tr>');
+        }
+        $oBlock->AddHtml('</tbody></table>');
+
+        // Legende
+        $oBlock->AddHtml('<div class="risk-legend" style="margin-top:6px">'
+            . '<span class="risk-dot pre">P</span> ' . Dict::S('ISMSRisk:Legend:Pre', 'Pre')
+            . ' &nbsp; <span class="risk-dot res">R</span> ' . Dict::S('ISMSRisk:Legend:Residual', 'Residual')
+            . ' &nbsp; <span class="risk-dot tgt">T</span> ' . Dict::S('ISMSRisk:Legend:Target', 'Target')
+            . '</div>');
+
+        $oBlock->AddHtml('<div class="risk-note">' . Dict::S('ISMSRisk:Legend:Note', 'Cell background shows severity by L×I') . '</div>');
+
+        $oBlock->AddHtml('</div>');
+
+        return $oBlock;
+    }
+
 
     private function MakeSearchUrl(string $sClass, string $sOql): string
     {
