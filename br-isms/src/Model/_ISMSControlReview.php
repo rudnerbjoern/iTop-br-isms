@@ -1,8 +1,8 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Model;
+namespace BR\Extension\Isms\Model;
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
+use BR\Extension\Isms\Util\IsmsUtils;
 use Combodo\iTop\Service\Events\EventData;
 use Dict;
 use ISMSReview;
@@ -32,7 +32,7 @@ class _ISMSControlReview extends ISMSReview
     {
         // planned_on = today if empty
         if (empty($this->Get('planned_on'))) {
-            $this->Set('planned_on', IsmsReviewUtils::Today()));
+            $this->Set('planned_on', IsmsUtils::Today()));
         }
 
         // reviewer = Control.owner (if available and reviewer not set)
@@ -101,13 +101,13 @@ class _ISMSControlReview extends ISMSReview
         // Determine completion date (fallback: today, internal format)
         $sCompleted = (string) $this->Get('completed_on');
         if ($sCompleted === '') {
-            $sCompleted = IsmsReviewUtils::Today();
+            $sCompleted = IsmsUtils::Today();
         }
 
         // Compute next_review based on the control's interval or module default
         $iMonths = (int) $oControl->Get('review_interval_months');
         if ($iMonths <= 0) {
-            $iMonths = IsmsReviewUtils::GetDefaultReviewIntervalMonths();
+            $iMonths = IsmsUtils::GetDefaultReviewIntervalMonths();
         }
         $ts   = strtotime('+' . $iMonths . ' months', strtotime($sCompleted));
         $sNext = date(AttributeDate::GetInternalFormat(), $ts);

@@ -1,8 +1,8 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Model;
+namespace BR\Extension\Isms\Model;
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
+use BR\Extension\Isms\Util\IsmsUtils;
 use Combodo\iTop\Service\Events\EventData;
 use DBObjectSearch;
 use DBObjectSet;
@@ -10,8 +10,6 @@ use Dict;
 use cmdbAbstractObject;
 use ItopCounter;
 use MetaModel;
-use AttributeDate;
-use AttributeDateTime;
 
 /**
  * ISMS Risk business logic.
@@ -53,8 +51,8 @@ class _ISMSRisk extends cmdbAbstractObject
      */
     public function PrefillCreationForm(&$aContextParam): void
     {
-        $sToday = IsmsReviewUtils::Today();
-        $sNow = IsmsReviewUtils::Now();
+        $sToday = IsmsUtils::Today();
+        $sNow = IsmsUtils::Now();
 
         if ($this->Get('creation_date') === '') {
             $this->Set('creation_date', $sToday);
@@ -66,13 +64,13 @@ class _ISMSRisk extends cmdbAbstractObject
             $this->Set('last_review', $sToday);
         }
         if ((int) $this->Get('review_interval_months') <= 0) {
-            $this->Set('review_interval_months', IsmsReviewUtils::GetDefaultReviewIntervalMonths());
+            $this->Set('review_interval_months', IsmsUtils::GetDefaultReviewIntervalMonths());
         }
 
         if ($this->Get('next_review') === '') {
             $iMonths = max(1, (int) $this->Get('review_interval_months'));
             $anchor  = (string) $this->Get('last_review') ?: $sToday;
-            $this->Set('next_review', IsmsReviewUtils::ComputeNextReviewDate($anchor, $iMonths));
+            $this->Set('next_review', IsmsUtils::ComputeNextReviewDate($anchor, $iMonths));
         }
     }
 
@@ -132,8 +130,8 @@ class _ISMSRisk extends cmdbAbstractObject
      */
     public function EvtBeforeISMSRiskWrite(EventData $oEventData): void
     {
-        $sToday = IsmsReviewUtils::Today();
-        $sNow = IsmsReviewUtils::Now();
+        $sToday = IsmsUtils::Today();
+        $sNow = IsmsUtils::Now();
 
         if ($oEventData->Get('is_new') === true && $this->Get('creation_date') === '') {
             $this->Set('creation_date', $sToday);

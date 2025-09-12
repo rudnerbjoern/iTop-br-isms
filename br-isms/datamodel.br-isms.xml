@@ -96,8 +96,8 @@
         <class id="ISMSAsset" _delta="define">
             <parent>FunctionalCI</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSAsset</name>
-                <file>src/_ISMSAsset.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSAsset</name>
+                <file>src/Model/_ISMSAsset.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -1017,8 +1017,8 @@
         <class id="ISMSRisk" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSRisk</name>
-                <file>src/_ISMSRisk.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSRisk</name>
+                <file>src/Model/_ISMSRisk.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -2569,8 +2569,8 @@
         <class id="ISMSControl" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSControl</name>
-                <file>src/_ISMSControl.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSControl</name>
+                <file>src/Model/_ISMSControl.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -3773,8 +3773,8 @@
         <class id="ISMSReview" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSReview</name>
-                <file>src/_ISMSReview.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSReview</name>
+                <file>src/Model/_ISMSReview.php</file>
             </php_parent>
             <properties>
                 <abstract>true</abstract>
@@ -4176,8 +4176,8 @@
         <class id="ISMSAssetReview" _delta="define">
             <parent>ISMSReview</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSAssetReview</name>
-                <file>src/_ISMSAssetReview.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSAssetReview</name>
+                <file>src/Model/_ISMSAssetReview.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -4560,8 +4560,8 @@
         <class id="ISMSRiskReview" _delta="define">
             <parent>ISMSReview</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSRiskReview</name>
-                <file>src/_ISMSRiskReview.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSRiskReview</name>
+                <file>src/Model/_ISMSRiskReview.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -4944,8 +4944,8 @@
         <class id="ISMSControlReview" _delta="define">
             <parent>ISMSReview</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSControlReview</name>
-                <file>src/_ISMSControlReview.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSControlReview</name>
+                <file>src/Model/_ISMSControlReview.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -5530,8 +5530,8 @@
         <class id="ISMSSoA" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSSoA</name>
-                <file>src/_ISMSSoA.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSSoA</name>
+                <file>src/Model/_ISMSSoA.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>
@@ -5878,8 +5878,8 @@
         <class id="ISMSSoAEntry" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
-                <name>BR_isms\Extension\Framework\Model\_ISMSSoAEntry</name>
-                <file>src/_ISMSSoAEntry.php</file>
+                <name>BR\Extension\Isms\Model\_ISMSSoAEntry</name>
+                <file>src/Model/_ISMSSoAEntry.php</file>
             </php_parent>
             <properties>
                 <category>bizmodel,searchable</category>

@@ -31,8 +31,9 @@ SetupWebPage::AddModule(
         // Components
         //
         'datamodel' => array(
-            'src/DashletRiskMatrix.php',
-            'src/IsmsUIExtension.php',
+            'src/Util/IsmsUtils.php',
+            'src/UI/Dashlet/DashletRiskMatrix.php',
+            'src/UI/Extension/IsmsUIExtension.php',
         ),
         'webservice' => array(),
         'data.struct' => array(

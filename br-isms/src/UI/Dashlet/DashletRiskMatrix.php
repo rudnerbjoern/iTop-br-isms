@@ -1,8 +1,22 @@
 <?php
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
-use Combodo\iTop\Application\UI\Base\Layout\UIContentBlock;
+namespace BR\Extension\Isms\UI\Dashlet;
+
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlockUIBlockFactory;
+use Dashlet;
+use Dict;
+use DBObjectSearch;
+use utils;
+use DBObjectSet;
+use MetaModel;
+use AttributeEnum;
+use DesignerForm;
+use DesignerBooleanField;
+use DesignerTextField;
+use DesignerLongTextField;
+use DesignerComboField;
+use DesignerStaticTextField;
+use OQLException;
 
 class DashletRiskMatrix extends Dashlet
 {

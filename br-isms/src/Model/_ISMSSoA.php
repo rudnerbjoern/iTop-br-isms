@@ -1,8 +1,8 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Model;
+namespace BR\Extension\Isms\Model;
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
+use BR\Extension\Isms\Util\IsmsUtils;
 use Combodo\iTop\Service\Events\EventData;
 use DBObjectSearch;
 use DBObjectSet;

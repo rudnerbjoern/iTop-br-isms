@@ -1,17 +1,13 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Model;
+namespace BR\Extension\Isms\Model;
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
-use AttributeDate;
-use AttributeDateTime;
+use BR\Extension\Isms\Util\IsmsUtils;
 use Combodo\iTop\Service\Events\EventData;
-use DBObjectSearch;
-use DBObjectSet;
 use FunctionalCI;
 use ItopCounter;
-use MetaModel;
-use WebPage;
+use Combodo\iTop\Application\WebPage\WebPage;
+
 
 /**
  * ISMS Asset business logic and UI tweaks.
@@ -41,8 +37,8 @@ class _ISMSAsset extends FunctionalCI
      */
     public function PrefillCreationForm(&$aContextParam): void
     {
-        $sToday = IsmsReviewUtils::Today();
-        $sNow = IsmsReviewUtils::Now();
+        $sToday = IsmsUtils::Today();
+        $sNow = IsmsUtils::Now();
 
         if (empty($this->Get('creation_date'))) {
             $this->Set('creation_date', $sToday);
@@ -57,14 +53,14 @@ class _ISMSAsset extends FunctionalCI
         }
 
         if (empty($this->Get('review_interval_months'))) {
-            $this->Set('review_interval_months', IsmsReviewUtils::GetDefaultReviewIntervalMonths());
+            $this->Set('review_interval_months', IsmsUtils::GetDefaultReviewIntervalMonths());
         }
 
         // next_review: compute if empty, using last_review as the anchor
         if (empty($this->Get('next_review'))) {
             $iMonths = max(1, (int) $this->Get('review_interval_months'));
             $anchor  = $this->Get('last_review') ?: $sToday;
-            $this->Set('next_review', IsmsReviewUtils::ComputeNextReviewDate($anchor, $iMonths));
+            $this->Set('next_review', IsmsUtils::ComputeNextReviewDate($anchor, $iMonths));
         }
     }
 
@@ -125,8 +121,8 @@ class _ISMSAsset extends FunctionalCI
      */
     public function EvtBeforeISMSAssetWrite(EventData $oEventData): void
     {
-        $sToday = IsmsReviewUtils::Today();
-        $sNow = IsmsReviewUtils::Now();
+        $sToday = IsmsUtils::Today();
+        $sNow = IsmsUtils::Now();
 
         // set creation date on initial write
         if ($oEventData->Get('is_new') === true && empty($this->Get('creation_date'))) {
@@ -141,7 +137,7 @@ class _ISMSAsset extends FunctionalCI
         $iMonths     = (int) $this->Get('review_interval_months');
 
         if ($sLastReview !== '' && $iMonths > 0) {
-            $this->Set('next_review', IsmsReviewUtils::ComputeNextReviewDate($sLastReview, $iMonths));
+            $this->Set('next_review', IsmsUtils::ComputeNextReviewDate($sLastReview, $iMonths));
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Util;
+namespace BR\Extension\Isms\Util;
 
 use MetaModel;
 use AttributeDate;
@@ -8,7 +8,7 @@ use AttributeDateTime;
 use DateTimeImmutable;
 use DateInterval;
 
-final class IsmsReviewUtils
+final class IsmsUtils
 {
     private const MODULE = 'br-isms';
 

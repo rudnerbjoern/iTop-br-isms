@@ -1,12 +1,11 @@
 <?php
 
-namespace BR_isms\Extension\Framework\Model;
+namespace BR\Extension\Isms\Model;
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
+use BR\Extension\Isms\Util\IsmsUtils;
 use Combodo\iTop\Service\Events\EventData;
 use Dict;
 use cmdbAbstractObject;
-use AttributeDate;
 
 /**
  * Base class for all ISMS*Review objects.
@@ -46,7 +45,7 @@ class _ISMSReview extends cmdbAbstractObject
             $sPlanned = (string) $this->Get('planned_on'); // internal 'Y-m-d'
             if ($sPlanned !== '') {
                 $tsPlanned = @strtotime($sPlanned);
-                $tsToday   = @strtotime(IsmsReviewUtils::Today());
+                $tsToday   = @strtotime(IsmsUtils::Today());
                 if ($tsPlanned !== false && $tsPlanned < $tsToday) {
                     $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:PlannedInPast'));
                 }

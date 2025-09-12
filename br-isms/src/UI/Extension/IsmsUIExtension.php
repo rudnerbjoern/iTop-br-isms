@@ -1,7 +1,18 @@
 <?php
 
-use BR_isms\Extension\Framework\Util\IsmsReviewUtils;
+namespace BR\Extension\Isms\UI\Extension;
+
 use Combodo\iTop\Application\UI\Base\Layout\UIContentBlockUIBlockFactory;
+use Combodo\iTop\Application\WebPage\WebPage;
+use iApplicationUIExtension;
+use ISMSSoA;
+use Dict;
+use ISMSRisk;
+use DBObjectSet;
+use DBObjectSearch;
+use utils;
+use MetaModel;
+use AttributeEnum;
 
 class IsmsUIExtension implements iApplicationUIExtension
 {
@@ -274,7 +285,7 @@ CSS);
                 'L=%s, I=%s, %s=%s (%s)',
                 utils::HtmlEntities($pre['L'] ?: '-'),
                 utils::HtmlEntities($pre['I'] ?: '-'),
-            utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
                 utils::HtmlEntities($pre['S'] ?: '-'),
                 utils::HtmlEntities($fmtLvl('pre_level', $pre['LVL']) ?: '-')
             ) . '</span>');
@@ -283,7 +294,7 @@ CSS);
                 'L=%s, I=%s, %s=%s (%s)',
                 utils::HtmlEntities($res['L'] ?: '-'),
                 utils::HtmlEntities($res['I'] ?: '-'),
-            utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
                 utils::HtmlEntities($res['S'] ?: '-'),
                 utils::HtmlEntities($fmtLvl('res_level', $res['LVL']) ?: '-')
             ) . '</span>');
@@ -292,7 +303,7 @@ CSS);
                 'L=%s, I=%s, %s=%s (%s)',
                 utils::HtmlEntities($tgt['L'] ?: '-'),
                 utils::HtmlEntities($tgt['I'] ?: '-'),
-            utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
+                utils::HtmlEntities(Dict::S('ISMSRisk:Dashboard:Score', 'score')),
                 utils::HtmlEntities($tgt['S'] ?: '-'),
                 utils::HtmlEntities($fmtLvl('tgt_level', $tgt['LVL']) ?: '-')
             ) . '</span>');
