@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Set>
+    <ISMSStandard alias="ISMSStandard" id="1">
+        <name>ISO/IEC 27001</name>
+        <version>2022</version>
+        <publisher>ISO/IEC</publisher>
+        <uri>https://www.iso.org/standard/27001</uri>
+    </ISMSStandard>
+
+    <!-- Ten example controls (codes & titles adapted to ISO/IEC 27001/27002:2022 style) -->
+    <ISMSStandardControl alias="ISMSStandardControl" id="101">
+        <standard_id>1</standard_id>
+        <code>A.5.1</code>
+        <title>Policies for information security</title>
+        <domain>Organizational controls</domain>
+        <description>Define, approve and communicate information security policies.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="102">
+        <standard_id>1</standard_id>
+        <code>A.5.7</code>
+        <title>Threat intelligence</title>
+        <domain>Organizational controls</domain>
+        <description>Collect and analyze threat intelligence to support risk treatment.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="103">
+        <standard_id>1</standard_id>
+        <code>A.5.23</code>
+        <title>Information security for use of cloud services</title>
+        <domain>Organizational controls</domain>
+        <description>Establish and manage cloud security requirements and responsibilities.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="104">
+        <standard_id>1</standard_id>
+        <code>A.6.1</code>
+        <title>Screening</title>
+        <domain>People controls</domain>
+        <description>Background checks and verification appropriate to roles and risks.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="105">
+        <standard_id>1</standard_id>
+        <code>A.6.3</code>
+        <title>Information security awareness, education and training</title>
+        <domain>People controls</domain>
+        <description>Ensure personnel are aware of and trained in ISMS requirements.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="106">
+        <standard_id>1</standard_id>
+        <code>A.7.2</code>
+        <title>Physical entry controls</title>
+        <domain>Physical controls</domain>
+        <description>Secure areas with controlled entry, monitoring and authorization.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="107">
+        <standard_id>1</standard_id>
+        <code>A.7.10</code>
+        <title>Storage media</title>
+        <domain>Physical controls</domain>
+        <description>Protect media across its lifecycle, including secure disposal.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="108">
+        <standard_id>1</standard_id>
+        <code>A.8.2</code>
+        <title>Malware protection</title>
+        <domain>Technological controls</domain>
+        <description>Detect, prevent and recover from malware on systems and endpoints.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="109">
+        <standard_id>1</standard_id>
+        <code>A.8.16</code>
+        <title>Monitoring activities</title>
+        <domain>Technological controls</domain>
+        <description>Monitor networks and systems for anomalous behavior and events.</description>
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="110">
+        <standard_id>1</standard_id>
+        <code>A.8.23</code>
+        <title>Web filtering</title>
+        <domain>Technological controls</domain>
+        <description>Restrict access to malicious or inappropriate web content.</description>
+    </ISMSStandardControl>
+</Set>
