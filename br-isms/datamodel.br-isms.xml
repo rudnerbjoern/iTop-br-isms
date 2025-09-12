@@ -6050,6 +6050,21 @@
                     <rank>10</rank>
                     <callback>EvtISMSSoAEntryCheckToWrite</callback>
                 </event_listener>
+                <event_listener id="EvtISMSSoAEntryAfterWrite">
+                    <event>EVENT_DB_AFTER_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAEntryAfterWrite</callback>
+                </event_listener>
+                <event_listener id="EvtISMSSoAEntryAboutToDelete">
+                    <event>EVENT_DB_ABOUT_TO_DELETE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAEntryAboutToDelete</callback>
+                </event_listener>
+                <event_listener id="EvtISMSSoAEntryAfterDelete">
+                    <event>EVENT_DB_AFTER_DELETE</event>
+                    <rank>10</rank>
+                    <callback>EvtISMSSoAEntryAfterDelete</callback>
+                </event_listener>
             </event_listeners>
             <methods />
             <presentation>

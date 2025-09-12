@@ -37,7 +37,7 @@ class _ISMSSoA extends cmdbAbstractObject
 
     public function EvtISMSSoAComputeValues(EventData $oEventData): void
     {
-        $this->RecomputeKPIs();
+        $this->RecomputeKpis();
     }
 
     public function EvtISMSSoACheckToWrite(EventData $oEventData): void
@@ -71,30 +71,53 @@ class _ISMSSoA extends cmdbAbstractObject
         }
     }
 
-    public function RecomputeKPIs(): void
+    public function RecomputeKpis(): bool
     {
-        (int)$iTotal = 0;
-        (int)$iApplicable = 0;
-        (int)$iImpl = 0;
-        (int)$iGaps = 0;
+        $iTotal = 0;
+        $iApplicable = 0;
+        $iImpl = 0;
+        $iGaps = 0;
+
         $oSearch = DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa');
         $oSet = new DBObjectSet($oSearch, array(), array('soa' => $this->GetKey()));
+
         while ($o = $oSet->Fetch()) {
             $iTotal++;
-            $app = (string)$o->Get('applicability');
-            $impl = (string)$o->Get('implementation_status');
+            $app  = (string) $o->Get('applicability');         // applicable | partial | not_applicable | null/""
+            $impl = (string) $o->Get('implementation_status'); // planned | in_progress | implemented | not_implemented | null/""
+
             if ($app === 'applicable' || $app === 'partial') {
                 $iApplicable++;
-                if ($impl === 'implemented')
+                if ($impl === 'implemented') {
                     $iImpl++;
-                if ($impl === '' || $impl === 'planned' || $impl === 'in_progress')
+                }
+                // „Gaps“ = anwendbar, aber noch nicht fertig (leer / geplant / in Bearbeitung / nicht implementiert)
+                if ($impl === '' || $impl === 'planned' || $impl === 'in_progress' || $impl === 'not_implemented') {
                     $iGaps++;
+                }
             }
         }
-        $this->Set('kpi_total', $iTotal);
-        $this->Set('kpi_applicable', $iApplicable);
-        $this->Set('kpi_implemented', $iImpl);
-        $this->Set('kpi_gaps', $iGaps);
+
+        // nur setzen, wenn sich wirklich etwas geändert hat
+        $bChanged = false;
+        if ((int)$this->Get('kpi_total') !== $iTotal) {
+            $this->Set('kpi_total', $iTotal);
+            $bChanged = true;
+        }
+        if ((int)$this->Get('kpi_applicable') !== $iApplicable) {
+            $this->Set('kpi_applicable', $iApplicable);
+            $bChanged = true;
+        }
+        if ((int)$this->Get('kpi_implemented') !== $iImpl) {
+            $this->Set('kpi_implemented', $iImpl);
+            $bChanged = true;
+        }
+        if ((int)$this->Get('kpi_gaps') !== $iGaps) {
+            $this->Set('kpi_gaps', $iGaps);
+            $bChanged = true;
+        }
+
+        return $bChanged;
     }
 
     public function PopulateEntriesFromStandard($bOnlyMissing = true): int
@@ -134,7 +157,7 @@ class _ISMSSoA extends cmdbAbstractObject
         }
 
         // KPIs neu berechnen
-        $this->RecomputeKPIs();
+        $this->RecomputeKpis();
         $this->DBUpdate();
 
         return $iCreated;
