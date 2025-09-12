@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-09-10
+ * @version     2025-09-12
  *
  * Localized data
  */
@@ -19,6 +19,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Menu:ISMSSpace:Options' => 'Options',
     'Menu:ISMSSpace:Risks' => 'Risks & Controls',
     'Menu:ISMSSpace:Reviews' => 'Reviews',
+    'Menu:ISMSSpace:Standards' => 'Standards',
     'Menu:NewISMSAsset' => 'New Asset',
     'Menu:NewISMSAsset+' => 'Create a new ISMS asset',
     'Menu:NewISMSRisk' => 'New Risk',
@@ -152,6 +153,16 @@ Dict::Add('EN US', 'English', 'English', array(
     'ISMSRisk:Dates' => 'Dates',
     'ISMSRisk:Treatment' => 'Treatment',
     'ISMSRisk:Acceptance' => 'Acceptance',
+    'ISMSRisk:Dashboard' => 'Risk matrix',
+    'ISMSRisk:Dashboard:Title'        => 'Risk evaluation matrix',
+    'ISMSRisk:Dashboard:Axis:Likelihood' => 'Likelihood',
+    'ISMSRisk:Dashboard:Axis:Impact'     => 'Impact',
+    'ISMSRisk:Dashboard:Score'           => 'score',
+    'ISMSRisk:Dashboard:Legend:Pre'      => 'Pre (inherent)',
+    'ISMSRisk:Dashboard:Legend:Residual' => 'Residual',
+    'ISMSRisk:Dashboard:Legend:Target'   => 'Target',
+    'ISMSRisk:Dashboard:Legend:Note'     => 'Cell background shows severity by L×I',
+    'ISMSRisk:Dashboard:Tooltip:Point'   => '%1$s - L=%2$s, I=%3$s, score=%4$s',
     'Class:ISMSRisk' => 'ISMS Risk',
     'Class:ISMSRisk+' => 'Information security risk with inherent/residual/target evaluation and treatment data.',
     'Class:ISMSRisk/Name' => '%1$s %2$s',
@@ -695,6 +706,127 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSReview/Check:NoOutcome' => 'Outcome should be set before completion.',
     'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Started on" is before "Planned on".',
     'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Completed on" is before "Started on".',
+));
+
+//
+// Class: ISMSStandard
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSStandard' => 'ISMS Standard',
+    'Class:ISMSStandard+' => 'Security or compliance standard, e.g. ISO/IEC 27001.',
+    'Class:ISMSStandard/Name' => '%1$s:%2$s',
+    'Class:ISMSStandard/Attribute:name' => 'Name',
+    'Class:ISMSStandard/Attribute:version' => 'Version',
+    'Class:ISMSStandard/Attribute:publisher' => 'Publisher',
+    'Class:ISMSStandard/Attribute:url' => 'Reference (URL)',
+    'Class:ISMSStandard/Attribute:controls_list' => 'Control(s)',
+    'Class:ISMSStandard/Attribute:controls_list+' => 'Standard controls (e.g. Annex A).',
+    'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'This standard/version already exists',
+));
+
+//
+// Class: ISMSStandardControl
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSStandardControl' => 'Standard control',
+    'Class:ISMSStandardControl+' => 'Control as defined by the selected standard.',
+    'Class:ISMSStandardControl/Name' => '%1$s:%2$s / %3$s - %4$s',
+    'Class:ISMSStandardControl/Attribute:standard_id' => 'Standard',
+    'Class:ISMSStandardControl/Attribute:code' => 'Code',
+    'Class:ISMSStandardControl/Attribute:title' => 'Title',
+    'Class:ISMSStandardControl/Attribute:domain' => 'Domain',
+    'Class:ISMSStandardControl/Attribute:description' => 'Description',
+    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA entries',
+    'Class:ISMSStandardControl/UniquenessRule:no_duplicate' => 'This control already exists for the standard "$this->standard_id_friendlyname$".',
+));
+
+//
+// Class: ISMSSoA
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoA:Header'  => 'General information',
+    'ISMSSoA:KPIs' => 'KPIs',
+    'ISMSSoA:Entries' => 'Statement of Applicability',
+    'ISMSSoA:PopulatedEntries' => 'Created %1$d SoA entries.',
+    'ISMSSoA:Dashboard' => 'Dashboard',
+    'ISMSSoA:Dashboard:Title' => 'Coverage',
+    'ISMSSoA:Dashboard:StdControls:Total' => 'Standard controls: %1$d',
+    'ISMSSoA:Dashboard:Coverage' => 'Coverage',
+    'ISMSSoA:Dashboard:Undefined' => 'Undefined',
+    'ISMSSoA:Dashboard:EntriesCount' => 'Entries',
+    'Class:ISMSSoA' => 'Statement of Applicability',
+    'Class:ISMSSoA+' => 'SoA per Organization and Standard.',
+    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
+    'Class:ISMSSoA/Attribute:org_id' => 'Organization',
+    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
+    'Class:ISMSSoA/Attribute:status' => 'Status',
+    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Draft',
+    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In review',
+    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Approved',
+    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolete',
+    'Class:ISMSSoA/Attribute:owner_id' => 'Owner',
+    'Class:ISMSSoA/Attribute:effective_from' => 'Effective from',
+    'Class:ISMSSoA/Attribute:notes' => 'Notes',
+    'Class:ISMSSoA/Attribute:kpi_total' => 'Controls (total)',
+    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Applicable',
+    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implemented',
+    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Gaps',
+    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA entries',
+    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'There is already a SoA for organization "$this->org_id_friendlyname$" and standard "$this->standard_id_friendlyname$".',
+    'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
+    'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
+    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Retire',
+    'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
+));
+
+//
+// Class: ISMSSoAEntry
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSSoAEntry' => 'SoA entry',
+    'Class:ISMSSoAEntry+' => 'Applicability decision for one standard control.',
+    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
+    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard control',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Control code',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Control title',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Control domain',
+    'Class:ISMSSoAEntry/Attribute:applicability' => 'Applicability',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Applicable',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Not applicable',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Partially applicable',
+    'Class:ISMSSoAEntry/Attribute:justification' => 'Justification',
+    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Implementation status',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Planned',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In progress',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implemented',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Not implemented',
+    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidence',
+    'Class:ISMSSoAEntry/Attribute:notes' => 'Notes',
+    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Internal controls',
+    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'There is already an entry for standard control "$this->standardcontrol_code$" in the SoA "$this->soa_id_friendlyname$".',
+    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Please provide a justification when marking a control as not applicable.',
+    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Consider adding evidence for implemented controls.',
+));
+
+//
+// Class: lnkISMSSoAEntryToISMSControl
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSSoAEntryToISMSControl' => 'Link SoA entry / internal control',
+    'Class:lnkISMSSoAEntryToISMSControl/Name' => '%1$s - %2$s',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:soaentry_id' => 'SoA entry',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:control_id' => 'Control',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:role' => 'Role',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution' => 'Contribution',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:primary' => 'Primary',
+    'Class:lnkISMSSoAEntryToISMSControl/Attribute:contribution/Value:supporting' => 'Supporting',
+    'Class:lnkISMSSoAEntryToISMSControl/UniquenessRule:no_duplicate' => 'The SoA entry "$this->soaentry_id_friendlyname$" is already linked to control "$this->control_id_friendlyname$".',
 ));
 
 //
