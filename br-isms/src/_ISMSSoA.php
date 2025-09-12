@@ -57,25 +57,26 @@ class _ISMSSoA extends cmdbAbstractObject
     public function EvtISMSSoAAfterWrite(EventData $oEventData): void
     {
         if ($oEventData->Get('is_new') === true) {
-            try {
-                $created = $this->PopulateEntriesFromStandard(true);
-                // Optional: Log/Note
-                if ($created > 0) {
-                    $this->AddToNotes('Auto-populated ' . $created . ' SoA entries from standard.');
-                    $this->DBUpdate();
-                }
-            } catch (\Exception $e) {
-                // swallow to avoid breaking object creation; admin can check logs
+            //try {
+            (int)$iCreated = $this->PopulateEntriesFromStandard(true);
+            // Optional: Log/Note
+            if ($iCreated > 0) {
+
+                $this->Set('notes', Dict::Format('ISMSSoA:Populate:Done', $iCreated));
+                $this->DBUpdate();
             }
+            //} catch (\Exception $e) {
+            //    // swallow to avoid breaking object creation; admin can check logs
+            //}
         }
     }
 
     public function RecomputeKPIs(): void
     {
-        $iTotal = 0;
-        $iApplicable = 0;
-        $iImpl = 0;
-        $iGaps = 0;
+        (int)$iTotal = 0;
+        (int)$iApplicable = 0;
+        (int)$iImpl = 0;
+        (int)$iGaps = 0;
         $oSearch = DBObjectSearch::FromOQL('SELECT ISMSSoAEntry WHERE soa_id = :soa');
         $oSet = new DBObjectSet($oSearch, array(), array('soa' => $this->GetKey()));
         while ($o = $oSet->Fetch()) {
@@ -126,9 +127,8 @@ class _ISMSSoA extends cmdbAbstractObject
             $oEntry = new ISMSSoAEntry();
             $oEntry->Set('soa_id', $iSoaId);
             $oEntry->Set('standardcontrol_id', $iCtrlId);
-            // Optional defaults:
-            // $oEntry->Set('applicability', 'applicable');
-            // $oEntry->Set('implementation_status', 'planned');
+            $oEntry->Set('applicability', 'applicable');
+            $oEntry->Set('implementation_status', 'planned');
             $oEntry->DBInsert();
             $iCreated++;
         }
