@@ -8,6 +8,8 @@ use DBObjectSearch;
 use DBObjectSet;
 use Dict;
 use cmdbAbstractObject;
+use MetaModel;
+use AttributeCaseLog;
 use ISMSSoAEntry;
 
 /**

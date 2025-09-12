@@ -32,7 +32,7 @@ class _ISMSControlReview extends ISMSReview
     {
         // planned_on = today if empty
         if (empty($this->Get('planned_on'))) {
-            $this->Set('planned_on', IsmsUtils::Today()));
+            $this->Set('planned_on', IsmsUtils::Today());
         }
 
         // reviewer = Control.owner (if available and reviewer not set)
