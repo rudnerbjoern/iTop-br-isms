@@ -31,8 +31,9 @@ SetupWebPage::AddModule(
         // Components
         //
         'datamodel' => array(
-            'src/DashletRiskMatrix.class.inc.php',
-            'src/SoACoverage.class.inc.php',
+            'src/DashletRiskMatrix.php',
+            'src/SoACoverage.php',
+            'src/SoAPopulateMenu.php',
         ),
         'webservice' => array(),
         'data.struct' => array(
