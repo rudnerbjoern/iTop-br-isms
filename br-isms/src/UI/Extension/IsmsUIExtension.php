@@ -207,8 +207,7 @@ CSS);
                 . ' style="text-decoration:none;color:inherit">' . $implOK . '</a></td>'
 
                 // Total klickbar
-                . '<td><a href="' . $urlAll . '" style="text-decoration:none;color:inherit">' . $total . '</a> '
-                . '<span class="soa-subtle">' . Dict::S('ISMSSoA:Entries') . '</span></td>'
+                . '<td><a href="' . $urlAll . '" style="text-decoration:none;color:inherit">' . $total . '</a></td>'
 
                 // Coverage-Balken (ohne Link)
                 . '<td><div class="soa-bar"><span style="width:' . $barW . '%"></span></div> ' . $pct . '%</td>'
