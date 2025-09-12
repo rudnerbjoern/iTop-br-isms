@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @copyright   Copyright (C) 2024-2025 Björn Rudner
+ * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
+ * @version     2025-09-12
+ */
+
 namespace BR\Extension\Isms\Model;
 
 use BR\Extension\Isms\Util\IsmsUtils;
