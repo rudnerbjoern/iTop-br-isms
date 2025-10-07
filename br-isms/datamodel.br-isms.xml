@@ -5673,6 +5673,9 @@
                     <stimulus id="ev_submit" xsi:type="StimulusUserAction" />
                     <stimulus id="ev_approve" xsi:type="StimulusUserAction" />
                     <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_return_to_draft" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_return_to_review" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reopen" xsi:type="StimulusUserAction" />
                 </stimuli>
                 <states>
                     <state id="draft">
@@ -5698,6 +5701,17 @@
                                     </action>
                                 </actions>
                             </transition>
+                            <transition id="ev_return_to_draft">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">effective_from</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
                         </transitions>
                     </state>
                     <state id="approved">
@@ -5708,11 +5722,34 @@
                                 <flags />
                                 <actions />
                             </transition>
+                            <transition id="ev_return_to_review">
+                                <target>in_review</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">effective_from</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
                         </transitions>
                     </state>
                     <state id="obsolete">
                         <flags />
-                        <transitions />
+                        <transitions>
+                            <transition id="ev_reopen">
+                                <target>in_review</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">effective_from</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
                     </state>
                 </states>
             </lifecycle>

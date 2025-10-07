@@ -779,6 +779,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
     'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
     'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Retire',
+    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Return to Draft',
+    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Return to Review',
+    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Reopen',
     'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
 ));
 

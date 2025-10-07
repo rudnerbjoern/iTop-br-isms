@@ -763,6 +763,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSSoA/Stimulus:ev_submit' => 'Einreichen',
     'Class:ISMSSoA/Stimulus:ev_approve' => 'Freigeben',
     'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Außer Betrieb',
+    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Zurück zu Entwurf',
+    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Zurück in Prüfung',
+    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Wiedereröffnen',
     'Class:ISMSSoA/Check:AllEntriesDecided' => 'Vor der Freigabe müssen alle Einträge eine Entscheidung zur Anwendbarkeit besitzen.',
 ));
 
