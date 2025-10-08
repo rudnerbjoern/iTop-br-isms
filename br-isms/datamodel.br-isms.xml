@@ -4225,6 +4225,9 @@
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-review.svg</icon>
+                </style>
                 <indexes>
                     <index id="status">
                         <attributes>
@@ -4626,6 +4629,9 @@
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-asset-review.svg</icon>
+                </style>
                 <indexes>
                     <index id="asset_id">
                         <attributes>
@@ -5010,6 +5016,9 @@
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-risk-review.svg</icon>
+                </style>
                 <indexes>
                     <index id="risk_id">
                         <attributes>
@@ -5394,6 +5403,9 @@
                         <attribute id="planned_on" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-control-review.svg</icon>
+                </style>
                 <indexes>
                     <index id="control_id">
                         <attributes>
@@ -5776,6 +5788,9 @@
                         <attribute id="version" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-standard.svg</icon>
+                </style>
                 <reconciliation>
                     <attributes>
                         <attribute id="name" />
@@ -5872,6 +5887,9 @@
                         <attribute id="title" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-standard-control.svg</icon>
+                </style>
                 <reconciliation>
                     <attributes>
                         <attribute id="code" />
@@ -5982,6 +6000,9 @@
                         <attribute id="standard_version" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-soa.svg</icon>
+                </style>
                 <fields_semantic>
                     <state_attribute>status</state_attribute>
                 </fields_semantic>
@@ -6367,6 +6388,9 @@
                         <attribute id="standardcontrol_code" />
                     </attributes>
                 </naming>
+                <style>
+                    <icon>images/isms-soa-entry.svg</icon>
+                </style>
                 <uniqueness_rules>
                     <rule id="no_duplicate">
                         <attributes>
