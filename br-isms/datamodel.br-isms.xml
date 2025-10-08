@@ -1014,6 +1014,234 @@
                 </relation>
             </relations>
         </class>
+        <class id="ISMSThreat" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable,configmgmt</category>
+                <abstract>false</abstract>
+                <db_table>ismsthreat</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon>images/isms-threat.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="category" xsi:type="AttributeEnum">
+                    <sql>category</sql>
+                    <values>
+                        <value id="human">
+                            <code>human</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="technical">
+                            <code>technical</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="environmental">
+                            <code>environmental</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="supply_chain">
+                            <code>supply_chain</code>
+                            <rank>40</rank>
+                        </value>
+                        <value id="legal">
+                            <code>legal</code>
+                            <rank>50</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="source" xsi:type="AttributeString">
+                    <sql>source</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="references" xsi:type="AttributeText">
+                    <sql>references</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSThreat:Base">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name" />
+                                        <item id="category" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSThreat:Details">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="source" />
+                                        <item id="references" />
+                                        <item id="description" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="name" />
+                        <item id="category" />
+                    </items>
+                </default_search>
+                <list>
+                    <items>
+                        <item id="name" />
+                        <item id="category" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="ISMSVulnerability" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <category>bizmodel,searchable,configmgmt</category>
+                <abstract>false</abstract>
+                <db_table>ismsvulnerability</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon>images/isms-vulnerability.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="category" xsi:type="AttributeEnum">
+                    <sql>category</sql>
+                    <values>
+                        <value id="people">
+                            <code>people</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="process">
+                            <code>process</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="technology">
+                            <code>technology</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="third_party">
+                            <code>third_party</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="description" xsi:type="AttributeText">
+                    <sql>description</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="source" xsi:type="AttributeString">
+                    <sql>source</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="references" xsi:type="AttributeText">
+                    <sql>references</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:ISMSVulnerability:Base">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name" />
+                                        <item id="category" />
+                                    </items>
+                                </item>
+                                <item id="fieldset:ISMSVulnerability:Details">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="source" />
+                                        <item id="references" />
+                                        <item id="description" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="name" />
+                        <item id="category" />
+                    </items>
+                </default_search>
+                <list>
+                    <items>
+                        <item id="name" />
+                        <item id="category" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
         <class id="ISMSRisk" _delta="define">
             <parent>cmdbAbstractObject</parent>
             <php_parent>
@@ -1231,6 +1459,24 @@
                     <sort_type>rank</sort_type>
                     <default_value>security</default_value>
                     <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="threats_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSThreat</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>threat_id</ext_key_to_remote>
+                    <duplicates>false</duplicates>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <display_style>property</display_style>
+                </field>
+                <field id="vulnerabilities_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSRiskToISMSVulnerability</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>vulnerability_id</ext_key_to_remote>
+                    <duplicates>false</duplicates>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <display_style>property</display_style>
                 </field>
                 <field id="risk_cause" xsi:type="AttributeText">
                     <sql>risk_cause</sql>
@@ -2214,17 +2460,23 @@
                                         <item id="risk_category">
                                             <rank>10</rank>
                                         </item>
-                                        <item id="risk_cause">
+                                        <item id="threats_list">
                                             <rank>20</rank>
                                         </item>
-                                        <item id="risk_event">
+                                        <item id="vulnerabilities_list">
                                             <rank>30</rank>
                                         </item>
-                                        <item id="risk_consequence">
+                                        <item id="risk_cause">
                                             <rank>40</rank>
                                         </item>
-                                        <item id="description">
+                                        <item id="risk_event">
                                             <rank>50</rank>
+                                        </item>
+                                        <item id="risk_consequence">
+                                            <rank>60</rank>
+                                        </item>
+                                        <item id="description">
+                                            <rank>70</rank>
                                         </item>
                                     </items>
                                 </item>
@@ -2456,6 +2708,191 @@
                         <item id="res_score">
                             <rank>70</rank>
                         </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSRiskToISMSThreat" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <db_table>lnkismsrisktoismsthreat</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="risk_name" />
+                        <attribute id="threat_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="threat_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="threat_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="threat_id" xsi:type="AttributeExternalKey">
+                    <sql>threat_id</sql>
+                    <target_class>ISMSThreat</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="threat_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>threat_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="relevancy" xsi:type="AttributeEnum">
+                    <sql>relevancy</sql>
+                    <values>
+                        <value id="cause">
+                            <code>cause</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="contributing">
+                            <code>contributing</code>
+                            <rank>20</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="notes" xsi:type="AttributeText">
+                    <sql>notes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="threat_id" />
+                        <item id="relevancy" />
+                        <item id="notes" />
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="threat_id" />
+                        <item id="relevancy" />
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSRiskToISMSVulnerability" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <db_table>lnkismsrisktoismsvulnerability</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="risk_name" />
+                        <attribute id="vulnerability_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="vulnerability_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="vulnerability_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="vulnerability_id" xsi:type="AttributeExternalKey">
+                    <sql>vulnerability_id</sql>
+                    <target_class>ISMSVulnerability</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="vulnerability_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>vulnerability_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="exposure" xsi:type="AttributeEnum">
+                    <sql>exposure</sql>
+                    <values>
+                        <value id="present">
+                            <code>present</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="mitigated">
+                            <code>mitigated</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="unknown">
+                            <code>unknown</code>
+                            <rank>30</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="notes" xsi:type="AttributeText">
+                    <sql>notes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="vulnerability_id" />
+                        <item id="exposure" />
+                        <item id="notes" />
+                    </items>
+                </details>
+                <list>
+                    <items>
+                        <item id="risk_id" />
+                        <item id="vulnerability_id" />
+                        <item id="exposure" />
                     </items>
                 </list>
             </presentation>
@@ -6386,6 +6823,14 @@
                                 <rank>220</rank>
                                 <class>ISMSControl</class>
                             </dashlet>
+                            <dashlet id="isms-230" xsi:type="DashletBadge">
+                                <rank>230</rank>
+                                <class>ISMSThreat</class>
+                            </dashlet>
+                            <dashlet id="isms-240" xsi:type="DashletBadge">
+                                <rank>240</rank>
+                                <class>ISMSVulnerability</class>
+                            </dashlet>
                         </dashlets>
                     </cell>
                     <cell id="isms-300">
@@ -6600,6 +7045,8 @@ WHERE status NOT IN ('retired')
             <group id="ISMSTypology" _delta="define">
                 <classes>
                     <class id="ISMSAssetType" />
+                    <class id="ISMSThreat" />
+                    <class id="ISMSVulnerability" />
                 </classes>
             </group>
             <group id="ISMSAssetMgmt" _delta="define">
@@ -6610,6 +7057,8 @@ WHERE status NOT IN ('retired')
             <group id="ISMSRiskMgmt" _delta="define">
                 <classes>
                     <class id="ISMSRisk" />
+                    <class id="lnkISMSRiskToISMSThreat" />
+                    <class id="lnkISMSRiskToISMSVulnerability" />
                 </classes>
             </group>
             <group id="ISMSControlMgmt" _delta="define">
