@@ -876,6 +876,9 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoAEntry:Link' => 'Link',
+    'ISMSSoAEntry:Decision' => 'Decision',
+    'ISMSSoAEntry:Implementation' => 'Implementation',
     'Class:ISMSSoAEntry' => 'SoA entry',
     'Class:ISMSSoAEntry+' => 'Applicability decision for one standard control.',
     'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
