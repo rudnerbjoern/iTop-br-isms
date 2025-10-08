@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-09-12
+ * @version     2025-10-08
  *
  * Localized data
  */
@@ -140,6 +140,51 @@ Dict::Add('EN US', 'English', 'English', array(
 ));
 
 //
+// Class: ISMSThreat
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSThreat:Base' => 'Basics',
+    'ISMSThreat:Details' => 'Details',
+    'Class:ISMSThreat' => 'Threat',
+    'Class:ISMSThreat+' => 'Catalog of threats relevant to the ISMS.',
+    'Class:ISMSThreat/Attribute:name' => 'Name',
+    'Class:ISMSThreat/Attribute:category' => 'Category',
+    'Class:ISMSThreat/Attribute:category/Value:human' => 'Human',
+    'Class:ISMSThreat/Attribute:category/Value:technical' => 'Technical',
+    'Class:ISMSThreat/Attribute:category/Value:environmental' => 'Environmental',
+    'Class:ISMSThreat/Attribute:category/Value:supply_chain' => 'Supply chain',
+    'Class:ISMSThreat/Attribute:category/Value:legal' => 'Legal',
+    'Class:ISMSThreat/Attribute:description' => 'Description',
+    'Class:ISMSThreat/Attribute:source' => 'Source',
+    'Class:ISMSThreat/Attribute:references' => 'References',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate' => 'This threat already exists',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate+' => 'The threat must be unique',
+));
+
+//
+// Class: ISMSVulnerability
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSVulnerability:Base' => 'Basics',
+    'ISMSVulnerability:Details' => 'Details',
+    'Class:ISMSVulnerability' => 'Vulnerability',
+    'Class:ISMSVulnerability+' => 'Catalog of vulnerabilities (people, process, technology, third-party).',
+    'Class:ISMSVulnerability/Attribute:name' => 'Name',
+    'Class:ISMSVulnerability/Attribute:category' => 'Category',
+    'Class:ISMSVulnerability/Attribute:category/Value:people' => 'People',
+    'Class:ISMSVulnerability/Attribute:category/Value:process' => 'Process',
+    'Class:ISMSVulnerability/Attribute:category/Value:technology' => 'Technology',
+    'Class:ISMSVulnerability/Attribute:category/Value:third_party' => 'Third-party',
+    'Class:ISMSVulnerability/Attribute:description' => 'Description',
+    'Class:ISMSVulnerability/Attribute:source' => 'Source',
+    'Class:ISMSVulnerability/Attribute:references' => 'References',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate' => 'This vulnerability already exists',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate+' => 'The vulnerability must be unique',
+));
+
+//
 // Class: ISMSRisk
 //
 /** @disregard P1009 Undefined type Dict */
@@ -204,6 +249,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Attribute:risk_category/Value:operational+' => 'Operational/process-related risk.',
     'Class:ISMSRisk/Attribute:risk_category/Value:strategic' => 'Strategic',
     'Class:ISMSRisk/Attribute:risk_category/Value:strategic+' => 'Strategy/business model-related risk.',
+    'Class:ISMSRisk/Attribute:threats_list' => 'Threats',
+    'Class:ISMSRisk/Attribute:vulnerabilities_list' => 'Vulnerabilities',
     'Class:ISMSRisk/Attribute:risk_cause' => 'Cause',
     'Class:ISMSRisk/Attribute:risk_cause+' => 'Root cause or threat source.',
     'Class:ISMSRisk/Attribute:risk_event' => 'Event',
@@ -391,6 +438,45 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Check:TargetGtInherent' => 'Target score is greater than the inherent score. Please review.',
     'Class:ISMSRisk/Check:TargetGtResidual' => 'Target score is greater than the current residual score. Please review.',
     'Class:ISMSRisk/Check:AcceptButTargetBelowResidual' => "Treatment 'accept' but target residual is lower than current residual. Consider 'mitigate' instead.",
+));
+
+//
+// Class: lnkISMSRiskToISMSThreat
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSRiskToISMSThreat' => 'Link Risk / Threat',
+    'Class:lnkISMSRiskToISMSThreat+' => 'Link between a risk and a threat.',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risk',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risk',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_id' => 'Threat',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_name' => 'Threat',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy' => 'Relevancy',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:cause' => 'Cause',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:contributing' => 'Contributing',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:notes' => 'Notes',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate' => 'This combination already exists',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate+' => 'The combination must be unique',
+));
+
+//
+// Class: lnkISMSRiskToISMSVulnerability
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSRiskToISMSVulnerability' => 'Link Risk / Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability+' => 'Link between a risk and a vulnerability.',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risk',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risk',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_id' => 'Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_name' => 'Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure' => 'Exposure',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:present' => 'Present',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:mitigated' => 'Mitigated',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:unknown' => 'Unknown',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:notes' => 'Notes',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate' => 'This combination already exists',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate+' => 'The combination must be unique',
 ));
 
 //
@@ -779,6 +865,9 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
     'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
     'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Retire',
+    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Return to Draft',
+    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Return to Review',
+    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Reopen',
     'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
 ));
 
@@ -787,6 +876,9 @@ Dict::Add('EN US', 'English', 'English', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoAEntry:Link' => 'Link',
+    'ISMSSoAEntry:Decision' => 'Decision',
+    'ISMSSoAEntry:Implementation' => 'Implementation',
     'Class:ISMSSoAEntry' => 'SoA entry',
     'Class:ISMSSoAEntry+' => 'Applicability decision for one standard control.',
     'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',

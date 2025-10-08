@@ -7,6 +7,13 @@
         <uri>https://www.iso.org/standard/27001</uri>
     </ISMSStandard>
 
+    <ISMSStandard alias="ISMSStandard" id="2">
+        <name>BSI</name>
+        <version>1.2</version>
+        <publisher>Bundesamt für Sicherheit in der Informationstechnik</publisher>
+        <uri>https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/Konkretisierung_Anforderungen_Massnahmen_KRITIS.html</uri>
+    </ISMSStandard>
+
     <!-- Ten example controls (codes & titles adapted to ISO/IEC 27001/27002:2022 style) -->
     <ISMSStandardControl alias="ISMSStandardControl" id="101">
         <standard_id>1</standard_id>
@@ -87,4 +94,88 @@
         <domain>Technological controls</domain>
         <description>Restrict access to malicious or inappropriate web content.</description>
     </ISMSStandardControl>
+
+
+    <!-- Ten example controls (codes & titles adapted to BSI style) -->
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2001">
+        <standard_id>2</standard_id>
+        <code>001</code>
+        <title>Managementsystem für Informationssicherheit</title>
+        <domain>2.1 Informationssicherheitsmanagementsystem (ISMS)</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2002">
+        <standard_id>2</standard_id>
+        <code>002</code>
+        <title>Strategische Vorgaben zur Informationssicherheit und Verantwortung der Unternehmensleitung</title>
+        <domain>2.1 Informationssicherheitsmanagementsystem (ISMS)</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2003">
+        <standard_id>2</standard_id>
+        <code>003</code>
+        <title>Zuständigkeiten und Verantwortungen im Rahmen der Informationssicherheit</title>
+        <domain>2.1 Informationssicherheitsmanagementsystem (ISMS)</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2004">
+        <standard_id>2</standard_id>
+        <code>004</code>
+        <title>Funktionstrennung</title>
+        <domain>2.1 Informationssicherheitsmanagementsystem (ISMS)</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2005">
+        <standard_id>2</standard_id>
+        <code>005</code>
+        <title>Asset Inventar</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2006">
+        <standard_id>2</standard_id>
+        <code>006</code>
+        <title>Zuweisung von Asset Verantwortlichen</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2007">
+        <standard_id>2</standard_id>
+        <code>007</code>
+        <title>Nutzungsanweisungen für Assets</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2008">
+        <standard_id>2</standard_id>
+        <code>008</code>
+        <title>Ab- und Rückgabe von Assets</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2009">
+        <standard_id>2</standard_id>
+        <code>009</code>
+        <title>Klassifikation von Informationen</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
+    <ISMSStandardControl alias="ISMSStandardControl" id="2010">
+        <standard_id>2</standard_id>
+        <code>010</code>
+        <title>Kennzeichnung von Informationen und Handhabung von Assets</title>
+        <domain>2.2 Asset Management</domain>
+        <description />
+    </ISMSStandardControl>
+
 </Set>
