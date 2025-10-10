@@ -43,6 +43,70 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 ));
 
 //
+// Class: ISMSScope
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    // Klasse
+    'Class:ISMSScope' => 'ISMS-Geltungsbereich',
+    'Class:ISMSScope+' => 'Definierter Geltungsbereich des ISMS für eine Organisation.',
+    'Class:ISMSScope/Name' => '%1$s / %2$s', // Org / Name
+
+    // Attribute
+    'Class:ISMSScope/Attribute:org_id' => 'Organisation',
+    'Class:ISMSScope/Attribute:org_id+' => 'Eigentümer des Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:org_name' => 'Organisation',
+    'Class:ISMSScope/Attribute:org_name+' => '',
+
+    'Class:ISMSScope/Attribute:name' => 'Name',
+    'Class:ISMSScope/Attribute:name+' => 'Bezeichnung des Geltungsbereichs.',
+
+    'Class:ISMSScope/Attribute:status' => 'Status',
+    'Class:ISMSScope/Attribute:status+' => 'Lebenszyklusstatus des Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Entwurf',
+    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Wird erstellt oder überarbeitet.',
+    'Class:ISMSScope/Attribute:status/Value:active'  => 'Aktiv',
+    'Class:ISMSScope/Attribute:status/Value:active+' => 'In Kraft und operativ genutzt.',
+    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Eingefroren',
+    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Vorübergehend gesperrt; Änderungen erfordern Wiedereröffnung.',
+    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolet',
+    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'Nicht mehr in Verwendung.',
+
+    'Class:ISMSScope/Attribute:scope_statement' => 'Geltungsbereich (Beschreibung)',
+    'Class:ISMSScope/Attribute:scope_statement+' => 'Formale Beschreibung des ISMS-Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:boundaries_in' => 'Abgrenzung (inkludiert)',
+    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elemente, die ausdrücklich eingeschlossen sind (Standorte, Systeme, Prozesse).',
+    'Class:ISMSScope/Attribute:boundaries_out' => 'Abgrenzung (exkludiert)',
+    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elemente, die ausdrücklich ausgeschlossen sind.',
+    'Class:ISMSScope/Attribute:locations' => 'Standorte',
+    'Class:ISMSScope/Attribute:locations+' => 'Physische Standorte / Regionen, die abgedeckt sind.',
+    'Class:ISMSScope/Attribute:processes' => 'Prozesse',
+    'Class:ISMSScope/Attribute:processes+' => 'Geschäfts-/IT-Prozesse im Geltungsbereich.',
+
+    'Class:ISMSScope/Attribute:soa_id' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'Class:ISMSScope/Attribute:soa_id+' => 'Verknüpfte SoA für diesen Geltungsbereich.',
+    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
+    'Class:ISMSScope/Attribute:soa_name+' => '',
+
+    'Class:ISMSScope/Attribute:creation_date' => 'Erstellt am',
+    'Class:ISMSScope/Attribute:creation_date+' => 'Datum der Datensatzanlage.',
+    'Class:ISMSScope/Attribute:publish_date' => 'Veröffentlicht am',
+    'Class:ISMSScope/Attribute:publish_date+' => 'Datum der formalen Veröffentlichung/Freigabe.',
+    'Class:ISMSScope/Attribute:last_update' => 'Letzte Aktualisierung',
+    'Class:ISMSScope/Attribute:last_update+' => 'Zeitpunkt der letzten Änderung.',
+
+    // Stimuli (Aktionen)
+    'Class:ISMSScope/Stimulus:ev_activate' => 'Aktivieren',
+    'Class:ISMSScope/Stimulus:ev_activate+' => 'In den Status „Aktiv“ wechseln.',
+    'Class:ISMSScope/Stimulus:ev_freeze' => 'Einfrieren',
+    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Vorübergehend sperren.',
+    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Obsolet setzen',
+    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Diesen Geltungsbereich außer Betrieb nehmen.',
+    'Class:ISMSScope/Stimulus:ev_reopen' => 'Wieder öffnen',
+    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Einen Geltungsbereich wieder aktivieren.',
+));
+
+//
 // Klasse: ISMSAssetType (DE)
 //
 /** @disregard P1009 Undefined type Dict */

@@ -43,6 +43,70 @@ Dict::Add('EN US', 'English', 'English', array(
 ));
 
 //
+// Class: ISMSScope
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    // Class
+    'Class:ISMSScope' => 'ISMS Scope',
+    'Class:ISMSScope+' => 'Defined scope (coverage) of the ISMS for an organization.',
+    'Class:ISMSScope/Name' => '%1$s / %2$s', // org / name
+
+    // Attributes
+    'Class:ISMSScope/Attribute:org_id' => 'Organization',
+    'Class:ISMSScope/Attribute:org_id+' => 'Owning organization of the scope.',
+    'Class:ISMSScope/Attribute:org_name' => 'Organization',
+    'Class:ISMSScope/Attribute:org_name+' => '',
+
+    'Class:ISMSScope/Attribute:name' => 'Name',
+    'Class:ISMSScope/Attribute:name+' => 'Name of the scope.',
+
+    'Class:ISMSScope/Attribute:status' => 'Status',
+    'Class:ISMSScope/Attribute:status+' => 'Lifecycle status of the scope.',
+    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Draft',
+    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Being prepared/edited.',
+    'Class:ISMSScope/Attribute:status/Value:active'  => 'Active',
+    'Class:ISMSScope/Attribute:status/Value:active+' => 'In effect and used operationally.',
+    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Frozen',
+    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Temporarily locked; changes require reopening.',
+    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolete',
+    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'No longer in use.',
+
+    'Class:ISMSScope/Attribute:scope_statement' => 'Scope statement',
+    'Class:ISMSScope/Attribute:scope_statement+' => 'Formal definition of the ISMS scope.',
+    'Class:ISMSScope/Attribute:boundaries_in' => 'Included boundaries',
+    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elements explicitly included (sites, systems, processes).',
+    'Class:ISMSScope/Attribute:boundaries_out' => 'Excluded boundaries',
+    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elements explicitly excluded.',
+    'Class:ISMSScope/Attribute:locations' => 'Locations',
+    'Class:ISMSScope/Attribute:locations+' => 'Physical sites / regions covered by the scope.',
+    'Class:ISMSScope/Attribute:processes' => 'Processes',
+    'Class:ISMSScope/Attribute:processes+' => 'Business/IT processes covered by the scope.',
+
+    'Class:ISMSScope/Attribute:soa_id' => 'Statement of Applicability',
+    'Class:ISMSScope/Attribute:soa_id+' => 'Linked SoA for this scope.',
+    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
+    'Class:ISMSScope/Attribute:soa_name+' => '',
+
+    'Class:ISMSScope/Attribute:creation_date' => 'Creation date',
+    'Class:ISMSScope/Attribute:creation_date+' => 'Record creation date.',
+    'Class:ISMSScope/Attribute:publish_date' => 'Publish date',
+    'Class:ISMSScope/Attribute:publish_date+' => 'Date when the scope was formally published/approved.',
+    'Class:ISMSScope/Attribute:last_update' => 'Last update',
+    'Class:ISMSScope/Attribute:last_update+' => 'Timestamp of the last modification.',
+
+    // Stimuli (lifecycle buttons)
+    'Class:ISMSScope/Stimulus:ev_activate' => 'Activate',
+    'Class:ISMSScope/Stimulus:ev_activate+' => 'Move scope to Active.',
+    'Class:ISMSScope/Stimulus:ev_freeze' => 'Freeze',
+    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Temporarily lock the scope.',
+    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Set obsolete',
+    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Retire this scope.',
+    'Class:ISMSScope/Stimulus:ev_reopen' => 'Reopen',
+    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Reopen a scope.',
+));
+
+//
 // Class: ISMSAssetType
 //
 /** @disregard P1009 Undefined type Dict */
