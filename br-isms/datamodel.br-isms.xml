@@ -5,14 +5,563 @@
     * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
     -->
     <classes>
+        <class id="ISMSScope" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <php_parent>
+                <name>BR\Extension\Isms\Model\_ISMSScope</name>
+                <file>src/Model/_ISMSScope.php</file>
+            </php_parent>
+            <properties>
+                <category>bizmodel,searchable</category>
+                <abstract>false</abstract>
+                <db_table>ismsscope</db_table>
+                <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="org_name" />
+                        <attribute id="name" />
+                    </attributes>
+                </naming>
+                <fields_semantic>
+                    <state_attribute>status</state_attribute>
+                </fields_semantic>
+                <style>
+                    <icon>images/isms-TODO.svg</icon>
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="org_id" />
+                        <attribute id="org_name" />
+                        <attribute id="name" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="org_id" />
+                            <attribute id="name" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+                <obsolescence>
+                    <condition><![CDATA[status='obsolete']]></condition>
+                </obsolescence>
+            </properties>
+            <fields>
+                <field id="org_id" xsi:type="AttributeExternalKey">
+                    <sql>org_id</sql>
+                    <target_class>Organization</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="org_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>org_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="name" xsi:type="AttributeString">
+                    <sql>name</sql>
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="status" xsi:type="AttributeEnum">
+                    <sql>status</sql>
+                    <values>
+                        <value id="draft">
+                            <code>draft</code>
+                            <rank>10</rank>
+                        </value>
+                        <value id="active">
+                            <code>active</code>
+                            <rank>20</rank>
+                        </value>
+                        <value id="frozen">
+                            <code>frozen</code>
+                            <rank>30</rank>
+                        </value>
+                        <value id="obsolete">
+                            <code>obsolete</code>
+                            <rank>40</rank>
+                        </value>
+                    </values>
+                    <sort_type>rank</sort_type>
+                    <default_value>draft</default_value>
+                    <is_null_allowed>false</is_null_allowed>
+                    <display_style>list</display_style>
+                </field>
+                <field id="scope_statement" xsi:type="AttributeHTML">
+                    <sql>scope_statement</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="boundaries_in" xsi:type="AttributeHTML">
+                    <sql>boundaries_in</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="boundaries_out" xsi:type="AttributeHTML">
+                    <sql>boundaries_out</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="locations" xsi:type="AttributeText">
+                    <sql>locations</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="processes" xsi:type="AttributeText">
+                    <sql>processes</sql>
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="soa_id" xsi:type="AttributeExternalKey">
+                    <sql>soa_id</sql>
+                    <target_class>ISMSSoA</target_class>
+                    <is_null_allowed>true</is_null_allowed>
+                    <on_target_delete>DEL_MANUAL</on_target_delete>
+                    <dependencies>
+                        <attribute id="org_id" />
+                    </dependencies>
+                    <filter><![CDATA[SELECT ISMSSoA WHERE org_id = :this->org_id]]></filter>
+                </field>
+                <field id="soa_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>soa_id</extkey_attcode>
+                    <target_attcode>standard_name</target_attcode>
+                </field>
+                <field id="locations_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSScopeToLocation</linked_class>
+                    <ext_key_to_me>scope_id</ext_key_to_me>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <ext_key_to_remote>location_id</ext_key_to_remote>
+                    <duplicates>false</duplicates>
+                </field>
+                <field id="processes_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSScopeToProcess</linked_class>
+                    <ext_key_to_me>scope_id</ext_key_to_me>
+                    <ext_key_to_remote>process_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
+                <field id="creation_date" xsi:type="AttributeDate">
+                    <sql>creation_date</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+                <field id="publish_date" xsi:type="AttributeDate">
+                    <sql>publish_date</sql>
+                    <default_value />
+                    <is_null_allowed>true</is_null_allowed>
+                </field>
+                <field id="last_update" xsi:type="AttributeDateTime">
+                    <sql>last_update</sql>
+                    <default_value />
+                    <is_null_allowed>false</is_null_allowed>
+                </field>
+            </fields>
+            <lifecycle>
+                <stimuli>
+                    <stimulus id="ev_activate" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_freeze" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_obsolete" xsi:type="StimulusUserAction" />
+                    <stimulus id="ev_reopen" xsi:type="StimulusUserAction" />
+                </stimuli>
+                <states>
+                    <state id="draft">
+                        <flags>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_activate">
+                                <target>active</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>SetCurrentDate</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="active">
+                        <flags>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_freeze">
+                                <target>frozen</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="frozen">
+                        <flags>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_reopen">
+                                <target>active</target>
+                                <actions />
+                            </transition>
+                            <transition id="ev_obsolete">
+                                <target>obsolete</target>
+                                <actions />
+                            </transition>
+                        </transitions>
+                    </state>
+                    <state id="obsolete">
+                        <flags>
+                            <attribute id="creation_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="publish_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="last_update">
+                                <read_only />
+                            </attribute>
+                        </flags>
+                        <transitions>
+                            <transition id="ev_reopen">
+                                <target>draft</target>
+                                <actions>
+                                    <action id="1">
+                                        <verb>Reset</verb>
+                                        <params>
+                                            <param xsi:type="attcode">publish_date</param>
+                                        </params>
+                                    </action>
+                                </actions>
+                            </transition>
+                        </transitions>
+                    </state>
+                </states>
+            </lifecycle>
+            <event_listeners>
+                <event_listener id="EvtSetInitialISMSScopeAttributeFlags">
+                    <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetInitialISMSScopeAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtSetISMSScopeAttributeFlags">
+                    <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
+                    <rank>10</rank>
+                    <callback>EvtSetISMSScopeAttributeFlags</callback>
+                </event_listener>
+                <event_listener id="EvtBeforeISMSScopeWrite">
+                    <event>EVENT_DB_BEFORE_WRITE</event>
+                    <rank>10</rank>
+                    <callback>EvtBeforeISMSScopeWrite</callback>
+                </event_listener>
+            </event_listeners>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="col:col0">
+                            <rank>10</rank>
+                            <items>
+                                <item id="fieldset:Server:baseinfo">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="name">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="org_id">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="status">
+                                            <rank>30</rank>
+                                        </item>
+                                        <item id="soa_id">
+                                            <rank>40</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                                <item id="fieldset:Server:moreinfo">
+                                    <rank>20</rank>
+                                    <items>
+                                        <item id="scope_statement" />
+                                        <item id="boundaries_in" />
+                                        <item id="boundaries_out" />
+                                        <item id="locations" />
+                                        <item id="processes" />
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="col:col1">
+                            <rank>20</rank>
+                            <items>
+                                <item id="fieldset:Server:Date">
+                                    <rank>10</rank>
+                                    <items>
+                                        <item id="creation_date">
+                                            <rank>10</rank>
+                                        </item>
+                                        <item id="publish_date">
+                                            <rank>20</rank>
+                                        </item>
+                                        <item id="last_update">
+                                            <rank>30</rank>
+                                        </item>
+                                    </items>
+                                </item>
+                            </items>
+                        </item>
+                        <item id="locations_list">
+                            <rank>100</rank>
+                        </item>
+                        <item id="processes_list">
+                            <rank>110</rank>
+                        </item>
+                    </items>
+                </details>
+                <default_search>
+                    <items>
+                        <item id="name" />
+                        <item id="org_id" />
+                        <item id="status" />
+                    </items>
+                </default_search>
+                <search>
+                    <items>
+                        <item id="name" />
+                        <item id="org_id" />
+                        <item id="status" />
+                        <item id="soa_id" />
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="org_id">
+                            <rank>20</rank>
+                        </item>
+                        <item id="status">
+                            <rank>30</rank>
+                        </item>
+                        <item id="soa_id">
+                            <rank>40</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSScopeToLocation" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkismsscopetolocation</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="scope_name" />
+                        <attribute id="location_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="scope_id" />
+                        <attribute id="location_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="scope_id" />
+                            <attribute id="location_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="scope_id" xsi:type="AttributeExternalKey">
+                    <sql>scope_id</sql>
+                    <target_class>ISMSScope</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="scope_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>scope_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="location_id" xsi:type="AttributeExternalKey">
+                    <sql>location_id</sql>
+                    <target_class>Location</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="location_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>location_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSScopeToProcess" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkismsscopetoprocess</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="scope_name" />
+                        <attribute id="process_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="scope_id" />
+                        <attribute id="process_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="scope_id" />
+                            <attribute id="process_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="scope_id" xsi:type="AttributeExternalKey">
+                    <sql>scope_id</sql>
+                    <target_class>ISMSScope</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="scope_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>scope_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="process_id" xsi:type="AttributeExternalKey">
+                    <sql>process_id</sql>
+                    <target_class>BusinessProcess</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="process_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>process_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
         <class id="ISMSAssetType" _delta="define">
             <parent>Typology</parent>
             <properties>
                 <category>bizmodel,searchable,configmgmt</category>
                 <abstract>false</abstract>
-                <key_type>autoincrement</key_type>
                 <db_table>ismsassettype</db_table>
                 <db_key_field>id</db_key_field>
+                <key_type>autoincrement</key_type>
                 <db_final_class_field />
                 <naming>
                     <attributes>
@@ -314,6 +863,7 @@
                     <linked_class>lnkSupportingAssetToAsset</linked_class>
                     <ext_key_to_me>asset_id</ext_key_to_me>
                     <ext_key_to_remote>supportingasset_id</ext_key_to_remote>
+                    <filter><![CDATA[SELECT ISMSAsset WHERE id != :this->id]]></filter>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                     <duplicates>false</duplicates>
@@ -322,6 +872,7 @@
                     <linked_class>lnkSupportingAssetToAsset</linked_class>
                     <ext_key_to_me>supportingasset_id</ext_key_to_me>
                     <ext_key_to_remote>asset_id</ext_key_to_remote>
+                    <filter><![CDATA[SELECT ISMSAsset WHERE id != :this->id]]></filter>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                     <duplicates>false</duplicates>
@@ -341,6 +892,7 @@
                     <edit_mode>add_only</edit_mode>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
+                    <duplicates>false</duplicates>
                 </field>
             </fields>
             <lifecycle>
@@ -585,6 +1137,7 @@
                 <relation id="impacts">
                     <neighbours>
                         <neighbour id="ismsasset">
+                            <direction>down</direction>
                             <query_down><![CDATA[SELECT ISMSAsset AS down JOIN lnkSupportingAssetToAsset AS lnk ON lnk.asset_id = down.id WHERE lnk.supportingasset_id = :this->id]]></query_down>
                             <query_up><![CDATA[SELECT ISMSAsset AS up JOIN lnkSupportingAssetToAsset AS lnk ON lnk.supportingasset_id = up.id WHERE lnk.asset_id = :this->id]]></query_up>
                         </neighbour>
@@ -739,6 +1292,9 @@
                         </item>
                         <item id="reviews_list">
                             <rank>140</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>150</rank>
                         </item>
                     </items>
                 </details>
@@ -1324,7 +1880,6 @@
                 </field>
                 <field id="status" xsi:type="AttributeEnum">
                     <sql>status</sql>
-                    <sort_type>rank</sort_type>
                     <values>
                         <value id="draft">
                             <code>draft</code>
@@ -1354,6 +1909,7 @@
                             </style>
                         </value>
                     </values>
+                    <sort_type>rank</sort_type>
                     <default_value>draft</default_value>
                     <is_null_allowed>false</is_null_allowed>
                     <always_load_in_tables>true</always_load_in_tables>
@@ -2082,6 +2638,14 @@
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSRisk</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <lifecycle>
                 <stimuli>
@@ -2635,6 +3199,9 @@
                         </item>
                         <item id="reviews_list">
                             <rank>120</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -3292,6 +3859,14 @@
                     <ext_key_to_me>control_id</ext_key_to_me>
                     <ext_key_to_remote>soaentry_id</ext_key_to_remote>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSControl</linked_class>
+                    <ext_key_to_me>control_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <relations>
                 <relation id="impacts">
@@ -3822,6 +4397,9 @@
                         </item>
                         <item id="soaentries_list">
                             <rank>120</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -5828,36 +6406,73 @@
                     <linked_class>ISMSStandardControl</linked_class>
                     <ext_key_to_me>standard_id</ext_key_to_me>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSStandard</linked_class>
+                    <ext_key_to_me>standard_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <methods />
             <presentation>
                 <details>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
-                        <item id="url" />
-                        <item id="controls_list" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
+                        <item id="url">
+                            <rank>40</rank>
+                        </item>
+                        <item id="controls_list">
+                            <rank>100</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>110</rank>
+                        </item>
                     </items>
                 </details>
                 <default_search>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
                     </items>
                 </list>
                 <summary>
@@ -5892,8 +6507,8 @@
                 </style>
                 <reconciliation>
                     <attributes>
+                        <attribute id="standard_id" />
                         <attribute id="code" />
-                        <attribute id="title" />
                     </attributes>
                 </reconciliation>
                 <uniqueness_rules>
@@ -6794,6 +7409,279 @@
                 </list>
             </presentation>
         </class>
+        <class id="lnkDocumentToISMSRisk" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismsrisk</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="risk_name" />
+                        <attribute id="document_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="risk_id" />
+                            <attribute id="document_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkDocumentToISMSControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismscontrol</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="control_name" />
+                        <attribute id="document_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="control_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="control_id" />
+                            <attribute id="document_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="control_id" xsi:type="AttributeExternalKey">
+                    <sql>control_id</sql>
+                    <target_class>ISMSControl</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="control_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkDocumentToISMSStandard" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismsstandard</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="standard_name" />
+                        <attribute id="document_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="standard_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="standard_id" />
+                            <attribute id="document_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="standard_id" xsi:type="AttributeExternalKey">
+                    <sql>standard_id</sql>
+                    <target_class>ISMSStandard</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="standard_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="standard_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="standard_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="standard_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -6887,23 +7775,36 @@
                         <dashlets>
                             <dashlet id="isms-401" xsi:type="DashletHeaderStatic">
                                 <rank>401</rank>
-                                <title>Menu:ISMSSpace:Standards</title>
+                                <title>Menu:ISMSSpace:Scopes</title>
                             </dashlet>
                             <dashlet id="isms-410" xsi:type="DashletBadge">
                                 <rank>410</rank>
-                                <class>ISMSStandard</class>
+                                <class>ISMSScope</class>
                             </dashlet>
                             <dashlet id="isms-420" xsi:type="DashletBadge">
                                 <rank>420</rank>
-                                <class>ISMSStandardControl</class>
+                                <class>ISMSSoA</class>
                             </dashlet>
                             <dashlet id="isms-430" xsi:type="DashletBadge">
                                 <rank>430</rank>
-                                <class>ISMSSoA</class>
-                            </dashlet>
-                            <dashlet id="isms-440" xsi:type="DashletBadge">
-                                <rank>440</rank>
                                 <class>ISMSSoAEntry</class>
+                            </dashlet>
+                        </dashlets>
+                    </cell>
+                    <cell id="isms-500">
+                        <rank>5</rank>
+                        <dashlets>
+                            <dashlet id="isms-501" xsi:type="DashletHeaderStatic">
+                                <rank>501</rank>
+                                <title>Menu:ISMSSpace:Standards</title>
+                            </dashlet>
+                            <dashlet id="isms-510" xsi:type="DashletBadge">
+                                <rank>510</rank>
+                                <class>ISMSStandard</class>
+                            </dashlet>
+                            <dashlet id="isms-520" xsi:type="DashletBadge">
+                                <rank>520</rank>
+                                <class>ISMSStandardControl</class>
                             </dashlet>
                         </dashlets>
                     </cell>
@@ -7076,11 +7977,13 @@ WHERE status NOT IN ('retired')
             <group id="ISMSAssetMgmt" _delta="define">
                 <classes>
                     <class id="ISMSAsset" />
+                    <class id="lnkDocumentToISMSAsset" />
                 </classes>
             </group>
             <group id="ISMSRiskMgmt" _delta="define">
                 <classes>
                     <class id="ISMSRisk" />
+                    <class id="lnkDocumentToISMSRisk" />
                     <class id="lnkISMSRiskToISMSThreat" />
                     <class id="lnkISMSRiskToISMSVulnerability" />
                 </classes>
@@ -7088,6 +7991,7 @@ WHERE status NOT IN ('retired')
             <group id="ISMSControlMgmt" _delta="define">
                 <classes>
                     <class id="ISMSControl" />
+                    <class id="lnkDocumentToISMSControl" />
                 </classes>
             </group>
             <group id="ISMSLinkAssetAsset" _delta="define">
@@ -7127,6 +8031,7 @@ WHERE status NOT IN ('retired')
                 <classes>
                     <class id="ISMSStandard" />
                     <class id="ISMSStandardControl" />
+                    <class id="lnkDocumentToISMSStandard" />
                 </classes>
             </group>
             <group id="ISMSSoAAndEntry" _delta="define">

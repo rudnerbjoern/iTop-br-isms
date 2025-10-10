@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-10-08
+ * @version     2025-10-10
  *
  * Localized data
  */
@@ -40,6 +40,86 @@ Dict::Add('EN US', 'English', 'English', array(
     'Menu:ISMSMyRisks+' => 'Risks where I am the risk owner',
     'Menu:ISMSMyControls' => 'My Controls',
     'Menu:ISMSMyControls+' => 'Controls where I am the control owner',
+));
+
+//
+// Class: ISMSScope
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSScope' => 'ISMS Scope',
+    'Class:ISMSScope+' => 'Defined scope (coverage) of the ISMS for an organization.',
+    'Class:ISMSScope/Name' => '%1$s / %2$s',
+    'Class:ISMSScope/Attribute:org_id' => 'Organization',
+    'Class:ISMSScope/Attribute:org_id+' => 'Owning organization of the scope.',
+    'Class:ISMSScope/Attribute:org_name' => 'Organization',
+    'Class:ISMSScope/Attribute:org_name+' => '',
+    'Class:ISMSScope/Attribute:name' => 'Name',
+    'Class:ISMSScope/Attribute:name+' => 'Name of the scope.',
+    'Class:ISMSScope/Attribute:status' => 'Status',
+    'Class:ISMSScope/Attribute:status+' => 'Lifecycle status of the scope.',
+    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Draft',
+    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Being prepared/edited.',
+    'Class:ISMSScope/Attribute:status/Value:active'  => 'Active',
+    'Class:ISMSScope/Attribute:status/Value:active+' => 'In effect and used operationally.',
+    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Frozen',
+    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Temporarily locked; changes require reopening.',
+    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolete',
+    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'No longer in use.',
+    'Class:ISMSScope/Attribute:scope_statement' => 'Scope statement',
+    'Class:ISMSScope/Attribute:scope_statement+' => 'Formal definition of the ISMS scope.',
+    'Class:ISMSScope/Attribute:boundaries_in' => 'Included boundaries',
+    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elements explicitly included (sites, systems, processes).',
+    'Class:ISMSScope/Attribute:boundaries_out' => 'Excluded boundaries',
+    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elements explicitly excluded.',
+    'Class:ISMSScope/Attribute:locations' => 'Locations',
+    'Class:ISMSScope/Attribute:locations+' => 'Physical sites / regions covered by the scope.',
+    'Class:ISMSScope/Attribute:processes' => 'Processes',
+    'Class:ISMSScope/Attribute:processes+' => 'Business/IT processes covered by the scope.',
+    'Class:ISMSScope/Attribute:soa_id' => 'Statement of Applicability',
+    'Class:ISMSScope/Attribute:soa_id+' => 'Linked SoA for this scope.',
+    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
+    'Class:ISMSScope/Attribute:soa_name+' => '',
+    'Class:ISMSScope/Attribute:locations_list' => 'Locations',
+    'Class:ISMSScope/Attribute:processes_list' => 'Processes',
+    'Class:ISMSScope/Attribute:creation_date' => 'Creation date',
+    'Class:ISMSScope/Attribute:creation_date+' => 'Record creation date.',
+    'Class:ISMSScope/Attribute:publish_date' => 'Publish date',
+    'Class:ISMSScope/Attribute:publish_date+' => 'Date when the scope was formally published/approved.',
+    'Class:ISMSScope/Attribute:last_update' => 'Last update',
+    'Class:ISMSScope/Attribute:last_update+' => 'Timestamp of the last modification.',
+    'Class:ISMSScope/Stimulus:ev_activate' => 'Activate',
+    'Class:ISMSScope/Stimulus:ev_activate+' => 'Move scope to Active.',
+    'Class:ISMSScope/Stimulus:ev_freeze' => 'Freeze',
+    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Temporarily lock the scope.',
+    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Set obsolete',
+    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Retire this scope.',
+    'Class:ISMSScope/Stimulus:ev_reopen' => 'Reopen',
+    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Reopen a scope.',
+));
+
+//
+// Class: lnkISMSScopeToLocation
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSScopeToLocation' => 'Link ISMS Scope / Location',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Location',
+    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Location name',
+));
+
+//
+// Class: lnkISMSScopeToProcess
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSScopeToProcess' => 'Link ISMS Scope / Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business process name',
 ));
 
 //
@@ -409,6 +489,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Attribute:assets_list+' => 'All assets linked to this risk.',
     'Class:ISMSRisk/Attribute:controls_list' => 'Control(s)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'All controls linked to this risk.',
+    'Class:ISMSRisk/Attribute:documents_list' => 'Documents',
     'Class:ISMSRisk/Attribute:review_interval_months' => 'Review interval (months)',
     'Class:ISMSRisk/Attribute:review_interval_months+' => 'Review interval in months.',
     'Class:ISMSRisk/Attribute:last_review' => 'Last review',
@@ -550,6 +631,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Attribute:next_review+' => 'Date of the next scheduled review.',
     'Class:ISMSControl/Attribute:reviews_list' => 'Review(s)',
     'Class:ISMSControl/Attribute:reviews_list+' => 'All reviews of this control.',
+    'Class:ISMSControl/Attribute:documents_list' => 'Documents',
+    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA entries',
     'Class:ISMSControl/UniquenessRule:ref' => 'A control with this reference already exists',
     'Class:ISMSControl/UniquenessRule:ref+' => 'The ref must be unique',
     'Class:ISMSControl/UniquenessRule:name' => 'A control with this name already exists',
@@ -808,6 +891,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSStandard/Attribute:url' => 'Reference (URL)',
     'Class:ISMSStandard/Attribute:controls_list' => 'Control(s)',
     'Class:ISMSStandard/Attribute:controls_list+' => 'Standard controls (e.g. Annex A).',
+    'Class:ISMSStandard/Attribute:documents_list' => 'Documents',
     'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'This standard/version already exists',
 ));
 

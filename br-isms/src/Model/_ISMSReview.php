@@ -59,7 +59,7 @@ class _ISMSReview extends cmdbAbstractObject
         }
 
         // 2) outcome required when completing
-        if ($sTargetState === 'completed' && $this->Get('outcome') === '') {
+        if ($sTargetState === 'completed' && empty($this->Get('outcome'))) {
             $this->AddCheckIssue(Dict::S('Class:ISMSReview/Check:NoOutcome'));
         }
     }
