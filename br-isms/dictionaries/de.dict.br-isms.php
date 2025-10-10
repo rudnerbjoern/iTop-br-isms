@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-10-08
+ * @version     2025-10-10
  *
  * Localized data
  */
@@ -96,6 +96,31 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Diesen Geltungsbereich außer Betrieb nehmen.',
     'Class:ISMSScope/Stimulus:ev_reopen' => 'Wieder öffnen',
     'Class:ISMSScope/Stimulus:ev_reopen+' => 'Einen Geltungsbereich wieder aktivieren.',
+));
+
+//
+// Class: lnkISMSScopeToLocation
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkISMSScopeToLocation' => 'Verknüpfung ISMS Geltungsbereich / Standort',
+    'Class:lnkISMSScopeToLocation+' => '',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Geltungsbereich',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Geltungsbereich-Name',
+    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Standort',
+    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Standort-Name',
+));
+
+//
+// Class: lnkISMSScopeToProcess
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkISMSScopeToProcess' => 'Verknüpfung ISMS Geltungsbereich / Business-Prozess',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Geltungsbereich',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Geltungsbereich-Name',
+    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business-Prozess',
+    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business-Prozess-Name',
 ));
 
 //
@@ -490,7 +515,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSThreat' => 'Link Risiko / Bedrohung',
+    'Class:lnkISMSRiskToISMSThreat' => 'Verknüpfung Risiko/Bedrohung',
     'Class:lnkISMSRiskToISMSThreat+' => 'Verknüpfung zwischen einem Risiko und einer Bedrohung.',
     'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risiko',
@@ -509,7 +534,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSVulnerability' => 'Link Risiko / Schwachstelle',
+    'Class:lnkISMSRiskToISMSVulnerability' => 'Verknüpfung Risiko/Schwachstelle',
     'Class:lnkISMSRiskToISMSVulnerability+' => 'Verknüpfung zwischen einem Risiko und einer Schwachstelle.',
     'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risiko',
@@ -624,7 +649,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkSupportingAssetToAsset' => 'Link Unterstützendes Asset / Asset',
+    'Class:lnkSupportingAssetToAsset' => 'Verknüpfung Unterstützendes Asset/Asset',
     'Class:lnkSupportingAssetToAsset+' => 'Verknüpfung, die angibt, dass das erste Asset das zweite Asset unterstützt.',
     'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
     'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
@@ -642,13 +667,11 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkFunctionalCiToAsset' => 'Link FunctionalCI / Asset',
+    'Class:lnkFunctionalCiToAsset' => 'Verknüpfung FunctionalCI/Asset',
     'Class:lnkFunctionalCiToAsset/Name' => '%1$s - %2$s',
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id' => 'FunctionalCI',
-    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id_friendlyname' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_name' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_id' => 'Zugehöriges Asset',
-    'Class:lnkFunctionalCiToAsset/Attribute:asset_id_friendlyname' => 'Zugehöriges Asset',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Zugehöriges Asset',
 ));
 
@@ -657,16 +680,14 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSAsset' => 'Link Risiko / Asset',
+    'Class:lnkISMSRiskToISMSAsset' => 'Verknüpfung Risiko/Asset',
     'Class:lnkISMSRiskToISMSAsset+' => 'Verknüpfung zwischen einem ISMS-Risiko und einem ISMS-Asset.',
     'Class:lnkISMSRiskToISMSAsset/Name' => '%1$s - %2$s',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_name' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id' => 'Asset',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id+' => 'Verknüpftes Asset auswählen.',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id_friendlyname' => 'Asset',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
@@ -675,24 +696,22 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'lnkISMSRiskToISMSControl:Link' => 'Link',
+    'lnkISMSRiskToISMSControl:Link' => 'Verknüpfung',
     'lnkISMSRiskToISMSControl:ControlSnapshot' => 'Kontroll-Snapshot',
     'lnkISMSRiskToISMSControl:RiskSnapshot' => 'Risiko-Snapshot',
     'lnkISMSRiskToISMSControl:Effect' => 'Effekt',
     'lnkISMSRiskToISMSControl:Dates' => 'Termine',
     'lnkISMSRiskToISMSControl:Notes' => 'Notizen',
-    'Class:lnkISMSRiskToISMSControl' => 'Link Risiko / Kontrolle',
+    'Class:lnkISMSRiskToISMSControl' => 'Verknüpfung Risiko/Kontrolle',
     'Class:lnkISMSRiskToISMSControl+' => 'Verknüpfung zwischen einem ISMS-Risiko und einer ISMS-Kontrolle.',
     'Class:lnkISMSRiskToISMSControl/Name' => '%1$s - %2$s',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_id_friendlyname' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_name' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref' => 'Risiko-Ref',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref+' => 'Referenz des verknüpften Risikos (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_id' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_id+' => 'Verknüpfte Kontrolle auswählen.',
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_id_friendlyname' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_name' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood' => 'Effekt auf Eintrittswahrscheinlichkeit',
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood+' => 'Relative Reduktionsstufen für die Eintrittswahrscheinlichkeit (0 = kein Effekt).',

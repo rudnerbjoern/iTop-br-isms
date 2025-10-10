@@ -3,7 +3,7 @@
 /**
  * @copyright   Copyright (C) 2024-2025 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2025-10-08
+ * @version     2025-10-10
  *
  * Localized data
  */
@@ -96,6 +96,30 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Retire this scope.',
     'Class:ISMSScope/Stimulus:ev_reopen' => 'Reopen',
     'Class:ISMSScope/Stimulus:ev_reopen+' => 'Reopen a scope.',
+));
+
+//
+// Class: lnkISMSScopeToLocation
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSScopeToLocation' => 'Link ISMS Scope / Location',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Location',
+    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Location name',
+));
+
+//
+// Class: lnkISMSScopeToProcess
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkISMSScopeToProcess' => 'Link ISMS Scope / Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business process name',
 ));
 
 //
