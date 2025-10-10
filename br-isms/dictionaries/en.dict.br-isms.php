@@ -81,6 +81,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSScope/Attribute:soa_name' => 'SoA',
     'Class:ISMSScope/Attribute:soa_name+' => '',
     'Class:ISMSScope/Attribute:locations_list' => 'Locations',
+    'Class:ISMSScope/Attribute:processes_list' => 'Processes',
     'Class:ISMSScope/Attribute:creation_date' => 'Creation date',
     'Class:ISMSScope/Attribute:creation_date+' => 'Record creation date.',
     'Class:ISMSScope/Attribute:publish_date' => 'Publish date',

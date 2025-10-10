@@ -81,6 +81,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSScope/Attribute:soa_name' => 'SoA',
     'Class:ISMSScope/Attribute:soa_name+' => '',
     'Class:ISMSScope/Attribute:locations_list' => 'Standorte',
+    'Class:ISMSScope/Attribute:processes_list' => 'Prozesse',
     'Class:ISMSScope/Attribute:creation_date' => 'Erstellt am',
     'Class:ISMSScope/Attribute:creation_date+' => 'Datum der Datensatzanlage.',
     'Class:ISMSScope/Attribute:publish_date' => 'Veröffentlicht am',

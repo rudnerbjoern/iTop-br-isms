@@ -60,6 +60,7 @@
         "lnkismsrisktoismsthreat",
         "lnkismsrisktoismsvulnerability",
         "lnkismsscopetolocation",
+        "lnkismsscopetoprocess",
         "lnksoaentrytocontrol",
         "lnksupportingassettoasset",
         "mgmt",

@@ -132,6 +132,14 @@
                     <ext_key_to_remote>location_id</ext_key_to_remote>
                     <duplicates>false</duplicates>
                 </field>
+                <field id="processes_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkISMSScopeToProcess</linked_class>
+                    <ext_key_to_me>scope_id</ext_key_to_me>
+                    <ext_key_to_remote>process_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
                 <field id="creation_date" xsi:type="AttributeDate">
                     <sql>creation_date</sql>
                     <default_value />
@@ -335,6 +343,9 @@
                         <item id="locations_list">
                             <rank>100</rank>
                         </item>
+                        <item id="processes_list">
+                            <rank>110</rank>
+                        </item>
                     </items>
                 </details>
                 <default_search>
@@ -379,21 +390,21 @@
                 <db_final_class_field />
                 <naming>
                     <attributes>
-                        <attribute id="location_name" />
                         <attribute id="scope_name" />
+                        <attribute id="location_name" />
                     </attributes>
                 </naming>
                 <reconciliation>
                     <attributes>
-                        <attribute id="location_id" />
                         <attribute id="scope_id" />
+                        <attribute id="location_id" />
                     </attributes>
                 </reconciliation>
                 <uniqueness_rules>
                     <rule id="no_duplicate">
                         <attributes>
-                            <attribute id="location_id" />
                             <attribute id="scope_id" />
+                            <attribute id="location_id" />
                         </attributes>
                         <is_blocking>true</is_blocking>
                     </rule>
@@ -449,6 +460,94 @@
                             <rank>10</rank>
                         </item>
                         <item id="location_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkISMSScopeToProcess" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkismsscopetoprocess</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="scope_name" />
+                        <attribute id="process_name" />
+                    </attributes>
+                </naming>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="scope_id" />
+                        <attribute id="process_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="scope_id" />
+                            <attribute id="process_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="scope_id" xsi:type="AttributeExternalKey">
+                    <sql>scope_id</sql>
+                    <target_class>ISMSScope</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="scope_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>scope_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="process_id" xsi:type="AttributeExternalKey">
+                    <sql>process_id</sql>
+                    <target_class>BusinessProcess</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="process_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>process_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="scope_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="process_id">
                             <rank>20</rank>
                         </item>
                     </items>
