@@ -59,7 +59,7 @@ class _ISMSScope extends cmdbAbstractObject
         $sToday = IsmsUtils::Today();
         $sNow = IsmsUtils::Now();
 
-        if ($oEventData->Get('is_new') === true && $this->Get('creation_date') === '') {
+        if ($oEventData->Get('is_new') === true && empty($this->Get('creation_date'))) {
             $this->Set('creation_date', $sToday);
         }
 

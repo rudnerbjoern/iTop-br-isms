@@ -58,20 +58,20 @@ class _ISMSControl extends cmdbAbstractObject
         $sToday = IsmsUtils::Today();
         $sNow = IsmsUtils::Now();
 
-        if ($this->Get('creation_date') === '') {
+        if (empty($this->Get('creation_date'))) {
             $this->Set('creation_date', $sToday);
         }
-        if ($this->Get('last_update') === '') {
+        if (empty($this->Get('last_update'))) {
             $this->Set('last_update', $sNow);
         }
-        if ($this->Get('last_review') === '') {
+        if (empty($this->Get('last_review'))) {
             $this->Set('last_review', $sToday);
         }
         if ((int) $this->Get('review_interval_months') <= 0) {
             $this->Set('review_interval_months', IsmsUtils::GetDefaultReviewIntervalMonths());
         }
 
-        if ($this->Get('next_review') === '') {
+        if (empty($this->Get('next_review'))) {
             $iMonths = max(1, (int) $this->Get('review_interval_months'));
             $anchor  = (string) $this->Get('last_review') ?: $sToday;
             $this->Set('next_review', IsmsUtils::ComputeNextReviewDate($anchor, $iMonths));
@@ -109,7 +109,7 @@ class _ISMSControl extends cmdbAbstractObject
         $sToday = IsmsUtils::Today();
         $sNow   = IsmsUtils::Now();
 
-        if ($oEventData->Get('is_new') === true && $this->Get('creation_date') === '') {
+        if ($oEventData->Get('is_new') === true && empty($this->Get('creation_date'))) {
             $this->Set('creation_date', $sToday);
         }
 
