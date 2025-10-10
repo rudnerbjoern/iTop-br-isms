@@ -341,6 +341,7 @@
                     <edit_mode>add_only</edit_mode>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
+                    <duplicates>false</duplicates>
                 </field>
             </fields>
             <lifecycle>
@@ -739,6 +740,9 @@
                         </item>
                         <item id="reviews_list">
                             <rank>140</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>150</rank>
                         </item>
                     </items>
                 </details>
@@ -2082,6 +2086,14 @@
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSRisk</linked_class>
+                    <ext_key_to_me>risk_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <lifecycle>
                 <stimuli>
@@ -2635,6 +2647,9 @@
                         </item>
                         <item id="reviews_list">
                             <rank>120</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -3292,6 +3307,14 @@
                     <ext_key_to_me>control_id</ext_key_to_me>
                     <ext_key_to_remote>soaentry_id</ext_key_to_remote>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSControl</linked_class>
+                    <ext_key_to_me>control_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <relations>
                 <relation id="impacts">
@@ -3822,6 +3845,9 @@
                         </item>
                         <item id="soaentries_list">
                             <rank>120</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>130</rank>
                         </item>
                     </items>
                 </details>
@@ -5828,36 +5854,73 @@
                     <linked_class>ISMSStandardControl</linked_class>
                     <ext_key_to_me>standard_id</ext_key_to_me>
                 </field>
+                <field id="documents_list" xsi:type="AttributeLinkedSetIndirect">
+                    <linked_class>lnkDocumentToISMSStandard</linked_class>
+                    <ext_key_to_me>standard_id</ext_key_to_me>
+                    <ext_key_to_remote>document_id</ext_key_to_remote>
+                    <count_min>0</count_min>
+                    <count_max>0</count_max>
+                    <duplicates>false</duplicates>
+                </field>
             </fields>
             <methods />
             <presentation>
                 <details>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
-                        <item id="url" />
-                        <item id="controls_list" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
+                        <item id="url">
+                            <rank>40</rank>
+                        </item>
+                        <item id="controls_list">
+                            <rank>100</rank>
+                        </item>
+                        <item id="documents_list">
+                            <rank>110</rank>
+                        </item>
                     </items>
                 </details>
                 <default_search>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
                     </items>
                 </default_search>
                 <search>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
                     </items>
                 </search>
                 <list>
                     <items>
-                        <item id="name" />
-                        <item id="version" />
-                        <item id="publisher" />
+                        <item id="name">
+                            <rank>10</rank>
+                        </item>
+                        <item id="version">
+                            <rank>20</rank>
+                        </item>
+                        <item id="publisher">
+                            <rank>30</rank>
+                        </item>
                     </items>
                 </list>
                 <summary>
@@ -5892,8 +5955,8 @@
                 </style>
                 <reconciliation>
                     <attributes>
+                        <attribute id="standard_id" />
                         <attribute id="code" />
-                        <attribute id="title" />
                     </attributes>
                 </reconciliation>
                 <uniqueness_rules>
@@ -6794,6 +6857,279 @@
                 </list>
             </presentation>
         </class>
+        <class id="lnkDocumentToISMSRisk" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismsrisk</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="document_name" />
+                        <attribute id="risk_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="risk_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="document_id" />
+                            <attribute id="risk_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="risk_id" xsi:type="AttributeExternalKey">
+                    <sql>risk_id</sql>
+                    <target_class>ISMSRisk</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="risk_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>risk_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="document_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="risk_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="risk_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkDocumentToISMSControl" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismscontrol</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="document_name" />
+                        <attribute id="control_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="control_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="document_id" />
+                            <attribute id="control_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="control_id" xsi:type="AttributeExternalKey">
+                    <sql>control_id</sql>
+                    <target_class>ISMSControl</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="control_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>control_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="document_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="control_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="control_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
+        <class id="lnkDocumentToISMSStandard" _delta="define">
+            <parent>cmdbAbstractObject</parent>
+            <properties>
+                <is_link>1</is_link>
+                <category>bizmodel</category>
+                <abstract>false</abstract>
+                <key_type>autoincrement</key_type>
+                <db_table>lnkdocumenttoismsstandard</db_table>
+                <db_key_field>id</db_key_field>
+                <db_final_class_field />
+                <naming>
+                    <attributes>
+                        <attribute id="document_name" />
+                        <attribute id="standard_name" />
+                    </attributes>
+                </naming>
+                <style>
+                    <icon />
+                </style>
+                <reconciliation>
+                    <attributes>
+                        <attribute id="standard_id" />
+                        <attribute id="document_id" />
+                    </attributes>
+                </reconciliation>
+                <uniqueness_rules>
+                    <rule id="no_duplicate">
+                        <attributes>
+                            <attribute id="document_id" />
+                            <attribute id="standard_id" />
+                        </attributes>
+                        <is_blocking>true</is_blocking>
+                    </rule>
+                </uniqueness_rules>
+            </properties>
+            <fields>
+                <field id="standard_id" xsi:type="AttributeExternalKey">
+                    <sql>standard_id</sql>
+                    <target_class>ISMSStandard</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="standard_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>standard_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+                <field id="document_id" xsi:type="AttributeExternalKey">
+                    <sql>document_id</sql>
+                    <target_class>Document</target_class>
+                    <is_null_allowed>false</is_null_allowed>
+                    <on_target_delete>DEL_AUTO</on_target_delete>
+                </field>
+                <field id="document_name" xsi:type="AttributeExternalField">
+                    <extkey_attcode>document_id</extkey_attcode>
+                    <target_attcode>name</target_attcode>
+                </field>
+            </fields>
+            <methods />
+            <presentation>
+                <details>
+                    <items>
+                        <item id="document_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="standard_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </details>
+                <search>
+                    <items>
+                        <item id="standard_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </search>
+                <list>
+                    <items>
+                        <item id="standard_id">
+                            <rank>10</rank>
+                        </item>
+                        <item id="document_id">
+                            <rank>20</rank>
+                        </item>
+                    </items>
+                </list>
+            </presentation>
+        </class>
     </classes>
     <!-- ***************** Menus ***************** -->
     <menus>
@@ -7076,11 +7412,13 @@ WHERE status NOT IN ('retired')
             <group id="ISMSAssetMgmt" _delta="define">
                 <classes>
                     <class id="ISMSAsset" />
+                    <class id="lnkDocumentToISMSAsset" />
                 </classes>
             </group>
             <group id="ISMSRiskMgmt" _delta="define">
                 <classes>
                     <class id="ISMSRisk" />
+                    <class id="lnkDocumentToISMSRisk" />
                     <class id="lnkISMSRiskToISMSThreat" />
                     <class id="lnkISMSRiskToISMSVulnerability" />
                 </classes>
@@ -7088,6 +7426,7 @@ WHERE status NOT IN ('retired')
             <group id="ISMSControlMgmt" _delta="define">
                 <classes>
                     <class id="ISMSControl" />
+                    <class id="lnkDocumentToISMSControl" />
                 </classes>
             </group>
             <group id="ISMSLinkAssetAsset" _delta="define">
@@ -7127,6 +7466,7 @@ WHERE status NOT IN ('retired')
                 <classes>
                     <class id="ISMSStandard" />
                     <class id="ISMSStandardControl" />
+                    <class id="lnkDocumentToISMSStandard" />
                 </classes>
             </group>
             <group id="ISMSSoAAndEntry" _delta="define">

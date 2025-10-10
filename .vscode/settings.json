@@ -84,5 +84,6 @@
     ],
     "editor.formatOnSave": true,
     "editor.formatOnSaveMode": "modificationsIfAvailable",
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "xml.symbols.maxItemsComputed": 8000
 }

@@ -409,6 +409,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Attribute:assets_list+' => 'All assets linked to this risk.',
     'Class:ISMSRisk/Attribute:controls_list' => 'Control(s)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'All controls linked to this risk.',
+    'Class:ISMSRisk/Attribute:documents_list' => 'Documents',
     'Class:ISMSRisk/Attribute:review_interval_months' => 'Review interval (months)',
     'Class:ISMSRisk/Attribute:review_interval_months+' => 'Review interval in months.',
     'Class:ISMSRisk/Attribute:last_review' => 'Last review',
@@ -550,6 +551,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSControl/Attribute:next_review+' => 'Date of the next scheduled review.',
     'Class:ISMSControl/Attribute:reviews_list' => 'Review(s)',
     'Class:ISMSControl/Attribute:reviews_list+' => 'All reviews of this control.',
+    'Class:ISMSControl/Attribute:documents_list' => 'Documents',
+    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA entries',
     'Class:ISMSControl/UniquenessRule:ref' => 'A control with this reference already exists',
     'Class:ISMSControl/UniquenessRule:ref+' => 'The ref must be unique',
     'Class:ISMSControl/UniquenessRule:name' => 'A control with this name already exists',
@@ -808,6 +811,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSStandard/Attribute:url' => 'Reference (URL)',
     'Class:ISMSStandard/Attribute:controls_list' => 'Control(s)',
     'Class:ISMSStandard/Attribute:controls_list+' => 'Standard controls (e.g. Annex A).',
+    'Class:ISMSStandard/Attribute:documents_list' => 'Documents',
     'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'This standard/version already exists',
 ));
 

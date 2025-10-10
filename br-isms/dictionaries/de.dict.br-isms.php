@@ -405,6 +405,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Attribute:assets_list+' => 'Alle mit diesem Risiko verknüpften Assets.',
     'Class:ISMSRisk/Attribute:controls_list' => 'Kontrolle(n)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'Alle Kontrollen, die mit diesem Risiko verknüpft sind.',
+    'Class:ISMSRisk/Attribute:documents_list' => 'Dokumente',
     'Class:ISMSRisk/UniquenessRule:ref' => 'Es existiert bereits ein Risiko mit dieser Referenz',
     'Class:ISMSRisk/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
     'Class:ISMSRisk/UniquenessRule:name' => 'Es existiert bereits ein Risiko mit diesem Namen',
@@ -533,6 +534,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControl/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
     'Class:ISMSControl/Attribute:risks_list' => 'Risiken',
     'Class:ISMSControl/Attribute:risks_list+' => 'Alle Risiken, die mit dieser Kontrolle verknüpft sind.',
+    'Class:ISMSControl/Attribute:documents_list' => 'Dokumente',
+    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA Einträge',
     'Class:ISMSControl/UniquenessRule:ref' => 'Es existiert bereits eine Kontrolle mit dieser Referenz',
     'Class:ISMSControl/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
     'Class:ISMSControl/UniquenessRule:name' => 'Es existiert bereits eine Kontrolle mit diesem Namen',
@@ -792,6 +795,7 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSStandard/Attribute:url' => 'Referenz (URL)',
     'Class:ISMSStandard/Attribute:controls_list' => 'Kontrollen',
     'Class:ISMSStandard/Attribute:controls_list+' => 'Standard-Kontrollen (z. B. Anhang A).',
+    'Class:ISMSStandard/Attribute:documents_list' => 'Dokumente',
     'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'Dieser Standard/Version existiert bereits.',
 ));
 
