@@ -64,7 +64,7 @@ class _ISMSAssetReview extends ISMSReview
      *
      * Emits CheckIssues to block the write if invalid.
      */
-    public function EvtAssetReviewCheckToWrite(EventData $oEventData): void
+    public function OnISMSAssetReviewCheckToWrite(EventData $oEventData): void
     {
         $sPlanned   = (string) $this->Get('planned_on');
         $sStarted   = (string) $this->Get('started_on');
@@ -88,7 +88,7 @@ class _ISMSAssetReview extends ISMSReview
      *
      * Only persists the Asset if values actually changed.
      */
-    public function EvtAssetReviewAfterWrite(EventData $oEventData): void
+    public function OnISMSAssetReviewAfterWrite(EventData $oEventData): void
     {
         $sStimulus = (string) $oEventData->Get('stimulus_applied'); // e.g. 'ev_complete'
         $sTarget   = (string) $oEventData->Get('target_state');     // e.g. 'completed'

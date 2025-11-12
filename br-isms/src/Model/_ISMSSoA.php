@@ -39,7 +39,7 @@ class _ISMSSoA extends cmdbAbstractObject
      * Attribute flags (initial): make KPIs & effective_from read-only at creation time.
      * This runs before the object is displayed/edited the first time.
      */
-    public function EvtSetInitialISMSoAAttributeFlags(EventData $oEventData): void
+    public function OnISMSoASetInitialAttributesFlags(EventData $oEventData): void
     {
         $this->ForceInitialAttributeFlags('effective_from',   OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('kpi_total',        OPT_ATT_READONLY);
@@ -52,7 +52,7 @@ class _ISMSSoA extends cmdbAbstractObject
      * Attribute flags (runtime): keep KPIs & effective_from read-only at all times.
      * This is evaluated repeatedly (eg. on state changes).
      */
-    public function EvtSetISMSSoaAttributeFlags(EventData $oEventData): void
+    public function OnISMSoASetAttributesFlags(EventData $oEventData): void
     {
         $this->ForceAttributeFlags('effective_from',   OPT_ATT_READONLY);
         $this->ForceAttributeFlags('kpi_total',        OPT_ATT_READONLY);
@@ -65,7 +65,7 @@ class _ISMSSoA extends cmdbAbstractObject
      * Compute derived values: recompute KPIs.
      * Keep this side-effect free (no DB writes here); caller decides if/when to save.
      */
-    public function EvtISMSSoAComputeValues(EventData $oEventData): void
+    public function OnISMSSoAComputeValues(EventData $oEventData): void
     {
         $this->RecomputeKpis(); // method returns bool, but here we simply compute
     }
@@ -74,7 +74,7 @@ class _ISMSSoA extends cmdbAbstractObject
      * Prevent approval unless all entries have a decision (applicability set).
      * Emits a CheckIssue to block the write if condition is not met.
      */
-    public function EvtISMSSoACheckToWrite(EventData $oEventData): void
+    public function OnISMSSoACheckToWrite(EventData $oEventData): void
     {
         $sTarget = (string) $oEventData->Get('target_state');
         if ($sTarget === 'approved') {
@@ -93,7 +93,7 @@ class _ISMSSoA extends cmdbAbstractObject
     protected static bool $bPostCreateInProgress = false;
 
 
-    public function EvtISMSSoAAfterWrite(EventData $oEventData): void
+    public function OnISMSSoAAfterWrite(EventData $oEventData): void
     {
         $bIsNew = (bool) $oEventData->Get('is_new');
         if (!$bIsNew) {

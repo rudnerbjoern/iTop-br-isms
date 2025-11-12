@@ -79,7 +79,7 @@ class _ISMSControl extends cmdbAbstractObject
     }
 
     /** Initial attribute flags at creation time (read-only system fields). */
-    public function EvtSetInitialISMSControlAttributeFlags(EventData $oEventData): void
+    public function OnISMSControlSetInitialAttributesFlags(EventData $oEventData): void
     {
         $this->ForceInitialAttributeFlags('ref',                 OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('creation_date',       OPT_ATT_READONLY);
@@ -89,7 +89,7 @@ class _ISMSControl extends cmdbAbstractObject
     }
 
     /** Runtime attribute flags (keep read-only at all times). */
-    public function EvtSetISMSControlAttributeFlags(EventData $oEventData): void
+    public function OnISMSControlSetAttributesFlags(EventData $oEventData): void
     {
         $this->ForceAttributeFlags('ref',                 OPT_ATT_READONLY);
         $this->ForceAttributeFlags('creation_date',       OPT_ATT_READONLY);
@@ -104,7 +104,7 @@ class _ISMSControl extends cmdbAbstractObject
      *  - Always: update last_update (now).
      *  - Keep next_review coherent with last_review + interval when both present.
      */
-    public function EvtBeforeISMSControlWrite(EventData $oEventData): void
+    public function OnISMSControlBeforeWrite(EventData $oEventData): void
     {
         $sToday = IsmsUtils::Today();
         $sNow   = IsmsUtils::Now();

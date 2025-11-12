@@ -38,14 +38,14 @@ class _ISMSRiskAcceptance extends cmdbAbstractObject
 
 
     /** Initial attribute flags at creation time (read-only system fields). */
-    public function EvtSetInitialISMSRiskAcceptanceAttributeFlags(EventData $oEventData): void
+    public function OnISMSRiskAcceptanceSetInitialAttributesFlags(EventData $oEventData): void
     {
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
     }
 
     /** Runtime attribute flags (keep read-only at all times). */
-    public function EvtSetISMSRiskAcceptanceAttributeFlags(EventData $oEventData): void
+    public function OnISMSRiskAcceptanceSetAttributesFlags(EventData $oEventData): void
     {
         $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
         $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
@@ -56,7 +56,7 @@ class _ISMSRiskAcceptance extends cmdbAbstractObject
      *  - On first insert: ensure creation_date is set.
      *  - Always: update last_update (now).
      */
-    public function EvtBeforeISMSRiskAcceptanceWrite(EventData $oEventData): void
+    public function OnISMSRiskAcceptanceBeforeWrite(EventData $oEventData): void
     {
         $sToday = IsmsUtils::Today();
         $sNow   = IsmsUtils::Now();

@@ -40,7 +40,7 @@ class _ISMSReview extends cmdbAbstractObject
      *
      * Emits CheckIssues to block the write if invalid.
      */
-    public function EvtReviewCheckToWrite(EventData $oEventData): void
+    public function OnISMSReviewCheckToWrite(EventData $oEventData): void
     {
         $sCurrentStatus = (string) $this->Get('status');
         $sTargetState   = (string) $oEventData->Get('target_state'); // may be ''

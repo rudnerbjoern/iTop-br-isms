@@ -224,7 +224,7 @@ stateDiagram-v2
 - `EvtCheckToWrite`
   Add user warnings for the validations above.
 - **Reviews**:
-  - `EvtReviewCheckToWrite` validates `planned_on` (create & update while status=planned) and `outcome` on completion.
+  - `OnISMSReviewCheckToWrite` validates `planned_on` (create & update while status=planned) and `outcome` on completion.
   - `EvtOnStateTransition` timestamps `started_on` / `completed_on` and triggers post-completion hook.
   - `ISMSAssetReview::OnReviewCompleted()` updates `last_review` and computes `next_review`.
 - `DBInsertNoReload` + counters

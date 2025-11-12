@@ -269,20 +269,20 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSScopeAttributeFlags">
+                <event_listener id="OnISMSScopeSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSScopeAttributeFlags</callback>
+                    <callback>OnISMSScopeSetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSScopeAttributeFlags">
+                <event_listener id="OnISMSScopeSetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSScopeAttributeFlags</callback>
+                    <callback>OnISMSScopeSetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeISMSScopeWrite">
+                <event_listener id="OnISMSScopeBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeISMSScopeWrite</callback>
+                    <callback>OnISMSScopeBeforeWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -948,7 +948,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSAssetBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1026,7 +1026,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSAssetBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1039,7 +1039,7 @@
                             <transition id="ev_obsolete">
                                 <target>obsolete</target>
                                 <actions>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSAssetBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1133,7 +1133,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSAssetWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSAssetBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -1167,20 +1167,20 @@
                 </relation>
             </relations>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSAssetAttributeFlags">
+                <event_listener id="OnISMSAssetSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSAssetAttributeFlags</callback>
+                    <callback>OnISMSAssetSetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSAssetAttributeFlags">
+                <event_listener id="OnISMSAssetSetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSAssetAttributeFlags</callback>
+                    <callback>OnISMSAssetSetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeISMSAssetWrite">
+                <event_listener id="OnISMSAssetBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeISMSAssetWrite</callback>
+                    <callback>OnISMSAssetBeforeWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -2764,7 +2764,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSRiskBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -2857,7 +2857,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSRiskBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -2870,7 +2870,7 @@
                             <transition id="ev_obsolete">
                                 <target>obsolete</target>
                                 <actions>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSRiskBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -3000,7 +3000,7 @@
                                             <param xsi:type="attcode">publish_date</param>
                                         </params>
                                     </action>
-                                    <!-- done by event EVENT_DB_BEFORE_WRITE: EvtBeforeISMSRiskWrite
+                                    <!-- done by event EVENT_DB_BEFORE_WRITE: OnISMSRiskBeforeWrite
                                     <action id="9">
                                         <verb>SetCurrentDate</verb>
                                         <params>
@@ -3029,35 +3029,35 @@
                 </relation>
             </relations>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSRiskAttributeFlags">
+                <event_listener id="OnISMSRiskSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSRiskAttributeFlags</callback>
+                    <callback>OnISMSRiskSetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSRiskAttributeFlags">
+                <event_listener id="OnISMSRiskSetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSRiskAttributeFlags</callback>
+                    <callback>OnISMSRiskSetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtCheckISMSRiskToWrite">
+                <event_listener id="OnISMSRiskCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtCheckISMSRiskToWrite</callback>
+                    <callback>OnISMSRiskCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeISMSRiskWrite">
+                <event_listener id="OnISMSRiskBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeISMSRiskWrite</callback>
+                    <callback>OnISMSRiskBeforeWrite</callback>
                 </event_listener>
-                <event_listener id="EvtComputeISMSRiskValues">
+                <event_listener id="OnISMSRiskComputeValues">
                     <event>EVENT_DB_COMPUTE_VALUES</event>
                     <rank>10</rank>
-                    <callback>EvtComputeISMSRiskValues</callback>
+                    <callback>OnISMSRiskComputeValues</callback>
                 </event_listener>
-                <event_listener id="EvtISMSRiskLinksChanged">
+                <event_listener id="OnISMSRiskLinksChanged">
                     <event>EVENT_DB_LINKS_CHANGED</event>
                     <rank>10</rank>
-                    <callback>EvtISMSRiskLinksChanged</callback>
+                    <callback>OnISMSRiskLinksChanged</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -4389,20 +4389,20 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSControlAttributeFlags">
+                <event_listener id="OnISMSControlSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSControlAttributeFlags</callback>
+                    <callback>OnISMSControlSetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSControlAttributeFlags">
+                <event_listener id="OnISMSControlSetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSControlAttributeFlags</callback>
+                    <callback>OnISMSControlSetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeISMSControlWrite">
+                <event_listener id="OnISMSControlBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeISMSControlWrite</callback>
+                    <callback>OnISMSControlBeforeWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -5294,20 +5294,20 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSRiskAcceptanceAttributeFlags">
+                <event_listener id="OnISMSRiskAcceptanceSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSRiskAcceptanceAttributeFlags</callback>
+                    <callback>OnISMSRiskAcceptanceSetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSRiskAcceptanceAttributeFlags">
+                <event_listener id="OnISMSRiskAcceptanceSetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSRiskAcceptanceAttributeFlags</callback>
+                    <callback>OnISMSRiskAcceptanceSetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtBeforeISMSRiskAcceptanceWrite">
+                <event_listener id="OnISMSRiskAcceptanceBeforeWrite">
                     <event>EVENT_DB_BEFORE_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtBeforeISMSRiskAcceptanceWrite</callback>
+                    <callback>OnISMSRiskAcceptanceBeforeWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -5760,10 +5760,10 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtReviewCheckToWrite">
+                <event_listener id="OnISMSReviewCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtReviewCheckToWrite</callback>
+                    <callback>OnISMSReviewCheckToWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -6056,15 +6056,15 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtAssetReviewCheckToWrite">
+                <event_listener id="OnISMSAssetReviewCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtAssetReviewCheckToWrite</callback>
+                    <callback>OnISMSAssetReviewCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtAssetReviewAfterWrite">
+                <event_listener id="OnISMSAssetReviewAfterWrite">
                     <event>EVENT_DB_AFTER_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtAssetReviewAfterWrite</callback>
+                    <callback>OnISMSAssetReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -6443,15 +6443,15 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtRiskReviewCheckToWrite">
+                <event_listener id="OnISMSRiskReviewCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtRiskReviewCheckToWrite</callback>
+                    <callback>OnISMSRiskReviewCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtRiskReviewAfterWrite">
+                <event_listener id="OnISMSRiskReviewAfterWrite">
                     <event>EVENT_DB_AFTER_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtRiskReviewAfterWrite</callback>
+                    <callback>OnISMSRiskReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -6830,15 +6830,15 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtControlReviewCheckToWrite">
+                <event_listener id="OnISMSControlReviewCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtControlReviewCheckToWrite</callback>
+                    <callback>OnISMSControlReviewCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtControlReviewAfterWrite">
+                <event_listener id="OnISMSControlReviewAfterWrite">
                     <event>EVENT_DB_AFTER_WRITE</event>
                     <rank>20</rank>
-                    <callback>EvtControlReviewAfterWrite</callback>
+                    <callback>OnISMSControlReviewAfterWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -7496,30 +7496,30 @@
                 </states>
             </lifecycle>
             <event_listeners>
-                <event_listener id="EvtSetInitialISMSoAAttributeFlags">
+                <event_listener id="OnISMSoASetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetInitialISMSoAAttributeFlags</callback>
+                    <callback>OnISMSoASetInitialAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtSetISMSSoaAttributeFlags">
+                <event_listener id="OnISMSoASetAttributesFlags">
                     <event>EVENT_DB_SET_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
-                    <callback>EvtSetISMSSoaAttributeFlags</callback>
+                    <callback>OnISMSoASetAttributesFlags</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoAComputeValues">
+                <event_listener id="OnISMSSoAComputeValues">
                     <event>EVENT_DB_COMPUTE_VALUES</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAComputeValues</callback>
+                    <callback>OnISMSSoAComputeValues</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoACheckToWrite">
+                <event_listener id="OnISMSSoACheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoACheckToWrite</callback>
+                    <callback>OnISMSSoACheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoAAfterWrite">
+                <event_listener id="OnISMSSoAAfterWrite">
                     <event>EVENT_DB_AFTER_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAAfterWrite</callback>
+                    <callback>OnISMSSoAAfterWrite</callback>
                 </event_listener>
             </event_listeners>
             <methods />
@@ -7827,25 +7827,25 @@
                 </field>
             </fields>
             <event_listeners>
-                <event_listener id="EvtISMSSoAEntryCheckToWrite">
+                <event_listener id="OnISMSSoAEntryCheckToWrite">
                     <event>EVENT_DB_CHECK_TO_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAEntryCheckToWrite</callback>
+                    <callback>OnISMSSoAEntryCheckToWrite</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoAEntryAfterWrite">
+                <event_listener id="OnISMSSoAEntryAfterWrite">
                     <event>EVENT_DB_AFTER_WRITE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAEntryAfterWrite</callback>
+                    <callback>OnISMSSoAEntryAfterWrite</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoAEntryAboutToDelete">
+                <event_listener id="OnISMSSoAEntryAboutToDelete">
                     <event>EVENT_DB_ABOUT_TO_DELETE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAEntryAboutToDelete</callback>
+                    <callback>OnISMSSoAEntryAboutToDelete</callback>
                 </event_listener>
-                <event_listener id="EvtISMSSoAEntryAfterDelete">
+                <event_listener id="OnISMSSoAEntryAfterDelete">
                     <event>EVENT_DB_AFTER_DELETE</event>
                     <rank>10</rank>
-                    <callback>EvtISMSSoAEntryAfterDelete</callback>
+                    <callback>OnISMSSoAEntryAfterDelete</callback>
                 </event_listener>
             </event_listeners>
             <methods />

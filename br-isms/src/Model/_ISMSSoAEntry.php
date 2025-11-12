@@ -20,7 +20,7 @@ class _ISMSSoAEntry extends cmdbAbstractObject
     /** @var array<int,bool> SoA IDs to recompute after deletions (deduplicated per request). */
     protected static array $aSoaToRecompute = [];
 
-    public function EvtISMSSoAEntryCheckToWrite(EventData $oEventData): void
+    public function OnISMSSoAEntryCheckToWrite(EventData $oEventData): void
     {
         $app = (string)$this->Get('applicability');
         if ($app === 'not_applicable' && trim((string)$this->Get('justification')) === '') {
@@ -38,7 +38,7 @@ class _ISMSSoAEntry extends cmdbAbstractObject
      * After write (insert or update): recompute current SoA KPIs.
      * If the entry was moved to a different SoA, recompute the previous one as well.
      */
-    public function EvtISMSSoAEntryAfterWrite(EventData $oEventData): void
+    public function OnISMSSoAEntryAfterWrite(EventData $oEventData): void
     {
         $iSoaId = (int) $this->Get('soa_id');
         if ($iSoaId > 0) {
@@ -63,7 +63,7 @@ class _ISMSSoAEntry extends cmdbAbstractObject
      * About to delete: remember the owning SoA ID.
      * After deletion we can no longer read the row; we recompute in EvtAfterDelete().
      */
-    public function EvtISMSSoAEntryAboutToDelete(EventData $oEventData): void
+    public function OnISMSSoAEntryAboutToDelete(EventData $oEventData): void
     {
         $iSoaId = (int) $this->Get('soa_id');
         if ($iSoaId > 0) {
@@ -75,7 +75,7 @@ class _ISMSSoAEntry extends cmdbAbstractObject
      * After delete: recompute KPIs for all SoAs that had entries removed in this request.
      * We deduplicate via a static array to be efficient during mass deletes.
      */
-    public function EvtISMSSoAEntryAfterDelete(EventData $oEventData): void
+    public function OnISMSSoAEntryAfterDelete(EventData $oEventData): void
     {
         if (empty(self::$aSoaToRecompute)) {
             return;
