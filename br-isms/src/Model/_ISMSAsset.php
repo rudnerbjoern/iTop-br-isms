@@ -101,7 +101,7 @@ class _ISMSAsset extends FunctionalCI
      * Initial attribute flags at creation time.
      * Make identity and system dates read-only in the initial form.
      */
-    public function EvtSetInitialISMSAssetAttributeFlags(EventData $oEventData): void
+    public function OnISMSAssetSetInitialAttributesFlags(EventData $oEventData): void
     {
         $this->ForceInitialAttributeFlags('ref',           OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -112,7 +112,7 @@ class _ISMSAsset extends FunctionalCI
      * Runtime attribute flags (evaluated repeatedly).
      * Keep identity and system dates read-only at all times.
      */
-    public function EvtSetISMSAssetAttributeFlags(EventData $oEventData): void
+    public function OnISMSAssetSetAttributesFlags(EventData $oEventData): void
     {
         $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
         $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
@@ -125,7 +125,7 @@ class _ISMSAsset extends FunctionalCI
      * - On every save:   update last_update (now).
      * - If last_review or review_interval_months are present, ensure next_review is aligned.
      */
-    public function EvtBeforeISMSAssetWrite(EventData $oEventData): void
+    public function OnISMSAssetBeforeWrite(EventData $oEventData): void
     {
         $sToday = IsmsUtils::Today();
         $sNow = IsmsUtils::Now();

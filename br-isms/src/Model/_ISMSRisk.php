@@ -81,7 +81,7 @@ class _ISMSRisk extends cmdbAbstractObject
     }
 
     /** Initial attribute flags at creation time (read-only computed/system fields). */
-    public function EvtSetInitialISMSRiskAttributeFlags(EventData $oEventData): void
+    public function OnISMSRiskSetInitialAttributesFlags(EventData $oEventData): void
     {
         $this->ForceInitialAttributeFlags('ref',           OPT_ATT_READONLY);
         $this->ForceInitialAttributeFlags('pre_score',     OPT_ATT_READONLY);
@@ -96,7 +96,7 @@ class _ISMSRisk extends cmdbAbstractObject
     }
 
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
-    public function EvtSetISMSRiskAttributeFlags(EventData $oEventData): void
+    public function OnISMSRiskSetAttributesFlags(EventData $oEventData): void
     {
         $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
         $this->ForceAttributeFlags('pre_score',     OPT_ATT_READONLY);
@@ -123,7 +123,7 @@ class _ISMSRisk extends cmdbAbstractObject
     }
 
     /** When links change, recompute scores. */
-    public function EvtISMSRiskLinksChanged(EventData $oEventData): void
+    public function OnISMSRiskLinksChanged(EventData $oEventData): void
     {
         $this->RecomputeRiskScores();
     }
@@ -134,7 +134,7 @@ class _ISMSRisk extends cmdbAbstractObject
      *  - Always: update last_update (now).
      *  - Recompute scores to persist consistent derived values.
      */
-    public function EvtBeforeISMSRiskWrite(EventData $oEventData): void
+    public function OnISMSRiskBeforeWrite(EventData $oEventData): void
     {
         $sToday = IsmsUtils::Today();
         $sNow = IsmsUtils::Now();
@@ -149,7 +149,7 @@ class _ISMSRisk extends cmdbAbstractObject
     }
 
     /** Compute values hook (safe to call same recompute). */
-    public function EvtComputeISMSRiskValues(EventData $oEventData): void
+    public function OnISMSRiskComputeValues(EventData $oEventData): void
     {
         $this->RecomputeRiskScores();
     }
@@ -158,7 +158,7 @@ class _ISMSRisk extends cmdbAbstractObject
      * EVENT_DB_CHECK_TO_WRITE: add warnings (non-blocking) about treatment, dates, and plausibility.
      * Use AddCheckIssue() instead of AddCheckWarning() if you want to block saving.
      */
-    public function EvtCheckISMSRiskToWrite(EventData $oEventData): void
+    public function OnISMSRiskCheckToWrite(EventData $oEventData): void
     {
         $bIsNew = (bool) $oEventData->Get('is_new');
 

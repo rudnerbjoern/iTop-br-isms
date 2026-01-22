@@ -64,7 +64,7 @@ class _ISMSRiskReview extends ISMSReview
      *
      * Emits CheckIssues to block the write if invalid.
      */
-    public function EvtRiskReviewCheckToWrite(EventData $oEventData): void
+    public function OnISMSRiskReviewCheckToWrite(EventData $oEventData): void
     {
         $sPlanned   = (string) $this->Get('planned_on');
         $sStarted   = (string) $this->Get('started_on');
@@ -87,7 +87,7 @@ class _ISMSRiskReview extends ISMSReview
      *
      * Only persists the Risk if values actually changed.
      */
-    public function EvtRiskReviewAfterWrite(EventData $oEventData): void
+    public function OnISMSRiskReviewAfterWrite(EventData $oEventData): void
     {
         $sStimulus = (string) $oEventData->Get('stimulus_applied'); // e.g. 'ev_complete'
         $sTarget   = (string) $oEventData->Get('target_state');     // e.g. 'completed'
