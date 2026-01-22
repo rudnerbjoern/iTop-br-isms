@@ -1,6 +1,6 @@
 # iTop ISMS Extension
 
-Copyright (c) 2024-2025 Björn Rudner
+Copyright (c) 2024-2026 Björn Rudner
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?logo=git&style=flat)](https://github.com/rudnerbjoern/iTop-isms/issues)
 [![License](https://img.shields.io/github/license/rudnerbjoern/iTop-br-isms)](https://github.com/rudnerbjoern/iTop-br-isms/blob/main/LICENSE)
 
