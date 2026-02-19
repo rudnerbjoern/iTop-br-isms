@@ -41,11 +41,11 @@ class _ISMSSoA extends cmdbAbstractObject
      */
     public function OnISMSoASetInitialAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceInitialAttributeFlags('effective_from',   OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_total',        OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('effective_from',   OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('kpi_total',        OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
     }
 
     /**
@@ -54,11 +54,11 @@ class _ISMSSoA extends cmdbAbstractObject
      */
     public function OnISMSoASetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('effective_from',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_total',        OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
+        $this->AddAttributeFlags('effective_from',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_total',        OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
     }
 
     /**

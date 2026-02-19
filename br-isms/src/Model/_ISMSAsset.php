@@ -103,9 +103,9 @@ class _ISMSAsset extends FunctionalCI
      */
     public function OnISMSAssetSetInitialAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceInitialAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
     }
 
     /**
@@ -114,9 +114,9 @@ class _ISMSAsset extends FunctionalCI
      */
     public function OnISMSAssetSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
     }
 
     /**

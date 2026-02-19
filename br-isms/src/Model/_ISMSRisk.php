@@ -83,39 +83,39 @@ class _ISMSRisk extends cmdbAbstractObject
     /** Initial attribute flags at creation time (read-only computed/system fields). */
     public function OnISMSRiskSetInitialAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceInitialAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('pre_score',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('pre_level',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('res_score',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('res_level',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('tgt_score',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('tgt_level',     OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('pre_score',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('pre_level',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('res_score',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('res_level',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('tgt_score',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('tgt_level',     OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('publish_date',  OPT_ATT_READONLY);
     }
 
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
     public function OnISMSRiskSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddAttributeFlags('pre_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('pre_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('res_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('res_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('tgt_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('tgt_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('publish_date',  OPT_ATT_READONLY);
 
         // Optional: once effective controls influence residuals, lock res_likelihood/res_impact
         try {
             $aAgg = $this->AggregateControlEffects();
             $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
             if ($bHasAnyEffect) {
-                $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
-                $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
+                $this->AddAttributeFlags('res_likelihood', OPT_ATT_READONLY);
+                $this->AddAttributeFlags('res_impact',     OPT_ATT_READONLY);
             }
         } catch (\Exception $e) {
             // ignore (flagging must not break the UI)

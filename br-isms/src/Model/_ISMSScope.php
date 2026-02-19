@@ -36,17 +36,17 @@ class _ISMSScope extends cmdbAbstractObject
     /** Initial attribute flags at creation time (read-only computed/system fields). */
     public function OnISMSScopeSetInitialAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceInitialAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddInitialAttributeFlags('publish_date',  OPT_ATT_READONLY);
     }
 
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
     public function OnISMSScopeSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('publish_date',  OPT_ATT_READONLY);
     }
 
     /**
