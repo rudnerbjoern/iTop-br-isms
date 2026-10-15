@@ -8336,6 +8336,13 @@ WHERE status NOT IN ('retired')
     </menus>
     <user_rights>
         <groups>
+            <group id="ISMSScopeMgmt" _delta="define">
+                <classes>
+                    <class id="ISMSScope" />
+                    <class id="lnkISMSScopeToLocation" />
+                    <class id="lnkISMSScopeToProcess" />
+                </classes>
+            </group>
             <group id="ISMSTypology" _delta="define">
                 <classes>
                     <class id="ISMSAssetType" />
@@ -8366,6 +8373,7 @@ WHERE status NOT IN ('retired')
             <group id="ISMSLinkAssetAsset" _delta="define">
                 <classes>
                     <class id="lnkSupportingAssetToAsset" />
+                    <class id="lnkFunctionalCiToAsset" />
                 </classes>
             </group>
             <group id="ISMSLinkRiskAsset" _delta="define">
@@ -8412,6 +8420,20 @@ WHERE status NOT IN ('retired')
             <profile id="117" _delta="if_exists">
                 <!-- SuperUser -->
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_activate">allow</action>
+                            <action id="stimulus:ev_freeze">allow</action>
+                            <action id="stimulus:ev_obsolete">allow</action>
+                            <action id="stimulus:ev_reopen">allow</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8575,6 +8597,20 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Manager</name>
                 <description>Full access to ISMS Assets, Risks, Controls, links and lifecycle actions across all organizations.</description>
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_activate">allow</action>
+                            <action id="stimulus:ev_freeze">allow</action>
+                            <action id="stimulus:ev_obsolete">allow</action>
+                            <action id="stimulus:ev_reopen">allow</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8738,6 +8774,20 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Asset Maintainer</name>
                 <description>Create and maintain ISMS Assets (typically within own organization). No publish or obsolete transitions.</description>
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_activate">deny</action>
+                            <action id="stimulus:ev_freeze">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8901,6 +8951,20 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Risk Analyst</name>
                 <description>Create and assess ISMS Risks, manage links to Assets/Controls and treatment data. No publish or obsolete transitions.</description>
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_activate">deny</action>
+                            <action id="stimulus:ev_freeze">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology">
                         <actions>
                             <action id="action:read">allow</action>
@@ -9064,6 +9128,20 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Control Maintainer</name>
                 <description>Create and maintain ISMS Controls and implementation details. Governance actions (approve/effective/retire) by Manager.</description>
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_activate">deny</action>
+                            <action id="stimulus:ev_freeze">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology">
                         <actions>
                             <action id="action:read">allow</action>
@@ -9227,6 +9305,20 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Viewer</name>
                 <description>Read-only access to ISMS Assets, Risks and Controls.</description>
                 <groups>
+                    <group id="ISMSScopeMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_activate">deny</action>
+                            <action id="stimulus:ev_freeze">deny</action>
+                            <action id="stimulus:ev_obsolete">deny</action>
+                            <action id="stimulus:ev_reopen">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSTypology">
                         <actions>
                             <action id="action:read">allow</action>
@@ -9380,7 +9472,7 @@ WHERE status NOT IN ('retired')
                             <action id="action:bulk read">allow</action>
                             <action id="action:write">deny</action>
                             <action id="action:bulk write">deny</action>
-                            <action id="action:delete">allow</action>
+                            <action id="action:delete">deny</action>
                             <action id="action:bulk delete">deny</action>
                         </actions>
                     </group>
