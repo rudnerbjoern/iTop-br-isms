@@ -1,0 +1,8 @@
+{
+    "name": "itop-br-isms-tools",
+    "private": true,
+    "description": "Spelling dictionary dependencies for the ISMS extension",
+    "devDependencies": {
+        "@cspell/dict-de-de": "4.1.3"
+    }
+}
