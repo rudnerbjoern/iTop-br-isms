@@ -93,11 +93,11 @@ class _ISMSControl extends cmdbAbstractObject
     /** Runtime attribute flags (keep read-only at all times). */
     public function OnISMSControlSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('ref',                 OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date',       OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',         OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('approval_date',       OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('implementation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('ref',                 OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date',       OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',         OPT_ATT_READONLY);
+        $this->AddAttributeFlags('approval_date',       OPT_ATT_READONLY);
+        $this->AddAttributeFlags('implementation_date', OPT_ATT_READONLY);
     }
 
     /**

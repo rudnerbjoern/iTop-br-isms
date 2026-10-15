@@ -50,9 +50,9 @@ class _ISMSRiskAcceptance extends cmdbAbstractObject
     /** Runtime attribute flags (keep read-only at all times). */
     public function OnISMSRiskAcceptanceSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('approval_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('approval_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
     }
 
     /**

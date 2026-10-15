@@ -46,9 +46,9 @@ class _ISMSScope extends cmdbAbstractObject
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
     public function OnISMSScopeSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('publish_date',  OPT_ATT_READONLY);
     }
 
     /**
