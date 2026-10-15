@@ -1,1 +1,47 @@
+# Installed dependencies; keep manifests and lock files versioned.
+/vendor/
+node_modules/
+
+# Local environment values and Composer credentials; allow safe templates.
+.env
+.env.*
+!.env.example
+!.env.*.example
+/auth.json
+
+# Local PHPUnit configuration and generated test output.
+/phpunit.xml
+/.phpunit.cache/
+/.phpunit.result.cache
+/coverage/
+/reports/
+
+# Generated build and distribution output.
+/build/
+/dist/
+
+# Temporary files, logs, backups, and existing local notes.
+/.tmp/
+/.cache/
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
 *.todo
+
+# Personal IDE state; keep shared project and VS Code settings versioned.
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.idea/shelf/
+*.swp
+*.swo
+*~
+
+# Operating system metadata.
+.DS_Store
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,14 @@
+# Normalize text in Git and use CRLF in the working tree, matching .editorconfig.
+* text=auto eol=crlf
+
+# Explicit text formats used by the extension.
+*.php text
+*.xml text
+*.xml.dist text
+*.json text
+*.md text
+*.svg text
+*.csv text
+
+# Preserve Excel workbook bytes and disable text diff/merge.
+*.xlsx binary
