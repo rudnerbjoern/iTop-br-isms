@@ -1,0 +1,4 @@
+interface:
+  display_name: "Release iTop ISMS"
+  short_description: "Publish and verify version-tagged ISMS releases"
+  default_prompt: "Use $release-itop-br-isms to prepare the next ISMS release and publish its version tag only when authorized."

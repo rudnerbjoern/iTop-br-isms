@@ -190,8 +190,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:publish_date+' => 'Datum der Freigabe/Veröffentlichung.',
     'Class:ISMSAsset/Attribute:last_update' => 'Letzte Aktualisierung',
     'Class:ISMSAsset/Attribute:last_update+' => 'Zeitstempel der letzten Änderung.',
-    'Class:ISMSAsset/Attribute:next_revision' => 'Nächste Revision',
-    'Class:ISMSAsset/Attribute:next_revision+' => 'Geplantes Datum der nächsten Überprüfung/Revision.',
+    'Class:ISMSAsset/Attribute:next_review' => 'Nächste Überprüfung',
+    'Class:ISMSAsset/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
     'Class:ISMSAsset/Attribute:functionalcis_list' => 'Verknüpfte CI(s)',
     'Class:ISMSAsset/Attribute:functionalcis_list+' => 'Funktionelle CIs, die mit diesem Asset verknüpft sind.',
     'Class:ISMSAsset/Attribute:supportingassets_list' => 'Unterstützende Assets',
@@ -214,6 +214,12 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Stimulus:ev_obsolete+' => 'Asset außer Betrieb nehmen.',
     'Class:ISMSAsset/Stimulus:ev_reopen' => 'Wieder öffnen',
     'Class:ISMSAsset/Stimulus:ev_reopen+' => 'Obsoletes Asset wieder öffnen (zurück zu Entwurf).',
+    'Class:ISMSAsset/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSAsset/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSAsset/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSAsset/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSAsset/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSAsset/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Assets.',
 ));
 
 //
@@ -312,8 +318,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Attribute:publish_date+' => 'Datum der Freigabe/Veröffentlichung.',
     'Class:ISMSRisk/Attribute:last_update' => 'Letzte Aktualisierung',
     'Class:ISMSRisk/Attribute:last_update+' => 'Zeitstempel der letzten Änderung.',
-    'Class:ISMSRisk/Attribute:next_revision' => 'Nächste Überprüfung',
-    'Class:ISMSRisk/Attribute:next_revision+' => 'Geplantes Datum der nächsten Risikoprüfung.',
+    'Class:ISMSRisk/Attribute:next_review' => 'Nächste Überprüfung',
+    'Class:ISMSRisk/Attribute:next_review+' => 'Geplantes Datum der nächsten Risikoprüfung.',
     'Class:ISMSRisk/Attribute:description' => 'Beschreibung',
     'Class:ISMSRisk/Attribute:description+' => 'Zusätzliche Details zum Kontext, Annahmen und Notizen.',
     'Class:ISMSRisk/Attribute:risk_category' => 'Risikokategorie',
@@ -512,6 +518,12 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Check:AcceptButTargetBelowResidual' => "Treatment 'accept' but target residual is lower than current residual. Consider 'mitigate' instead.",
     'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'Das Datum der Genehmigung wird beim Genehmigen und Zurücksetzen automatisch verwaltet und kann nicht manuell geändert werden.',
     'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Die Zuordnung der Risiken ist nach der Genehmigung gesperrt. Setzen Sie die widerrufene oder abgelaufene Risikoakzeptanz in den Entwurf zurück, bevor Sie die Zuordnung der Risiken ändern.',
+    'Class:ISMSRisk/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSRisk/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSRisk/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSRisk/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSRisk/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSRisk/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Risikos.',
 ));
 
 //
@@ -646,6 +658,12 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Überarbeitung zur Freigabe einreichen',
     'Class:ISMSControl/Stimulus:ev_cancel_amend' => 'Überarbeitung abbrechen',
     'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Überarbeitung verwerfen und zu Wirksam zurückkehren',
+    'Class:ISMSControl/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSControl/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSControl/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSControl/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSControl/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSControl/Attribute:reviews_list+' => 'Alle Überprüfungen dieser Kontrolle.',
 ));
 
 //
@@ -658,11 +676,11 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
     'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
     'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Wähle das Asset, das ein anderes Asset unterstützt.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
     'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Unterstützendes Asset',
     'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Unterstütztes Asset',
     'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Wähle das Asset, das unterstützt wird.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Unterstütztes Asset',
     'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Unterstütztes Asset',
 ));
 
@@ -677,6 +695,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_name' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_id' => 'Zugehöriges Asset',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Zugehöriges Asset',
+    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id_friendlyname' => 'FunctionalCI',
+    'Class:lnkFunctionalCiToAsset/Attribute:asset_id_friendlyname' => 'Zugehöriges Asset',
 ));
 
 //
@@ -693,6 +713,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id' => 'Asset',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id+' => 'Verknüpftes Asset auswählen.',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id_friendlyname' => 'Asset',
 ));
 
 //
@@ -769,6 +791,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_level_ro+' => 'Aktueller Netto-Risikolevel (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro' => 'Netto-Score',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro+' => 'Aktueller Netto-Risikoscore (schreibgeschützt).',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_id_friendlyname' => 'Risiko',
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_id_friendlyname' => 'Kontrolle',
 ));
 
 
@@ -941,6 +965,9 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'Es existiert bereits ein Eintrag zu "$this->standardcontrol_code$" in der SoA "$this->soa_id_friendlyname$".',
     'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Bitte gib eine Begründung an, wenn eine Kontrolle als nicht anwendbar markiert wird.',
     'Class:ISMSSoAEntry/Check:NoEvidence' => 'Füge nach Möglichkeit Evidenz für implementierte Kontrollen hinzu.',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Kontrollcode',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Kontrolltitel',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Kontrolldomäne',
 ));
 
 //

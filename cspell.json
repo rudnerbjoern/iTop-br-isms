@@ -24,6 +24,7 @@
         "controlowner",
         "dashlet",
         "dashlets",
+        "datamodel",
         "Datenschutzbezogenes",
         "drilldown",
         "extkey",
@@ -53,6 +54,7 @@
         "ismsstandardcontrol",
         "ismsthreat",
         "ismsvulnerability",
+        "itop",
         "Lebenszyklusstatus",
         "lnkdocumenttoismscontrol",
         "lnkdocumenttoismsrisk",
@@ -74,16 +76,28 @@
         "nonrepudiation",
         "RACI",
         "Reduktionsstufen",
-        "Rudner",
         "riskassessment",
         "riskmanagement",
         "riskmatrix",
         "riskowner",
+        "Rudner",
+        "rudnerbjoern",
         "soaentries",
         "soaentry",
         "standardcontrol",
         "supportedassets",
         "supportingasset",
         "supportingassets"
+    ],
+    "files": [
+        "**/*.md"
+    ],
+    "ignorePaths": [
+        ".git/**"
+    ],
+    "ignoreRegExpList": [
+        "/```[\\s\\S]*?```/g",
+        "/`[^`]*`/g",
+        "/https?:\\/\\/[^\\s)]+/g"
     ]
 }

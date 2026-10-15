@@ -1,38 +1,58 @@
-<!--- Provide a general summary of your changes in the Title above -->
+<!-- Use a concise title describing the outcome. Remove sections that do not apply. -->
 
-## :memo: Description
-<!-- Please describe the changes you made. What was improved, added, or fixed? -->
+## Description
 
-## :bulb: Context / Motivation
-<!-- Why are these changes necessary? What issue or use case do they address? -->
+<!-- Describe the problem and the resulting behavior from a user perspective. -->
 
-## :arrows_counterclockwise: Overview of Changes
+## Motivation
 
-- [ ] New classes / objects added
-- [ ] XML data model (`datamodel.*.xml`) modified
-- [ ] Dictionary files (`*.dict.*.php`) updated
-- [ ] UI adjustments or visual changes
-- [ ] Bug fix
-- [ ] Documentation added or updated
+<!-- Explain why this change is needed. -->
 
-## :white_check_mark: Checklist
+## Changes
 
-Please confirm the following (or remove if not applicable):
+<!-- Summarize the material effects, rather than listing files. -->
 
-- [ ] Code style and structure follow project conventions
-- [ ] XML definitions validate without errors
-- [ ] All new fields and classes are documented
-- [ ] No unintended changes to existing behavior
-- [ ] Changes are tested (manually or automatically)
-- [ ] Compatible with existing iTop installations
+-
 
-## :test_tube: Test Instructions
-<!-- If applicable, describe how to test the changes -->
+## Compatibility and impact
 
-## :paperclip: Related Issues
+<!-- Identify affected modules, supported iTop versions, and relevant dependency changes.
+Describe effects on existing data, permissions, lifecycle rules, or user workflows.
+For breaking changes, explain the impact and required action. Do not invent manual
+upgrade steps for changes handled automatically by the iTop installer. -->
 
-Closes #<number> or Relates to #<number>
+## Validation
 
----
+<!-- State the versions or commit tested, checks performed, and actual results.
+Distinguish PHP/XML syntax checks, XSD validation, iTop model compilation,
+source contracts or test doubles, and installed runtime behavior.
+For runtime checks, give the iTop, PHP, and database versions and indicate whether
+this was a fresh installation or an upgrade. List checks not run and their limits.
+CI configuration alone does not establish a successful pipeline run. -->
 
-**Thank you for your contribution! :tada:**
+- Environment / revision:
+- Checks and results:
+- Not tested / limitations:
+
+## Review checklist
+
+<!-- Check only verified items. Remove items that do not apply. -->
+
+- [ ] Changes follow repository conventions and remain within scope.
+- [ ] Affected classes, fields, and workflows are documented appropriately.
+- [ ] English and German dictionary entries are aligned.
+- [ ] Module dependencies preserve the reference catalog's independence.
+- [ ] Permission and lifecycle changes were checked for the affected profiles and states.
+- [ ] Relevant installation, upgrade, and data-preservation behavior was verified as described above.
+- [ ] The description and attachments contain no credentials, customer records, or sensitive diagnostics.
+
+## Known limitations and accepted findings
+
+<!-- Link unresolved findings to issues. For explicitly accepted limitations, state
+who accepted them, when, and the scope of acceptance. Keep actual failed checks
+visible; acceptance does not mean a defect is resolved or a test passed. -->
+
+## Related issues
+
+<!-- Use Fixes #123 only when this PR resolves the issue. Use Related to #123
+for follow-up work or accepted limitations that must remain open. -->
