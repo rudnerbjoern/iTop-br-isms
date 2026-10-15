@@ -2,7 +2,7 @@
 name: Bug report
 about: Report unexpected behavior in the ISMS or reference catalog module.
 title: ''
-labels: bug, enhancement
+labels: bug
 assignees: ''
 
 ---

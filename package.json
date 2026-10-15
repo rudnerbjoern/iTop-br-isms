@@ -10,5 +10,14 @@
     "scripts": {
         "lint:md": "markdownlint --dot --config .markdownlint.json --ignore-path .markdownlintignore \"**/*.md\"",
         "lint:spelling": "cspell lint --config cspell.json --dot --no-progress --no-color"
+    },
+    "overrides": {
+        "markdownlint-cli": {
+            "js-yaml": "5.4.1",
+            "smol-toml": "1.9.1"
+        },
+        "micromark-extension-math": {
+            "katex": "0.18.2"
+        }
     }
 }
