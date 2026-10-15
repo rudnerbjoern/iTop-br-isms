@@ -1,5 +1,6 @@
 """Build a checked extension ZIP from explicitly allowed tracked sources."""
 
+import argparse
 import hashlib
 import os
 from pathlib import Path, PurePosixPath
@@ -36,7 +37,7 @@ def included(name):
     return path.parts[1] in FOLDERS and path.suffix.lower() in SUFFIXES
 
 
-def build(root, tracked, revision):
+def build(root, tracked, revision, *, release=False):
     root = Path(root).resolve()
     if not re.fullmatch(r"[0-9a-f]{40}", revision):
         raise ValueError("Expected a full Git commit SHA")
@@ -63,7 +64,8 @@ def build(root, tracked, revision):
         raise ValueError("Invalid extension identity or version")
     directory = root / ".tmp/packages"
     directory.mkdir(parents=True, exist_ok=True)
-    archive = directory / f"{code}-{version}-{revision[:12]}.zip"
+    filename = f"{code}-{version}.zip" if release else f"{code}-{version}-{revision[:12]}.zip"
+    archive = directory / filename
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as package:
         for name in names:
             entry = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
@@ -82,6 +84,9 @@ def build(root, tracked, revision):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--release", action="store_true", help="Use a version-only release filename")
+    args = parser.parse_args()
     root = Path(__file__).resolve().parent.parent
     tracked = subprocess.check_output(
         ["git", "ls-files", "-z"], cwd=root
@@ -89,7 +94,7 @@ def main():
     revision = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=root, text=True
     ).strip()
-    archive = build(root, tracked, revision)
+    archive = build(root, tracked, revision, release=args.release)
     if os.environ.get("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
             output.write(f"path={archive.relative_to(root).as_posix()}\n")

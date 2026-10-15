@@ -55,6 +55,12 @@ class PackageTests(unittest.TestCase):
         before = archive.read_bytes()
         self.assertEqual(self.build().read_bytes(), before)
 
+    def test_release_filename_omits_commit(self):
+        development = self.build()
+        release = BUILDER.build(self.root, self.tracked, "a" * 40, release=True)
+        self.assertEqual(release.name, "br-isms-3.2.6.zip")
+        self.assertEqual(release.read_bytes(), development.read_bytes())
+
     def test_development_files_are_excluded(self):
         excluded = [
             ".env", "docs/ci-checks.md", "tests/test.py", ".github/workflows/CI.yml",
