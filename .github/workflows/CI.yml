@@ -249,7 +249,7 @@ jobs:
         run: python3 tests/test_build_package.py
       - name: Build and verify release ZIP
         id: build
-        run: python3 tests/build-package.py
+        run: python3 tests/build-package.py --release
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
