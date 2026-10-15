@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Manage asset references, defaults, and system attribute flags.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\Model;
@@ -114,9 +116,9 @@ class _ISMSAsset extends FunctionalCI
      */
     public function OnISMSAssetSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
     }
 
     /**

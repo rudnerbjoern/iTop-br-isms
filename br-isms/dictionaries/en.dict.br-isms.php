@@ -1,11 +1,11 @@
 <?php
 
 /**
+ * English translations for the ISMS module.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
- *
- * Localized data
+ * @version     2026-10-15
  */
 
 //
@@ -195,6 +195,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets that support this asset.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Supported asset(s)',
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets that are supported by this asset.',
+    'Class:ISMSAsset/Attribute:isms_documents_list' => 'ISMS evidence',
+    'Class:ISMSAsset/Attribute:isms_documents_list+' => 'Documents providing ISMS-specific evidence for this asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risk(s)',
     'Class:ISMSAsset/Attribute:risks_list+' => 'All risks linked to this asset.',
     'Class:ISMSAsset/Attribute:review_interval_months' => 'Review interval (months)',
@@ -878,38 +880,11 @@ Dict::Add('EN US', 'English', 'English', array(
 ));
 
 //
-// Class: ISMSStandard
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSStandard' => 'ISMS Standard',
-    'Class:ISMSStandard+' => 'Security or compliance standard, e.g. ISO/IEC 27001.',
-    'Class:ISMSStandard/Name' => '%1$s:%2$s',
-    'Class:ISMSStandard/Attribute:name' => 'Name',
-    'Class:ISMSStandard/Attribute:version' => 'Version',
-    'Class:ISMSStandard/Attribute:publisher' => 'Publisher',
-    'Class:ISMSStandard/Attribute:url' => 'Reference (URL)',
-    'Class:ISMSStandard/Attribute:controls_list' => 'Control(s)',
-    'Class:ISMSStandard/Attribute:controls_list+' => 'Standard controls (e.g. Annex A).',
-    'Class:ISMSStandard/Attribute:documents_list' => 'Documents',
-    'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'This standard/version already exists',
-));
-
-//
 // Class: ISMSStandardControl
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSStandardControl' => 'Standard control',
-    'Class:ISMSStandardControl+' => 'Control as defined by the selected standard.',
-    'Class:ISMSStandardControl/Name' => '%1$s:%2$s / %3$s - %4$s',
-    'Class:ISMSStandardControl/Attribute:standard_id' => 'Standard',
-    'Class:ISMSStandardControl/Attribute:code' => 'Code',
-    'Class:ISMSStandardControl/Attribute:title' => 'Title',
-    'Class:ISMSStandardControl/Attribute:domain' => 'Domain',
-    'Class:ISMSStandardControl/Attribute:description' => 'Description',
     'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA entries',
-    'Class:ISMSStandardControl/UniquenessRule:no_duplicate' => 'This control already exists for the standard "$this->standard_id_friendlyname$".',
 ));
 
 //
@@ -1040,4 +1015,24 @@ Dict::Add('EN US', 'English', 'English', array(
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (from cell data)',
 
     'UI:DashletRiskMatrix:NA' => 'N/A',
+    'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'The approval date is managed by the approval and reset transitions and cannot be edited manually.',
+    'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Risk assignments are frozen after approval. Reset the revoked or expired acceptance to draft before changing its risk assignments.',
+));
+
+//
+// Class: lnkDocumentToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkDocumentToISMSAsset' => 'Link Document / ISMS Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Associates ISMS evidence documents with an asset.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset supported by this evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Document',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Existing document used as ISMS evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Document name',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'This document is already linked to this asset',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Each document can be linked to an asset only once.',
 ));

@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Manage scope creation defaults, system dates, and attribute flags.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\Model;
@@ -44,9 +46,9 @@ class _ISMSScope extends cmdbAbstractObject
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
     public function OnISMSScopeSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('publish_date',  OPT_ATT_READONLY);
     }
 
     /**

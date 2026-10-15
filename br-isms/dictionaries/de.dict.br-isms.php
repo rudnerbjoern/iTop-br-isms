@@ -1,11 +1,11 @@
 <?php
 
 /**
+ * German translations for the ISMS module.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
- *
- * Localized data
+ * @version     2026-10-15
  */
 
 //
@@ -198,6 +198,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets, die dieses Asset unterstützen.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Unterstützte Assets',
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets, die von diesem Asset unterstützt werden.',
+    'Class:ISMSAsset/Attribute:isms_documents_list' => 'ISMS-Nachweise',
+    'Class:ISMSAsset/Attribute:isms_documents_list+' => 'Dokumente als ISMS-spezifische Nachweise für dieses Asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risiken',
     'Class:ISMSAsset/Attribute:risks_list+' => 'Alle Risiken zu diesem Asset.',
     'Class:ISMSAsset/UniquenessRule:ref' => 'Es existiert bereits ein Asset mit dieser Referenz',
@@ -508,6 +510,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Check:TargetGtInherent' => 'Target score is greater than the inherent score. Please review.',
     'Class:ISMSRisk/Check:TargetGtResidual' => 'Target score is greater than the current residual score. Please review.',
     'Class:ISMSRisk/Check:AcceptButTargetBelowResidual' => "Treatment 'accept' but target residual is lower than current residual. Consider 'mitigate' instead.",
+    'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'Das Datum der Genehmigung wird beim Genehmigen und Zurücksetzen automatisch verwaltet und kann nicht manuell geändert werden.',
+    'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Die Zuordnung der Risiken ist nach der Genehmigung gesperrt. Setzen Sie die widerrufene oder abgelaufene Risikoakzeptanz in den Entwurf zurück, bevor Sie die Zuordnung der Risiken ändern.',
 ));
 
 //
@@ -856,38 +860,11 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
 ));
 
 //
-// Class: ISMSStandard
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:ISMSStandard' => 'ISMS-Standard',
-    'Class:ISMSStandard+' => 'Sicherheits-/Compliance-Standard, z. B. ISO/IEC 27001.',
-    'Class:ISMSStandard/Name' => '%1$s:%2$s',
-    'Class:ISMSStandard/Attribute:name' => 'Name',
-    'Class:ISMSStandard/Attribute:version' => 'Version',
-    'Class:ISMSStandard/Attribute:publisher' => 'Herausgeber',
-    'Class:ISMSStandard/Attribute:url' => 'Referenz (URL)',
-    'Class:ISMSStandard/Attribute:controls_list' => 'Kontrollen',
-    'Class:ISMSStandard/Attribute:controls_list+' => 'Standard-Kontrollen (z. B. Anhang A).',
-    'Class:ISMSStandard/Attribute:documents_list' => 'Dokumente',
-    'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'Dieser Standard/Version existiert bereits.',
-));
-
-//
 // Class: ISMSStandardControl
 //
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:ISMSStandardControl' => 'Standard-Kontrolle',
-    'Class:ISMSStandardControl+' => 'Kontrolle gemäß gewähltem Standard.',
-    'Class:ISMSStandardControl/Name' => '%1$s:%2$s / %3$s - %4$s',
-    'Class:ISMSStandardControl/Attribute:standard_id' => 'Standard',
-    'Class:ISMSStandardControl/Attribute:code' => 'Code',
-    'Class:ISMSStandardControl/Attribute:title' => 'Titel',
-    'Class:ISMSStandardControl/Attribute:domain' => 'Domäne',
-    'Class:ISMSStandardControl/Attribute:description' => 'Beschreibung',
     'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA-Einträge',
-    'Class:ISMSStandardControl/UniquenessRule:no_duplicate' => 'Diese Kontrolle existiert bereits für den Standard "$this->standard_id_friendlyname$".',
 ));
 
 //
@@ -1017,4 +994,22 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (aus Zellen-Daten)',
 
     'UI:DashletRiskMatrix:NA' => 'N/V',
+));
+
+//
+// Class: lnkDocumentToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkDocumentToISMSAsset' => 'Verknüpfung Dokument / ISMS-Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Ordnet einem Asset ISMS-Nachweise zu.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset, auf das sich dieser Nachweis bezieht.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset-Name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Dokument',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Vorhandenes Dokument als ISMS-Nachweis.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Dokumentname',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'Dieses Dokument ist bereits mit diesem Asset verknüpft',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Jedes Dokument kann einem Asset nur einmal zugeordnet werden.',
 ));

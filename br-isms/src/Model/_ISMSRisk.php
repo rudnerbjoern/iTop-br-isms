@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Manage risk references, assessments, validation, and control effects.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\Model;
@@ -98,24 +100,24 @@ class _ISMSRisk extends cmdbAbstractObject
     /** Runtime attribute flags (keep read-only at all times; optionally lock residual inputs when effective controls exist). */
     public function OnISMSRiskSetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('ref',           OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('pre_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('res_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_score',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('tgt_level',     OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('creation_date', OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('last_update',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('publish_date',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('ref',           OPT_ATT_READONLY);
+        $this->AddAttributeFlags('pre_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('pre_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('res_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('res_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('tgt_score',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('tgt_level',     OPT_ATT_READONLY);
+        $this->AddAttributeFlags('creation_date', OPT_ATT_READONLY);
+        $this->AddAttributeFlags('last_update',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('publish_date',  OPT_ATT_READONLY);
 
         // Optional: once effective controls influence residuals, lock res_likelihood/res_impact
         try {
             $aAgg = $this->AggregateControlEffects();
             $bHasAnyEffect = (!is_null($aAgg['like']) || !is_null($aAgg['impact']));
             if ($bHasAnyEffect) {
-                $this->ForceAttributeFlags('res_likelihood', OPT_ATT_READONLY);
-                $this->ForceAttributeFlags('res_impact',     OPT_ATT_READONLY);
+                $this->AddAttributeFlags('res_likelihood', OPT_ATT_READONLY);
+                $this->AddAttributeFlags('res_impact',     OPT_ATT_READONLY);
             }
         } catch (\Exception $e) {
             // ignore (flagging must not break the UI)

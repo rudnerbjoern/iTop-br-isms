@@ -4,14 +4,14 @@
         <name>ISO/IEC 27001</name>
         <version>2022</version>
         <publisher>ISO/IEC</publisher>
-        <uri>https://www.iso.org/standard/27001</uri>
+        <url>https://www.iso.org/standard/27001</url>
     </ISMSStandard>
 
     <ISMSStandard alias="ISMSStandard" id="2">
         <name>BSI</name>
         <version>1.2</version>
         <publisher>Bundesamt für Sicherheit in der Informationstechnik</publisher>
-        <uri>https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/Konkretisierung_Anforderungen_Massnahmen_KRITIS.html</uri>
+        <url>https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/KRITIS/Konkretisierung_Anforderungen_Massnahmen_KRITIS.html</url>
     </ISMSStandard>
 
     <!-- Ten example controls (codes & titles adapted to ISO/IEC 27001/27002:2022 style) -->

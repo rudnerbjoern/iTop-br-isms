@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Populate and validate statements of applicability and compute their KPIs.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\Model;
@@ -54,11 +56,11 @@ class _ISMSSoA extends cmdbAbstractObject
      */
     public function OnISMSoASetAttributesFlags(EventData $oEventData): void
     {
-        $this->ForceAttributeFlags('effective_from',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_total',        OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
-        $this->ForceAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
+        $this->AddAttributeFlags('effective_from',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_total',        OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_applicable',   OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_implemented',  OPT_ATT_READONLY);
+        $this->AddAttributeFlags('kpi_gaps',         OPT_ATT_READONLY);
     }
 
     /**
