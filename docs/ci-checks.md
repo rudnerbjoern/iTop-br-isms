@@ -218,3 +218,24 @@ The release version guard can be checked locally without publishing:
 ```shell
 python3 tests/test_release.py
 ```
+
+## Dependabot
+
+Dependabot runs as a GitHub service alongside CI. The configuration in
+`.github/dependabot.yml` schedules npm and GitHub Actions version checks every
+Monday at 06:00 in the Europe/Berlin timezone, with up to five open version-update
+PRs per ecosystem. It becomes active after the configuration reaches the default
+branch. Actions pinned to commit SHAs are covered by the GitHub Actions ecosystem.
+
+Repository-level Dependabot alerts and automated security updates are enabled.
+Security updates respond to known vulnerable dependencies independently of the
+weekly version-update schedule. Dependabot proposes fixes through PRs rather
+than pushing changes directly to `main`; the main ruleset requires the CI checks
+before merging. Updates are not automatically merged.
+
+This does not scan PHP application code, Python standard library code, runtime
+container contents, or the scanner binaries downloaded by workflow shell steps.
+Those binaries and their checksums still require reviewed updates. A configured
+schedule or enabled alerts do not establish that a scan ran or that every
+dependency is free of vulnerabilities. Open Dependabot PRs also block publication
+through the release skill's open-PR gate.
