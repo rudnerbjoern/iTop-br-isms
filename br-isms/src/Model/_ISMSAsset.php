@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Manage asset references, defaults, and system attribute flags.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\Model;

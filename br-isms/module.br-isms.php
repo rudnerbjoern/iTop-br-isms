@@ -1,11 +1,11 @@
 <?php
 
 /**
+ * Register the ISMS module, its dependencies, and installation hooks.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
- *
- * iTop module definition file
+ * @version     2026-10-15
  */
 
 /** @disregard P1009 Undefined type SetupWebPage */

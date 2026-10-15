@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * Display statement of applicability and risk dashboards in relation tabs.
+ *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-01-22
+ * @version     2026-10-15
  */
 
 namespace BR\Extension\Isms\UI\Extension;
