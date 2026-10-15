@@ -1,0 +1,261 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  source-checks:
+    name: PHP 8.3 and XML source checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    container:
+      image: php:8.3-cli-bookworm
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check PHP syntax, module metadata, and XML syntax
+        run: php tests/check-source.php
+
+  markdown:
+    name: Markdown lint
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --cache .tmp/npm-cache --no-fund --no-audit
+      - name: Lint Markdown
+        run: npm run lint:md
+
+  xml-schema:
+    name: XML schema validation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends libxml2-utils
+      - name: Download published schemas
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/xsd-ci
+          curl --fail --silent --show-error --location --retry 3 --proto '=https' \
+            https://rudnerbjoern.github.io/iTop-schema/3.2/itop_design.xsd \
+            --output .tmp/xsd-ci/itop_design.xsd
+          curl --fail --silent --show-error --location --retry 3 --proto '=https' \
+            https://rudnerbjoern.github.io/iTop-schema/extension.xsd \
+            --output .tmp/xsd-ci/extension.xsd
+      - name: Validate XML against XSD
+        run: python3 tests/check-xml-schema.py
+
+  dictionaries:
+    name: English and German dictionaries
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    container:
+      image: php:8.3-cli-bookworm
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify dictionary checker regression cases
+        run: php tests/check-dictionaries.test.php
+      - name: Check dictionary keys and translations
+        run: php tests/check-dictionaries.php
+
+  spelling:
+    name: Markdown spelling
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --ignore-scripts --cache .tmp/npm-cache --no-fund --no-audit
+      - name: Check spelling
+        run: npm run lint:spelling
+
+  workflow-changes:
+    name: Detect workflow changes
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      changed: ${{ steps.diff.outputs.changed }}
+    steps:
+      - name: Check out sources and comparison history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Compare workflows against the PR base
+        id: diff
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet "$BASE_SHA...$HEAD_SHA" -- .github/workflows/; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            status=$?
+            if [ "$status" -ne 1 ]; then
+              exit "$status"
+            fi
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+
+  actionlint:
+    name: Workflow validation
+    needs: workflow-changes
+    if: needs.workflow-changes.outputs.changed == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned actionlint
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/actionlint
+          curl --fail --silent --show-error --location --retry 3 --proto '=https' \
+            https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz \
+            --output .tmp/actionlint/actionlint_1.7.12_linux_amd64.tar.gz
+          echo '8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  .tmp/actionlint/actionlint_1.7.12_linux_amd64.tar.gz' \
+            | sha256sum --check --strict
+          tar -xzf .tmp/actionlint/actionlint_1.7.12_linux_amd64.tar.gz -C .tmp/actionlint actionlint
+      - name: Validate workflows
+        run: .tmp/actionlint/actionlint -color -shellcheck= -pyflakes=
+
+  gitleaks:
+    name: Secret scanning
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out complete history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install pinned Gitleaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .tmp/gitleaks
+          curl --fail --silent --show-error --location --retry 3 --proto '=https' \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz \
+            --output .tmp/gitleaks/gitleaks_8.30.1_linux_x64.tar.gz
+          echo '551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  .tmp/gitleaks/gitleaks_8.30.1_linux_x64.tar.gz' \
+            | sha256sum --check --strict
+          tar -xzf .tmp/gitleaks/gitleaks_8.30.1_linux_x64.tar.gz -C .tmp/gitleaks gitleaks
+      - name: Scan fetched Git history
+        run: >-
+          .tmp/gitleaks/gitleaks git
+          --log-opts="--all"
+          --redact=100
+          --no-banner
+          --no-color
+          --exit-code 1
+          --report-format json
+          --report-path .tmp/gitleaks/report.json
+          .
+
+  package:
+    name: Extension download package
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [source-checks, markdown, xml-schema, dictionaries, spelling, gitleaks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out merged sources
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Verify package builder
+        run: python3 tests/test_build_package.py
+      - name: Build and verify extension ZIP
+        id: build
+        run: python3 tests/build-package.py
+      - name: Upload extension ZIP
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          path: ${{ steps.build.outputs.path }}
+          include-hidden-files: true
+          archive: false
+          if-no-files-found: error
+          retention-days: 30
+
+  release:
+    name: Official version release
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: [source-checks, markdown, xml-schema, dictionaries, spelling, gitleaks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.ref_name }}
+    steps:
+      - name: Check out tagged sources and main history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Verify release policy regression cases
+        run: python3 tests/test_release.py
+      - name: Verify version tag and main ancestry
+        run: python3 tests/check-release.py
+      - name: Verify package builder
+        run: python3 tests/test_build_package.py
+      - name: Build and verify release ZIP
+        id: build
+        run: python3 tests/build-package.py
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKAGE_PATH: ${{ steps.build.outputs.path }}
+        run: >-
+          gh release create "$RELEASE_TAG" "$PACKAGE_PATH"
+          --verify-tag
+          --title "$RELEASE_TAG"
+          --generate-notes

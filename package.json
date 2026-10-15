@@ -1,8 +1,14 @@
 {
     "name": "itop-br-isms-tools",
     "private": true,
-    "description": "Spelling dictionary dependencies for the ISMS extension",
+    "description": "Development and validation tools for the ISMS extension",
     "devDependencies": {
-        "@cspell/dict-de-de": "4.1.3"
+        "@cspell/dict-de-de": "4.1.3",
+        "cspell": "10.4.0",
+        "markdownlint-cli": "0.49.1"
+    },
+    "scripts": {
+        "lint:md": "markdownlint --dot --config .markdownlint.json --ignore-path .markdownlintignore \"**/*.md\"",
+        "lint:spelling": "cspell lint --config cspell.json --dot --no-progress --no-color"
     }
 }

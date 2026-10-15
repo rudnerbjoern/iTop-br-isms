@@ -108,6 +108,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Scope name',
     'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Location',
     'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Location name',
+    'Class:lnkISMSScopeToLocation+' => '',
 ));
 
 //
@@ -928,6 +929,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Return to Review',
     'Class:ISMSSoA/Stimulus:ev_reopen' => 'Reopen',
     'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
 ));
 
 //
