@@ -195,6 +195,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets that support this asset.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Supported asset(s)',
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets that are supported by this asset.',
+    'Class:ISMSAsset/Attribute:isms_documents_list' => 'ISMS evidence',
+    'Class:ISMSAsset/Attribute:isms_documents_list+' => 'Documents providing ISMS-specific evidence for this asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risk(s)',
     'Class:ISMSAsset/Attribute:risks_list+' => 'All risks linked to this asset.',
     'Class:ISMSAsset/Attribute:review_interval_months' => 'Review interval (months)',
@@ -1015,4 +1017,22 @@ Dict::Add('EN US', 'English', 'English', array(
     'UI:DashletRiskMatrix:NA' => 'N/A',
     'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'The approval date is managed by the approval and reset transitions and cannot be edited manually.',
     'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Risk assignments are frozen after approval. Reset the revoked or expired acceptance to draft before changing its risk assignments.',
+));
+
+//
+// Class: lnkDocumentToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkDocumentToISMSAsset' => 'Link Document / ISMS Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Associates ISMS evidence documents with an asset.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset supported by this evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Document',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Existing document used as ISMS evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Document name',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'This document is already linked to this asset',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Each document can be linked to an asset only once.',
 ));

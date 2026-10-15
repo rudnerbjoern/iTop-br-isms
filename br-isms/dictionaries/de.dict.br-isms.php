@@ -198,6 +198,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:supportingassets_list+' => 'Assets, die dieses Asset unterstützen.',
     'Class:ISMSAsset/Attribute:supportedassets_list' => 'Unterstützte Assets',
     'Class:ISMSAsset/Attribute:supportedassets_list+' => 'Assets, die von diesem Asset unterstützt werden.',
+    'Class:ISMSAsset/Attribute:isms_documents_list' => 'ISMS-Nachweise',
+    'Class:ISMSAsset/Attribute:isms_documents_list+' => 'Dokumente als ISMS-spezifische Nachweise für dieses Asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risiken',
     'Class:ISMSAsset/Attribute:risks_list+' => 'Alle Risiken zu diesem Asset.',
     'Class:ISMSAsset/UniquenessRule:ref' => 'Es existiert bereits ein Asset mit dieser Referenz',
@@ -992,4 +994,22 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (aus Zellen-Daten)',
 
     'UI:DashletRiskMatrix:NA' => 'N/V',
+));
+
+//
+// Class: lnkDocumentToISMSAsset
+//
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkDocumentToISMSAsset' => 'Verknüpfung Dokument / ISMS-Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Ordnet einem Asset ISMS-Nachweise zu.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset, auf das sich dieser Nachweis bezieht.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset-Name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Dokument',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Vorhandenes Dokument als ISMS-Nachweis.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Dokumentname',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'Dieses Dokument ist bereits mit diesem Asset verknüpft',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Jedes Dokument kann einem Asset nur einmal zugeordnet werden.',
 ));
