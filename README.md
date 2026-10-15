@@ -35,19 +35,20 @@ The interface is available in **English and German**.
 
 ## Modules
 
-The extension is available as a full ISMS bundle or a standalone reference catalog.
+The ISMS bundle contains the ISMS application and a shared reference catalog.
 
 | Module            | Purpose                                                                                          |
 | ----------------- | ------------------------------------------------------------------------------------------------ |
 | `br-isms`         | Manage scope, assets, risks, controls, reviews, risk acceptances, and applicability assessments. |
 | `br-isms-catalog` | Maintain reusable standards, requirements, and supporting documents.                             |
 
-The full bundle includes both modules. The catalog can also be installed on its
-own when you only need a shared library of standards and requirements.
+The full bundle includes both modules. During interactive setup, selecting ISMS
+also selects its reference catalog. The catalog is currently provided as part of
+the ISMS installation.
 
 ## Installation
 
-Requires **iTop 3.2** and the dependencies of the selected package.
+Requires **iTop 3.2** and the dependencies listed below.
 
 Dependencies for version `3.2.6`:
 
@@ -55,9 +56,10 @@ Dependencies for version `3.2.6`:
 - `br-isms`: `itop-config-mgmt/3.2.0`, `br-riskassessment/3.2.0`, and
   `br-isms-catalog/3.2.6` or later compatible versions.
 
-1. Extract the chosen bundle into iTop's `extensions/` directory and ensure
+1. Extract the full ISMS bundle into iTop's `extensions/` directory and ensure
    its dependencies are available.
-2. Run iTop setup and select the desired extension.
+2. Run iTop setup and select the ISMS extension. The reference catalog is
+   selected automatically.
 3. Assign the appropriate ISMS profiles to your users. Catalog administration
    requires an iTop administrator.
 
@@ -269,7 +271,7 @@ Detail and relationship views bring together ownership, assessments, treatment,
 reviews, and supporting information. Dependency views connect assets with their
 supporting assets and configuration items, and risks with their controls and assets.
 Applicability summaries and risk matrices provide an overview of priorities.
-The standalone catalog has its own searches for standards and requirements.
+The reference catalog has its own searches for standards and requirements.
 
 Risk warnings highlight incomplete treatment or acceptance information, overdue
 treatment dates, and inconsistent assessments. These warnings support review
