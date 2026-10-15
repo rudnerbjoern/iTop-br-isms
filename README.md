@@ -1,356 +1,389 @@
 # iTop ISMS Extension
 
 Copyright (c) 2024-2026 Björn Rudner
-[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?logo=git&style=flat)](https://github.com/rudnerbjoern/iTop-isms/issues)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?logo=git&style=flat)](https://github.com/rudnerbjoern/iTop-br-isms/issues)
 [![License](https://img.shields.io/github/license/rudnerbjoern/iTop-br-isms)](https://github.com/rudnerbjoern/iTop-br-isms/blob/main/LICENSE)
 
-A lightweight Information Security Management (ISMS) extension for **iTop** that adds Assets, Risks, Controls and their relations — including inherent/residual/target risk evaluation, aggregation of control effects, **review workflows**, validations, and tidy UI presentations.
+An Information Security Management System (ISMS) extension for **iTop 3.2**.
+It connects information assets, risks, security controls, and compliance
+assessments with the organizations and configuration items already managed in iTop.
 
-> Tested with recent iTop 3.2 lines.
-
----
+Use it to document what needs protection, assess risks, track their treatment,
+and review whether security controls meet your organization's requirements.
+The interface is available in **English and German**.
 
 ## Features
 
-- **Entities**
-  - `ISMSAssetType` (typology)
-  - `ISMSAsset` (with owner/guardian, dependencies and review dates)
-  - `ISMSRisk` (inherent / residual / target, treatment & acceptance)
-  - `ISMSControl` (reusable controls with their own lifecycle)
-  - Links: `lnkSupportingAssetToAsset`, `lnkISMSRiskToISMSAsset`, `lnkISMSRiskToISMSControl`
-- **Reviews**
-  - Base class `ISMSReview` with lifecycle: `planned → in_progress → (completed | cancelled)`
-  - Common fields: `planned_on`, `started_on`, `completed_on`, `reviewer_id`, `outcome`, `summary`, `scope`, `checklist`, `evidence`, `notes`
-  - Validation: while status is **Planned**, `planned_on` **is required** and **must not be in the past** (server-side)
-    – and on completion an **Outcome** is required.
-  - `ISMSAssetReview`: upon completion sets asset `last_review` and computes `next_review` using `review_interval_months`.
-- **Risk math**
-  - Inherent score = `pre_likelihood × pre_impact`
-  - Residual computed from *effective* controls (see aggregation)
-  - Target score = `tgt_likelihood × tgt_impact`
-  - Level mapping: `low` (<5), `medium` (5–9), `high` (10–15), `extreme` (≥16)
-- **Aggregation modes** for control effects
-  - `max` (default): take the max reduction per dimension
-  - `sum_capped`: sum reductions and cap so residual never goes below 1
-  - Per-risk override + global default via config
-- **Event-driven logic**
-  - Recompute on `EVENT_DB_BEFORE_WRITE`, `EVENT_DB_COMPUTE_VALUES`, `EVENT_DB_LINKS_CHANGED`
-  - Attribute flags set via events (computed fields & timestamps are read-only)
-  - Dynamic lock of residual dimensions when effective control effects are present
-- **Validation (non-blocking warnings)**
-  - Mitigation without plan (no effective controls **and** no target)
-  - Acceptance without formal acceptance fields
-  - Treatment due date in the past
-  - Residual worse than inherent
-  - Target inconsistencies (partial input, worse than inherent/residual, acceptance conflict)
-- **Presentation**
-  - Clean 3-column details view with fieldsets
-  - "Depends on…" relations for Assets (supporting/supported) and Risks (up: Controls, down: Assets)
-- **Localization**
-  - Dictionaries in **English** and **German** (EN/DE)
+- **Scope:** define the organizational boundaries, locations, and business
+  processes covered by your ISMS.
+- **Assets:** maintain ownership, asset types, dependencies, and links to
+  configuration items and risks.
+- **Risk management:** describe threats and vulnerabilities, assess inherent,
+  residual, and target risk, and document treatment responsibilities and deadlines.
+- **Security controls:** manage controls from submission and approval through
+  implementation, amendment, suspension, and retirement.
+- **Risk acceptance:** document the rationale, conditions, validity, and approval
+  of formal risk acceptances.
+- **Reference catalogs:** maintain standards and regulatory requirements by edition,
+  with supporting documents.
+- **Statements of Applicability (SoA):** assess which requirements apply, document
+  implementation and evidence, and connect requirements to security controls.
+- **Reviews:** plan and complete asset, risk, and control reviews, with results,
+  evidence, and follow-up dates.
+- **Overview and navigation:** explore dependencies, view applicability summaries,
+  and use risk matrices to identify priorities.
 
----
+## Modules
+
+The extension is available as a full ISMS bundle or a standalone reference catalog.
+
+| Module            | Purpose                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `br-isms`         | Manage scope, assets, risks, controls, reviews, risk acceptances, and applicability assessments. |
+| `br-isms-catalog` | Maintain reusable standards, requirements, and supporting documents.                             |
+
+The full bundle includes both modules. The catalog can also be installed on its
+own when you only need a shared library of standards and requirements.
 
 ## Installation
 
-1. Copy the extension folder (e.g. `br-isms/`) into your iTop `extensions/` directory.
-2. (Optional) Add global config (see **Configuration**).
-3. Run the iTop setup (web installer or CLI) to update the DB model.
-4. Clear cache if needed; log in and assign profiles/rights as appropriate.
+Requires **iTop 3.2** and the dependencies of the selected package.
 
----
+Dependencies for version `3.2.6`:
+
+- `br-isms-catalog`: `itop-structure/3.2.0` or later.
+- `br-isms`: `itop-config-mgmt/3.2.0`, `br-riskassessment/3.2.0`, and
+  `br-isms-catalog/3.2.6` or later compatible versions.
+
+1. Extract the chosen bundle into iTop's `extensions/` directory and ensure
+   its dependencies are available.
+2. Run iTop setup and select the desired extension.
+3. Assign the appropriate ISMS profiles to your users. Catalog administration
+   requires an iTop administrator.
+
+Optional sample catalogs illustrate how to organize standards and requirements.
+They do not provide complete regulatory coverage. Keep demonstration data separate
+from an existing production catalog.
+
+## Working with the ISMS
+
+### Define scope and reference requirements
+
+Create a scope for the organization and associate the relevant locations and
+business processes. A scope can be prepared as a draft, activated, frozen,
+or marked obsolete.
+
+Choose the standard or regulatory catalog edition against which you want to
+assess the organization. Each catalog contains its own requirements and can
+include supporting documents.
+
+### Record assets and dependencies
+
+Create asset types and record the assets within scope. Assign owners and
+guardians, describe supporting assets, and connect assets to configuration
+items already present in iTop. These relationships help explain which assets
+and services a risk may affect.
+
+Assets can be published when ready for use and marked obsolete when no longer
+needed. They can be returned to draft for revision by an authorized user.
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+  draft --> published: Publish
+  published --> draft: Revise
+  published --> obsolete: Mark obsolete
+  obsolete --> draft: Reopen
+```
+
+### Assess and treat risks
+
+Describe a risk's causes, potential events, consequences, and affected assets.
+Associate relevant threats and vulnerabilities, assess likelihood and impact,
+and choose a treatment approach. Record the responsible person, treatment plan,
+and due date.
+
+Risks use the same draft, published, and obsolete stages as assets:
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+  draft --> published: Publish
+  published --> draft: Revise
+  published --> obsolete: Mark obsolete
+  obsolete --> draft: Reopen
+```
+
+The assessment distinguishes three views of a risk:
+
+| Assessment | Meaning                                               |
+| ---------- | ----------------------------------------------------- |
+| Inherent   | Likelihood and impact before accounting for controls. |
+| Residual   | Likelihood and impact after accounting for controls.  |
+| Target     | The likelihood and impact you intend to achieve.      |
+
+#### Scores and risk levels
+
+For each assessment, the score is **likelihood × impact**:
+
+- **Inherent score = inherent likelihood × inherent impact.**
+- **Residual score = residual likelihood × residual impact.**
+- **Target score = target likelihood × target impact.**
+
+A score and its risk level are calculated only when both corresponding values
+are greater than zero. If either value is missing or not positive, the score
+and risk level remain empty. An incomplete assessment is not classified as low risk.
+
+| Risk level | Score       |
+| ---------- | ----------- |
+| Low        | 1–4         |
+| Medium     | 5–9         |
+| High       | 10–15       |
+| Extreme    | 16 or above |
+
+#### Control effects and aggregation
+
+For each risk-control relationship, record whether the control's contribution
+is effective and how many whole rating steps it reduces likelihood or impact.
+Only contributions marked effective enter the calculation. The control itself
+has a separate approval and implementation lifecycle.
+
+Reductions are combined separately for likelihood and impact:
+
+- **Strongest reduction (`max`, the default):** use the largest recorded reduction
+  in each dimension. The strongest likelihood and impact reductions may come
+  from different controls.
+- **Combined reductions (`sum_capped`):** add the recorded reductions in each
+  dimension. Cap each total at the corresponding inherent value minus 1, so the
+  resulting residual value cannot fall below 1.
+
+A risk can inherit the configured default or select its own aggregation mode.
+An empty contribution does not supply a reduction; a recorded zero means no
+reduction in that dimension.
+
+#### Residual calculation and missing values
+
+When at least one control reduction can be calculated from an available inherent
+value, the residual dimensions are derived as follows:
+
+- **Residual likelihood = maximum of 1 and (inherent likelihood − aggregated likelihood reduction).**
+- **Residual impact = maximum of 1 and (inherent impact − aggregated impact reduction).**
+
+This minimum of 1 applies in both aggregation modes. A dimension without a
+recorded reduction uses zero reduction. If its corresponding inherent value
+is missing or not positive, that residual dimension remains empty.
+
+If no control reduction can be calculated, existing residual values are retained.
+They can be entered manually when the risk's current state and the user's
+permissions allow editing. While control effects determine the residual values,
+those calculated values are read-only.
+
+The residual score and risk level are always recalculated from the current
+residual likelihood and impact, whether these were calculated from control
+effects or entered manually. Both must be positive; otherwise the residual
+score and level remain empty. Scores and levels are refreshed when the risk is
+saved or its control relationships change.
+
+#### Calculation example
+
+For an inherent likelihood of **4** and impact of **5**, the inherent score is
+**20 (extreme)**. Two effective contributions reduce likelihood/impact by
+**1/2** and **2/1** rating steps:
+
+| Aggregation         | Likelihood reduction | Impact reduction | Residual likelihood | Residual impact | Residual score |
+| ------------------- | -------------------- | ---------------- | ------------------- | --------------- | -------------- |
+| Strongest reduction | 2                    | 2                | 2                   | 3               | 6 (medium)     |
+| Combined reductions | 3                    | 3                | 1                   | 2               | 2 (low)        |
+
+For example, a target likelihood of **1** and impact of **2** gives a target
+score of **2 (low)**. The target describes the intended result and does not
+replace the current residual assessment.
+
+### Manage security controls
+
+Describe the planned or implemented control, assign responsibility, and link it
+to the risks it addresses. Submit the control for approval, track implementation,
+and mark it effective when ready. Effective controls can be amended or suspended;
+controls no longer needed can be retired.
+
+```mermaid
+stateDiagram-v2
+  [*] --> draft
+  draft --> submitted: Submit
+  submitted --> approved: Approve
+  submitted --> amending: Reject
+  approved --> implementing: Start implementation
+  approved --> effective: Mark effective
+  approved --> retired: Retire
+  implementing --> effective: Mark effective
+  implementing --> retired: Retire
+  amending --> submitted: Submit amendment
+  amending --> effective: Cancel amendment
+  amending --> retired: Retire
+  effective --> amending: Start amendment
+  effective --> suspended: Suspend
+  effective --> retired: Retire
+  suspended --> effective: Resume
+  suspended --> retired: Retire
+```
+
+### Document formal risk acceptance
+
+A risk acceptance records the responsible owner, rationale, conditions, and
+validity period for accepting one or more risks. Prepare it as a draft, submit
+it for approval, and let the ISMS Manager approve the decision. An approved
+acceptance can later be revoked or marked expired.
+
+The approval date is recorded automatically. Once approved, the assigned risks
+cannot be added, removed, or replaced, including from a risk's own form. This
+protection also applies after revocation or expiry. An authorized user must
+reset the revoked or expired acceptance to draft before changing its assignments.
+Other information on the risks remains subject to their own editing permissions.
+
+### Assess applicability and implementation
+
+Create a Statement of Applicability for an organization and a standard edition.
+Its requirements are added automatically, initially marked applicable and not
+implemented. Review these starting values against the organization's actual scope.
+
+For each requirement, record applicability, justification, implementation status,
+and evidence. Connect it to the controls that implement it. Requirements declared
+not applicable need a justification; applicable or partially applicable requirements
+marked implemented need evidence.
+
+Applicability statements can be prepared, reviewed, approved, and marked obsolete.
+Summary counts help identify implementation gaps and outstanding work.
+
+### Review assets, risks, and controls
+
+Plan reviews with a reviewer, date, scope, and checklist. Record the findings,
+outcome, and evidence, then complete or cancel the review. Completing a review
+updates the reviewed object's last and next review dates.
+
+Reviews need a planned date and cannot be newly planned in the past. Completion
+requires an outcome and consistent review dates.
+
+### Use summaries and warnings
+
+Detail and relationship views bring together ownership, assessments, treatment,
+reviews, and supporting information. Dependency views connect assets with their
+supporting assets and configuration items, and risks with their controls and assets.
+Applicability summaries and risk matrices provide an overview of priorities.
+The standalone catalog has its own searches for standards and requirements.
+
+Risk warnings highlight incomplete treatment or acceptance information, overdue
+treatment dates, and inconsistent assessments. These warnings support review
+without blocking a save. Review completion, applicability evidence, and protected
+risk acceptance information have mandatory checks.
+
+## Roles and access
+
+Choose profiles according to each user's responsibilities. Access also depends
+on organization visibility and any additional profiles assigned to the user.
+
+| Profile ID | Profile                 | Responsibility                                                                                              |
+| ---------- | ----------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `73001`    | ISMS Manager            | Manage ISMS work, scope, and risk acceptance decisions.                                                     |
+| `73002`    | ISMS Asset Maintainer   | Maintain assets, their dependencies, and asset reviews.                                                     |
+| `73003`    | ISMS Risk Analyst       | Maintain risk assessments, relationships, and reviews; prepare and submit risk acceptances.                 |
+| `73004`    | ISMS Control Maintainer | Maintain controls, implementation activities, and control reviews within the assigned approval permissions. |
+| `73005`    | ISMS Viewer             | Read ISMS information.                                                                                      |
+| `117`      | SuperUser               | Perform all ISMS operations, including administrative actions.                                              |
+
+ISMS Managers manage scope and its lifecycle; the other ISMS profiles can read it.
+For risk acceptances, Managers may read, create, edit, submit, approve, revoke,
+and expire records. Risk Analysts may read, create, edit, and submit them; the
+other ISMS profiles have read-only access.
+
+Deleting risk acceptances, changing or deleting them in bulk, and resetting
+their lifecycle are reserved for SuperUser. Business rules that protect approval
+dates and risk assignments still apply.
+
+Catalog administration is reserved for iTop administrators. The ISMS profiles
+provide read-only access to standards and requirements.
 
 ## Configuration
 
-Override module settings in **config-itop.php**:
+Administrators can set two defaults in `config-itop.php`:
+
+- **Control effect aggregation:** use the strongest reduction per dimension
+  (`max`, the default) or combine reductions (`sum_capped`). Individual risks
+  can override this default.
+- **Review interval:** use 12 months unless a different interval is specified.
 
 ```php
-// config-itop.php
 'module_settings' => array(
   'br-isms' => array(
-    // Risk: how to aggregate control effects (per-risk can still override)
-    'risk_aggregation_mode' => 'max',      // 'max' or 'sum_capped'
-    // Reviews: default interval (months) used by Asset/Risk/Control reviews
-    'review_interval_months' => 12,        // fallback if not set on the object
+    'risk_aggregation_mode' => 'max',
+    'review_interval_months' => 12,
   ),
 ),
 ```
 
-The extension reads these values via `MetaModel::GetModuleSetting('br-isms', ...)`.
-
----
-
-## Data Model (Overview)
-
-### ISMSAssetType
-
-- Typology for Assets (`name`, `description`)
-- 1-N back-link to `ISMSAsset`
-
-### ISMSAsset
-
-- Lifecycle: `draft → published → obsolete` (reopen to draft if allowed)
-- Key fields: `ref`, `name`, `org_id`, `assetowner_id`, `assetguardian_id`, `category`, `assettype_id`
-- Dates: `creation_date` (auto), `publish_date` (on publish), `last_update` (auto), `last_review`, `next_review` (computed from `review_interval_months`)
-- Relations:
-  - `supportingassets_list` / `supportedassets_list` via `lnkSupportingAssetToAsset`
-  - `risks_list` via `lnkISMSRiskToISMSAsset`
-- Flags:
-  - In `published`: identity/context read-only; review dates editable
-
-```mermaid
-stateDiagram-v2
-  [*] --> draft
-
-  draft --> published: ev_publish
-  published --> draft: ev_draft
-  published --> obsolete: ev_obsolete
-  obsolete --> draft: ev_reopen
-```
-
-### ISMSRisk
-
-- Lifecycle: `draft → published → obsolete` (optional reopen to draft)
-- Context: `risk_category`, `risk_cause`, `risk_event`, `risk_consequence`, `description`
-- Inherent (`pre_*`), Residual (`res_*`), Target (`tgt_*`)
-- Treatment: `treatment_decision`, `treatment_owner_id`, `treatment_due`, `treatment_plan`
-- Acceptance: `acceptance_status`, `accepted_by_id`, `acceptance_date`, `acceptance_rationale`
-- Relations:
-  - Controls via `lnkISMSRiskToISMSControl` (only *effective* links contribute to computations)
-  - Assets via `lnkISMSRiskToISMSAsset`
-
-```mermaid
-stateDiagram-v2
-  [*] --> draft
-
-  draft --> published: ev_publish
-  published --> draft: ev_draft
-  published --> obsolete: ev_obsolete
-  obsolete --> draft: ev_reopen
-```
-
-### ISMSControl
-
-- Lifecycle (recommended): `draft → submitted → approved → implementing → effective → (suspended ↔ effective) → retired`
-- Fields: `name`, `org_id`, `controlowner_id`, `control_domain`, `control_type`, `implementation_date`, `next_review`
-- Linked risks via `lnkISMSRiskToISMSControl`
-- Can be revised (return to draft) if your policy allows it.
-
-```mermaid
-stateDiagram-v2
-  [*] --> draft
-
-  draft --> submitted: ev_submit
-  submitted --> approved: ev_approve
-  approved --> implementing: ev_start_impl
-  implementing --> effective: ev_mark_effective
-
-  effective --> suspended: ev_suspend
-  suspended --> effective: ev_resume
-
-  approved --> retired: ev_retire
-  implementing --> retired: ev_retire
-  effective --> retired: ev_retire
-  suspended --> retired: ev_retire
-```
-
----
-
-## Risk Computation Rules
-
-- **Inherent**
-  If both `pre_likelihood` and `pre_impact` > 0
-  → `pre_score = pre_likelihood × pre_impact`
-  → `pre_level = MapScoreToLevel(pre_score)`
-
-- **Residual**
-  - Collect per-link *reductions* (integers) from effective control links:
-    - `effect_on_likelihood`, `effect_on_impact`
-  - Aggregation:
-    - `max` → take max per dimension
-    - `sum_capped` → sum and cap so `res_dimension ≥ 1`
-  - If any effect is present, set:
-    - `res_likelihood = max(1, pre_likelihood − effect_like)` (or `null` if pre is missing)
-    - `res_impact    = max(1, pre_impact    − effect_imp)`
-  - Always recompute:
-    - `res_score` and `res_level` from current `res_*`
-  - If **no** effect is present, residual dimensions can be edited manually (UI keeps them writable).
-
-- **Target**
-  If both `tgt_likelihood` and `tgt_impact` > 0
-  → `tgt_score` & `tgt_level` computed similarly.
-
-- **Level thresholds**
-  `extreme` (≥16), `high` (≥10), `medium` (≥5), `low` (<5).
-
----
-
-## Validations & Warnings (non-blocking)
-
-- Mitigate without effective controls **and** without target: warn
-- Accept without `acceptance_status = accepted` or missing `accepted_by` / `acceptance_date`: warn
-- Treatment due date in the past: warn
-- Residual worse than inherent: warn
-- Target: partial input (only one dimension): warn
-- Target worse than Inherent or Residual: warn
-- Accept + Target below current Residual: warn
-- Reviews:
-  - Planned: `planned_on` is required and cannot be in the past
-  - Complete: `outcome` must be set
-
-(See `EvtCheckToWrite` for the exact messages)
-
----
-
-## UI / Presentation
-
-- Three-column details:
-  - **Asset**: General & Contacts (left), More info + Risk management + Reviews (center), Dates (right)
-  - **Risk**: Base & Context (left), Summary + Inherent/Residual/Target (center), Dates + Treatment + Acceptance + Reviews (right)
-  - Clear fieldsets: **Base**, **Context**, **Summary**, **Preliminary**, **Residual**, **Target**, **Treatment**, **Acceptance**, **Dates**, **Reviews**.
-- Relations:
-  - Asset "impacts" shows **supporting/supported** assets and **risks**.
-  - Risk "impacts" shows **controls** (up) and **assets** (down).
-- Computed fields and timestamps are read-only (via event listeners).
-
----
-
-## Events & Methods (high level)
-
-- `EvtSetInitialAttributeFlags` / `EvtSetAttributeFlags`
-  Enforce read-only on computed fields; dynamic lock of residual values when control effects apply.
-- `EvtBeforeWrite` / `EvtComputeValues` / `EvtLinksChanged`
-  Recompute scores and touch `last_update`.
-- `EvtCheckToWrite`
-  Add user warnings for the validations above.
-- **Reviews**:
-  - `OnISMSReviewCheckToWrite` validates `planned_on` (create & update while status=planned) and `outcome` on completion.
-  - `EvtOnStateTransition` timestamps `started_on` / `completed_on` and triggers post-completion hook.
-  - `ISMSAssetReview::OnReviewCompleted()` updates `last_review` and computes `next_review`.
-- `DBInsertNoReload` + counters
-  Generate human-friendly references:
-  - Assets:   `ASS-%04d`
-  - Risks:    `RSK-%04d`
-  - Controls: `CST-%04d`
-
----
-
-## User Rights
-
-This chapter defines who is **Responsible (R)**, **Accountable (A)**, **Consulted (C)**, and **Informed (I)** for key activities within the ISMS extension.
-
-> **Legend:**
-> **R** = Responsible (does the work) • **A** = Accountable (final decision/ownership) • **C** = Consulted (two-way) • **I** = Informed (one-way)
-
-### Roles
-
-- **ISMS Manager** – governance & lifecycle authority, full access
-- **ISMS Asset Maintainer** – creates/maintains assets
-- **ISMS Risk Analyst** – creates/assesses risks, manages risk links & treatment data
-- **ISMS Control Maintainer** – creates/maintains controls, implements them (approval/go-live by Manager)
-- **ISMS Viewer** – read-only
-
-> Organization scope/visibility is governed separately from these role profiles.
-
-### Typology
-
-| Activity                                   | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
-| ------------------------------------------ | -----------: | ---------------: | -----------: | -----------------: | -----: |
-| Maintain **Asset Types** (`ISMSAssetType`) |      **A/R** |                I |            I |                  I |      I |
-
-### Assets
-
-| Activity                                                              | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
-| --------------------------------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
-| Create / update **Asset** (`ISMSAsset`)                               |            A |            **R** |            I |                  I |      I |
-| Publish asset (→ `published`)                                         |      **A/R** |                I |            I |                  I |      I |
-| Obsolete asset (→ `obsolete`)                                         |      **A/R** |                I |            I |                  I |      I |
-| Reopen asset (→ `draft`)                                              |      **A/R** |                I |            I |                  I |      I |
-| Maintain **supporting/supported** links (`lnkSupportingAssetToAsset`) |            A |            **R** |            C |                  I |      I |
-
-### Risks
-
-| Activity                                                       | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
-| -------------------------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
-| Create / update **Risk** (`ISMSRisk`)                          |            A |                I |        **R** |                  I |      I |
-| Publish risk (→ `published`)                                   |      **A/R** |                I |            I |                  I |      I |
-| Obsolete / reopen risk                                         |      **A/R** |                I |            I |                  I |      I |
-| Maintain **Risk ↔ Asset** links (`lnkISMSRiskToISMSAsset`)     |            A |                I |        **R** |                  I |      I |
-| Maintain **Risk ↔ Control** links (`lnkISMSRiskToISMSControl`) |            A |                I |        **R** |                  C |      I |
-| Define treatment (decision/owner/due/plan, target residual)    |        **A** |                C |        **R** |                  C |      I |
-| Record risk **acceptance** (status/by/date/rationale)          |      **A/R** |                I |            C |                  I |      I |
-
-### Controls
-
-| Activity                                    | ISMS Manager | Asset Maintainer | Risk Analyst | Control Maintainer | Viewer |
-| ------------------------------------------- | -----------: | ---------------: | -----------: | -----------------: | -----: |
-| Create / update **Control** (`ISMSControl`) |            A |                I |            I |              **R** |      I |
-| Submit control (→ internal review)          |            A |                I |            I |              **R** |      I |
-| Approve control                             |      **A/R** |                I |            I |                  C |      I |
-| Start implementation                        |            A |                I |            I |              **R** |      I |
-| Mark **effective**                          |      **A/R** |                I |            I |                  C |      I |
-| Suspend / resume                            |            A |                I |            I |              **R** |      I |
-| Retire                                      |      **A/R** |                I |            I |                  C |      I |
-
-### Notes
-
-- Tables reflect shipped profile permissions: **Manager** can execute all lifecycle stimuli; **Maintainers/Analysts** have day-to-day write access in their domain but not publish/obsolete/approve/effective actions.
-- Link maintenance is segregated:
-  - Asset topology (`lnkSupportingAssetToAsset`) by **Asset Maintainer**.
-  - Risk linkage (`lnkISMSRiskToISMSAsset`, `lnkISMSRiskToISMSControl`) by **Risk Analyst**.
-- Organization boundaries (who may touch which org’s data) are enforced via user/org visibility, not via these RACI assignments.
-
----
-
-## Quick Start
-
-1. Create an **Asset Type** and at least one **Asset**; publish it.
-2. Create a **Control**, move it to **effective** (or as your policy requires).
-3. Create a **Risk**:
-   - Fill **Context** and **Preliminary** (`pre_*`)
-   - **Publish** the risk (inherent frozen)
-4. Link the effective **Control** to the **Risk** (set link `link_status = effective` and effects).
-5. Observe **Residual** values recompute automatically.
-6. Set a **Target**; review warnings if inconsistencies exist.
-7. Link the **Risk** to relevant **Assets**.
-8. Create an **Asset Review** from the Asset; complete it → `last_review`/`next_review` auto-updated using the configured interval.
-
----
-
-## Roadmap / Next steps
-
-- Generalized **Review** objects for Assets, Controls, Risks (with lifecycle and reminders)
-- **Risk & Control Reviews** (same framework as Asset Reviews)
-- Organization-wide thresholds (e.g., appetite) and dashboards
-- Reporting & matrix widgets (risk heatmap)
-- Additional control assurance fields
-
----
-
-## Compatibility & Notes
-
-- Designed for iTop ≥ 3.2
-- Time/date parsing uses server timezone for "due date in the past" checks
-- Profiles/ACL not included — control via iTop standard mechanisms
-
----
-
-## Localization
-
-- English and German dictionaries included. Review strings & name patterns (EN/DE) are shipped.
-  Add new locales by duplicating the dict files under `dictionaries/`.
-
----
+Assets have a dedicated **ISMS evidence** list for supporting documents. General
+configuration-item documents remain available in the existing **Documents** list.
+
+## Object reference
+
+The following tables list all object types and relationships provided by the
+extension. Existing iTop organizations, people, locations, business processes,
+documents, and configuration items are reused.
+
+### Business objects
+
+| Class                 | Module            | Purpose                                                                       |
+| --------------------- | ----------------- | ----------------------------------------------------------------------------- |
+| `ISMSScope`           | `br-isms`         | Organizational boundaries, locations, and processes covered by the ISMS.      |
+| `ISMSAssetType`       | `br-isms`         | Categories used to organize assets.                                           |
+| `ISMSAsset`           | `br-isms`         | Assets with owners, dependencies, review dates, and associated risks.         |
+| `ISMSThreat`          | `br-isms`         | Reusable descriptions of threats.                                             |
+| `ISMSVulnerability`   | `br-isms`         | Reusable descriptions of vulnerabilities.                                     |
+| `ISMSRisk`            | `br-isms`         | Risk assessments, treatment decisions, and responsibilities.                  |
+| `ISMSControl`         | `br-isms`         | Planned or implemented security controls.                                     |
+| `ISMSRiskAcceptance`  | `br-isms`         | Formal acceptance decisions with conditions, validity, and approval.          |
+| `ISMSReview`          | `br-isms`         | Shared review information used by asset, risk, and control reviews.           |
+| `ISMSAssetReview`     | `br-isms`         | Review of an asset.                                                           |
+| `ISMSRiskReview`      | `br-isms`         | Review of a risk.                                                             |
+| `ISMSControlReview`   | `br-isms`         | Review of a control.                                                          |
+| `ISMSSoA`             | `br-isms`         | Statement of Applicability for an organization and a standard edition.        |
+| `ISMSSoAEntry`        | `br-isms`         | Applicability, implementation, justification, and evidence for a requirement. |
+| `ISMSStandard`        | `br-isms-catalog` | Standard or regulatory reference catalog with edition and publisher.          |
+| `ISMSStandardControl` | `br-isms-catalog` | Individual requirement within a catalog edition.                              |
+
+### Relationships
+
+| Class                            | Relationship                                                     |
+| -------------------------------- | ---------------------------------------------------------------- |
+| `lnkISMSScopeToLocation`         | Locations included in a scope.                                   |
+| `lnkISMSScopeToProcess`          | Business processes included in a scope.                          |
+| `lnkSupportingAssetToAsset`      | Dependencies between supporting and supported assets.            |
+| `lnkFunctionalCiToAsset`         | Configuration items associated with an ISMS asset.               |
+| `lnkISMSRiskToISMSThreat`        | Threats associated with a risk, with relevance and notes.        |
+| `lnkISMSRiskToISMSVulnerability` | Vulnerabilities associated with a risk, with exposure and notes. |
+| `lnkISMSRiskToISMSAsset`         | Assets affected by a risk.                                       |
+| `lnkISMSRiskToISMSControl`       | Controls addressing a risk, with effectiveness and due dates.    |
+| `lnkISMSSoAEntryToISMSControl`   | Controls implementing an assessed requirement.                   |
+| `lnkDocumentToISMSAsset`         | ISMS evidence documents associated with an asset.                |
+| `lnkDocumentToISMSRisk`          | Supporting documents for a risk.                                 |
+| `lnkDocumentToISMSControl`       | Supporting documents for a control.                              |
+| `lnkDocumentToISMSStandard`      | Supporting documents for a standard or reference catalog.        |
+
+## Quick start
+
+1. Define the organization and scope, and select the relevant reference catalogs.
+2. Create asset types and assets; assign owners and record dependencies.
+3. Describe risks, assess likelihood and impact, and identify affected assets.
+4. Define treatment plans and controls, including responsibilities and deadlines.
+5. Record effective control contributions and review the resulting residual risk.
+6. Document formal risk acceptance where needed and submit it for approval.
+7. Assess requirements in a Statement of Applicability and record implementation evidence.
+8. Schedule asset, risk, and control reviews to keep assessments current.
 
 ## Contributing
 
-PRs and issues welcome. Please:
-
-- Follow iTop XML/PHP coding conventions
-- Include a short description and testing notes
-- Keep dictionaries in EN + DE in sync
-
----
+Issues and pull requests are welcome. Describe the problem or intended behavior,
+include relevant testing notes, follow iTop conventions, and keep English and
+German translations aligned.
 
 ## License
 
@@ -362,13 +395,3 @@ If you run a modified version over a network (e.g., as a web application), you m
 offer the complete corresponding source code to the users interacting with it.
 
 - [Full text](LICENSE)
-
-## How to help
-
-**Contributions are very welcome!**
-
-If you would like to contribute, please check the [issues](https://github.com/rudnerbjoern/iTop-isms/issues) or open a pull request.
-
-## Credits
-
-Built with ❤️ for iTop admins who run an ISMS and want a pragmatic, automation-friendly data model without the bloat.
