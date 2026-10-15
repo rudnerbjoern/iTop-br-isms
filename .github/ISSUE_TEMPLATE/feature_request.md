@@ -1,7 +1,10 @@
 ---
 name: Feature request
 about: Suggest an improvement to the ISMS or reference catalog module.
-labels: ["enhancement"]
+title: ''
+labels: enhancement
+assignees: ''
+
 ---
 
 ## Problem or use case
