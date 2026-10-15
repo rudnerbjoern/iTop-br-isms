@@ -1013,4 +1013,6 @@ Dict::Add('EN US', 'English', 'English', array(
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (from cell data)',
 
     'UI:DashletRiskMatrix:NA' => 'N/A',
+    'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'The approval date is managed by the approval and reset transitions and cannot be edited manually.',
+    'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Risk assignments are frozen after approval. Reset the revoked or expired acceptance to draft before changing its risk assignments.',
 ));

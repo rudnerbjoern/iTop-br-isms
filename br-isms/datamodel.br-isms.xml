@@ -5043,7 +5043,7 @@
                     <ext_key_to_me>acceptance_id</ext_key_to_me>
                     <tracking_level>list</tracking_level>
                     <edit_mode>actions</edit_mode>
-                    <edit_when>always</edit_when>
+                    <edit_when>on_host_edition</edit_when>
                     <count_min>0</count_min>
                     <count_max>0</count_max>
                     <with_php_constraint>true</with_php_constraint>
@@ -5065,6 +5065,9 @@
                 <states>
                     <state id="draft">
                         <flags>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
                             <attribute id="effective_from">
                                 <read_only />
                             </attribute>
@@ -5094,6 +5097,9 @@
                     </state>
                     <state id="proposed">
                         <flags>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -5154,6 +5160,12 @@
                     </state>
                     <state id="approved">
                         <flags>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risks_list">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -5201,6 +5213,12 @@
                     </state>
                     <state id="revoked">
                         <flags>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risks_list">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -5254,6 +5272,12 @@
                     </state>
                     <state id="expired">
                         <flags>
+                            <attribute id="approval_date">
+                                <read_only />
+                            </attribute>
+                            <attribute id="risks_list">
+                                <read_only />
+                            </attribute>
                             <attribute id="name">
                                 <read_only />
                             </attribute>
@@ -5308,6 +5332,11 @@
                 </states>
             </lifecycle>
             <event_listeners>
+                <event_listener id="OnISMSRiskAcceptanceCheckToWrite">
+                    <event>EVENT_DB_CHECK_TO_WRITE</event>
+                    <rank>10</rank>
+                    <callback>OnISMSRiskAcceptanceCheckToWrite</callback>
+                </event_listener>
                 <event_listener id="OnISMSRiskAcceptanceSetInitialAttributesFlags">
                     <event>EVENT_DB_SET_INITIAL_ATTRIBUTES_FLAGS</event>
                     <rank>10</rank>
@@ -8336,6 +8365,11 @@ WHERE status NOT IN ('retired')
     </menus>
     <user_rights>
         <groups>
+            <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                <classes>
+                    <class id="ISMSRiskAcceptance" />
+                </classes>
+            </group>
             <group id="ISMSScopeMgmt" _delta="define">
                 <classes>
                     <class id="ISMSScope" />
@@ -8420,6 +8454,21 @@ WHERE status NOT IN ('retired')
             <profile id="117" _delta="if_exists">
                 <!-- SuperUser -->
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">allow</action>
+                            <action id="action:delete">allow</action>
+                            <action id="action:bulk delete">allow</action>
+                            <action id="stimulus:ev_submit">allow</action>
+                            <action id="stimulus:ev_approve">allow</action>
+                            <action id="stimulus:ev_reset">allow</action>
+                            <action id="stimulus:ev_revoke">allow</action>
+                            <action id="stimulus:ev_expire">allow</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8597,6 +8646,21 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Manager</name>
                 <description>Full access to ISMS Assets, Risks, Controls, links and lifecycle actions across all organizations.</description>
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">allow</action>
+                            <action id="stimulus:ev_approve">allow</action>
+                            <action id="stimulus:ev_reset">deny</action>
+                            <action id="stimulus:ev_revoke">allow</action>
+                            <action id="stimulus:ev_expire">allow</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8774,6 +8838,21 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Asset Maintainer</name>
                 <description>Create and maintain ISMS Assets (typically within own organization). No publish or obsolete transitions.</description>
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_reset">deny</action>
+                            <action id="stimulus:ev_revoke">deny</action>
+                            <action id="stimulus:ev_expire">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -8951,6 +9030,21 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Risk Analyst</name>
                 <description>Create and assess ISMS Risks, manage links to Assets/Controls and treatment data. No publish or obsolete transitions.</description>
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">allow</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">allow</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_reset">deny</action>
+                            <action id="stimulus:ev_revoke">deny</action>
+                            <action id="stimulus:ev_expire">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -9128,6 +9222,21 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Control Maintainer</name>
                 <description>Create and maintain ISMS Controls and implementation details. Governance actions (approve/effective/retire) by Manager.</description>
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_reset">deny</action>
+                            <action id="stimulus:ev_revoke">deny</action>
+                            <action id="stimulus:ev_expire">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
@@ -9305,6 +9414,21 @@ WHERE status NOT IN ('retired')
                 <name>ISMS Viewer</name>
                 <description>Read-only access to ISMS Assets, Risks and Controls.</description>
                 <groups>
+                    <group id="ISMSRiskAcceptanceMgmt" _delta="define">
+                        <actions>
+                            <action id="action:read">allow</action>
+                            <action id="action:bulk read">allow</action>
+                            <action id="action:write">deny</action>
+                            <action id="action:bulk write">deny</action>
+                            <action id="action:delete">deny</action>
+                            <action id="action:bulk delete">deny</action>
+                            <action id="stimulus:ev_submit">deny</action>
+                            <action id="stimulus:ev_approve">deny</action>
+                            <action id="stimulus:ev_reset">deny</action>
+                            <action id="stimulus:ev_revoke">deny</action>
+                            <action id="stimulus:ev_expire">deny</action>
+                        </actions>
+                    </group>
                     <group id="ISMSScopeMgmt" _delta="define">
                         <actions>
                             <action id="action:read">allow</action>
