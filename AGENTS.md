@@ -2,6 +2,7 @@
 
 - Communicate in German; write code, documentation, and commits in English.
 - Target iTop 3.2; keep the catalog independent and English/German dictionaries aligned.
+- Use Git history for modification dates; do not add date-based `@version` tags. Keep module and extension versions in their metadata; use `@since` only for an established introduction version.
 - Preserve user changes; modify staged files only when explicitly requested.
 - Never stage, commit, or push without authorization. Use feature branches and GitHub pull requests, never direct commits to `main` or `master`.
 - Follow [commit instructions](.github/commit-message-instructions.md), `.editorconfig`, and `.gitattributes`.

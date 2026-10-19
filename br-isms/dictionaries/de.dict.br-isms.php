@@ -5,7 +5,6 @@
  *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-10-15
  */
 
 // Class: ISMSAsset
