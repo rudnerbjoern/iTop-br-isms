@@ -5,144 +5,9 @@
  *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-10-15
  */
 
-//
-// Application Menu
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Menu:ISMSManagement' => 'ISMS Management',
-    'Menu:ISMSSpace' => 'ISMS Raum',
-    'Menu:ISMSSpace:Assets' => 'Assets',
-    'Menu:ISMSSpace:Options' => 'Optionen',
-    'Menu:ISMSSpace:Risks' => 'Risiken & Kontrollen',
-    'Menu:ISMSSpace:Reviews' => 'Reviews',
-    'Menu:ISMSSpace:Standards' => 'Standards',
-    'Menu:NewISMSAsset' => 'Neues Asset',
-    'Menu:NewISMSAsset+' => 'Neues ISMS-Asset anlegen',
-    'Menu:NewISMSRisk' => 'Neues Risiko',
-    'Menu:NewISMSRisk+' => 'Neues ISMS-Risiko anlegen',
-    'Menu:NewISMSControl' => 'Neue Kontrolle',
-    'Menu:NewISMSControl+' => 'Neue ISMS-Kontrolle anlegen',
-    'Menu:SearchISMSAssets' => 'Assets suchen',
-    'Menu:SearchISMSAssets+' => 'ISMS-Assets durchsuchen',
-    'Menu:SearchISMSRisks' => 'Risiken suchen',
-    'Menu:SearchISMSRisks+' => 'ISMS-Risiken durchsuchen',
-    'Menu:SearchISMSControls' => 'Kontrollen suchen',
-    'Menu:SearchISMSControls+' => 'ISMS-Kontrollen durchsuchen',
-    'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
-    'Menu:ISMSManagement:Shortcuts+' => 'Direkter Zugriff auf häufige ISMS-Ansichten',
-    'Menu:ISMSMyAssets' => 'Meine Assets',
-    'Menu:ISMSMyAssets+' => 'Assets, bei denen ich Besitzer bin',
-    'Menu:ISMSMyRisks' => 'Meine Risiken',
-    'Menu:ISMSMyRisks+' => 'Risiken, bei denen ich Risiko-Eigner bin',
-    'Menu:ISMSMyControls' => 'Meine Kontrollen',
-    'Menu:ISMSMyControls+' => 'Kontrollen, bei denen ich Besitzer bin',
-));
-
-//
-// Class: ISMSScope
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:ISMSScope' => 'ISMS-Geltungsbereich',
-    'Class:ISMSScope+' => 'Definierter Geltungsbereich des ISMS für eine Organisation.',
-    'Class:ISMSScope/Name' => '%1$s / %2$s',
-    'Class:ISMSScope/Attribute:org_id' => 'Organisation',
-    'Class:ISMSScope/Attribute:org_id+' => 'Eigentümer des Geltungsbereichs.',
-    'Class:ISMSScope/Attribute:org_name' => 'Organisation',
-    'Class:ISMSScope/Attribute:org_name+' => '',
-    'Class:ISMSScope/Attribute:name' => 'Name',
-    'Class:ISMSScope/Attribute:name+' => 'Bezeichnung des Geltungsbereichs.',
-    'Class:ISMSScope/Attribute:status' => 'Status',
-    'Class:ISMSScope/Attribute:status+' => 'Lebenszyklusstatus des Geltungsbereichs.',
-    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Entwurf',
-    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Wird erstellt oder überarbeitet.',
-    'Class:ISMSScope/Attribute:status/Value:active'  => 'Aktiv',
-    'Class:ISMSScope/Attribute:status/Value:active+' => 'In Kraft und operativ genutzt.',
-    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Eingefroren',
-    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Vorübergehend gesperrt; Änderungen erfordern Wiedereröffnung.',
-    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolet',
-    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'Nicht mehr in Verwendung.',
-    'Class:ISMSScope/Attribute:scope_statement' => 'Geltungsbereich (Beschreibung)',
-    'Class:ISMSScope/Attribute:scope_statement+' => 'Formale Beschreibung des ISMS-Geltungsbereichs.',
-    'Class:ISMSScope/Attribute:boundaries_in' => 'Abgrenzung (inkludiert)',
-    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elemente, die ausdrücklich eingeschlossen sind (Standorte, Systeme, Prozesse).',
-    'Class:ISMSScope/Attribute:boundaries_out' => 'Abgrenzung (exkludiert)',
-    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elemente, die ausdrücklich ausgeschlossen sind.',
-    'Class:ISMSScope/Attribute:locations' => 'Standorte',
-    'Class:ISMSScope/Attribute:locations+' => 'Physische Standorte / Regionen, die abgedeckt sind.',
-    'Class:ISMSScope/Attribute:processes' => 'Prozesse',
-    'Class:ISMSScope/Attribute:processes+' => 'Geschäfts-/IT-Prozesse im Geltungsbereich.',
-    'Class:ISMSScope/Attribute:soa_id' => 'Erklärung zur Anwendbarkeit (SoA)',
-    'Class:ISMSScope/Attribute:soa_id+' => 'Verknüpfte SoA für diesen Geltungsbereich.',
-    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
-    'Class:ISMSScope/Attribute:soa_name+' => '',
-    'Class:ISMSScope/Attribute:locations_list' => 'Standorte',
-    'Class:ISMSScope/Attribute:processes_list' => 'Prozesse',
-    'Class:ISMSScope/Attribute:creation_date' => 'Erstellt am',
-    'Class:ISMSScope/Attribute:creation_date+' => 'Datum der Datensatzanlage.',
-    'Class:ISMSScope/Attribute:publish_date' => 'Veröffentlicht am',
-    'Class:ISMSScope/Attribute:publish_date+' => 'Datum der formalen Veröffentlichung/Freigabe.',
-    'Class:ISMSScope/Attribute:last_update' => 'Letzte Aktualisierung',
-    'Class:ISMSScope/Attribute:last_update+' => 'Zeitpunkt der letzten Änderung.',
-    'Class:ISMSScope/Stimulus:ev_activate' => 'Aktivieren',
-    'Class:ISMSScope/Stimulus:ev_activate+' => 'In den Status „Aktiv“ wechseln.',
-    'Class:ISMSScope/Stimulus:ev_freeze' => 'Einfrieren',
-    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Vorübergehend sperren.',
-    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Obsolet setzen',
-    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Diesen Geltungsbereich außer Betrieb nehmen.',
-    'Class:ISMSScope/Stimulus:ev_reopen' => 'Wieder öffnen',
-    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Einen Geltungsbereich wieder aktivieren.',
-));
-
-//
-// Class: lnkISMSScopeToLocation
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSScopeToLocation' => 'Verknüpfung ISMS Geltungsbereich / Standort',
-    'Class:lnkISMSScopeToLocation+' => '',
-    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Geltungsbereich',
-    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Geltungsbereich-Name',
-    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Standort',
-    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Standort-Name',
-));
-
-//
-// Class: lnkISMSScopeToProcess
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSScopeToProcess' => 'Verknüpfung ISMS Geltungsbereich / Business-Prozess',
-    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Geltungsbereich',
-    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Geltungsbereich-Name',
-    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business-Prozess',
-    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business-Prozess-Name',
-));
-
-//
-// Klasse: ISMSAssetType (DE)
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:ISMSAssetType' => 'ISMS Asset-Typ',
-    'Class:ISMSAssetType+' => 'Typologie zur Klassifizierung von ISMS-Assets.',
-    'Class:ISMSAssetType/Attribute:name' => 'Name',
-    'Class:ISMSAssetType/Attribute:name+' => 'Eindeutige Bezeichnung des Asset-Typs.',
-    'Class:ISMSAssetType/Attribute:description' => 'Beschreibung',
-    'Class:ISMSAssetType/Attribute:description+' => 'Optionale Details zu diesem Asset-Typ.',
-    'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
-    'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'Alle Assets, die diesem Typ zugeordnet sind.',
-    'Class:ISMSAssetType/UniquenessRule:name' => 'Ein Asset mit diesem Namen existiert bereits.',
-    'Class:ISMSAssetType/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
-));
-
-//
 // Class: ISMSAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'ISMSAsset:Contacts' => 'Kontakte',
@@ -190,8 +55,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:publish_date+' => 'Datum der Freigabe/Veröffentlichung.',
     'Class:ISMSAsset/Attribute:last_update' => 'Letzte Aktualisierung',
     'Class:ISMSAsset/Attribute:last_update+' => 'Zeitstempel der letzten Änderung.',
-    'Class:ISMSAsset/Attribute:next_review' => 'Nächste Überprüfung',
-    'Class:ISMSAsset/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
     'Class:ISMSAsset/Attribute:functionalcis_list' => 'Verknüpfte CI(s)',
     'Class:ISMSAsset/Attribute:functionalcis_list+' => 'Funktionelle CIs, die mit diesem Asset verknüpft sind.',
     'Class:ISMSAsset/Attribute:supportingassets_list' => 'Unterstützende Assets',
@@ -202,6 +65,14 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Attribute:isms_documents_list+' => 'Dokumente als ISMS-spezifische Nachweise für dieses Asset.',
     'Class:ISMSAsset/Attribute:risks_list' => 'Risiken',
     'Class:ISMSAsset/Attribute:risks_list+' => 'Alle Risiken zu diesem Asset.',
+    'Class:ISMSAsset/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSAsset/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSAsset/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSAsset/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSAsset/Attribute:next_review' => 'Nächste Überprüfung',
+    'Class:ISMSAsset/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
+    'Class:ISMSAsset/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSAsset/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Assets.',
     'Class:ISMSAsset/UniquenessRule:ref' => 'Es existiert bereits ein Asset mit dieser Referenz',
     'Class:ISMSAsset/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
     'Class:ISMSAsset/UniquenessRule:name' => 'Es existiert bereits ein Asset mit diesem Namen',
@@ -214,62 +85,199 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSAsset/Stimulus:ev_obsolete+' => 'Asset außer Betrieb nehmen.',
     'Class:ISMSAsset/Stimulus:ev_reopen' => 'Wieder öffnen',
     'Class:ISMSAsset/Stimulus:ev_reopen+' => 'Obsoletes Asset wieder öffnen (zurück zu Entwurf).',
-    'Class:ISMSAsset/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
-    'Class:ISMSAsset/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
-    'Class:ISMSAsset/Attribute:last_review' => 'Letzte Überprüfung',
-    'Class:ISMSAsset/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
-    'Class:ISMSAsset/Attribute:reviews_list' => 'Überprüfungen',
-    'Class:ISMSAsset/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Assets.',
 ));
 
-//
-// Class: ISMSThreat
-//
+// Class: ISMSAssetReview
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSThreat:Base' => 'Grundlagen',
-    'ISMSThreat:Details' => 'Details',
-    'Class:ISMSThreat' => 'Bedrohung',
-    'Class:ISMSThreat+' => 'Katalog von für das ISMS relevanten Bedrohungen.',
-    'Class:ISMSThreat/Attribute:name' => 'Name',
-    'Class:ISMSThreat/Attribute:category' => 'Kategorie',
-    'Class:ISMSThreat/Attribute:category/Value:human' => 'Menschlich',
-    'Class:ISMSThreat/Attribute:category/Value:technical' => 'Technisch',
-    'Class:ISMSThreat/Attribute:category/Value:environmental' => 'Umwelt',
-    'Class:ISMSThreat/Attribute:category/Value:supply_chain' => 'Lieferkette',
-    'Class:ISMSThreat/Attribute:category/Value:legal' => 'Rechtlich',
-    'Class:ISMSThreat/Attribute:description' => 'Beschreibung',
-    'Class:ISMSThreat/Attribute:source' => 'Quelle',
-    'Class:ISMSThreat/Attribute:references' => 'Referenzen',
-    'Class:ISMSThreat/UniquenessRule:no_duplicate' => 'Diese Bedrohung existiert bereits',
-    'Class:ISMSThreat/UniquenessRule:no_duplicate+' => 'Die Bedrohung muss eindeutig sein',
+    'Class:ISMSAssetReview' => 'ISMS-Asset-Review',
+    'Class:ISMSAssetReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSAssetReview/Attribute:asset_id' => 'Asset',
+    'Class:ISMSAssetReview/Attribute:asset_id+' => 'Verknüpftes Asset, das geprüft wird.',
+    'Class:ISMSAssetReview/Attribute:asset_ref' => 'Asset-Referenz',
+    'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset-Name',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'Dieses Asset-Review existiert bereits',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Review abbrechen',
 ));
 
-//
-// Class: ISMSVulnerability
-//
+// Class: ISMSAssetType
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSVulnerability:Base' => 'Grundlagen',
-    'ISMSVulnerability:Details' => 'Details',
-    'Class:ISMSVulnerability' => 'Schwachstelle',
-    'Class:ISMSVulnerability+' => 'Katalog von Schwachstellen (Mensch, Prozess, Technologie, Drittanbieter).',
-    'Class:ISMSVulnerability/Attribute:name' => 'Name',
-    'Class:ISMSVulnerability/Attribute:category' => 'Kategorie',
-    'Class:ISMSVulnerability/Attribute:category/Value:people' => 'Mensch',
-    'Class:ISMSVulnerability/Attribute:category/Value:process' => 'Prozess',
-    'Class:ISMSVulnerability/Attribute:category/Value:technology' => 'Technologie',
-    'Class:ISMSVulnerability/Attribute:category/Value:third_party' => 'Drittanbieter',
-    'Class:ISMSVulnerability/Attribute:description' => 'Beschreibung',
-    'Class:ISMSVulnerability/Attribute:source' => 'Quelle',
-    'Class:ISMSVulnerability/Attribute:references' => 'Referenzen',
-    'Class:ISMSVulnerability/UniquenessRule:no_duplicate' => 'Diese Schwachstelle existiert bereits',
-    'Class:ISMSVulnerability/UniquenessRule:no_duplicate+' => 'Die Schwachstelle muss eindeutig sein',
+    'Class:ISMSAssetType' => 'ISMS Asset-Typ',
+    'Class:ISMSAssetType+' => 'Typologie zur Klassifizierung von ISMS-Assets.',
+    'Class:ISMSAssetType/Attribute:name' => 'Name',
+    'Class:ISMSAssetType/Attribute:name+' => 'Eindeutige Bezeichnung des Asset-Typs.',
+    'Class:ISMSAssetType/Attribute:description' => 'Beschreibung',
+    'Class:ISMSAssetType/Attribute:description+' => 'Optionale Details zu diesem Asset-Typ.',
+    'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
+    'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'Alle Assets, die diesem Typ zugeordnet sind.',
+    'Class:ISMSAssetType/UniquenessRule:name' => 'Ein Asset mit diesem Namen existiert bereits.',
+    'Class:ISMSAssetType/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
 ));
 
-//
+// Class: ISMSControl
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSControl:Basics' => 'Basis',
+    'ISMSControl:Classification' => 'Klassifizierung',
+    'ISMSControl:OwnershipSchedule' => 'Verantwortung & Terminplan',
+    'ISMSControl:Description' => 'Beschreibung',
+    'Class:ISMSControl' => 'ISMS-Kontrolle',
+    'Class:ISMSControl+' => 'Wiederverwendbare Sicherheitsmaßnahme (organisatorisch / personell / physisch / technologisch).',
+    'Class:ISMSControl/Attribute:name' => 'Name',
+    'Class:ISMSControl/Attribute:name+' => 'Bezeichnung der Kontrolle.',
+    'Class:ISMSControl/Attribute:org_id' => 'Organisation',
+    'Class:ISMSControl/Attribute:org_id+' => 'Zuständige Organisation der Kontrolle.',
+    'Class:ISMSControl/Attribute:org_id_friendlyname' => 'Organisation',
+    'Class:ISMSControl/Attribute:organization_name' => 'Organisation',
+    'Class:ISMSControl/Attribute:status' => 'Status',
+    'Class:ISMSControl/Attribute:status+' => 'Lebenszyklus-Status der Maßnahme',
+    'Class:ISMSControl/Attribute:status/Value:draft' => 'Entwurf',
+    'Class:ISMSControl/Attribute:status/Value:draft+' => 'Erste Entwurfsphase',
+    'Class:ISMSControl/Attribute:status/Value:submitted' => 'Eingereicht',
+    'Class:ISMSControl/Attribute:status/Value:submitted+' => 'Wartet auf Freigabe',
+    'Class:ISMSControl/Attribute:status/Value:approved' => 'Freigegeben',
+    'Class:ISMSControl/Attribute:status/Value:approved+' => 'Zur Umsetzung freigegeben',
+    'Class:ISMSControl/Attribute:status/Value:implementing' => 'In Umsetzung',
+    'Class:ISMSControl/Attribute:status/Value:implementing+' => 'Umsetzung läuft',
+    'Class:ISMSControl/Attribute:status/Value:amending' => 'In Überarbeitung',
+    'Class:ISMSControl/Attribute:status/Value:amending+' => 'Änderung/Revision in Arbeit',
+    'Class:ISMSControl/Attribute:status/Value:effective' => 'Wirksam',
+    'Class:ISMSControl/Attribute:status/Value:effective+' => 'Im Betrieb und wirksam',
+    'Class:ISMSControl/Attribute:status/Value:suspended' => 'Ausgesetzt',
+    'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Vorübergehend außer Kraft',
+    'Class:ISMSControl/Attribute:status/Value:retired' => 'Außer Betrieb',
+    'Class:ISMSControl/Attribute:status/Value:retired+' => 'Endgültig außer Betrieb',
+    'Class:ISMSControl/Attribute:controlowner_id' => 'Kontroll-Owner',
+    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person, die für die Kontrolle verantwortlich ist.',
+    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Kontroll-Owner',
+    'Class:ISMSControl/Attribute:controlowner_name' => 'Kontroll-Owner',
+    'Class:ISMSControl/Attribute:control_domain' => 'Kontroll-Domäne',
+    'Class:ISMSControl/Attribute:control_domain+' => 'Primäre Domäne der Kontrolle.',
+    'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organisatorisch',
+    'Class:ISMSControl/Attribute:control_domain/Value:organizational+' => 'Organisatorische Domäne.',
+    'Class:ISMSControl/Attribute:control_domain/Value:people' => 'Personen',
+    'Class:ISMSControl/Attribute:control_domain/Value:people+' => 'Personenbezogene Domäne.',
+    'Class:ISMSControl/Attribute:control_domain/Value:physical' => 'Physisch',
+    'Class:ISMSControl/Attribute:control_domain/Value:physical+' => 'Physische Domäne.',
+    'Class:ISMSControl/Attribute:control_domain/Value:technological' => 'Technologisch',
+    'Class:ISMSControl/Attribute:control_domain/Value:technological+' => 'Technologische Domäne.',
+    'Class:ISMSControl/Attribute:control_type' => 'Kontrolltyp',
+    'Class:ISMSControl/Attribute:control_type+' => 'Einteilung der Kontrolle nach Zweck.',
+    'Class:ISMSControl/Attribute:control_type/Value:corrective' => 'Korrektiv',
+    'Class:ISMSControl/Attribute:control_type/Value:corrective+' => 'Korrektive Kontrolle.',
+    'Class:ISMSControl/Attribute:control_type/Value:detective' => 'Detektiv',
+    'Class:ISMSControl/Attribute:control_type/Value:detective+' => 'Detektive Kontrolle.',
+    'Class:ISMSControl/Attribute:control_type/Value:preventive' => 'Präventiv',
+    'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Präventive Kontrolle.',
+    'Class:ISMSControl/Attribute:description' => 'Beschreibung',
+    'Class:ISMSControl/Attribute:description+' => 'Details zur Umsetzung und zum Geltungsbereich der Kontrolle.',
+    'Class:ISMSControl/Attribute:implementation_date' => 'Implementiert am',
+    'Class:ISMSControl/Attribute:implementation_date+' => 'Datum der Implementierung.',
+    'Class:ISMSControl/Attribute:risks_list' => 'Risiken',
+    'Class:ISMSControl/Attribute:risks_list+' => 'Alle Risiken, die mit dieser Kontrolle verknüpft sind.',
+    'Class:ISMSControl/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSControl/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSControl/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSControl/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSControl/Attribute:next_review' => 'Nächste Überprüfung',
+    'Class:ISMSControl/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
+    'Class:ISMSControl/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSControl/Attribute:reviews_list+' => 'Alle Überprüfungen dieser Kontrolle.',
+    'Class:ISMSControl/Attribute:documents_list' => 'Dokumente',
+    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA Einträge',
+    'Class:ISMSControl/UniquenessRule:ref' => 'Es existiert bereits eine Kontrolle mit dieser Referenz',
+    'Class:ISMSControl/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
+    'Class:ISMSControl/UniquenessRule:name' => 'Es existiert bereits eine Kontrolle mit diesem Namen',
+    'Class:ISMSControl/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
+    'Class:ISMSControl/Stimulus:ev_submit' => 'Zur Freigabe einreichen',
+    'Class:ISMSControl/Stimulus:ev_submit+' => 'Von Entwurf zu Eingereicht',
+    'Class:ISMSControl/Stimulus:ev_approve' => 'Freigeben',
+    'Class:ISMSControl/Stimulus:ev_approve+' => 'Eingereichte Maßnahme freigeben',
+    'Class:ISMSControl/Stimulus:ev_reject' => 'Ablehnen',
+    'Class:ISMSControl/Stimulus:ev_reject+' => 'Einreichung ablehnen (zur Überarbeitung)',
+    'Class:ISMSControl/Stimulus:ev_start_impl' => 'Umsetzung starten',
+    'Class:ISMSControl/Stimulus:ev_start_impl+' => 'Von Freigegeben zu In Umsetzung',
+    'Class:ISMSControl/Stimulus:ev_mark_effective' => 'Als wirksam markieren',
+    'Class:ISMSControl/Stimulus:ev_mark_effective+' => 'Maßnahme als wirksam/betriebsbereit markieren',
+    'Class:ISMSControl/Stimulus:ev_suspend' => 'Aussetzen',
+    'Class:ISMSControl/Stimulus:ev_suspend+' => 'Wirksame Maßnahme vorübergehend aussetzen',
+    'Class:ISMSControl/Stimulus:ev_resume' => 'Fortsetzen',
+    'Class:ISMSControl/Stimulus:ev_resume+' => 'Von Ausgesetzt zurück zu Wirksam',
+    'Class:ISMSControl/Stimulus:ev_retire' => 'Außer Betrieb nehmen',
+    'Class:ISMSControl/Stimulus:ev_retire+' => 'Maßnahme endgültig außer Betrieb nehmen',
+    'Class:ISMSControl/Stimulus:ev_start_amend' => 'Überarbeitung starten',
+    'Class:ISMSControl/Stimulus:ev_start_amend+' => 'Überarbeitung einer wirksamen Maßnahme beginnen',
+    'Class:ISMSControl/Stimulus:ev_submit_amend' => 'Überarbeitung einreichen',
+    'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Überarbeitung zur Freigabe einreichen',
+    'Class:ISMSControl/Stimulus:ev_cancel_amend' => 'Überarbeitung abbrechen',
+    'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Überarbeitung verwerfen und zu Wirksam zurückkehren',
+));
+
+// Class: ISMSControlReview
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSControlReview' => 'ISMS-Kontroll-Review',
+    'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSControlReview/Attribute:control_id' => 'Kontrolle',
+    'Class:ISMSControlReview/Attribute:control_id+' => 'Verknüpfte Kontrolle, die geprüft wird.',
+    'Class:ISMSControlReview/Attribute:control_ref' => 'Kontroll-Referenz',
+    'Class:ISMSControlReview/Attribute:control_name' => 'Kontroll-Name',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'Dieses Kontroll-Review existiert bereits',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSControlReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Review abbrechen',
+));
+
+// Class: ISMSReview
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSReview:Link' => 'Verknüpfung',
+    'ISMSReview:Reviews' => 'Reviews',
+    'ISMSReview:Outcome' => 'Ergebnis',
+    'ISMSReview:Notes' => 'Notizen',
+    'ISMSReview:Progress' => 'Fortschritt',
+    'Class:ISMSReview'  => 'ISMS-Review',
+    'Class:ISMSReview+' => 'Review-Eintrag zu einem ISMS-Objekt (Asset, Risiko oder Kontrolle).',
+    'Class:ISMSReview/Attribute:status' => 'Status',
+    'Class:ISMSReview/Attribute:status+' => 'Lebenszyklusstatus des Reviews.',
+    'Class:ISMSReview/Attribute:status/Value:planned' => 'Geplant',
+    'Class:ISMSReview/Attribute:status/Value:planned+' => 'Initialer Planungszustand.',
+    'Class:ISMSReview/Attribute:status/Value:in_progress' => 'In Arbeit',
+    'Class:ISMSReview/Attribute:status/Value:in_progress+' => 'Review in Bearbeitung.',
+    'Class:ISMSReview/Attribute:status/Value:completed' => 'Abgeschlossen',
+    'Class:ISMSReview/Attribute:status/Value:completed+' => 'Review abgeschlossen.',
+    'Class:ISMSReview/Attribute:status/Value:cancelled' => 'Abgebrochen',
+    'Class:ISMSReview/Attribute:status/Value:cancelled+' => 'Review abgebrochen.',
+    'Class:ISMSReview/Attribute:planned_on' => 'Geplant am',
+    'Class:ISMSReview/Attribute:started_on' => 'Begonnen am',
+    'Class:ISMSReview/Attribute:completed_on' => 'Abgeschlossen am',
+    'Class:ISMSReview/Attribute:reviewer_id' => 'Prüfer',
+    'Class:ISMSReview/Attribute:reviewer_name' => 'Prüfer (Name)',
+    'Class:ISMSReview/Attribute:outcome' => 'Ergebnis',
+    'Class:ISMSReview/Attribute:outcome/Value:pass' => 'Bestanden',
+    'Class:ISMSReview/Attribute:outcome/Value:minor_issues' => 'Kleinere Abweichungen',
+    'Class:ISMSReview/Attribute:outcome/Value:major_issues' => 'Größere Abweichungen',
+    'Class:ISMSReview/Attribute:outcome/Value:fail' => 'Nicht bestanden',
+    'Class:ISMSReview/Attribute:summary' => 'Zusammenfassung',
+    'Class:ISMSReview/Attribute:notes' => 'Notizen',
+    'Class:ISMSReview/Attribute:scope' => 'Geltungsbereich',
+    'Class:ISMSReview/Attribute:checklist' => 'Checkliste',
+    'Class:ISMSReview/Attribute:evidence' => 'Nachweise',
+    'Class:ISMSReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSReview/Stimulus:ev_cancel' => 'Review abbrechen',
+    'Class:ISMSReview/Check:PlannedInPast' => 'Planungsdatum darf nicht in der Vergangenheit liegen.',
+    'Class:ISMSReview/Check:NoOutcome' => 'Ergebnis sollte vor dem Abschluss gesetzt werden.',
+    'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Begonnen am" liegt vor "Geplant am".',
+    'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Abgeschlossen am" liegt vor "Begonnen am".',
+));
+
 // Class: ISMSRisk
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'ISMSRisk:Base' => 'Basis',
@@ -318,8 +326,6 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Attribute:publish_date+' => 'Datum der Freigabe/Veröffentlichung.',
     'Class:ISMSRisk/Attribute:last_update' => 'Letzte Aktualisierung',
     'Class:ISMSRisk/Attribute:last_update+' => 'Zeitstempel der letzten Änderung.',
-    'Class:ISMSRisk/Attribute:next_review' => 'Nächste Überprüfung',
-    'Class:ISMSRisk/Attribute:next_review+' => 'Geplantes Datum der nächsten Risikoprüfung.',
     'Class:ISMSRisk/Attribute:description' => 'Beschreibung',
     'Class:ISMSRisk/Attribute:description+' => 'Zusätzliche Details zum Kontext, Annahmen und Notizen.',
     'Class:ISMSRisk/Attribute:risk_category' => 'Risikokategorie',
@@ -495,6 +501,14 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Attribute:controls_list' => 'Kontrolle(n)',
     'Class:ISMSRisk/Attribute:controls_list+' => 'Alle Kontrollen, die mit diesem Risiko verknüpft sind.',
     'Class:ISMSRisk/Attribute:documents_list' => 'Dokumente',
+    'Class:ISMSRisk/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
+    'Class:ISMSRisk/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
+    'Class:ISMSRisk/Attribute:last_review' => 'Letzte Überprüfung',
+    'Class:ISMSRisk/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
+    'Class:ISMSRisk/Attribute:next_review' => 'Nächste Überprüfung',
+    'Class:ISMSRisk/Attribute:next_review+' => 'Geplantes Datum der nächsten Risikoprüfung.',
+    'Class:ISMSRisk/Attribute:reviews_list' => 'Überprüfungen',
+    'Class:ISMSRisk/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Risikos.',
     'Class:ISMSRisk/UniquenessRule:ref' => 'Es existiert bereits ein Risiko mit dieser Referenz',
     'Class:ISMSRisk/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
     'Class:ISMSRisk/UniquenessRule:name' => 'Es existiert bereits ein Risiko mit diesem Namen',
@@ -516,192 +530,236 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRisk/Check:TargetGtInherent' => 'Target score is greater than the inherent score. Please review.',
     'Class:ISMSRisk/Check:TargetGtResidual' => 'Target score is greater than the current residual score. Please review.',
     'Class:ISMSRisk/Check:AcceptButTargetBelowResidual' => "Treatment 'accept' but target residual is lower than current residual. Consider 'mitigate' instead.",
+));
+
+// Class: ISMSRiskAcceptance
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'Das Datum der Genehmigung wird beim Genehmigen und Zurücksetzen automatisch verwaltet und kann nicht manuell geändert werden.',
     'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Die Zuordnung der Risiken ist nach der Genehmigung gesperrt. Setzen Sie die widerrufene oder abgelaufene Risikoakzeptanz in den Entwurf zurück, bevor Sie die Zuordnung der Risiken ändern.',
-    'Class:ISMSRisk/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
-    'Class:ISMSRisk/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
-    'Class:ISMSRisk/Attribute:last_review' => 'Letzte Überprüfung',
-    'Class:ISMSRisk/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
-    'Class:ISMSRisk/Attribute:reviews_list' => 'Überprüfungen',
-    'Class:ISMSRisk/Attribute:reviews_list+' => 'Alle Überprüfungen dieses Risikos.',
 ));
 
-//
-// Class: lnkISMSRiskToISMSThreat
-//
+// Class: ISMSRiskReview
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSThreat' => 'Verknüpfung Risiko/Bedrohung',
-    'Class:lnkISMSRiskToISMSThreat+' => 'Verknüpfung zwischen einem Risiko und einer Bedrohung.',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risiko',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risiko',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_id' => 'Bedrohung',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_name' => 'Bedrohung',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy' => 'Relevanz',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:cause' => 'Ursache',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:contributing' => 'Mitwirkend',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:notes' => 'Notizen',
-    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate' => 'Diese Kombination existiert bereits',
-    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate+' => 'Die Kombination muss eindeutig sein',
+    'Class:ISMSRiskReview' => 'ISMS-Risiko-Review',
+    'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSRiskReview/Attribute:risk_id' => 'Risiko',
+    'Class:ISMSRiskReview/Attribute:risk_id+' => 'Verknüpftes Risiko, das geprüft wird.',
+    'Class:ISMSRiskReview/Attribute:risk_ref' => 'Risiko-Referenz',
+    'Class:ISMSRiskReview/Attribute:risk_name' => 'Risiko-Name',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'Dieses Risiko-Review existiert bereits',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
+    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Review starten',
+    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Review abschließen',
+    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Review abbrechen',
 ));
 
-//
-// Class: lnkISMSRiskToISMSVulnerability
-//
+// Class: ISMSScope
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkISMSRiskToISMSVulnerability' => 'Verknüpfung Risiko/Schwachstelle',
-    'Class:lnkISMSRiskToISMSVulnerability+' => 'Verknüpfung zwischen einem Risiko und einer Schwachstelle.',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risiko',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risiko',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_id' => 'Schwachstelle',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_name' => 'Schwachstelle',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure' => 'Exposition',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:present' => 'Vorhanden',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:mitigated' => 'Mitigiert',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:unknown' => 'Unbekannt',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:notes' => 'Notizen',
-    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate' => 'Diese Kombination existiert bereits',
-    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate+' => 'Die Kombination muss eindeutig sein',
+    'Class:ISMSScope' => 'ISMS-Geltungsbereich',
+    'Class:ISMSScope+' => 'Definierter Geltungsbereich des ISMS für eine Organisation.',
+    'Class:ISMSScope/Name' => '%1$s / %2$s',
+    'Class:ISMSScope/Attribute:org_id' => 'Organisation',
+    'Class:ISMSScope/Attribute:org_id+' => 'Eigentümer des Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:org_name' => 'Organisation',
+    'Class:ISMSScope/Attribute:org_name+' => '',
+    'Class:ISMSScope/Attribute:name' => 'Name',
+    'Class:ISMSScope/Attribute:name+' => 'Bezeichnung des Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:status' => 'Status',
+    'Class:ISMSScope/Attribute:status+' => 'Lebenszyklusstatus des Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Entwurf',
+    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Wird erstellt oder überarbeitet.',
+    'Class:ISMSScope/Attribute:status/Value:active'  => 'Aktiv',
+    'Class:ISMSScope/Attribute:status/Value:active+' => 'In Kraft und operativ genutzt.',
+    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Eingefroren',
+    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Vorübergehend gesperrt; Änderungen erfordern Wiedereröffnung.',
+    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolet',
+    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'Nicht mehr in Verwendung.',
+    'Class:ISMSScope/Attribute:scope_statement' => 'Geltungsbereich (Beschreibung)',
+    'Class:ISMSScope/Attribute:scope_statement+' => 'Formale Beschreibung des ISMS-Geltungsbereichs.',
+    'Class:ISMSScope/Attribute:boundaries_in' => 'Abgrenzung (inkludiert)',
+    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elemente, die ausdrücklich eingeschlossen sind (Standorte, Systeme, Prozesse).',
+    'Class:ISMSScope/Attribute:boundaries_out' => 'Abgrenzung (exkludiert)',
+    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elemente, die ausdrücklich ausgeschlossen sind.',
+    'Class:ISMSScope/Attribute:locations' => 'Standorte',
+    'Class:ISMSScope/Attribute:locations+' => 'Physische Standorte / Regionen, die abgedeckt sind.',
+    'Class:ISMSScope/Attribute:processes' => 'Prozesse',
+    'Class:ISMSScope/Attribute:processes+' => 'Geschäfts-/IT-Prozesse im Geltungsbereich.',
+    'Class:ISMSScope/Attribute:soa_id' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'Class:ISMSScope/Attribute:soa_id+' => 'Verknüpfte SoA für diesen Geltungsbereich.',
+    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
+    'Class:ISMSScope/Attribute:soa_name+' => '',
+    'Class:ISMSScope/Attribute:locations_list' => 'Standorte',
+    'Class:ISMSScope/Attribute:processes_list' => 'Prozesse',
+    'Class:ISMSScope/Attribute:creation_date' => 'Erstellt am',
+    'Class:ISMSScope/Attribute:creation_date+' => 'Datum der Datensatzanlage.',
+    'Class:ISMSScope/Attribute:publish_date' => 'Veröffentlicht am',
+    'Class:ISMSScope/Attribute:publish_date+' => 'Datum der formalen Veröffentlichung/Freigabe.',
+    'Class:ISMSScope/Attribute:last_update' => 'Letzte Aktualisierung',
+    'Class:ISMSScope/Attribute:last_update+' => 'Zeitpunkt der letzten Änderung.',
+    'Class:ISMSScope/Stimulus:ev_activate' => 'Aktivieren',
+    'Class:ISMSScope/Stimulus:ev_activate+' => 'In den Status „Aktiv“ wechseln.',
+    'Class:ISMSScope/Stimulus:ev_freeze' => 'Einfrieren',
+    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Vorübergehend sperren.',
+    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Obsolet setzen',
+    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Diesen Geltungsbereich außer Betrieb nehmen.',
+    'Class:ISMSScope/Stimulus:ev_reopen' => 'Wieder öffnen',
+    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Einen Geltungsbereich wieder aktivieren.',
 ));
 
-//
-// Class: ISMSControl
-//
+// Class: ISMSSoA
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSControl:Basics' => 'Basis',
-    'ISMSControl:Classification' => 'Klassifizierung',
-    'ISMSControl:OwnershipSchedule' => 'Verantwortung & Terminplan',
-    'ISMSControl:Description' => 'Beschreibung',
-    'Class:ISMSControl' => 'ISMS-Kontrolle',
-    'Class:ISMSControl+' => 'Wiederverwendbare Sicherheitsmaßnahme (organisatorisch / personell / physisch / technologisch).',
-    'Class:ISMSControl/Attribute:name' => 'Name',
-    'Class:ISMSControl/Attribute:name+' => 'Bezeichnung der Kontrolle.',
-    'Class:ISMSControl/Attribute:org_id' => 'Organisation',
-    'Class:ISMSControl/Attribute:org_id+' => 'Zuständige Organisation der Kontrolle.',
-    'Class:ISMSControl/Attribute:org_id_friendlyname' => 'Organisation',
-    'Class:ISMSControl/Attribute:organization_name' => 'Organisation',
-    'Class:ISMSControl/Attribute:status' => 'Status',
-    'Class:ISMSControl/Attribute:status+' => 'Lebenszyklus-Status der Maßnahme',
-    'Class:ISMSControl/Attribute:status/Value:draft' => 'Entwurf',
-    'Class:ISMSControl/Attribute:status/Value:draft+' => 'Erste Entwurfsphase',
-    'Class:ISMSControl/Attribute:status/Value:submitted' => 'Eingereicht',
-    'Class:ISMSControl/Attribute:status/Value:submitted+' => 'Wartet auf Freigabe',
-    'Class:ISMSControl/Attribute:status/Value:approved' => 'Freigegeben',
-    'Class:ISMSControl/Attribute:status/Value:approved+' => 'Zur Umsetzung freigegeben',
-    'Class:ISMSControl/Attribute:status/Value:implementing' => 'In Umsetzung',
-    'Class:ISMSControl/Attribute:status/Value:implementing+' => 'Umsetzung läuft',
-    'Class:ISMSControl/Attribute:status/Value:amending' => 'In Überarbeitung',
-    'Class:ISMSControl/Attribute:status/Value:amending+' => 'Änderung/Revision in Arbeit',
-    'Class:ISMSControl/Attribute:status/Value:effective' => 'Wirksam',
-    'Class:ISMSControl/Attribute:status/Value:effective+' => 'Im Betrieb und wirksam',
-    'Class:ISMSControl/Attribute:status/Value:suspended' => 'Ausgesetzt',
-    'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Vorübergehend außer Kraft',
-    'Class:ISMSControl/Attribute:status/Value:retired' => 'Außer Betrieb',
-    'Class:ISMSControl/Attribute:status/Value:retired+' => 'Endgültig außer Betrieb',
-    'Class:ISMSControl/Attribute:controlowner_id' => 'Kontroll-Owner',
-    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person, die für die Kontrolle verantwortlich ist.',
-    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Kontroll-Owner',
-    'Class:ISMSControl/Attribute:controlowner_name' => 'Kontroll-Owner',
-    'Class:ISMSControl/Attribute:control_domain' => 'Kontroll-Domäne',
-    'Class:ISMSControl/Attribute:control_domain+' => 'Primäre Domäne der Kontrolle.',
-    'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organisatorisch',
-    'Class:ISMSControl/Attribute:control_domain/Value:organizational+' => 'Organisatorische Domäne.',
-    'Class:ISMSControl/Attribute:control_domain/Value:people' => 'Personen',
-    'Class:ISMSControl/Attribute:control_domain/Value:people+' => 'Personenbezogene Domäne.',
-    'Class:ISMSControl/Attribute:control_domain/Value:physical' => 'Physisch',
-    'Class:ISMSControl/Attribute:control_domain/Value:physical+' => 'Physische Domäne.',
-    'Class:ISMSControl/Attribute:control_domain/Value:technological' => 'Technologisch',
-    'Class:ISMSControl/Attribute:control_domain/Value:technological+' => 'Technologische Domäne.',
-    'Class:ISMSControl/Attribute:control_type' => 'Kontrolltyp',
-    'Class:ISMSControl/Attribute:control_type+' => 'Einteilung der Kontrolle nach Zweck.',
-    'Class:ISMSControl/Attribute:control_type/Value:corrective' => 'Korrektiv',
-    'Class:ISMSControl/Attribute:control_type/Value:corrective+' => 'Korrektive Kontrolle.',
-    'Class:ISMSControl/Attribute:control_type/Value:detective' => 'Detektiv',
-    'Class:ISMSControl/Attribute:control_type/Value:detective+' => 'Detektive Kontrolle.',
-    'Class:ISMSControl/Attribute:control_type/Value:preventive' => 'Präventiv',
-    'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Präventive Kontrolle.',
-    'Class:ISMSControl/Attribute:description' => 'Beschreibung',
-    'Class:ISMSControl/Attribute:description+' => 'Details zur Umsetzung und zum Geltungsbereich der Kontrolle.',
-    'Class:ISMSControl/Attribute:implementation_date' => 'Implementiert am',
-    'Class:ISMSControl/Attribute:implementation_date+' => 'Datum der Implementierung.',
-    'Class:ISMSControl/Attribute:next_review' => 'Nächste Überprüfung',
-    'Class:ISMSControl/Attribute:next_review+' => 'Geplantes Datum der nächsten Überprüfung.',
-    'Class:ISMSControl/Attribute:risks_list' => 'Risiken',
-    'Class:ISMSControl/Attribute:risks_list+' => 'Alle Risiken, die mit dieser Kontrolle verknüpft sind.',
-    'Class:ISMSControl/Attribute:documents_list' => 'Dokumente',
-    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA Einträge',
-    'Class:ISMSControl/UniquenessRule:ref' => 'Es existiert bereits eine Kontrolle mit dieser Referenz',
-    'Class:ISMSControl/UniquenessRule:ref+' => 'Die Referenz muss eindeutig sein',
-    'Class:ISMSControl/UniquenessRule:name' => 'Es existiert bereits eine Kontrolle mit diesem Namen',
-    'Class:ISMSControl/UniquenessRule:name+' => 'Der Name muss eindeutig sein',
-    'Class:ISMSControl/Stimulus:ev_submit' => 'Zur Freigabe einreichen',
-    'Class:ISMSControl/Stimulus:ev_submit+' => 'Von Entwurf zu Eingereicht',
-    'Class:ISMSControl/Stimulus:ev_approve' => 'Freigeben',
-    'Class:ISMSControl/Stimulus:ev_approve+' => 'Eingereichte Maßnahme freigeben',
-    'Class:ISMSControl/Stimulus:ev_reject' => 'Ablehnen',
-    'Class:ISMSControl/Stimulus:ev_reject+' => 'Einreichung ablehnen (zur Überarbeitung)',
-    'Class:ISMSControl/Stimulus:ev_start_impl' => 'Umsetzung starten',
-    'Class:ISMSControl/Stimulus:ev_start_impl+' => 'Von Freigegeben zu In Umsetzung',
-    'Class:ISMSControl/Stimulus:ev_mark_effective' => 'Als wirksam markieren',
-    'Class:ISMSControl/Stimulus:ev_mark_effective+' => 'Maßnahme als wirksam/betriebsbereit markieren',
-    'Class:ISMSControl/Stimulus:ev_suspend' => 'Aussetzen',
-    'Class:ISMSControl/Stimulus:ev_suspend+' => 'Wirksame Maßnahme vorübergehend aussetzen',
-    'Class:ISMSControl/Stimulus:ev_resume' => 'Fortsetzen',
-    'Class:ISMSControl/Stimulus:ev_resume+' => 'Von Ausgesetzt zurück zu Wirksam',
-    'Class:ISMSControl/Stimulus:ev_retire' => 'Außer Betrieb nehmen',
-    'Class:ISMSControl/Stimulus:ev_retire+' => 'Maßnahme endgültig außer Betrieb nehmen',
-    'Class:ISMSControl/Stimulus:ev_start_amend' => 'Überarbeitung starten',
-    'Class:ISMSControl/Stimulus:ev_start_amend+' => 'Überarbeitung einer wirksamen Maßnahme beginnen',
-    'Class:ISMSControl/Stimulus:ev_submit_amend' => 'Überarbeitung einreichen',
-    'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Überarbeitung zur Freigabe einreichen',
-    'Class:ISMSControl/Stimulus:ev_cancel_amend' => 'Überarbeitung abbrechen',
-    'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Überarbeitung verwerfen und zu Wirksam zurückkehren',
-    'Class:ISMSControl/Attribute:review_interval_months' => 'Überprüfungsintervall (Monate)',
-    'Class:ISMSControl/Attribute:review_interval_months+' => 'Intervall zwischen Überprüfungen in Monaten.',
-    'Class:ISMSControl/Attribute:last_review' => 'Letzte Überprüfung',
-    'Class:ISMSControl/Attribute:last_review+' => 'Datum der letzten Überprüfung.',
-    'Class:ISMSControl/Attribute:reviews_list' => 'Überprüfungen',
-    'Class:ISMSControl/Attribute:reviews_list+' => 'Alle Überprüfungen dieser Kontrolle.',
+    'ISMSSoA:Header'  => 'Allgemeine Informationen',
+    'ISMSSoA:KPIs' => 'KPIs',
+    'ISMSSoA:Entries' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'ISMSSoA:PopulatedEntries' => '%1$d SoA-Einträge erstellt.',
+    'ISMSSoA:Dashboard' => 'Dashboard',
+    'ISMSSoA:Dashboard:Title' => 'Abdeckung',
+    'ISMSSoA:Dashboard:StdControls:Total' => 'Standard-Kontrollen: %1$d',
+    'ISMSSoA:Dashboard:Coverage' => 'Abdeckung',
+    'ISMSSoA:Dashboard:Undefined' => 'Undefiniert',
+    'ISMSSoA:Dashboard:EntriesCount' => 'Einträge',
+    'Class:ISMSSoA' => 'Erklärung zur Anwendbarkeit (SoA)',
+    'Class:ISMSSoA+' => 'SoA pro Organisation und Standard.',
+    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
+    'Class:ISMSSoA/Attribute:org_id' => 'Organisation',
+    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
+    'Class:ISMSSoA/Attribute:status' => 'Status',
+    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Entwurf',
+    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In Prüfung',
+    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Freigegeben',
+    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolet',
+    'Class:ISMSSoA/Attribute:owner_id' => 'Verantwortlich',
+    'Class:ISMSSoA/Attribute:effective_from' => 'Gültig ab',
+    'Class:ISMSSoA/Attribute:notes' => 'Notizen',
+    'Class:ISMSSoA/Attribute:kpi_total' => 'Kontrollen (gesamt)',
+    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Anwendbar',
+    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implementiert',
+    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Lücken',
+    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA-Einträge',
+    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'Für die Organisation "$this->org_id_friendlyname$" und den Standard "$this->standard_id_friendlyname$" existiert bereits eine SoA.',
+    'Class:ISMSSoA/Stimulus:ev_submit' => 'Einreichen',
+    'Class:ISMSSoA/Stimulus:ev_approve' => 'Freigeben',
+    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Außer Betrieb',
+    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Zurück zu Entwurf',
+    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Zurück in Prüfung',
+    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Wiedereröffnen',
+    'Class:ISMSSoA/Check:AllEntriesDecided' => 'Vor der Freigabe müssen alle Einträge eine Entscheidung zur Anwendbarkeit besitzen.',
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
 ));
 
-//
-// Class: lnkSupportingAssetToAsset
-//
+// Class: ISMSSoAEntry
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkSupportingAssetToAsset' => 'Verknüpfung Unterstützendes Asset/Asset',
-    'Class:lnkSupportingAssetToAsset+' => 'Verknüpfung, die angibt, dass das erste Asset das zweite Asset unterstützt.',
-    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Wähle das Asset, das ein anderes Asset unterstützt.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Unterstützendes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Unterstütztes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Wähle das Asset, das unterstützt wird.',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Unterstütztes Asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Unterstütztes Asset',
+    'ISMSSoAEntry:Link' => 'Verknüpfung',
+    'ISMSSoAEntry:Decision' => 'Entscheidung',
+    'ISMSSoAEntry:Implementation' => 'Implementierung',
+    'Class:ISMSSoAEntry' => 'SoA-Eintrag',
+    'Class:ISMSSoAEntry+' => 'Entscheidung zur Anwendbarkeit von eine Standard-Kontrolle.',
+    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
+    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard-Kontrolle',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Kontrollcode',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Kontrolltitel',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Kontrolldomäne',
+    'Class:ISMSSoAEntry/Attribute:applicability' => 'Anwendbarkeit',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Anwendbar',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Nicht anwendbar',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Teilweise anwendbar',
+    'Class:ISMSSoAEntry/Attribute:justification' => 'Begründung',
+    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Umsetzungsstatus',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Geplant',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In Umsetzung',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implementiert',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Nicht implementiert',
+    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidenz',
+    'Class:ISMSSoAEntry/Attribute:notes' => 'Notizen',
+    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Interne Kontrollen',
+    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'Es existiert bereits ein Eintrag zu "$this->standardcontrol_code$" in der SoA "$this->soa_id_friendlyname$".',
+    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Bitte gib eine Begründung an, wenn eine Kontrolle als nicht anwendbar markiert wird.',
+    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Füge nach Möglichkeit Evidenz für implementierte Kontrollen hinzu.',
 ));
 
-//
+// Class: ISMSStandardControl
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA-Einträge',
+));
+
+// Class: ISMSThreat
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSThreat:Base' => 'Grundlagen',
+    'ISMSThreat:Details' => 'Details',
+    'Class:ISMSThreat' => 'Bedrohung',
+    'Class:ISMSThreat+' => 'Katalog von für das ISMS relevanten Bedrohungen.',
+    'Class:ISMSThreat/Attribute:name' => 'Name',
+    'Class:ISMSThreat/Attribute:category' => 'Kategorie',
+    'Class:ISMSThreat/Attribute:category/Value:human' => 'Menschlich',
+    'Class:ISMSThreat/Attribute:category/Value:technical' => 'Technisch',
+    'Class:ISMSThreat/Attribute:category/Value:environmental' => 'Umwelt',
+    'Class:ISMSThreat/Attribute:category/Value:supply_chain' => 'Lieferkette',
+    'Class:ISMSThreat/Attribute:category/Value:legal' => 'Rechtlich',
+    'Class:ISMSThreat/Attribute:description' => 'Beschreibung',
+    'Class:ISMSThreat/Attribute:source' => 'Quelle',
+    'Class:ISMSThreat/Attribute:references' => 'Referenzen',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate' => 'Diese Bedrohung existiert bereits',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate+' => 'Die Bedrohung muss eindeutig sein',
+));
+
+// Class: ISMSVulnerability
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'ISMSVulnerability:Base' => 'Grundlagen',
+    'ISMSVulnerability:Details' => 'Details',
+    'Class:ISMSVulnerability' => 'Schwachstelle',
+    'Class:ISMSVulnerability+' => 'Katalog von Schwachstellen (Mensch, Prozess, Technologie, Drittanbieter).',
+    'Class:ISMSVulnerability/Attribute:name' => 'Name',
+    'Class:ISMSVulnerability/Attribute:category' => 'Kategorie',
+    'Class:ISMSVulnerability/Attribute:category/Value:people' => 'Mensch',
+    'Class:ISMSVulnerability/Attribute:category/Value:process' => 'Prozess',
+    'Class:ISMSVulnerability/Attribute:category/Value:technology' => 'Technologie',
+    'Class:ISMSVulnerability/Attribute:category/Value:third_party' => 'Drittanbieter',
+    'Class:ISMSVulnerability/Attribute:description' => 'Beschreibung',
+    'Class:ISMSVulnerability/Attribute:source' => 'Quelle',
+    'Class:ISMSVulnerability/Attribute:references' => 'Referenzen',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate' => 'Diese Schwachstelle existiert bereits',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate+' => 'Die Schwachstelle muss eindeutig sein',
+));
+
+// Class: lnkDocumentToISMSAsset
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkDocumentToISMSAsset' => 'Verknüpfung Dokument / ISMS-Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Ordnet einem Asset ISMS-Nachweise zu.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset, auf das sich dieser Nachweis bezieht.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset-Name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Dokument',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Vorhandenes Dokument als ISMS-Nachweis.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Dokumentname',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'Dieses Dokument ist bereits mit diesem Asset verknüpft',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Jedes Dokument kann einem Asset nur einmal zugeordnet werden.',
+));
+
 // Class: lnkFunctionalCiToAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkFunctionalCiToAsset' => 'Verknüpfung FunctionalCI/Asset',
     'Class:lnkFunctionalCiToAsset/Name' => '%1$s - %2$s',
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id' => 'FunctionalCI',
+    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id_friendlyname' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:functionalci_name' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_id' => 'Zugehöriges Asset',
-    'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Zugehöriges Asset',
-    'Class:lnkFunctionalCiToAsset/Attribute:functionalci_id_friendlyname' => 'FunctionalCI',
     'Class:lnkFunctionalCiToAsset/Attribute:asset_id_friendlyname' => 'Zugehöriges Asset',
+    'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Zugehöriges Asset',
 ));
 
-//
 // Class: lnkISMSRiskToISMSAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSAsset' => 'Verknüpfung Risiko/Asset',
@@ -709,17 +767,15 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSAsset/Name' => '%1$s - %2$s',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:risk_name' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id' => 'Asset',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id+' => 'Verknüpftes Asset auswählen.',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
-    'Class:lnkISMSRiskToISMSAsset/Attribute:risk_id_friendlyname' => 'Risiko',
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_id_friendlyname' => 'Asset',
+    'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
-//
 // Class: lnkISMSRiskToISMSControl
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'lnkISMSRiskToISMSControl:Link' => 'Verknüpfung',
@@ -733,11 +789,13 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSControl/Name' => '%1$s - %2$s',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_id' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_id+' => 'Verknüpftes Risiko auswählen.',
+    'Class:lnkISMSRiskToISMSControl/Attribute:risk_id_friendlyname' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_name' => 'Risiko',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref' => 'Risiko-Ref',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_ref+' => 'Referenz des verknüpften Risikos (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_id' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_id+' => 'Verknüpfte Kontrolle auswählen.',
+    'Class:lnkISMSRiskToISMSControl/Attribute:control_id_friendlyname' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:control_name' => 'Kontrolle',
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood' => 'Effekt auf Eintrittswahrscheinlichkeit',
     'Class:lnkISMSRiskToISMSControl/Attribute:effect_on_likelihood+' => 'Relative Reduktionsstufen für die Eintrittswahrscheinlichkeit (0 = kein Effekt).',
@@ -791,188 +849,65 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_level_ro+' => 'Aktueller Netto-Risikolevel (schreibgeschützt).',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro' => 'Netto-Score',
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro+' => 'Aktueller Netto-Risikoscore (schreibgeschützt).',
-    'Class:lnkISMSRiskToISMSControl/Attribute:risk_id_friendlyname' => 'Risiko',
-    'Class:lnkISMSRiskToISMSControl/Attribute:control_id_friendlyname' => 'Kontrolle',
 ));
 
-
-//
-// Class: ISMSReview
-//
+// Class: lnkISMSRiskToISMSThreat
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSReview:Link' => 'Verknüpfung',
-    'ISMSReview:Reviews' => 'Reviews',
-    'ISMSReview:Outcome' => 'Ergebnis',
-    'ISMSReview:Notes' => 'Notizen',
-    'ISMSReview:Progress' => 'Fortschritt',
-
-    'Class:ISMSReview'  => 'ISMS-Review',
-    'Class:ISMSReview+' => 'Review-Eintrag zu einem ISMS-Objekt (Asset, Risiko oder Kontrolle).',
-
-    'Class:ISMSAssetReview' => 'ISMS-Asset-Review',
-    'Class:ISMSAssetReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSAssetReview/Attribute:asset_id' => 'Asset',
-    'Class:ISMSAssetReview/Attribute:asset_id+' => 'Verknüpftes Asset, das geprüft wird.',
-    'Class:ISMSAssetReview/Attribute:asset_ref' => 'Asset-Referenz',
-    'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset-Name',
-    'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'Dieses Asset-Review existiert bereits',
-    'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
-    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Review starten',
-    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Review abschließen',
-    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Review abbrechen',
-
-    'Class:ISMSRiskReview' => 'ISMS-Risiko-Review',
-    'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSRiskReview/Attribute:risk_id' => 'Risiko',
-    'Class:ISMSRiskReview/Attribute:risk_id+' => 'Verknüpftes Risiko, das geprüft wird.',
-    'Class:ISMSRiskReview/Attribute:risk_ref' => 'Risiko-Referenz',
-    'Class:ISMSRiskReview/Attribute:risk_name' => 'Risiko-Name',
-    'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'Dieses Risiko-Review existiert bereits',
-    'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
-    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Review starten',
-    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Review abschließen',
-    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Review abbrechen',
-
-    'Class:ISMSControlReview' => 'ISMS-Kontroll-Review',
-    'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSControlReview/Attribute:control_id' => 'Kontrolle',
-    'Class:ISMSControlReview/Attribute:control_id+' => 'Verknüpfte Kontrolle, die geprüft wird.',
-    'Class:ISMSControlReview/Attribute:control_ref' => 'Kontroll-Referenz',
-    'Class:ISMSControlReview/Attribute:control_name' => 'Kontroll-Name',
-    'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'Dieses Kontroll-Review existiert bereits',
-    'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'Das Review muss eindeutig sein.',
-    'Class:ISMSControlReview/Stimulus:ev_start' => 'Review starten',
-    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Review abschließen',
-    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Review abbrechen',
-
-    'Class:ISMSReview/Attribute:status' => 'Status',
-    'Class:ISMSReview/Attribute:status+' => 'Lebenszyklusstatus des Reviews.',
-    'Class:ISMSReview/Attribute:status/Value:planned' => 'Geplant',
-    'Class:ISMSReview/Attribute:status/Value:planned+' => 'Initialer Planungszustand.',
-    'Class:ISMSReview/Attribute:status/Value:in_progress' => 'In Arbeit',
-    'Class:ISMSReview/Attribute:status/Value:in_progress+' => 'Review in Bearbeitung.',
-    'Class:ISMSReview/Attribute:status/Value:completed' => 'Abgeschlossen',
-    'Class:ISMSReview/Attribute:status/Value:completed+' => 'Review abgeschlossen.',
-    'Class:ISMSReview/Attribute:status/Value:cancelled' => 'Abgebrochen',
-    'Class:ISMSReview/Attribute:status/Value:cancelled+' => 'Review abgebrochen.',
-    'Class:ISMSReview/Attribute:planned_on' => 'Geplant am',
-    'Class:ISMSReview/Attribute:started_on' => 'Begonnen am',
-    'Class:ISMSReview/Attribute:completed_on' => 'Abgeschlossen am',
-    'Class:ISMSReview/Attribute:reviewer_id' => 'Prüfer',
-    'Class:ISMSReview/Attribute:reviewer_name' => 'Prüfer (Name)',
-    'Class:ISMSReview/Attribute:outcome' => 'Ergebnis',
-    'Class:ISMSReview/Attribute:outcome/Value:pass' => 'Bestanden',
-    'Class:ISMSReview/Attribute:outcome/Value:minor_issues' => 'Kleinere Abweichungen',
-    'Class:ISMSReview/Attribute:outcome/Value:major_issues' => 'Größere Abweichungen',
-    'Class:ISMSReview/Attribute:outcome/Value:fail' => 'Nicht bestanden',
-
-    'Class:ISMSReview/Attribute:summary' => 'Zusammenfassung',
-    'Class:ISMSReview/Attribute:notes' => 'Notizen',
-    'Class:ISMSReview/Attribute:scope' => 'Geltungsbereich',
-    'Class:ISMSReview/Attribute:checklist' => 'Checkliste',
-    'Class:ISMSReview/Attribute:evidence' => 'Nachweise',
-
-    'Class:ISMSReview/Stimulus:ev_start' => 'Review starten',
-    'Class:ISMSReview/Stimulus:ev_complete' => 'Review abschließen',
-    'Class:ISMSReview/Stimulus:ev_cancel' => 'Review abbrechen',
-
-    'Class:ISMSReview/Check:PlannedInPast' => 'Planungsdatum darf nicht in der Vergangenheit liegen.',
-    'Class:ISMSReview/Check:NoOutcome' => 'Ergebnis sollte vor dem Abschluss gesetzt werden.',
-    'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Begonnen am" liegt vor "Geplant am".',
-    'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Abgeschlossen am" liegt vor "Begonnen am".',
+    'Class:lnkISMSRiskToISMSThreat' => 'Verknüpfung Risiko/Bedrohung',
+    'Class:lnkISMSRiskToISMSThreat+' => 'Verknüpfung zwischen einem Risiko und einer Bedrohung.',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risiko',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risiko',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_id' => 'Bedrohung',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_name' => 'Bedrohung',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy' => 'Relevanz',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:cause' => 'Ursache',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:contributing' => 'Mitwirkend',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:notes' => 'Notizen',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate' => 'Diese Kombination existiert bereits',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate+' => 'Die Kombination muss eindeutig sein',
 ));
 
-//
-// Class: ISMSStandardControl
-//
+// Class: lnkISMSRiskToISMSVulnerability
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA-Einträge',
+    'Class:lnkISMSRiskToISMSVulnerability' => 'Verknüpfung Risiko/Schwachstelle',
+    'Class:lnkISMSRiskToISMSVulnerability+' => 'Verknüpfung zwischen einem Risiko und einer Schwachstelle.',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risiko',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risiko',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_id' => 'Schwachstelle',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_name' => 'Schwachstelle',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure' => 'Exposition',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:present' => 'Vorhanden',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:mitigated' => 'Mitigiert',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:unknown' => 'Unbekannt',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:notes' => 'Notizen',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate' => 'Diese Kombination existiert bereits',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate+' => 'Die Kombination muss eindeutig sein',
 ));
 
-//
-// Class: ISMSSoA
-//
+// Class: lnkISMSScopeToLocation
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
-    'ISMSSoA:Header'  => 'Allgemeine Informationen',
-    'ISMSSoA:KPIs' => 'KPIs',
-    'ISMSSoA:Entries' => 'Erklärung zur Anwendbarkeit (SoA)',
-    'ISMSSoA:PopulatedEntries' => '%1$d SoA-Einträge erstellt.',
-    'ISMSSoA:Dashboard' => 'Dashboard',
-    'ISMSSoA:Dashboard:Title' => 'Abdeckung',
-    'ISMSSoA:Dashboard:StdControls:Total' => 'Standard-Kontrollen: %1$d',
-    'ISMSSoA:Dashboard:Coverage' => 'Abdeckung',
-    'ISMSSoA:Dashboard:Undefined' => 'Undefiniert',
-    'ISMSSoA:Dashboard:EntriesCount' => 'Einträge',
-    'Class:ISMSSoA' => 'Erklärung zur Anwendbarkeit (SoA)',
-    'Class:ISMSSoA+' => 'SoA pro Organisation und Standard.',
-    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
-    'Class:ISMSSoA/Attribute:org_id' => 'Organisation',
-    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
-    'Class:ISMSSoA/Attribute:status' => 'Status',
-    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Entwurf',
-    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In Prüfung',
-    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Freigegeben',
-    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolet',
-    'Class:ISMSSoA/Attribute:owner_id' => 'Verantwortlich',
-    'Class:ISMSSoA/Attribute:effective_from' => 'Gültig ab',
-    'Class:ISMSSoA/Attribute:notes' => 'Notizen',
-    'Class:ISMSSoA/Attribute:kpi_total' => 'Kontrollen (gesamt)',
-    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Anwendbar',
-    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implementiert',
-    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Lücken',
-    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA-Einträge',
-    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'Für die Organisation "$this->org_id_friendlyname$" und den Standard "$this->standard_id_friendlyname$" existiert bereits eine SoA.',
-    'Class:ISMSSoA/Stimulus:ev_submit' => 'Einreichen',
-    'Class:ISMSSoA/Stimulus:ev_approve' => 'Freigeben',
-    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Außer Betrieb',
-    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Zurück zu Entwurf',
-    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Zurück in Prüfung',
-    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Wiedereröffnen',
-    'Class:ISMSSoA/Check:AllEntriesDecided' => 'Vor der Freigabe müssen alle Einträge eine Entscheidung zur Anwendbarkeit besitzen.',
+    'Class:lnkISMSScopeToLocation' => 'Verknüpfung ISMS Geltungsbereich / Standort',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Geltungsbereich',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Geltungsbereich-Name',
+    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Standort',
+    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Standort-Name',
+    'Class:lnkISMSScopeToLocation+' => '',
 ));
 
-
-//
-// Class: ISMSSoAEntry
-//
+// Class: lnkISMSScopeToProcess
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'ISMSSoAEntry:Link' => 'Verknüpfung',
-    'ISMSSoAEntry:Decision' => 'Entscheidung',
-    'ISMSSoAEntry:Implementation' => 'Implementierung',
-    'Class:ISMSSoAEntry' => 'SoA-Eintrag',
-    'Class:ISMSSoAEntry+' => 'Entscheidung zur Anwendbarkeit von eine Standard-Kontrolle.',
-    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
-    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard-Kontrolle',
-    'Class:ISMSSoAEntry/Attribute:applicability' => 'Anwendbarkeit',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Anwendbar',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Nicht anwendbar',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Teilweise anwendbar',
-    'Class:ISMSSoAEntry/Attribute:justification' => 'Begründung',
-    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Umsetzungsstatus',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Geplant',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In Umsetzung',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implementiert',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Nicht implementiert',
-    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidenz',
-    'Class:ISMSSoAEntry/Attribute:notes' => 'Notizen',
-    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Interne Kontrollen',
-    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'Es existiert bereits ein Eintrag zu "$this->standardcontrol_code$" in der SoA "$this->soa_id_friendlyname$".',
-    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Bitte gib eine Begründung an, wenn eine Kontrolle als nicht anwendbar markiert wird.',
-    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Füge nach Möglichkeit Evidenz für implementierte Kontrollen hinzu.',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Kontrollcode',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Kontrolltitel',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Kontrolldomäne',
+    'Class:lnkISMSScopeToProcess' => 'Verknüpfung ISMS Geltungsbereich / Business-Prozess',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Geltungsbereich',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Geltungsbereich-Name',
+    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business-Prozess',
+    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business-Prozess-Name',
 ));
 
-//
 // Class: lnkISMSSoAEntryToISMSControl
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSSoAEntryToISMSControl' => 'Verknüpfung SoA-Eintrag / interne Kontrolle',
@@ -986,26 +921,68 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:lnkISMSSoAEntryToISMSControl/UniquenessRule:no_duplicate' => 'Der SoA-Eintrag "$this->soaentry_id_friendlyname$" ist bereits mit der Kontrolle "$this->control_id_friendlyname$" verknüpft.',
 ));
 
-//
-// Class: DashletRiskMatrix
-//
+// Class: lnkSupportingAssetToAsset
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Class:lnkSupportingAssetToAsset' => 'Verknüpfung Unterstützendes Asset/Asset',
+    'Class:lnkSupportingAssetToAsset+' => 'Verknüpfung, die angibt, dass das erste Asset das zweite Asset unterstützt.',
+    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Wähle das Asset, das ein anderes Asset unterstützt.',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Unterstützendes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Unterstütztes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Wähle das Asset, das unterstützt wird.',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Unterstütztes Asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Unterstütztes Asset',
+));
+
+// Menus.
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Menu:ISMSManagement' => 'ISMS Management',
+    'Menu:ISMSSpace' => 'ISMS Raum',
+    'Menu:ISMSSpace:Assets' => 'Assets',
+    'Menu:ISMSSpace:Options' => 'Optionen',
+    'Menu:ISMSSpace:Risks' => 'Risiken & Kontrollen',
+    'Menu:ISMSSpace:Reviews' => 'Reviews',
+    'Menu:ISMSSpace:Standards' => 'Standards',
+    'Menu:NewISMSAsset' => 'Neues Asset',
+    'Menu:NewISMSAsset+' => 'Neues ISMS-Asset anlegen',
+    'Menu:NewISMSRisk' => 'Neues Risiko',
+    'Menu:NewISMSRisk+' => 'Neues ISMS-Risiko anlegen',
+    'Menu:NewISMSControl' => 'Neue Kontrolle',
+    'Menu:NewISMSControl+' => 'Neue ISMS-Kontrolle anlegen',
+    'Menu:SearchISMSAssets' => 'Assets suchen',
+    'Menu:SearchISMSAssets+' => 'ISMS-Assets durchsuchen',
+    'Menu:SearchISMSRisks' => 'Risiken suchen',
+    'Menu:SearchISMSRisks+' => 'ISMS-Risiken durchsuchen',
+    'Menu:SearchISMSControls' => 'Kontrollen suchen',
+    'Menu:SearchISMSControls+' => 'ISMS-Kontrollen durchsuchen',
+    'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
+    'Menu:ISMSManagement:Shortcuts+' => 'Direkter Zugriff auf häufige ISMS-Ansichten',
+    'Menu:ISMSMyAssets' => 'Meine Assets',
+    'Menu:ISMSMyAssets+' => 'Assets, bei denen ich Besitzer bin',
+    'Menu:ISMSMyRisks' => 'Meine Risiken',
+    'Menu:ISMSMyRisks+' => 'Risiken, bei denen ich Risiko-Eigner bin',
+    'Menu:ISMSMyControls' => 'Meine Kontrollen',
+    'Menu:ISMSMyControls+' => 'Kontrollen, bei denen ich Besitzer bin',
+));
+
+// User interface: DashletRiskMatrix
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'UI:DashletRiskMatrix:Label' => 'Risiko-Matrix',
     'UI:DashletRiskMatrix:Description' => '5×5 Likelihood × Impact Matrix für veröffentlichte Risiken',
     'UI:DashletRiskMatrix:Title' => 'Veröffentlichte Risiken — Risiko-Matrix',
-
     'UI:DashletRiskMatrix:Impact' => 'Auswirkung',
     'UI:DashletRiskMatrix:Likelihood' => 'Eintrittswahrscheinlichkeit',
     'UI:DashletRiskMatrix:Total' => 'Summe',
-
     'UI:DashletRiskMatrix:Legend:Low' => 'Niedrig',
     'UI:DashletRiskMatrix:Legend:Medium' => 'Mittel',
     'UI:DashletRiskMatrix:Legend:High' => 'Hoch',
     'UI:DashletRiskMatrix:Legend:Extreme' => 'Extrem',
-
     'UI:DashletRiskMatrix:NoData' => 'Keine Daten im aktuellen Umfang',
-
     'UI:DashletRiskMatrix:Prop-Title' => 'Titel',
     'UI:DashletRiskMatrix:Prop-Query' => 'OQL-Scope',
     'UI:DashletRiskMatrix:Prop-X' => 'X-Achse (Auswirkung) - Attribut',
@@ -1015,28 +992,8 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'UI:DashletRiskMatrix:Prop-ColorMode' => 'Farbmodus',
     'UI:DashletRiskMatrix:Prop-ShowPercent' => 'Prozente pro Zelle anzeigen',
     'UI:DashletRiskMatrix:Prop-IncludeNA'   => '(n/a)-Bucket einschließen',
-
     'UI:DashletRiskMatrix:ColorMode:Count' => 'Heatmap nach Anzahl',
     'UI:DashletRiskMatrix:ColorMode:Severity' => 'Schweregrad (fixe Stufen)',
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (aus Zellen-Daten)',
-
     'UI:DashletRiskMatrix:NA' => 'N/V',
-));
-
-//
-// Class: lnkDocumentToISMSAsset
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('DE DE', 'German', 'Deutsch', array(
-    'Class:lnkDocumentToISMSAsset' => 'Verknüpfung Dokument / ISMS-Asset',
-    'Class:lnkDocumentToISMSAsset+' => 'Ordnet einem Asset ISMS-Nachweise zu.',
-    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset, auf das sich dieser Nachweis bezieht.',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset-Name',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Dokument',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Vorhandenes Dokument als ISMS-Nachweis.',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Dokumentname',
-    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'Dieses Dokument ist bereits mit diesem Asset verknüpft',
-    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Jedes Dokument kann einem Asset nur einmal zugeordnet werden.',
 ));

@@ -67,6 +67,16 @@
                     <duplicates>false</duplicates>
                 </field>
             </fields>
+            <relations>
+                <relation id="isms_catalog">
+                    <neighbours>
+                        <neighbour id="standard_controls">
+                            <attribute>controls_list</attribute>
+                            <direction>both</direction>
+                        </neighbour>
+                    </neighbours>
+                </relation>
+            </relations>
             <methods />
             <presentation>
                 <details>

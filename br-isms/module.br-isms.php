@@ -5,13 +5,12 @@
  *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-10-15
  */
 
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__, // Path to the current file, all other file names are relative to the directory containing this file
-    'br-isms/3.2.6',
+    'br-isms/3.2.7',
     array(
         // Identification
         //
@@ -22,7 +21,7 @@ SetupWebPage::AddModule(
         //
         'dependencies' => array(
             'itop-config-mgmt/3.2.0',
-            'br-isms-catalog/3.2.6',
+            'br-isms-catalog/3.2.7',
             'br-riskassessment/3.2.0',
         ),
         'mandatory' => false,

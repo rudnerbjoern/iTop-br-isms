@@ -5,13 +5,12 @@
  *
  * @copyright   Copyright (C) 2024-2026 Björn Rudner
  * @license     https://www.gnu.org/licenses/agpl-3.0.en.html
- * @version     2026-10-15
  */
 
 /** @disregard P1009 Undefined type SetupWebPage */
 SetupWebPage::AddModule(
     __FILE__,
-    'br-isms-catalog/3.2.6',
+    'br-isms-catalog/3.2.7',
     array(
         'label' => 'ISMS Reference Catalog',
         'category' => 'business',

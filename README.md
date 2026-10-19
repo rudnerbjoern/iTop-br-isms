@@ -50,11 +50,11 @@ the ISMS installation.
 
 Requires **iTop 3.2** and the dependencies listed below.
 
-Dependencies for version `3.2.6`:
+Dependencies for version `3.2.7`:
 
 - `br-isms-catalog`: `itop-structure/3.2.0` or later.
 - `br-isms`: `itop-config-mgmt/3.2.0`, `br-riskassessment/3.2.0`, and
-  `br-isms-catalog/3.2.6` or later compatible versions.
+  `br-isms-catalog/3.2.7` or later compatible versions.
 
 1. Extract the full ISMS bundle into iTop's `extensions/` directory and ensure
    its dependencies are available.
@@ -272,6 +272,9 @@ reviews, and supporting information. Dependency views connect assets with their
 supporting assets and configuration items, and risks with their controls and assets.
 Applicability summaries and risk matrices provide an overview of priorities.
 The reference catalog has its own searches for standards and requirements.
+Its Relations menu shows a standard's requirements downstream and the containing
+reference standard upstream from a requirement, including when the catalog is
+installed independently.
 
 Risk warnings highlight incomplete treatment or acceptance information, overdue
 treatment dates, and inconsistent assessments. These warnings support review
