@@ -8,141 +8,7 @@
  * @version     2026-10-15
  */
 
-//
-// Application Menu
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Menu:ISMSManagement' => 'ISMS Management',
-    'Menu:ISMSSpace' => 'ISMS Space',
-    'Menu:ISMSSpace:Assets' => 'Assets',
-    'Menu:ISMSSpace:Options' => 'Options',
-    'Menu:ISMSSpace:Risks' => 'Risks & Controls',
-    'Menu:ISMSSpace:Reviews' => 'Reviews',
-    'Menu:ISMSSpace:Standards' => 'Standards',
-    'Menu:NewISMSAsset' => 'New Asset',
-    'Menu:NewISMSAsset+' => 'Create a new ISMS asset',
-    'Menu:NewISMSRisk' => 'New Risk',
-    'Menu:NewISMSRisk+' => 'Create a new ISMS risk',
-    'Menu:NewISMSControl' => 'New Control',
-    'Menu:NewISMSControl+' => 'Create a new ISMS control',
-    'Menu:SearchISMSAssets' => 'Search Assets',
-    'Menu:SearchISMSAssets+' => 'Search ISMS assets',
-    'Menu:SearchISMSRisks' => 'Search Risks',
-    'Menu:SearchISMSRisks+' => 'Search ISMS risks',
-    'Menu:SearchISMSControls' => 'Search Controls',
-    'Menu:SearchISMSControls+' => 'Search ISMS controls',
-    'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
-    'Menu:ISMSManagement:Shortcuts+' => 'Quick access to common ISMS views',
-    'Menu:ISMSMyAssets' => 'My Assets',
-    'Menu:ISMSMyAssets+' => 'Assets where I am the asset owner',
-    'Menu:ISMSMyRisks' => 'My Risks',
-    'Menu:ISMSMyRisks+' => 'Risks where I am the risk owner',
-    'Menu:ISMSMyControls' => 'My Controls',
-    'Menu:ISMSMyControls+' => 'Controls where I am the control owner',
-));
-
-//
-// Class: ISMSScope
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSScope' => 'ISMS Scope',
-    'Class:ISMSScope+' => 'Defined scope (coverage) of the ISMS for an organization.',
-    'Class:ISMSScope/Name' => '%1$s / %2$s',
-    'Class:ISMSScope/Attribute:org_id' => 'Organization',
-    'Class:ISMSScope/Attribute:org_id+' => 'Owning organization of the scope.',
-    'Class:ISMSScope/Attribute:org_name' => 'Organization',
-    'Class:ISMSScope/Attribute:org_name+' => '',
-    'Class:ISMSScope/Attribute:name' => 'Name',
-    'Class:ISMSScope/Attribute:name+' => 'Name of the scope.',
-    'Class:ISMSScope/Attribute:status' => 'Status',
-    'Class:ISMSScope/Attribute:status+' => 'Lifecycle status of the scope.',
-    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Draft',
-    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Being prepared/edited.',
-    'Class:ISMSScope/Attribute:status/Value:active'  => 'Active',
-    'Class:ISMSScope/Attribute:status/Value:active+' => 'In effect and used operationally.',
-    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Frozen',
-    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Temporarily locked; changes require reopening.',
-    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolete',
-    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'No longer in use.',
-    'Class:ISMSScope/Attribute:scope_statement' => 'Scope statement',
-    'Class:ISMSScope/Attribute:scope_statement+' => 'Formal definition of the ISMS scope.',
-    'Class:ISMSScope/Attribute:boundaries_in' => 'Included boundaries',
-    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elements explicitly included (sites, systems, processes).',
-    'Class:ISMSScope/Attribute:boundaries_out' => 'Excluded boundaries',
-    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elements explicitly excluded.',
-    'Class:ISMSScope/Attribute:locations' => 'Locations',
-    'Class:ISMSScope/Attribute:locations+' => 'Physical sites / regions covered by the scope.',
-    'Class:ISMSScope/Attribute:processes' => 'Processes',
-    'Class:ISMSScope/Attribute:processes+' => 'Business/IT processes covered by the scope.',
-    'Class:ISMSScope/Attribute:soa_id' => 'Statement of Applicability',
-    'Class:ISMSScope/Attribute:soa_id+' => 'Linked SoA for this scope.',
-    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
-    'Class:ISMSScope/Attribute:soa_name+' => '',
-    'Class:ISMSScope/Attribute:locations_list' => 'Locations',
-    'Class:ISMSScope/Attribute:processes_list' => 'Processes',
-    'Class:ISMSScope/Attribute:creation_date' => 'Creation date',
-    'Class:ISMSScope/Attribute:creation_date+' => 'Record creation date.',
-    'Class:ISMSScope/Attribute:publish_date' => 'Publish date',
-    'Class:ISMSScope/Attribute:publish_date+' => 'Date when the scope was formally published/approved.',
-    'Class:ISMSScope/Attribute:last_update' => 'Last update',
-    'Class:ISMSScope/Attribute:last_update+' => 'Timestamp of the last modification.',
-    'Class:ISMSScope/Stimulus:ev_activate' => 'Activate',
-    'Class:ISMSScope/Stimulus:ev_activate+' => 'Move scope to Active.',
-    'Class:ISMSScope/Stimulus:ev_freeze' => 'Freeze',
-    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Temporarily lock the scope.',
-    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Set obsolete',
-    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Retire this scope.',
-    'Class:ISMSScope/Stimulus:ev_reopen' => 'Reopen',
-    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Reopen a scope.',
-));
-
-//
-// Class: lnkISMSScopeToLocation
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkISMSScopeToLocation' => 'Link ISMS Scope / Location',
-    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Scope',
-    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Scope name',
-    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Location',
-    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Location name',
-    'Class:lnkISMSScopeToLocation+' => '',
-));
-
-//
-// Class: lnkISMSScopeToProcess
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkISMSScopeToProcess' => 'Link ISMS Scope / Business Process',
-    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Scope',
-    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Scope name',
-    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business Process',
-    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business process name',
-));
-
-//
-// Class: ISMSAssetType
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSAssetType' => 'ISMS Asset Type',
-    'Class:ISMSAssetType+' => 'Typology used to classify ISMS assets.',
-    'Class:ISMSAssetType/Attribute:name' => 'Name',
-    'Class:ISMSAssetType/Attribute:name+' => 'Unique label of the asset type.',
-    'Class:ISMSAssetType/Attribute:description' => 'Description',
-    'Class:ISMSAssetType/Attribute:description+' => 'Optional details about this asset type.',
-    'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
-    'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'All assets that are assigned to this type.',
-    'Class:ISMSAssetType/UniquenessRule:name' => 'This asset type already exists',
-    'Class:ISMSAssetType/UniquenessRule:name+' => 'The name must be unique',
-));
-
-//
 // Class: ISMSAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'ISMSAsset:Contacts' => 'Contacts',
@@ -222,54 +88,197 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSAsset/Stimulus:ev_reopen+' => 'Reopen an obsolete asset (back to draft).',
 ));
 
-//
-// Class: ISMSThreat
-//
+// Class: ISMSAssetReview
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSThreat:Base' => 'Basics',
-    'ISMSThreat:Details' => 'Details',
-    'Class:ISMSThreat' => 'Threat',
-    'Class:ISMSThreat+' => 'Catalog of threats relevant to the ISMS.',
-    'Class:ISMSThreat/Attribute:name' => 'Name',
-    'Class:ISMSThreat/Attribute:category' => 'Category',
-    'Class:ISMSThreat/Attribute:category/Value:human' => 'Human',
-    'Class:ISMSThreat/Attribute:category/Value:technical' => 'Technical',
-    'Class:ISMSThreat/Attribute:category/Value:environmental' => 'Environmental',
-    'Class:ISMSThreat/Attribute:category/Value:supply_chain' => 'Supply chain',
-    'Class:ISMSThreat/Attribute:category/Value:legal' => 'Legal',
-    'Class:ISMSThreat/Attribute:description' => 'Description',
-    'Class:ISMSThreat/Attribute:source' => 'Source',
-    'Class:ISMSThreat/Attribute:references' => 'References',
-    'Class:ISMSThreat/UniquenessRule:no_duplicate' => 'This threat already exists',
-    'Class:ISMSThreat/UniquenessRule:no_duplicate+' => 'The threat must be unique',
+    'Class:ISMSAssetReview' => 'ISMS Asset Review',
+    'Class:ISMSAssetReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSAssetReview/Attribute:asset_id' => 'Asset',
+    'Class:ISMSAssetReview/Attribute:asset_id+' => 'Linked asset being reviewed.',
+    'Class:ISMSAssetReview/Attribute:asset_ref' => 'Asset reference',
+    'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset name',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'This asset review already exists',
+    'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Cancel Review',
 ));
 
-//
-// Class: ISMSVulnerability
-//
+// Class: ISMSAssetType
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSVulnerability:Base' => 'Basics',
-    'ISMSVulnerability:Details' => 'Details',
-    'Class:ISMSVulnerability' => 'Vulnerability',
-    'Class:ISMSVulnerability+' => 'Catalog of vulnerabilities (people, process, technology, third-party).',
-    'Class:ISMSVulnerability/Attribute:name' => 'Name',
-    'Class:ISMSVulnerability/Attribute:category' => 'Category',
-    'Class:ISMSVulnerability/Attribute:category/Value:people' => 'People',
-    'Class:ISMSVulnerability/Attribute:category/Value:process' => 'Process',
-    'Class:ISMSVulnerability/Attribute:category/Value:technology' => 'Technology',
-    'Class:ISMSVulnerability/Attribute:category/Value:third_party' => 'Third-party',
-    'Class:ISMSVulnerability/Attribute:description' => 'Description',
-    'Class:ISMSVulnerability/Attribute:source' => 'Source',
-    'Class:ISMSVulnerability/Attribute:references' => 'References',
-    'Class:ISMSVulnerability/UniquenessRule:no_duplicate' => 'This vulnerability already exists',
-    'Class:ISMSVulnerability/UniquenessRule:no_duplicate+' => 'The vulnerability must be unique',
+    'Class:ISMSAssetType' => 'ISMS Asset Type',
+    'Class:ISMSAssetType+' => 'Typology used to classify ISMS assets.',
+    'Class:ISMSAssetType/Attribute:name' => 'Name',
+    'Class:ISMSAssetType/Attribute:name+' => 'Unique label of the asset type.',
+    'Class:ISMSAssetType/Attribute:description' => 'Description',
+    'Class:ISMSAssetType/Attribute:description+' => 'Optional details about this asset type.',
+    'Class:ISMSAssetType/Attribute:ismsassets_list' => 'Assets',
+    'Class:ISMSAssetType/Attribute:ismsassets_list+' => 'All assets that are assigned to this type.',
+    'Class:ISMSAssetType/UniquenessRule:name' => 'This asset type already exists',
+    'Class:ISMSAssetType/UniquenessRule:name+' => 'The name must be unique',
 ));
 
-//
+// Class: ISMSControl
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSControl:Basics' => 'Basics',
+    'ISMSControl:Classification' => 'Classification',
+    'ISMSControl:OwnershipSchedule' => 'Ownership & schedule',
+    'ISMSControl:Description' => 'Description',
+    'Class:ISMSControl' => 'ISMS Control',
+    'Class:ISMSControl+' => 'Reusable security control (organizational / people / physical / technological).',
+    'Class:ISMSControl/Attribute:name' => 'Name',
+    'Class:ISMSControl/Attribute:name+' => 'Name of the control.',
+    'Class:ISMSControl/Attribute:org_id' => 'Organization',
+    'Class:ISMSControl/Attribute:org_id+' => 'Owning organization of the control.',
+    'Class:ISMSControl/Attribute:org_id_friendlyname' => 'Organization',
+    'Class:ISMSControl/Attribute:organization_name' => 'Organization',
+    'Class:ISMSControl/Attribute:status' => 'Status',
+    'Class:ISMSControl/Attribute:status+' => 'Lifecycle status of the control',
+    'Class:ISMSControl/Attribute:status/Value:draft' => 'Draft',
+    'Class:ISMSControl/Attribute:status/Value:draft+' => 'Initial drafting state',
+    'Class:ISMSControl/Attribute:status/Value:submitted' => 'Submitted',
+    'Class:ISMSControl/Attribute:status/Value:submitted+' => 'Waiting for approval',
+    'Class:ISMSControl/Attribute:status/Value:approved' => 'Approved',
+    'Class:ISMSControl/Attribute:status/Value:approved+' => 'Approved for implementation',
+    'Class:ISMSControl/Attribute:status/Value:implementing' => 'Implementing',
+    'Class:ISMSControl/Attribute:status/Value:implementing+' => 'Implementation in progress',
+    'Class:ISMSControl/Attribute:status/Value:amending' => 'Amending',
+    'Class:ISMSControl/Attribute:status/Value:amending+' => 'Under amendment / revision',
+    'Class:ISMSControl/Attribute:status/Value:effective' => 'Effective',
+    'Class:ISMSControl/Attribute:status/Value:effective+' => 'Operational and effective',
+    'Class:ISMSControl/Attribute:status/Value:suspended' => 'Suspended',
+    'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Temporarily suspended',
+    'Class:ISMSControl/Attribute:status/Value:retired' => 'Retired',
+    'Class:ISMSControl/Attribute:status/Value:retired+' => 'Decommissioned / no longer in use',
+    'Class:ISMSControl/Attribute:controlowner_id' => 'Control owner',
+    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person responsible for maintaining the control.',
+    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Control owner',
+    'Class:ISMSControl/Attribute:controlowner_name' => 'Control owner',
+    'Class:ISMSControl/Attribute:control_domain' => 'Control domain',
+    'Class:ISMSControl/Attribute:control_domain+' => 'Primary domain of the control.',
+    'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organizational',
+    'Class:ISMSControl/Attribute:control_domain/Value:organizational+' => 'Organizational domain.',
+    'Class:ISMSControl/Attribute:control_domain/Value:people' => 'People',
+    'Class:ISMSControl/Attribute:control_domain/Value:people+' => 'People-related domain.',
+    'Class:ISMSControl/Attribute:control_domain/Value:physical' => 'Physical',
+    'Class:ISMSControl/Attribute:control_domain/Value:physical+' => 'Physical domain.',
+    'Class:ISMSControl/Attribute:control_domain/Value:technological' => 'Technological',
+    'Class:ISMSControl/Attribute:control_domain/Value:technological+' => 'Technological domain.',
+    'Class:ISMSControl/Attribute:control_type' => 'Control type',
+    'Class:ISMSControl/Attribute:control_type+' => 'Type of control by purpose.',
+    'Class:ISMSControl/Attribute:control_type/Value:corrective' => 'Corrective',
+    'Class:ISMSControl/Attribute:control_type/Value:corrective+' => 'Corrective control.',
+    'Class:ISMSControl/Attribute:control_type/Value:detective' => 'Detective',
+    'Class:ISMSControl/Attribute:control_type/Value:detective+' => 'Detective control.',
+    'Class:ISMSControl/Attribute:control_type/Value:preventive' => 'Preventive',
+    'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Preventive control.',
+    'Class:ISMSControl/Attribute:description' => 'Description',
+    'Class:ISMSControl/Attribute:description+' => 'Details about the control implementation and scope.',
+    'Class:ISMSControl/Attribute:implementation_date' => 'Implemented on',
+    'Class:ISMSControl/Attribute:implementation_date+' => 'Date when the control was implemented.',
+    'Class:ISMSControl/Attribute:risks_list' => 'Risk(s)',
+    'Class:ISMSControl/Attribute:risks_list+' => 'All risks linked to this control.',
+    'Class:ISMSControl/Attribute:review_interval_months' => 'Review interval (months)',
+    'Class:ISMSControl/Attribute:review_interval_months+' => 'Review interval in months.',
+    'Class:ISMSControl/Attribute:last_review' => 'Last review',
+    'Class:ISMSControl/Attribute:last_review+' => 'Date of the last review.',
+    'Class:ISMSControl/Attribute:next_review' => 'Next review',
+    'Class:ISMSControl/Attribute:next_review+' => 'Date of the next scheduled review.',
+    'Class:ISMSControl/Attribute:reviews_list' => 'Review(s)',
+    'Class:ISMSControl/Attribute:reviews_list+' => 'All reviews of this control.',
+    'Class:ISMSControl/Attribute:documents_list' => 'Documents',
+    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA entries',
+    'Class:ISMSControl/UniquenessRule:ref' => 'A control with this reference already exists',
+    'Class:ISMSControl/UniquenessRule:ref+' => 'The ref must be unique',
+    'Class:ISMSControl/UniquenessRule:name' => 'A control with this name already exists',
+    'Class:ISMSControl/UniquenessRule:name+' => 'The name must be unique',
+    'Class:ISMSControl/Stimulus:ev_submit' => 'Submit for approval',
+    'Class:ISMSControl/Stimulus:ev_submit+' => 'Move from Draft to Submitted',
+    'Class:ISMSControl/Stimulus:ev_approve' => 'Approve',
+    'Class:ISMSControl/Stimulus:ev_approve+' => 'Approve a submitted control',
+    'Class:ISMSControl/Stimulus:ev_reject' => 'Reject',
+    'Class:ISMSControl/Stimulus:ev_reject+' => 'Reject a submission (returns to Amending)',
+    'Class:ISMSControl/Stimulus:ev_start_impl' => 'Start implementation',
+    'Class:ISMSControl/Stimulus:ev_start_impl+' => 'Move from Approved to Implementing',
+    'Class:ISMSControl/Stimulus:ev_mark_effective' => 'Mark effective',
+    'Class:ISMSControl/Stimulus:ev_mark_effective+' => 'Declare the control operational/effective',
+    'Class:ISMSControl/Stimulus:ev_suspend' => 'Suspend',
+    'Class:ISMSControl/Stimulus:ev_suspend+' => 'Temporarily suspend an effective control',
+    'Class:ISMSControl/Stimulus:ev_resume' => 'Resume',
+    'Class:ISMSControl/Stimulus:ev_resume+' => 'Resume from Suspended to Effective',
+    'Class:ISMSControl/Stimulus:ev_retire' => 'Retire',
+    'Class:ISMSControl/Stimulus:ev_retire+' => 'Retire the control from service',
+    'Class:ISMSControl/Stimulus:ev_start_amend' => 'Start amendment',
+    'Class:ISMSControl/Stimulus:ev_start_amend+' => 'Begin revising an effective control',
+    'Class:ISMSControl/Stimulus:ev_submit_amend' => 'Submit amendment',
+    'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Submit the amendment for approval',
+    'Class:ISMSControl/Stimulus:ev_cancel_amend'  => 'Cancel amendment',
+    'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Discard the amendment and return to Effective',
+));
+
+// Class: ISMSControlReview
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSControlReview' => 'ISMS Control Review',
+    'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSControlReview/Attribute:control_id' => 'Control',
+    'Class:ISMSControlReview/Attribute:control_id+' => 'Linked control being reviewed.',
+    'Class:ISMSControlReview/Attribute:control_ref' => 'Control reference',
+    'Class:ISMSControlReview/Attribute:control_name' => 'Control name',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'This control review already exists',
+    'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSControlReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Cancel Review',
+));
+
+// Class: ISMSReview
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSReview:Link' => 'Link',
+    'ISMSReview:Reviews' => 'Reviews',
+    'ISMSReview:Outcome' => 'Outcome',
+    'ISMSReview:Notes' => 'Notes',
+    'ISMSReview:Progress' => 'Progress',
+    'Class:ISMSReview' => 'ISMS Review',
+    'Class:ISMSReview+' => 'A review record linked to an ISMS object (asset, risk or control).',
+    'Class:ISMSReview/Attribute:status' => 'Status',
+    'Class:ISMSReview/Attribute:status+' => 'Lifecycle status of the review.',
+    'Class:ISMSReview/Attribute:status/Value:planned' => 'Planned',
+    'Class:ISMSReview/Attribute:status/Value:planned+' => 'Initial planning state.',
+    'Class:ISMSReview/Attribute:status/Value:in_progress' => 'In progress',
+    'Class:ISMSReview/Attribute:status/Value:in_progress+' => 'Work in progress.',
+    'Class:ISMSReview/Attribute:status/Value:completed' => 'Completed',
+    'Class:ISMSReview/Attribute:status/Value:completed+' => 'Review completed.',
+    'Class:ISMSReview/Attribute:status/Value:cancelled' => 'Cancelled',
+    'Class:ISMSReview/Attribute:status/Value:cancelled+' => 'Review cancelled.',
+    'Class:ISMSReview/Attribute:planned_on' => 'Planned on',
+    'Class:ISMSReview/Attribute:started_on' => 'Started on',
+    'Class:ISMSReview/Attribute:completed_on' => 'Completed on',
+    'Class:ISMSReview/Attribute:reviewer_id' => 'Reviewer',
+    'Class:ISMSReview/Attribute:reviewer_name' => 'Reviewer name',
+    'Class:ISMSReview/Attribute:outcome' => 'Outcome',
+    'Class:ISMSReview/Attribute:outcome/Value:pass' => 'Pass',
+    'Class:ISMSReview/Attribute:outcome/Value:minor_issues' => 'Minor issues',
+    'Class:ISMSReview/Attribute:outcome/Value:major_issues' => 'Major issues',
+    'Class:ISMSReview/Attribute:outcome/Value:fail' => 'Fail',
+    'Class:ISMSReview/Attribute:summary' => 'Summary',
+    'Class:ISMSReview/Attribute:notes' => 'Notes',
+    'Class:ISMSReview/Attribute:scope' => 'Scope',
+    'Class:ISMSReview/Attribute:checklist' => 'Checklist',
+    'Class:ISMSReview/Attribute:evidence' => 'Evidence',
+    'Class:ISMSReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSReview/Stimulus:ev_cancel' => 'Cancel Review',
+    'Class:ISMSReview/Check:PlannedInPast' => 'Planned date cannot be in the past.',
+    'Class:ISMSReview/Check:NoOutcome' => 'Outcome should be set before completion.',
+    'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Started on" is before "Planned on".',
+    'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Completed on" is before "Started on".',
+));
+
 // Class: ISMSRisk
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'ISMSRisk:Base' => 'Basics',
@@ -524,167 +533,221 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:ISMSRisk/Check:AcceptButTargetBelowResidual' => "Treatment 'accept' but target residual is lower than current residual. Consider 'mitigate' instead.",
 ));
 
-//
-// Class: lnkISMSRiskToISMSThreat
-//
+// Class: ISMSRiskAcceptance
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkISMSRiskToISMSThreat' => 'Link Risk / Threat',
-    'Class:lnkISMSRiskToISMSThreat+' => 'Link between a risk and a threat.',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risk',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risk',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_id' => 'Threat',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_name' => 'Threat',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy' => 'Relevancy',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:cause' => 'Cause',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:contributing' => 'Contributing',
-    'Class:lnkISMSRiskToISMSThreat/Attribute:notes' => 'Notes',
-    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate' => 'This combination already exists',
-    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate+' => 'The combination must be unique',
+    'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'The approval date is managed by the approval and reset transitions and cannot be edited manually.',
+    'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Risk assignments are frozen after approval. Reset the revoked or expired acceptance to draft before changing its risk assignments.',
 ));
 
-//
-// Class: lnkISMSRiskToISMSVulnerability
-//
+// Class: ISMSRiskReview
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkISMSRiskToISMSVulnerability' => 'Link Risk / Vulnerability',
-    'Class:lnkISMSRiskToISMSVulnerability+' => 'Link between a risk and a vulnerability.',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risk',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risk',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_id' => 'Vulnerability',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_name' => 'Vulnerability',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure' => 'Exposure',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:present' => 'Present',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:mitigated' => 'Mitigated',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:unknown' => 'Unknown',
-    'Class:lnkISMSRiskToISMSVulnerability/Attribute:notes' => 'Notes',
-    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate' => 'This combination already exists',
-    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate+' => 'The combination must be unique',
+    'Class:ISMSRiskReview' => 'ISMS Risk Review',
+    'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
+    'Class:ISMSRiskReview/Attribute:risk_id' => 'Risk',
+    'Class:ISMSRiskReview/Attribute:risk_id+' => 'Linked risk being reviewed.',
+    'Class:ISMSRiskReview/Attribute:risk_ref' => 'Risk reference',
+    'Class:ISMSRiskReview/Attribute:risk_name' => 'Risk name',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'This risk review already exists',
+    'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
+    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Start Review',
+    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Complete Review',
+    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Cancel Review',
 ));
 
-//
-// Class: ISMSControl
-//
+// Class: ISMSScope
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSControl:Basics' => 'Basics',
-    'ISMSControl:Classification' => 'Classification',
-    'ISMSControl:OwnershipSchedule' => 'Ownership & schedule',
-    'ISMSControl:Description' => 'Description',
-    'Class:ISMSControl' => 'ISMS Control',
-    'Class:ISMSControl+' => 'Reusable security control (organizational / people / physical / technological).',
-    'Class:ISMSControl/Attribute:name' => 'Name',
-    'Class:ISMSControl/Attribute:name+' => 'Name of the control.',
-    'Class:ISMSControl/Attribute:org_id' => 'Organization',
-    'Class:ISMSControl/Attribute:org_id+' => 'Owning organization of the control.',
-    'Class:ISMSControl/Attribute:org_id_friendlyname' => 'Organization',
-    'Class:ISMSControl/Attribute:organization_name' => 'Organization',
-    'Class:ISMSControl/Attribute:status' => 'Status',
-    'Class:ISMSControl/Attribute:status+' => 'Lifecycle status of the control',
-    'Class:ISMSControl/Attribute:status/Value:draft' => 'Draft',
-    'Class:ISMSControl/Attribute:status/Value:draft+' => 'Initial drafting state',
-    'Class:ISMSControl/Attribute:status/Value:submitted' => 'Submitted',
-    'Class:ISMSControl/Attribute:status/Value:submitted+' => 'Waiting for approval',
-    'Class:ISMSControl/Attribute:status/Value:approved' => 'Approved',
-    'Class:ISMSControl/Attribute:status/Value:approved+' => 'Approved for implementation',
-    'Class:ISMSControl/Attribute:status/Value:implementing' => 'Implementing',
-    'Class:ISMSControl/Attribute:status/Value:implementing+' => 'Implementation in progress',
-    'Class:ISMSControl/Attribute:status/Value:amending' => 'Amending',
-    'Class:ISMSControl/Attribute:status/Value:amending+' => 'Under amendment / revision',
-    'Class:ISMSControl/Attribute:status/Value:effective' => 'Effective',
-    'Class:ISMSControl/Attribute:status/Value:effective+' => 'Operational and effective',
-    'Class:ISMSControl/Attribute:status/Value:suspended' => 'Suspended',
-    'Class:ISMSControl/Attribute:status/Value:suspended+' => 'Temporarily suspended',
-    'Class:ISMSControl/Attribute:status/Value:retired' => 'Retired',
-    'Class:ISMSControl/Attribute:status/Value:retired+' => 'Decommissioned / no longer in use',
-    'Class:ISMSControl/Attribute:controlowner_id' => 'Control owner',
-    'Class:ISMSControl/Attribute:controlowner_id+' => 'Person responsible for maintaining the control.',
-    'Class:ISMSControl/Attribute:controlowner_id_friendlyname' => 'Control owner',
-    'Class:ISMSControl/Attribute:controlowner_name' => 'Control owner',
-    'Class:ISMSControl/Attribute:control_domain' => 'Control domain',
-    'Class:ISMSControl/Attribute:control_domain+' => 'Primary domain of the control.',
-    'Class:ISMSControl/Attribute:control_domain/Value:organizational' => 'Organizational',
-    'Class:ISMSControl/Attribute:control_domain/Value:organizational+' => 'Organizational domain.',
-    'Class:ISMSControl/Attribute:control_domain/Value:people' => 'People',
-    'Class:ISMSControl/Attribute:control_domain/Value:people+' => 'People-related domain.',
-    'Class:ISMSControl/Attribute:control_domain/Value:physical' => 'Physical',
-    'Class:ISMSControl/Attribute:control_domain/Value:physical+' => 'Physical domain.',
-    'Class:ISMSControl/Attribute:control_domain/Value:technological' => 'Technological',
-    'Class:ISMSControl/Attribute:control_domain/Value:technological+' => 'Technological domain.',
-    'Class:ISMSControl/Attribute:control_type' => 'Control type',
-    'Class:ISMSControl/Attribute:control_type+' => 'Type of control by purpose.',
-    'Class:ISMSControl/Attribute:control_type/Value:corrective' => 'Corrective',
-    'Class:ISMSControl/Attribute:control_type/Value:corrective+' => 'Corrective control.',
-    'Class:ISMSControl/Attribute:control_type/Value:detective' => 'Detective',
-    'Class:ISMSControl/Attribute:control_type/Value:detective+' => 'Detective control.',
-    'Class:ISMSControl/Attribute:control_type/Value:preventive' => 'Preventive',
-    'Class:ISMSControl/Attribute:control_type/Value:preventive+' => 'Preventive control.',
-    'Class:ISMSControl/Attribute:description' => 'Description',
-    'Class:ISMSControl/Attribute:description+' => 'Details about the control implementation and scope.',
-    'Class:ISMSControl/Attribute:implementation_date' => 'Implemented on',
-    'Class:ISMSControl/Attribute:implementation_date+' => 'Date when the control was implemented.',
-    'Class:ISMSControl/Attribute:risks_list' => 'Risk(s)',
-    'Class:ISMSControl/Attribute:risks_list+' => 'All risks linked to this control.',
-    'Class:ISMSControl/Attribute:review_interval_months' => 'Review interval (months)',
-    'Class:ISMSControl/Attribute:review_interval_months+' => 'Review interval in months.',
-    'Class:ISMSControl/Attribute:last_review' => 'Last review',
-    'Class:ISMSControl/Attribute:last_review+' => 'Date of the last review.',
-    'Class:ISMSControl/Attribute:next_review' => 'Next review',
-    'Class:ISMSControl/Attribute:next_review+' => 'Date of the next scheduled review.',
-    'Class:ISMSControl/Attribute:reviews_list' => 'Review(s)',
-    'Class:ISMSControl/Attribute:reviews_list+' => 'All reviews of this control.',
-    'Class:ISMSControl/Attribute:documents_list' => 'Documents',
-    'Class:ISMSControl/Attribute:soaentries_list' => 'SoA entries',
-    'Class:ISMSControl/UniquenessRule:ref' => 'A control with this reference already exists',
-    'Class:ISMSControl/UniquenessRule:ref+' => 'The ref must be unique',
-    'Class:ISMSControl/UniquenessRule:name' => 'A control with this name already exists',
-    'Class:ISMSControl/UniquenessRule:name+' => 'The name must be unique',
-    'Class:ISMSControl/Stimulus:ev_submit' => 'Submit for approval',
-    'Class:ISMSControl/Stimulus:ev_submit+' => 'Move from Draft to Submitted',
-    'Class:ISMSControl/Stimulus:ev_approve' => 'Approve',
-    'Class:ISMSControl/Stimulus:ev_approve+' => 'Approve a submitted control',
-    'Class:ISMSControl/Stimulus:ev_reject' => 'Reject',
-    'Class:ISMSControl/Stimulus:ev_reject+' => 'Reject a submission (returns to Amending)',
-    'Class:ISMSControl/Stimulus:ev_start_impl' => 'Start implementation',
-    'Class:ISMSControl/Stimulus:ev_start_impl+' => 'Move from Approved to Implementing',
-    'Class:ISMSControl/Stimulus:ev_mark_effective' => 'Mark effective',
-    'Class:ISMSControl/Stimulus:ev_mark_effective+' => 'Declare the control operational/effective',
-    'Class:ISMSControl/Stimulus:ev_suspend' => 'Suspend',
-    'Class:ISMSControl/Stimulus:ev_suspend+' => 'Temporarily suspend an effective control',
-    'Class:ISMSControl/Stimulus:ev_resume' => 'Resume',
-    'Class:ISMSControl/Stimulus:ev_resume+' => 'Resume from Suspended to Effective',
-    'Class:ISMSControl/Stimulus:ev_retire' => 'Retire',
-    'Class:ISMSControl/Stimulus:ev_retire+' => 'Retire the control from service',
-    'Class:ISMSControl/Stimulus:ev_start_amend' => 'Start amendment',
-    'Class:ISMSControl/Stimulus:ev_start_amend+' => 'Begin revising an effective control',
-    'Class:ISMSControl/Stimulus:ev_submit_amend' => 'Submit amendment',
-    'Class:ISMSControl/Stimulus:ev_submit_amend+' => 'Submit the amendment for approval',
-    'Class:ISMSControl/Stimulus:ev_cancel_amend'  => 'Cancel amendment',
-    'Class:ISMSControl/Stimulus:ev_cancel_amend+' => 'Discard the amendment and return to Effective',
+    'Class:ISMSScope' => 'ISMS Scope',
+    'Class:ISMSScope+' => 'Defined scope (coverage) of the ISMS for an organization.',
+    'Class:ISMSScope/Name' => '%1$s / %2$s',
+    'Class:ISMSScope/Attribute:org_id' => 'Organization',
+    'Class:ISMSScope/Attribute:org_id+' => 'Owning organization of the scope.',
+    'Class:ISMSScope/Attribute:org_name' => 'Organization',
+    'Class:ISMSScope/Attribute:org_name+' => '',
+    'Class:ISMSScope/Attribute:name' => 'Name',
+    'Class:ISMSScope/Attribute:name+' => 'Name of the scope.',
+    'Class:ISMSScope/Attribute:status' => 'Status',
+    'Class:ISMSScope/Attribute:status+' => 'Lifecycle status of the scope.',
+    'Class:ISMSScope/Attribute:status/Value:draft'   => 'Draft',
+    'Class:ISMSScope/Attribute:status/Value:draft+'  => 'Being prepared/edited.',
+    'Class:ISMSScope/Attribute:status/Value:active'  => 'Active',
+    'Class:ISMSScope/Attribute:status/Value:active+' => 'In effect and used operationally.',
+    'Class:ISMSScope/Attribute:status/Value:frozen'  => 'Frozen',
+    'Class:ISMSScope/Attribute:status/Value:frozen+' => 'Temporarily locked; changes require reopening.',
+    'Class:ISMSScope/Attribute:status/Value:obsolete'  => 'Obsolete',
+    'Class:ISMSScope/Attribute:status/Value:obsolete+' => 'No longer in use.',
+    'Class:ISMSScope/Attribute:scope_statement' => 'Scope statement',
+    'Class:ISMSScope/Attribute:scope_statement+' => 'Formal definition of the ISMS scope.',
+    'Class:ISMSScope/Attribute:boundaries_in' => 'Included boundaries',
+    'Class:ISMSScope/Attribute:boundaries_in+' => 'Elements explicitly included (sites, systems, processes).',
+    'Class:ISMSScope/Attribute:boundaries_out' => 'Excluded boundaries',
+    'Class:ISMSScope/Attribute:boundaries_out+' => 'Elements explicitly excluded.',
+    'Class:ISMSScope/Attribute:locations' => 'Locations',
+    'Class:ISMSScope/Attribute:locations+' => 'Physical sites / regions covered by the scope.',
+    'Class:ISMSScope/Attribute:processes' => 'Processes',
+    'Class:ISMSScope/Attribute:processes+' => 'Business/IT processes covered by the scope.',
+    'Class:ISMSScope/Attribute:soa_id' => 'Statement of Applicability',
+    'Class:ISMSScope/Attribute:soa_id+' => 'Linked SoA for this scope.',
+    'Class:ISMSScope/Attribute:soa_name' => 'SoA',
+    'Class:ISMSScope/Attribute:soa_name+' => '',
+    'Class:ISMSScope/Attribute:locations_list' => 'Locations',
+    'Class:ISMSScope/Attribute:processes_list' => 'Processes',
+    'Class:ISMSScope/Attribute:creation_date' => 'Creation date',
+    'Class:ISMSScope/Attribute:creation_date+' => 'Record creation date.',
+    'Class:ISMSScope/Attribute:publish_date' => 'Publish date',
+    'Class:ISMSScope/Attribute:publish_date+' => 'Date when the scope was formally published/approved.',
+    'Class:ISMSScope/Attribute:last_update' => 'Last update',
+    'Class:ISMSScope/Attribute:last_update+' => 'Timestamp of the last modification.',
+    'Class:ISMSScope/Stimulus:ev_activate' => 'Activate',
+    'Class:ISMSScope/Stimulus:ev_activate+' => 'Move scope to Active.',
+    'Class:ISMSScope/Stimulus:ev_freeze' => 'Freeze',
+    'Class:ISMSScope/Stimulus:ev_freeze+' => 'Temporarily lock the scope.',
+    'Class:ISMSScope/Stimulus:ev_obsolete' => 'Set obsolete',
+    'Class:ISMSScope/Stimulus:ev_obsolete+' => 'Retire this scope.',
+    'Class:ISMSScope/Stimulus:ev_reopen' => 'Reopen',
+    'Class:ISMSScope/Stimulus:ev_reopen+' => 'Reopen a scope.',
 ));
 
-//
-// Class: lnkSupportingAssetToAsset
-//
+// Class: ISMSSoA
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkSupportingAssetToAsset' => 'Link Supporting Asset / Asset',
-    'Class:lnkSupportingAssetToAsset+' => 'Association indicating that the first asset supports the second asset.',
-    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Select the asset that provides support to another asset.',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Supporting asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Supported asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Select the asset that is being supported.',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Supported asset',
-    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
+    'ISMSSoA:Header'  => 'General information',
+    'ISMSSoA:KPIs' => 'KPIs',
+    'ISMSSoA:Entries' => 'Statement of Applicability',
+    'ISMSSoA:PopulatedEntries' => 'Created %1$d SoA entries.',
+    'ISMSSoA:Dashboard' => 'Dashboard',
+    'ISMSSoA:Dashboard:Title' => 'Coverage',
+    'ISMSSoA:Dashboard:StdControls:Total' => 'Standard controls: %1$d',
+    'ISMSSoA:Dashboard:Coverage' => 'Coverage',
+    'ISMSSoA:Dashboard:Undefined' => 'Undefined',
+    'ISMSSoA:Dashboard:EntriesCount' => 'Entries',
+    'Class:ISMSSoA' => 'Statement of Applicability',
+    'Class:ISMSSoA+' => 'SoA per Organization and Standard.',
+    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
+    'Class:ISMSSoA/Attribute:org_id' => 'Organization',
+    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
+    'Class:ISMSSoA/Attribute:status' => 'Status',
+    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Draft',
+    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In review',
+    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Approved',
+    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolete',
+    'Class:ISMSSoA/Attribute:owner_id' => 'Owner',
+    'Class:ISMSSoA/Attribute:effective_from' => 'Effective from',
+    'Class:ISMSSoA/Attribute:notes' => 'Notes',
+    'Class:ISMSSoA/Attribute:kpi_total' => 'Controls (total)',
+    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Applicable',
+    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implemented',
+    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Gaps',
+    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA entries',
+    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'There is already a SoA for organization "$this->org_id_friendlyname$" and standard "$this->standard_id_friendlyname$".',
+    'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
+    'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
+    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Retire',
+    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Return to Draft',
+    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Return to Review',
+    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Reopen',
+    'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
+    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
 ));
 
-//
+// Class: ISMSSoAEntry
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSSoAEntry:Link' => 'Link',
+    'ISMSSoAEntry:Decision' => 'Decision',
+    'ISMSSoAEntry:Implementation' => 'Implementation',
+    'Class:ISMSSoAEntry' => 'SoA entry',
+    'Class:ISMSSoAEntry+' => 'Applicability decision for one standard control.',
+    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
+    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard control',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Control code',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Control title',
+    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Control domain',
+    'Class:ISMSSoAEntry/Attribute:applicability' => 'Applicability',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Applicable',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Not applicable',
+    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Partially applicable',
+    'Class:ISMSSoAEntry/Attribute:justification' => 'Justification',
+    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Implementation status',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Planned',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In progress',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implemented',
+    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Not implemented',
+    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidence',
+    'Class:ISMSSoAEntry/Attribute:notes' => 'Notes',
+    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Internal controls',
+    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'There is already an entry for standard control "$this->standardcontrol_code$" in the SoA "$this->soa_id_friendlyname$".',
+    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Please provide a justification when marking a control as not applicable.',
+    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Consider adding evidence for implemented controls.',
+));
+
+// Class: ISMSStandardControl
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA entries',
+));
+
+// Class: ISMSThreat
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSThreat:Base' => 'Basics',
+    'ISMSThreat:Details' => 'Details',
+    'Class:ISMSThreat' => 'Threat',
+    'Class:ISMSThreat+' => 'Catalog of threats relevant to the ISMS.',
+    'Class:ISMSThreat/Attribute:name' => 'Name',
+    'Class:ISMSThreat/Attribute:category' => 'Category',
+    'Class:ISMSThreat/Attribute:category/Value:human' => 'Human',
+    'Class:ISMSThreat/Attribute:category/Value:technical' => 'Technical',
+    'Class:ISMSThreat/Attribute:category/Value:environmental' => 'Environmental',
+    'Class:ISMSThreat/Attribute:category/Value:supply_chain' => 'Supply chain',
+    'Class:ISMSThreat/Attribute:category/Value:legal' => 'Legal',
+    'Class:ISMSThreat/Attribute:description' => 'Description',
+    'Class:ISMSThreat/Attribute:source' => 'Source',
+    'Class:ISMSThreat/Attribute:references' => 'References',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate' => 'This threat already exists',
+    'Class:ISMSThreat/UniquenessRule:no_duplicate+' => 'The threat must be unique',
+));
+
+// Class: ISMSVulnerability
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'ISMSVulnerability:Base' => 'Basics',
+    'ISMSVulnerability:Details' => 'Details',
+    'Class:ISMSVulnerability' => 'Vulnerability',
+    'Class:ISMSVulnerability+' => 'Catalog of vulnerabilities (people, process, technology, third-party).',
+    'Class:ISMSVulnerability/Attribute:name' => 'Name',
+    'Class:ISMSVulnerability/Attribute:category' => 'Category',
+    'Class:ISMSVulnerability/Attribute:category/Value:people' => 'People',
+    'Class:ISMSVulnerability/Attribute:category/Value:process' => 'Process',
+    'Class:ISMSVulnerability/Attribute:category/Value:technology' => 'Technology',
+    'Class:ISMSVulnerability/Attribute:category/Value:third_party' => 'Third-party',
+    'Class:ISMSVulnerability/Attribute:description' => 'Description',
+    'Class:ISMSVulnerability/Attribute:source' => 'Source',
+    'Class:ISMSVulnerability/Attribute:references' => 'References',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate' => 'This vulnerability already exists',
+    'Class:ISMSVulnerability/UniquenessRule:no_duplicate+' => 'The vulnerability must be unique',
+));
+
+// Class: lnkDocumentToISMSAsset
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkDocumentToISMSAsset' => 'Link Document / ISMS Asset',
+    'Class:lnkDocumentToISMSAsset+' => 'Associates ISMS evidence documents with an asset.',
+    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset supported by this evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset name',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Document',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Existing document used as ISMS evidence.',
+    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Document name',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'This document is already linked to this asset',
+    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Each document can be linked to an asset only once.',
+));
+
 // Class: lnkFunctionalCiToAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkFunctionalCiToAsset' => 'Link FunctionalCI / Asset',
@@ -697,9 +760,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkFunctionalCiToAsset/Attribute:asset_name' => 'Related asset',
 ));
 
-//
 // Class: lnkISMSRiskToISMSAsset
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSRiskToISMSAsset' => 'Link Risk / Asset',
@@ -715,9 +776,7 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSRiskToISMSAsset/Attribute:asset_name' => 'Asset',
 ));
 
-//
 // Class: lnkISMSRiskToISMSControl
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'lnkISMSRiskToISMSControl:Link' => 'Link',
@@ -793,182 +852,63 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSRiskToISMSControl/Attribute:risk_res_score_ro+' => 'Current residual risk score (read-only).',
 ));
 
-//
-// Class: ISMSReview
-//
+// Class: lnkISMSRiskToISMSThreat
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSReview:Link' => 'Link',
-    'ISMSReview:Reviews' => 'Reviews',
-    'ISMSReview:Outcome' => 'Outcome',
-    'ISMSReview:Notes' => 'Notes',
-    'ISMSReview:Progress' => 'Progress',
-
-    'Class:ISMSReview' => 'ISMS Review',
-    'Class:ISMSReview+' => 'A review record linked to an ISMS object (asset, risk or control).',
-
-    'Class:ISMSAssetReview' => 'ISMS Asset Review',
-    'Class:ISMSAssetReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSAssetReview/Attribute:asset_id' => 'Asset',
-    'Class:ISMSAssetReview/Attribute:asset_id+' => 'Linked asset being reviewed.',
-    'Class:ISMSAssetReview/Attribute:asset_ref' => 'Asset reference',
-    'Class:ISMSAssetReview/Attribute:asset_name' => 'Asset name',
-    'Class:ISMSAssetReview/UniquenessRule:no_duplicate' => 'This asset review already exists',
-    'Class:ISMSAssetReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
-    'Class:ISMSAssetReview/Stimulus:ev_start' => 'Start Review',
-    'Class:ISMSAssetReview/Stimulus:ev_complete' => 'Complete Review',
-    'Class:ISMSAssetReview/Stimulus:ev_cancel' => 'Cancel Review',
-
-    'Class:ISMSRiskReview' => 'ISMS Risk Review',
-    'Class:ISMSRiskReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSRiskReview/Attribute:risk_id' => 'Risk',
-    'Class:ISMSRiskReview/Attribute:risk_id+' => 'Linked risk being reviewed.',
-    'Class:ISMSRiskReview/Attribute:risk_ref' => 'Risk reference',
-    'Class:ISMSRiskReview/Attribute:risk_name' => 'Risk name',
-    'Class:ISMSRiskReview/UniquenessRule:no_duplicate' => 'This risk review already exists',
-    'Class:ISMSRiskReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
-    'Class:ISMSRiskReview/Stimulus:ev_start' => 'Start Review',
-    'Class:ISMSRiskReview/Stimulus:ev_complete' => 'Complete Review',
-    'Class:ISMSRiskReview/Stimulus:ev_cancel' => 'Cancel Review',
-
-    'Class:ISMSControlReview' => 'ISMS Control Review',
-    'Class:ISMSControlReview/Name' => '%1$s %2$s - %3$s',
-    'Class:ISMSControlReview/Attribute:control_id' => 'Control',
-    'Class:ISMSControlReview/Attribute:control_id+' => 'Linked control being reviewed.',
-    'Class:ISMSControlReview/Attribute:control_ref' => 'Control reference',
-    'Class:ISMSControlReview/Attribute:control_name' => 'Control name',
-    'Class:ISMSControlReview/UniquenessRule:no_duplicate' => 'This control review already exists',
-    'Class:ISMSControlReview/UniquenessRule:no_duplicate+' => 'The review must be unique',
-    'Class:ISMSControlReview/Stimulus:ev_start' => 'Start Review',
-    'Class:ISMSControlReview/Stimulus:ev_complete' => 'Complete Review',
-    'Class:ISMSControlReview/Stimulus:ev_cancel' => 'Cancel Review',
-
-    'Class:ISMSReview/Attribute:status' => 'Status',
-    'Class:ISMSReview/Attribute:status+' => 'Lifecycle status of the review.',
-    'Class:ISMSReview/Attribute:status/Value:planned' => 'Planned',
-    'Class:ISMSReview/Attribute:status/Value:planned+' => 'Initial planning state.',
-    'Class:ISMSReview/Attribute:status/Value:in_progress' => 'In progress',
-    'Class:ISMSReview/Attribute:status/Value:in_progress+' => 'Work in progress.',
-    'Class:ISMSReview/Attribute:status/Value:completed' => 'Completed',
-    'Class:ISMSReview/Attribute:status/Value:completed+' => 'Review completed.',
-    'Class:ISMSReview/Attribute:status/Value:cancelled' => 'Cancelled',
-    'Class:ISMSReview/Attribute:status/Value:cancelled+' => 'Review cancelled.',
-    'Class:ISMSReview/Attribute:planned_on' => 'Planned on',
-    'Class:ISMSReview/Attribute:started_on' => 'Started on',
-    'Class:ISMSReview/Attribute:completed_on' => 'Completed on',
-    'Class:ISMSReview/Attribute:reviewer_id' => 'Reviewer',
-    'Class:ISMSReview/Attribute:reviewer_name' => 'Reviewer name',
-    'Class:ISMSReview/Attribute:outcome' => 'Outcome',
-    'Class:ISMSReview/Attribute:outcome/Value:pass' => 'Pass',
-    'Class:ISMSReview/Attribute:outcome/Value:minor_issues' => 'Minor issues',
-    'Class:ISMSReview/Attribute:outcome/Value:major_issues' => 'Major issues',
-    'Class:ISMSReview/Attribute:outcome/Value:fail' => 'Fail',
-
-    'Class:ISMSReview/Attribute:summary' => 'Summary',
-    'Class:ISMSReview/Attribute:notes' => 'Notes',
-    'Class:ISMSReview/Attribute:scope' => 'Scope',
-    'Class:ISMSReview/Attribute:checklist' => 'Checklist',
-    'Class:ISMSReview/Attribute:evidence' => 'Evidence',
-
-    'Class:ISMSReview/Stimulus:ev_start' => 'Start Review',
-    'Class:ISMSReview/Stimulus:ev_complete' => 'Complete Review',
-    'Class:ISMSReview/Stimulus:ev_cancel' => 'Cancel Review',
-
-    'Class:ISMSReview/Check:PlannedInPast' => 'Planned date cannot be in the past.',
-    'Class:ISMSReview/Check:NoOutcome' => 'Outcome should be set before completion.',
-    'Class:ISMSReview/Check:StartedOnIsBeforePlannedOn' => '"Started on" is before "Planned on".',
-    'Class:ISMSReview/Check:CompletedOnIsBeforeStartedOn' => '"Completed on" is before "Started on".',
+    'Class:lnkISMSRiskToISMSThreat' => 'Link Risk / Threat',
+    'Class:lnkISMSRiskToISMSThreat+' => 'Link between a risk and a threat.',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_id' => 'Risk',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:risk_name' => 'Risk',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_id' => 'Threat',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:threat_name' => 'Threat',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy' => 'Relevancy',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:cause' => 'Cause',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:relevancy/Value:contributing' => 'Contributing',
+    'Class:lnkISMSRiskToISMSThreat/Attribute:notes' => 'Notes',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate' => 'This combination already exists',
+    'Class:lnkISMSRiskToISMSThreat/UniquenessRule:no_duplicate+' => 'The combination must be unique',
 ));
 
-//
-// Class: ISMSStandardControl
-//
+// Class: lnkISMSRiskToISMSVulnerability
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'Class:ISMSStandardControl/Attribute:soa_entries_list' => 'SoA entries',
+    'Class:lnkISMSRiskToISMSVulnerability' => 'Link Risk / Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability+' => 'Link between a risk and a vulnerability.',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_id' => 'Risk',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:risk_name' => 'Risk',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_id' => 'Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:vulnerability_name' => 'Vulnerability',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure' => 'Exposure',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:present' => 'Present',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:mitigated' => 'Mitigated',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:exposure/Value:unknown' => 'Unknown',
+    'Class:lnkISMSRiskToISMSVulnerability/Attribute:notes' => 'Notes',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate' => 'This combination already exists',
+    'Class:lnkISMSRiskToISMSVulnerability/UniquenessRule:no_duplicate+' => 'The combination must be unique',
 ));
 
-//
-// Class: ISMSSoA
-//
+// Class: lnkISMSScopeToLocation
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSSoA:Header'  => 'General information',
-    'ISMSSoA:KPIs' => 'KPIs',
-    'ISMSSoA:Entries' => 'Statement of Applicability',
-    'ISMSSoA:PopulatedEntries' => 'Created %1$d SoA entries.',
-    'ISMSSoA:Dashboard' => 'Dashboard',
-    'ISMSSoA:Dashboard:Title' => 'Coverage',
-    'ISMSSoA:Dashboard:StdControls:Total' => 'Standard controls: %1$d',
-    'ISMSSoA:Dashboard:Coverage' => 'Coverage',
-    'ISMSSoA:Dashboard:Undefined' => 'Undefined',
-    'ISMSSoA:Dashboard:EntriesCount' => 'Entries',
-    'Class:ISMSSoA' => 'Statement of Applicability',
-    'Class:ISMSSoA+' => 'SoA per Organization and Standard.',
-    'Class:ISMSSoA/Name' => '%1$s - %2$s:%3$s',
-    'Class:ISMSSoA/Attribute:org_id' => 'Organization',
-    'Class:ISMSSoA/Attribute:standard_id' => 'Standard',
-    'Class:ISMSSoA/Attribute:status' => 'Status',
-    'Class:ISMSSoA/Attribute:status/Value:draft' => 'Draft',
-    'Class:ISMSSoA/Attribute:status/Value:in_review' => 'In review',
-    'Class:ISMSSoA/Attribute:status/Value:approved' => 'Approved',
-    'Class:ISMSSoA/Attribute:status/Value:obsolete' => 'Obsolete',
-    'Class:ISMSSoA/Attribute:owner_id' => 'Owner',
-    'Class:ISMSSoA/Attribute:effective_from' => 'Effective from',
-    'Class:ISMSSoA/Attribute:notes' => 'Notes',
-    'Class:ISMSSoA/Attribute:kpi_total' => 'Controls (total)',
-    'Class:ISMSSoA/Attribute:kpi_applicable' => 'Applicable',
-    'Class:ISMSSoA/Attribute:kpi_implemented' => 'Implemented',
-    'Class:ISMSSoA/Attribute:kpi_gaps' => 'Gaps',
-    'Class:ISMSSoA/Attribute:soaentries_list' => 'SoA entries',
-    'Class:ISMSSoA/UniquenessRule:no_duplicate' => 'There is already a SoA for organization "$this->org_id_friendlyname$" and standard "$this->standard_id_friendlyname$".',
-    'Class:ISMSSoA/Stimulus:ev_submit' => 'Submit',
-    'Class:ISMSSoA/Stimulus:ev_approve' => 'Approve',
-    'Class:ISMSSoA/Stimulus:ev_obsolete' => 'Retire',
-    'Class:ISMSSoA/Stimulus:ev_return_to_draft' => 'Return to Draft',
-    'Class:ISMSSoA/Stimulus:ev_return_to_review' => 'Return to Review',
-    'Class:ISMSSoA/Stimulus:ev_reopen' => 'Reopen',
-    'Class:ISMSSoA/Check:AllEntriesDecided' => 'All entries must have an applicability decision before approval.',
-    'ISMSSoA:Tab:Dashboard' => 'Dashboard',
+    'Class:lnkISMSScopeToLocation' => 'Link ISMS Scope / Location',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToLocation/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToLocation/Attribute:location_id' => 'Location',
+    'Class:lnkISMSScopeToLocation/Attribute:location_name' => 'Location name',
+    'Class:lnkISMSScopeToLocation+' => '',
 ));
 
-//
-// Class: ISMSSoAEntry
-//
+// Class: lnkISMSScopeToProcess
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
-    'ISMSSoAEntry:Link' => 'Link',
-    'ISMSSoAEntry:Decision' => 'Decision',
-    'ISMSSoAEntry:Implementation' => 'Implementation',
-    'Class:ISMSSoAEntry' => 'SoA entry',
-    'Class:ISMSSoAEntry+' => 'Applicability decision for one standard control.',
-    'Class:ISMSSoAEntry/Name' => '%1$s - %2$s/%3$s',
-    'Class:ISMSSoAEntry/Attribute:soa_id' => 'SoA',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_id' => 'Standard control',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_code' => 'Control code',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_title' => 'Control title',
-    'Class:ISMSSoAEntry/Attribute:standardcontrol_domain' => 'Control domain',
-    'Class:ISMSSoAEntry/Attribute:applicability' => 'Applicability',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:applicable' => 'Applicable',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:not_applicable' => 'Not applicable',
-    'Class:ISMSSoAEntry/Attribute:applicability/Value:partial' => 'Partially applicable',
-    'Class:ISMSSoAEntry/Attribute:justification' => 'Justification',
-    'Class:ISMSSoAEntry/Attribute:implementation_status' => 'Implementation status',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:planned' => 'Planned',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:in_progress' => 'In progress',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:implemented' => 'Implemented',
-    'Class:ISMSSoAEntry/Attribute:implementation_status/Value:not_implemented' => 'Not implemented',
-    'Class:ISMSSoAEntry/Attribute:evidence' => 'Evidence',
-    'Class:ISMSSoAEntry/Attribute:notes' => 'Notes',
-    'Class:ISMSSoAEntry/Attribute:controls_list' => 'Internal controls',
-    'Class:ISMSSoAEntry/UniquenessRule:no_duplicate' => 'There is already an entry for standard control "$this->standardcontrol_code$" in the SoA "$this->soa_id_friendlyname$".',
-    'Class:ISMSSoAEntry/Check:NoJustificationForNA' => 'Please provide a justification when marking a control as not applicable.',
-    'Class:ISMSSoAEntry/Check:NoEvidence' => 'Consider adding evidence for implemented controls.',
+    'Class:lnkISMSScopeToProcess' => 'Link ISMS Scope / Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_id' => 'Scope',
+    'Class:lnkISMSScopeToProcess/Attribute:scope_name' => 'Scope name',
+    'Class:lnkISMSScopeToProcess/Attribute:process_id' => 'Business Process',
+    'Class:lnkISMSScopeToProcess/Attribute:process_name' => 'Business process name',
 ));
 
-//
 // Class: lnkISMSSoAEntryToISMSControl
-//
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSSoAEntryToISMSControl' => 'Link SoA entry / internal control',
@@ -982,26 +922,68 @@ Dict::Add('EN US', 'English', 'English', array(
     'Class:lnkISMSSoAEntryToISMSControl/UniquenessRule:no_duplicate' => 'The SoA entry "$this->soaentry_id_friendlyname$" is already linked to control "$this->control_id_friendlyname$".',
 ));
 
-//
-// Class: DashletRiskMatrix
-//
+// Class: lnkSupportingAssetToAsset
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Class:lnkSupportingAssetToAsset' => 'Link Supporting Asset / Asset',
+    'Class:lnkSupportingAssetToAsset+' => 'Association indicating that the first asset supports the second asset.',
+    'Class:lnkSupportingAssetToAsset/Name' => '%1$s - %2$s',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id+' => 'Select the asset that provides support to another asset.',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_id_friendlyname' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:supportingasset_name' => 'Supporting asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id' => 'Supported asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id+' => 'Select the asset that is being supported.',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_id_friendlyname' => 'Supported asset',
+    'Class:lnkSupportingAssetToAsset/Attribute:asset_name' => 'Supported asset',
+));
+
+// Menus.
+/** @disregard P1009 Undefined type Dict */
+Dict::Add('EN US', 'English', 'English', array(
+    'Menu:ISMSManagement' => 'ISMS Management',
+    'Menu:ISMSSpace' => 'ISMS Space',
+    'Menu:ISMSSpace:Assets' => 'Assets',
+    'Menu:ISMSSpace:Options' => 'Options',
+    'Menu:ISMSSpace:Risks' => 'Risks & Controls',
+    'Menu:ISMSSpace:Reviews' => 'Reviews',
+    'Menu:ISMSSpace:Standards' => 'Standards',
+    'Menu:NewISMSAsset' => 'New Asset',
+    'Menu:NewISMSAsset+' => 'Create a new ISMS asset',
+    'Menu:NewISMSRisk' => 'New Risk',
+    'Menu:NewISMSRisk+' => 'Create a new ISMS risk',
+    'Menu:NewISMSControl' => 'New Control',
+    'Menu:NewISMSControl+' => 'Create a new ISMS control',
+    'Menu:SearchISMSAssets' => 'Search Assets',
+    'Menu:SearchISMSAssets+' => 'Search ISMS assets',
+    'Menu:SearchISMSRisks' => 'Search Risks',
+    'Menu:SearchISMSRisks+' => 'Search ISMS risks',
+    'Menu:SearchISMSControls' => 'Search Controls',
+    'Menu:SearchISMSControls+' => 'Search ISMS controls',
+    'Menu:ISMSManagement:Shortcuts' => 'Shortcuts',
+    'Menu:ISMSManagement:Shortcuts+' => 'Quick access to common ISMS views',
+    'Menu:ISMSMyAssets' => 'My Assets',
+    'Menu:ISMSMyAssets+' => 'Assets where I am the asset owner',
+    'Menu:ISMSMyRisks' => 'My Risks',
+    'Menu:ISMSMyRisks+' => 'Risks where I am the risk owner',
+    'Menu:ISMSMyControls' => 'My Controls',
+    'Menu:ISMSMyControls+' => 'Controls where I am the control owner',
+));
+
+// User interface: DashletRiskMatrix
 /** @disregard P1009 Undefined type Dict */
 Dict::Add('EN US', 'English', 'English', array(
     'UI:DashletRiskMatrix:Label' => 'Risk Matrix',
     'UI:DashletRiskMatrix:Description' => '5x5 likelihood × impact matrix for published risks',
     'UI:DashletRiskMatrix:Title' => 'Published Risks — Risk Matrix',
-
     'UI:DashletRiskMatrix:Impact' => 'Impact',
     'UI:DashletRiskMatrix:Likelihood' => 'Likelihood',
     'UI:DashletRiskMatrix:Total' => 'Total',
-
     'UI:DashletRiskMatrix:Legend:Low' => 'Low',
     'UI:DashletRiskMatrix:Legend:Medium' => 'Medium',
     'UI:DashletRiskMatrix:Legend:High' => 'High',
     'UI:DashletRiskMatrix:Legend:Extreme' => 'Extreme',
-
     'UI:DashletRiskMatrix:NoData' => 'No data for current scope',
-
     'UI:DashletRiskMatrix:Prop-Title' => 'Title',
     'UI:DashletRiskMatrix:Prop-Query' => 'OQL scope',
     'UI:DashletRiskMatrix:Prop-X' => 'X axis attribute (impact)',
@@ -1011,30 +993,8 @@ Dict::Add('EN US', 'English', 'English', array(
     'UI:DashletRiskMatrix:Prop-ColorMode' => 'Color mode',
     'UI:DashletRiskMatrix:Prop-ShowPercent' => 'Show % per cell',
     'UI:DashletRiskMatrix:Prop-IncludeNA'   => 'Include (n/a) bucket',
-
     'UI:DashletRiskMatrix:ColorMode:Count' => 'Heat by count',
     'UI:DashletRiskMatrix:ColorMode:Severity' => 'Severity (fixed levels)',
     'UI:DashletRiskMatrix:ColorMode:Level'  => 'Level (from cell data)',
-
     'UI:DashletRiskMatrix:NA' => 'N/A',
-    'Class:ISMSRiskAcceptance/Check:ApprovalDateManaged' => 'The approval date is managed by the approval and reset transitions and cannot be edited manually.',
-    'Class:ISMSRiskAcceptance/Check:RiskMembershipFrozen' => 'Risk assignments are frozen after approval. Reset the revoked or expired acceptance to draft before changing its risk assignments.',
-));
-
-//
-// Class: lnkDocumentToISMSAsset
-//
-/** @disregard P1009 Undefined type Dict */
-Dict::Add('EN US', 'English', 'English', array(
-    'Class:lnkDocumentToISMSAsset' => 'Link Document / ISMS Asset',
-    'Class:lnkDocumentToISMSAsset+' => 'Associates ISMS evidence documents with an asset.',
-    'Class:lnkDocumentToISMSAsset/Name' => '%1$s / %2$s',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_id' => 'Asset',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_id+' => 'Asset supported by this evidence.',
-    'Class:lnkDocumentToISMSAsset/Attribute:asset_name' => 'Asset name',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_id' => 'Document',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_id+' => 'Existing document used as ISMS evidence.',
-    'Class:lnkDocumentToISMSAsset/Attribute:document_name' => 'Document name',
-    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate' => 'This document is already linked to this asset',
-    'Class:lnkDocumentToISMSAsset/UniquenessRule:no_duplicate+' => 'Each document can be linked to an asset only once.',
 ));

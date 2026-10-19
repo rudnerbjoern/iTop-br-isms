@@ -98,3 +98,5 @@ foreach ($counts as $type => $count) {
     echo "$type: $count checked", PHP_EOL;
 }
 echo 'Source checks passed. XML schemas, iTop compilation, and runtime behavior were not validated.', PHP_EOL;
+
+runCheck([PHP_BINARY, __DIR__ . '/check-catalog-relations.php']);

@@ -272,6 +272,9 @@ reviews, and supporting information. Dependency views connect assets with their
 supporting assets and configuration items, and risks with their controls and assets.
 Applicability summaries and risk matrices provide an overview of priorities.
 The reference catalog has its own searches for standards and requirements.
+Its Relations menu shows a standard's requirements downstream and the containing
+reference standard upstream from a requirement, including when the catalog is
+installed independently.
 
 Risk warnings highlight incomplete treatment or acceptance information, overdue
 treatment dates, and inconsistent assessments. These warnings support review

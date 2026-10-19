@@ -8,6 +8,7 @@
  * @version     2026-10-15
  */
 
+// Class: ISMSStandard
 Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSStandard' => 'ISMS-Standard',
     'Class:ISMSStandard+' => 'Sicherheits-/Compliance-Standard, z. B. ISO/IEC 27001.',
@@ -20,6 +21,10 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSStandard/Attribute:controls_list+' => 'Standard-Kontrollen (z. B. Anhang A).',
     'Class:ISMSStandard/Attribute:documents_list' => 'Dokumente',
     'Class:ISMSStandard/UniquenessRule:no_duplicate' => 'Dieser Standard/Version existiert bereits.',
+));
+
+// Class: ISMSStandardControl
+Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSStandardControl' => 'Standard-Kontrolle',
     'Class:ISMSStandardControl+' => 'Kontrolle gemäß gewähltem Standard.',
     'Class:ISMSStandardControl/Name' => '%1$s:%2$s / %3$s - %4$s',
@@ -29,7 +34,19 @@ Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Class:ISMSStandardControl/Attribute:domain' => 'Domäne',
     'Class:ISMSStandardControl/Attribute:description' => 'Beschreibung',
     'Class:ISMSStandardControl/UniquenessRule:no_duplicate' => 'Diese Kontrolle existiert bereits für den Standard "$this->standard_id_friendlyname$".',
+));
+
+// Menus.
+Dict::Add('DE DE', 'German', 'Deutsch', array(
     'Menu:ISMSCatalog' => 'ISMS-Katalog',
     'Menu:SearchISMSStandards' => 'Standards',
     'Menu:SearchISMSStandardControls' => 'Standard-Anforderungen',
+));
+
+// Relations.
+Dict::Add('DE DE', 'German', 'Deutsch', array(
+    'Relation:isms_catalog/DownStream' => 'Standardanforderungen',
+    'Relation:isms_catalog/DownStream+' => 'Anforderungen dieses Referenzstandards.',
+    'Relation:isms_catalog/UpStream' => 'Referenzstandard',
+    'Relation:isms_catalog/UpStream+' => 'Der Referenzstandard, zu dem diese Anforderung gehört.',
 ));
